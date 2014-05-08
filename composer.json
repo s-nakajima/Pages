@@ -19,6 +19,7 @@
         "components/jquery":      "~2.1"
     },
     "require-dev": {
+        "netcommons/containers":  "dev-master",
         "satooshi/php-coveralls": "dev-master"
     },
     "config": {

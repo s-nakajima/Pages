@@ -22,6 +22,8 @@ before_script:
   - cp -r ../$PLUGIN_NAME app/Plugin/
   - chmod -R 777 app/tmp
   - mkdir -p build/logs
+  - pear channel-discover pear.phpunit.de
+  - pear config-set auto_discover 1; pear install --alldeps phpunit/PHPUnit-3.7.32
   - pear channel-discover pear.cakephp.org
   - pear install --alldeps cakephp/CakePHP_CodeSniffer
   - pear channel-discover pear.phpmd.org

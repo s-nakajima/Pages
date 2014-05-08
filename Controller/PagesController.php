@@ -13,20 +13,28 @@ App::uses('AppController', 'Controller');
 class PagesController extends AppController {
 
 /**
- * Components
- *
- * @var array
- */
-	public $components = array('Paginator');
-
-/**
  * index method
  *
+ * @throws NotFoundException
  * @return void
  */
 	public function index() {
-		$this->Page->recursive = 0;
-		$this->set('pages', $this->Paginator->paginate());
+		$paths = func_get_args();
+		$path = implode('/', $paths);
+
+		$page = $this->Page->findByPermalink($path);
+		if (empty($page)) {
+			throw new NotFoundException();
+		}
+
+		$containers = array();
+		foreach ($page['Container'] as $container) {
+			$type = $container['type'];
+			$containers[$type] = $container;
+		}
+
+		$this->set('page', $page);
+		$this->set('containers', $containers);
 	}
 
 /**

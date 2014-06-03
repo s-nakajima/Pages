@@ -11,38 +11,61 @@
 ?>
 
 <!-- Fixed navbar 別のプラグインとして実装することになる予定 -->
+<!-- navbar -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">NetCommons3 Base</a>
+			<a class="navbar-brand" href="/">NetCommons3</a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Home</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-				<li><a href="#">Action</a></li>
-				<li><a href="#">Another action</a></li>
-				<li><a href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li class="dropdown-header">Nav header</li>
-				<li><a href="#">Separated link</a></li>
-				<li><a href="#">One more separated link</a></li>
-				</ul>
-			</li>
+				<li><a href="/"><?php echo __("ホーム"); ?></a></li>
+
+				<li>
+					<?php if ($User = AuthComponent::user()): ?>
+						<?php echo h($User['handle']) ?>
+						<?php echo $this->Html->link(__('Logout'), '/auth/logout') ?>
+					<?php else: ?>
+						<?php echo $this->Html->link(__('Login'), '/auth/login') ?>
+					<?php endif; ?>
+				</li>
+
+				<li <?php
+					if (isset($this->request->params['plugin'])
+						&& $this->request->params['plugin'] == 'ThemeSettings') {
+					echo 'class="active"';
+					}
+				?>>
+					<?php echo $this->Html->link(__('テーマ設定'), '/theme_settings/site/') ?>
+				</li>
+
+				<li>
+					<?php if (!Configure::read('Pages.isSetting')): ?>
+						<?php echo $this->Html->link(__('Setting mode on'), '/' . Configure::read('Pages.settingModeWord') . $path) ?>
+					<?php else: ?>
+						<?php echo $this->Html->link(__('Setting mode off'), '/' . $path) ?>
+					<?php endif; ?>
+				</li>
+
 			</ul>
-		</div>
+		</div><!--/.nav-collapse -->
 	</div>
 </div>
 
-<?php if (!empty($containers[Configure::read('Containers.type.header')])): ?>
+<div ng-app="NetCommons">
+<?php
+if (Configure::read('Pages.isSetting')) {
+	echo $this->element('plugin_list');
+}
+?>
+
+<?php if (isset($containers[Configure::read('Containers.type.header')])): ?>
 	<!-- container-header -->
 	<header id="container-header">
 		<?php echo $this->requestAction(
@@ -53,7 +76,7 @@
 
 <div class="container">
 
-	<?php if (!empty($containers[Configure::read('Containers.type.major')])): ?>
+	<?php if (isset($containers[Configure::read('Containers.type.major')])): ?>
 		<!-- container-major -->
 		<div id="container-major" class="col-sm-3">
 			<?php echo $this->requestAction(
@@ -69,7 +92,7 @@
 						array('return')); ?>
 	</div>
 	
-	<?php if (!empty($containers[Configure::read('Containers.type.minor')])): ?>
+	<?php if (isset($containers[Configure::read('Containers.type.minor')])): ?>
 		<!-- container-minor  -->
 		<div id="container-minor" class="col-sm-3">
 			<?php echo $this->requestAction(
@@ -80,11 +103,12 @@
 
 </div>
 
-<?php if (!empty($containers[Configure::read('Containers.type.footer')])): ?>
+<?php if (isset($containers[Configure::read('Containers.type.footer')])): ?>
 	<!-- area-footer  -->
 	<footer id="container-footer" role="contentinfo">
 		<?php echo $this->requestAction(
 							'containers/containers/index/' . $containers[Configure::read('Containers.type.footer')]['id'],
 							array('return')); ?>
 	</footer>
-<?php endif;
+<?php endif; ?>
+</div>

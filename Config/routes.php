@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages plugin bootstrap
+ * Pages routes configuration
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@netcommons.org>
@@ -9,5 +9,5 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-Configure::load('Pages.config');
-Configure::load('Containers.config');
+Router::connect('/' . Configure::read('Pages.settingModeWord') . '/*',
+					array('controller' => 'pages', 'action' => 'index', 'plugin' => 'pages'));

@@ -107,7 +107,7 @@ class Page extends PagesAppModel {
 			'foreignKey' => 'page_id',
 			'associationForeignKey' => 'container_id',
 			'unique' => 'keepExisting',
-			'conditions' => '',
+			'conditions' => array('ContainersPage.is_visible' => true),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',

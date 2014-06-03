@@ -1,16 +1,17 @@
 <?php
-App::uses('AppController', 'Controller');
 /**
  * Pages Controller
  *
- * @property Page $Page
- * @property PaginatorComponent $Paginator
- *
- * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
- * @link     http://www.netcommons.org NetCommons Project
- * @license  http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
+ * @author Kohei Teraguchi <kteraguchi@netcommons.org>
+ * @since 3.0.0.0
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
  */
-class PagesController extends AppController {
+
+App::uses('PagesAppController', 'Pages.Controller');
+
+class PagesController extends PagesAppController {
 
 /**
  * index method
@@ -19,6 +20,9 @@ class PagesController extends AppController {
  * @return void
  */
 	public function index() {
+		//$this->set('isSetting', false);
+		Configure::write('Pages.isSetting', $this->__isSettingMode());
+
 		$paths = func_get_args();
 		$path = implode('/', $paths);
 
@@ -27,94 +31,37 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 
-		$containers = array();
-		foreach ($page['Container'] as $container) {
-			$type = $container['type'];
-			$containers[$type] = $container;
-		}
+		$containers = $this->__getContainersEachType($page['Container']);
 
+		$this->set('path', $path);
 		$this->set('page', $page);
-		$this->set('containers', $containers);
+		$this->set('containers',$containers);
 	}
 
 /**
- * view method
+ * Check setting mode
  *
- * @throws NotFoundException
- * @param string $id
- * @return void
+ * @return bool
  */
-	public function view($id = null) {
-		if (!$this->Page->exists($id)) {
-			throw new NotFoundException(__('Invalid page'));
-		}
-		$options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
-		$this->set('page', $this->Page->find('first', $options));
+	private function __isSettingMode() {
+		$pos = strpos($this->request->here, Configure::read('Pages.settingModeWord'));
+		return ($pos === 1);
 	}
 
 /**
- * add method
+ * Get containers each type
  *
- * @return void
+ * @param array $containers
+ * @return array
  */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Page->create();
-			if ($this->Page->save($this->request->data)) {
-				$this->Session->setFlash(__('The page has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
-			}
+	private function __getContainersEachType($containers) {
+		$containersEachType = array();
+		foreach ($containers as $container) {
+			$type = $container['type'];
+			$containersEachType[$type] = $container;
 		}
-		$parentPages = $this->Page->ParentPage->find('list');
-		$this->set(compact('parentPages'));
+
+		return $containersEachType;
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->Page->exists($id)) {
-			throw new NotFoundException(__('Invalid page'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Page->save($this->request->data)) {
-				$this->Session->setFlash(__('The page has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
-			$this->request->data = $this->Page->find('first', $options);
-		}
-		$parentPages = $this->Page->ParentPage->find('list');
-		$this->set(compact('parentPages'));
-	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->Page->id = $id;
-		if (!$this->Page->exists()) {
-			throw new NotFoundException(__('Invalid page'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Page->delete()) {
-			$this->Session->setFlash(__('The page has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The page could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages plugin bootstrap
+ * Pages configuration file
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@netcommons.org>
@@ -9,5 +9,6 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-Configure::load('Pages.config');
-Configure::load('Containers.config');
+$config['Pages.settingModeWord'] = 'setting';
+
+return $config;

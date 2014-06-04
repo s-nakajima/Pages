@@ -29,7 +29,7 @@
 
 				<li>
 					<?php if ($User = AuthComponent::user()): ?>
-						<?php echo h($User['handle']) ?>
+						<?php //echo h($User['handle']) ?>
 						<?php echo $this->Html->link(__('Logout'), '/auth/logout') ?>
 					<?php else: ?>
 						<?php echo $this->Html->link(__('Login'), '/auth/login') ?>
@@ -57,8 +57,10 @@
 		</div><!--/.nav-collapse -->
 	</div>
 </div>
-
-<div ng-app="NetCommons">
+<?php
+ echo $this->Html->script("/pages/js/pages.js");
+?>
+<div>
 <?php
 if (Configure::read('Pages.isSetting')) {
 	echo $this->element('plugin_list');

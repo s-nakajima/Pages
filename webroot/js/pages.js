@@ -1,12 +1,12 @@
 var ncPutBoxId = null;
 
-var ncApp = angular.module("NetCommons", []);
-ncApp.controller("PluginController", function($scope) {
+
+NetCommonsApp.controller("PluginController", function($scope) {
 	$scope.plugins = [
 		{id:1, name:"お知らせ"},
 		{id:2, name:"掲示板", disabled:true},
 		{id:3, name:"TODO", disabled:true},
-		{id:4, name:"ブログ", disabled:true},
+		{id:4, name:"ブログ", disabled:true}
 	];
 
 	$scope.snapshot = function(url) {
@@ -28,7 +28,7 @@ ncApp.controller("PluginController", function($scope) {
 	};
 });
 
-ncApp.controller("BoxController", function($scope) {
+NetCommonsApp.controller("BoxController", function($scope) {
 	$scope.showPluginList = function(boxId) {
 		ncPutBoxId = boxId;
 	};

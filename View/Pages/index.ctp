@@ -1,4 +1,5 @@
-<?php 
+<?php echo $this->Html->script("/announcements/js/announcements.js");?>
+<?php
 /**
  * Pages template.
  *

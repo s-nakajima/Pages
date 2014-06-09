@@ -43,6 +43,13 @@ NetCommonsApp.controller("PluginController", function($scope,$filter) {
         $scope.boxId = boxId;
 	};
 
+    $scope.deleteFrame = function (flameId) {
+        /*
+        $scope.frameId = flameId ;
+        var FrameTag = "#frame-id-" + $scope.frameId;
+        $(FrameTag).addClass('hidden'); */
+    }
+
 
 });
 

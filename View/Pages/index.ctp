@@ -1,4 +1,6 @@
 <?php echo $this->Html->script("/announcements/js/announcements.js");?>
+<!-- スペースのコントローラで読み込む -->
+<?php echo $this->Html->script("/pages/js/pages.js"); ?>
 <?php
 /**
  * Pages template.

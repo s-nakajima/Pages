@@ -58,9 +58,7 @@
 		</div><!--/.nav-collapse -->
 	</div>
 </div>
-<?php
- echo $this->Html->script("/pages/js/pages.js");
-?>
+
 <div>
 <?php
 if (Configure::read('Pages.isSetting')) {

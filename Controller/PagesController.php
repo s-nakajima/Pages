@@ -20,7 +20,6 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
-		//$this->set('isSetting', false);
 		Configure::write('Pages.isSetting', $this->__isSettingMode());
 
 		$paths = func_get_args();
@@ -44,8 +43,9 @@ class PagesController extends PagesAppController {
  * @return bool
  */
 	private function __isSettingMode() {
-		$pos = strpos($this->request->here, Configure::read('Pages.settingModeWord'));
-		return ($pos === 1);
+		$pos = strpos($this->request->url, Configure::read('Pages.settingModeWord'));
+
+		return ($pos === 0);
 	}
 
 /**

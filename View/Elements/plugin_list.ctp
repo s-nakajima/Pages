@@ -9,8 +9,6 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<!-- angularは共通で読み込む -->
-<?php echo $this->Html->script("/net_commons/angular/angular.js"); ?>
 <!-- スペースのコントローラで読み込む -->
 <?php echo $this->Html->script("/pages/js/pages.js"); ?>
 

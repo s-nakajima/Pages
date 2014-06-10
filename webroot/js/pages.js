@@ -53,14 +53,6 @@ NetCommonsApp.controller("PluginController", function($scope,$filter) {
 
 });
 
-NetCommonsApp.controller("BoxController", function($scope) {
-	$scope.showPluginList = function(boxId) {
-		ncPutBoxId = boxId;
-        $scope.boxId = boxId;
-	};
-
-});
-
 NetCommonsApp.controller("PagesBlockSetting", function($scope, $http,$filter) {
     $scope.PluginId = 0;
     $scope.frameId = 0;

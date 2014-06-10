@@ -20,47 +20,16 @@ class PagesControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.page',
-		'app.block',
-		'app.content',
-		'app.module',
-		'app.archive',
-		'app.user_group',
-		'app.user_group_link',
-		'app.user',
-		'app.authority',
-		'app.authority_lang',
-		'app.module_link',
-		'app.module_system_link',
-		'app.page_user_link',
-		'app.community_invitation',
-		'app.page_sum_view',
-		'app.passport',
-		'app.upload',
-		'app.upload_link',
-		'app.user_item_link',
-		'app.user_item',
-		'app.user_item_authority_link',
-		'app.user_item_lang',
-		'app.config_lang',
-		'app.config',
-		'app.announcement_edit',
-		'app.announcement',
-		'app.blog_comment',
-		'app.blog_post',
-		'app.blog_term_link',
-		'app.blog_term',
-		'app.blog',
-		'app.revision',
-		'app.blog_style',
-		'app.whatsnew_select_room',
-		'app.whatsnew_select_user',
-		'app.whatsnew_style',
-		'app.page_column',
-		'app.page_layout',
-		'app.page_meta',
-		'app.page_style',
-		'app.page_theme'
+		'app.SiteSetting',
+		'app.SiteSettingValue',
+		'plugin.PublicSpace.Room',
+		'plugin.PublicSpace.Page',
+		'plugin.PublicSpace.Box',
+		'plugin.PublicSpace.BoxesPage',
+		'plugin.PublicSpace.Container',
+		'plugin.PublicSpace.ContainersPage',
+		'plugin.PublicSpace.Language',
+		'plugin.PublicSpace.LanguagesPage',
 	);
 
 /**
@@ -69,38 +38,36 @@ class PagesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndex() {
+		$this->testAction('/', array('return' => 'view'));
+		$this->assertTextContains('<header id="container-header">', $this->view);
 	}
 
 /**
- * testView method
+ * testIndexNotFound method
  *
  * @return void
  */
-	public function testView() {
+	public function testIndexNotFound() {
+		$this->setExpectedException('NotFoundException');
+		$this->testAction('/pages/abc');
 	}
 
 /**
- * testAdd method
+ * testIndexSetting method
  *
  * @return void
  */
-	public function testAdd() {
-	}
+	public function testIndexSetting() {
+		$url = '/' . Configure::read('Pages.settingModeWord') . '/';
+		$assertText = '<div class="modal fade" '
+						. 'id="pluginList" '
+						. 'tabindex="-1" '
+						. 'role="dialog" '
+						. 'aria-labelledby="pluginListLabel" '
+						. 'aria-hidden="true">';
 
-/**
- * testEdit method
- *
- * @return void
- */
-	public function testEdit() {
-	}
-
-/**
- * testDelete method
- *
- * @return void
- */
-	public function testDelete() {
+		$this->testAction($url, array('return' => 'view'));
+		$this->assertTextContains($assertText, $this->view);
 	}
 
 }

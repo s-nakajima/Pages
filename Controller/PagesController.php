@@ -34,7 +34,7 @@ class PagesController extends PagesAppController {
 
 		$this->set('path', $path);
 		$this->set('page', $page);
-		$this->set('containers',$containers);
+		$this->set('containers', $containers);
 	}
 
 /**
@@ -51,7 +51,7 @@ class PagesController extends PagesAppController {
 /**
  * Get containers each type
  *
- * @param array $containers
+ * @param array $containers Container record array
  * @return array
  */
 	private function __getContainersEachType($containers) {

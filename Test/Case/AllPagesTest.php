@@ -1,6 +1,11 @@
 <?php
 class AllPagesTest extends CakeTestSuite {
 
+/**
+ * suite
+ *
+ * @return   void
+ */
 	public static function suite() {
 		$plugin = preg_replace('/^All([\w]+)Test$/', '$1', __CLASS__);
 		$suite = new CakeTestSuite(sprintf('All %s Plugin tests', $plugin));

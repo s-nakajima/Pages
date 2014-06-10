@@ -1,5 +1,12 @@
 var ncPutBoxId = null;
 
+NetCommonsApp.controller("PagesController", function($scope,$filter) {
+    //フレームの削除
+    $scope.deleteFrame = function (flameId) {
+        var FrameTag = "#frame-wrap-" + flameId;
+        $(FrameTag).addClass('hidden');
+    }
+});
 
 NetCommonsApp.controller("PluginController", function($scope,$filter) {
 	$scope.plugins = [

@@ -10,7 +10,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-
+<div ng-controller="PagesController">
 <!-- Fixed navbar 別のプラグインとして実装することになる予定 -->
 <!-- navbar -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -112,4 +112,5 @@ if (Configure::read('Pages.isSetting')) {
 							array('return')); ?>
 	</footer>
 <?php endif; ?>
+</div>
 </div>

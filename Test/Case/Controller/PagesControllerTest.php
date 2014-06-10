@@ -2,7 +2,7 @@
 /**
  * PagesController Test Case
  *
- * @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
+ * @author Kohei Teraguchi <kteraguchi@netcommons.org>
  * @link     http://www.netcommons.org NetCommons Project
  * @license  http://www.netcommons.org/license.txt NetCommons License
  */
@@ -31,6 +31,16 @@ class PagesControllerTest extends ControllerTestCase {
 		'plugin.PublicSpace.Language',
 		'plugin.PublicSpace.LanguagesPage',
 	);
+
+/**
+ * setUp
+ *
+ * @return   void
+ */
+	public function setUp() {
+		parent::setUp();
+		Configure::write('NetCommons.installed', true);
+	}
 
 /**
  * testIndex method

@@ -41,7 +41,7 @@
 								<div class="text-center">
 									<h3>{{plugin.name}}</h3>
 									<button type="button" class="btn btn-primary" ng-click="selectPlugin(plugin.id)" ng-disabled="{{plugin.disabled}}">
-										<?php echo __('Put on!')?>
+										<?php echo __('Add')?>
 									</button>
 								</div>
 							</div>

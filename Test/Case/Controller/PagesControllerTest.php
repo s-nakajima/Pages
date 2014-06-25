@@ -15,13 +15,6 @@ App::uses('PagesController', 'Controller');
 class PagesControllerTest extends ControllerTestCase {
 
 /**
- * AutoMock
- *
- * @var bool
- */
-	public $autoMock = false;
-
-/**
  * Fixtures
  *
  * @var array

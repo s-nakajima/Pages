@@ -15,6 +15,13 @@ App::uses('PagesController', 'Controller');
 class PagesControllerTest extends ControllerTestCase {
 
 /**
+ * AutoMock
+ *
+ * @var bool
+ */
+	public $autoMock = false;
+
+/**
  * Fixtures
  *
  * @var array
@@ -22,14 +29,14 @@ class PagesControllerTest extends ControllerTestCase {
 	public $fixtures = array(
 		'app.SiteSetting',
 		'app.SiteSettingValue',
-		'plugin.PublicSpace.Room',
-		'plugin.PublicSpace.Page',
-		'plugin.PublicSpace.Box',
-		'plugin.PublicSpace.BoxesPage',
-		'plugin.PublicSpace.Container',
-		'plugin.PublicSpace.ContainersPage',
-		'plugin.PublicSpace.Language',
-		'plugin.PublicSpace.LanguagesPage',
+		'plugin.Pages.Room',
+		'plugin.Pages.Page',
+		'plugin.Pages.Box',
+		'plugin.Pages.BoxesPage',
+		'plugin.Pages.Container',
+		'plugin.Pages.ContainersPage',
+		'plugin.Pages.Language',
+		'plugin.Pages.LanguagesPage',
 	);
 
 /**

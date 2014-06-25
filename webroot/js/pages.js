@@ -63,24 +63,4 @@ NetCommonsApp.controller("PluginController", function($scope,$filter) {
 NetCommonsApp.controller("PagesBlockSetting", function($scope, $http,$filter) {
     $scope.PluginId = 0;
     $scope.frameId = 0;
-
-    $scope.PagesBlockSettingShow = function (pluginId , frameId, getUrl){
-        $scope.frameId = frameId;
-        $scope.PluginId = pluginId;
-
-        var modalTag = '#frame-setting-show_'
-            + $scope.frameId;
-
-        //get
-        $http({method: 'GET', url: getUrl + '/' + Math.random()})
-            .success(function(data, status, headers, config) {
-                 $(modalTag + ' .modal-body').html(data);
-                //モーダルを開く
-                $(modalTag).modal("show");
-            })
-            .error(function(data, status, headers, config) {
-                alert('ERROR!');
-            });
-    }
-
 });

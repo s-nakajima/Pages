@@ -14,6 +14,13 @@ App::uses('PagesAppController', 'Pages.Controller');
 class PagesController extends PagesAppController {
 
 /**
+ * uses
+ *
+ * @var array
+ */
+	public $uses = array('Pages.Page');
+
+/**
  * index method
  *
  * @throws NotFoundException
@@ -25,6 +32,7 @@ class PagesController extends PagesAppController {
 		$paths = func_get_args();
 		$path = implode('/', $paths);
 
+		$this->Page->hasAndBelongsToMany['Language']['conditions'] = array('Language.code' => 'jpn');
 		$page = $this->Page->findByPermalink($path);
 		if (empty($page)) {
 			throw new NotFoundException();
@@ -62,6 +70,29 @@ class PagesController extends PagesAppController {
 		}
 
 		return $containersEachType;
+	}
+
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
+			$this->Page->create();
+			$page = $this->Page->save($this->request->data);
+			if ($page) {
+				$this->Session->setFlash(__('The page has been saved.'));
+				return $this->redirect('/' . Configure::read('Pages.settingModeWord') . '/' . $page['Page']['permalink']);
+			} else {
+				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
+				// TODO: Error handling
+				return $this->redirect('/' . Configure::read('Pages.settingModeWord') . '/' . $page['Page']['permalink']);
+			}
+		}
+
+		//$parentPages = $this->Page->ParentPage->find('list');
+		//$this->set(compact('parentPages'));
 	}
 
 }

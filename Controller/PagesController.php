@@ -32,17 +32,16 @@ class PagesController extends PagesAppController {
 		$paths = func_get_args();
 		$path = implode('/', $paths);
 
-		$this->Page->hasAndBelongsToMany['Language']['conditions'] = array('Language.code' => 'jpn');
-		$page = $this->Page->findByPermalink($path);
+		$page = $this->Page->getPageWithFrame($path);
 		if (empty($page)) {
 			throw new NotFoundException();
 		}
 
-		$containers = $this->__getContainersEachType($page['Container']);
+		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
+		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
 
 		$this->set('path', $path);
 		$this->set('page', $page);
-		$this->set('containers', $containers);
 	}
 
 /**
@@ -54,22 +53,6 @@ class PagesController extends PagesAppController {
 		$pos = strpos($this->request->url, Configure::read('Pages.settingModeWord'));
 
 		return ($pos === 0);
-	}
-
-/**
- * Get containers each type
- *
- * @param array $containers Container record array
- * @return array
- */
-	private function __getContainersEachType($containers) {
-		$containersEachType = array();
-		foreach ($containers as $container) {
-			$type = $container['type'];
-			$containersEachType[$type] = $container;
-		}
-
-		return $containersEachType;
 	}
 
 /**

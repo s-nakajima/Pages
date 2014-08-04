@@ -29,7 +29,10 @@ class Page extends PagesAppModel {
  *
  * @var array
  */
-	public $actsAs = array('Tree');
+	public $actsAs = array(
+		'Tree',
+		'Containable'
+	);
 
 /**
  * Validation rules
@@ -162,6 +165,36 @@ class Page extends PagesAppModel {
 	);
 
 /**
+ * Get page with frame
+ *
+ * @param string $permalink Permalink
+ * @return array
+ */
+	public function getPageWithFrame($permalink) {
+		$query = array(
+			'conditions' => array(
+				'Page.permalink' => $permalink
+			),
+			'contain' => array(
+				'Box' => $this->Box->getContainableQueryNotAssociatedPage(),
+				'Container' => array(
+					'conditions' => array(
+						// It must check settingmode
+						'ContainersPage.is_visible' => true
+					)
+				),
+				'Language' => array(
+					'conditions' => array(
+						'Language.code' => 'jpn'
+					)
+				)
+			)
+		);
+
+		return $this->find('first', $query);
+	}
+
+/**
  * Get page ID of top.
  *
  * @return string
@@ -253,6 +286,9 @@ class Page extends PagesAppModel {
 		$this->hasAndBelongsToMany['Container']['conditions'] = array(
 			'Container.type !=' => Configure::read('Containers.type.main')
 		);
+		$this->hasAndBelongsToMany['Box']['conditions'] = array(
+			'Box.type !=' => Box::TYPE_WITH_PAGE
+		);
 		$params = array(
 			'conditions' => array(
 				'Page.id' => $pageId
@@ -260,6 +296,7 @@ class Page extends PagesAppModel {
 		);
 		$pages = $this->find('first', $params);
 		$this->hasAndBelongsToMany['Container']['conditions'] = '';
+		$this->hasAndBelongsToMany['Box']['conditions'] = '';
 		if (empty($pages['Container'])) {
 			return;
 		}
@@ -270,6 +307,16 @@ class Page extends PagesAppModel {
 				'ContainersPage' => array(
 					'container_id' => $container['ContainersPage']['container_id'],
 					'is_visible' => $container['ContainersPage']['is_visible']
+				)
+			);
+		}
+
+		foreach ($pages['Box'] as $box) {
+			$this->data['Box'][] = array(
+				'id' => $box['BoxesPage']['box_id'],
+				'BoxesPage' => array(
+					'box_id' => $box['BoxesPage']['box_id'],
+					'is_visible' => $box['BoxesPage']['is_visible']
 				)
 			);
 		}

@@ -52,7 +52,7 @@ class PluginFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'folder' => 'plugin_room_manager',
+			'folder' => 'rooms',
 			'type' => '1'
 		),
 	);

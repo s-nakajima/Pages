@@ -9,7 +9,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-require APP . 'Plugin' . DS . 'ThemeSettings' . DS . 'Config' . DS . 'routes.php';
+//require APP . 'Plugin' . DS . 'ThemeSettings' . DS . 'Config' . DS . 'routes.php';
 
 Router::connect('/' . Configure::read('Pages.settingModeWord') . '/*',
 	array(

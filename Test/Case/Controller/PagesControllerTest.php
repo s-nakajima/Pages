@@ -10,6 +10,7 @@
  */
 
 App::uses('PagesController', 'Controller');
+App::uses('PluginsRoom', 'Rooms.Model');
 
 /**
  * Summary for PagesController Test Case

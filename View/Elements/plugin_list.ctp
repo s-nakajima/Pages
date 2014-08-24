@@ -40,9 +40,9 @@
 
 						<div class="col-sm-4 col-md-3" ng-repeat="plugin in plugins">
 							<div class="thumbnail">
-								<img  class="img-thumbnail" alt="{{plugin.LanguagesPlugin.0.name}}" ng-src="{{snapshot(plugin.Plugin.snapshot)}}">
+								<img  class="img-thumbnail" alt="{{plugin.LanguagesPlugin.name}}" ng-src="{{snapshot(plugin.Plugin.snapshot)}}">
 								<div class="text-center">
-									<h3>{{plugin.LanguagesPlugin.0.name}}</h3>
+									<h3>{{plugin.LanguagesPlugin.name}}</h3>
 									<button type="button" class="btn btn-primary" ng-click="selectPlugin(plugin.Plugin.id)">
 										<?php echo __('Add')?>
 									</button>

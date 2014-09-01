@@ -109,11 +109,11 @@ class PageTest extends CakeTestCase {
 	}
 
 /**
- * testAdd method
+ * test savePage method
  *
  * @return void
  */
-	public function testAdd() {
+	public function testSavePage() {
 		$data = array(
 			'Page' => array(
 				'parent_id' => null,
@@ -130,7 +130,7 @@ class PageTest extends CakeTestCase {
 		);
 
 		$this->Page->create();
-		$this->Page->save($data);
+		$this->Page->savePage($data);
 		$actualPage = $this->Page->findById($this->Page->getLastInsertID());
 
 		$this->assertEquals('test01', $actualPage['Page']['permalink']);
@@ -173,7 +173,7 @@ class PageTest extends CakeTestCase {
 		);
 
 		$this->Page->create();
-		$this->assertFalse($this->Page->save($data));
+		$this->assertFalse($this->Page->savePage($data));
 	}
 
 /**
@@ -198,8 +198,7 @@ class PageTest extends CakeTestCase {
 		);
 
 		$this->Page->create();
-		$actualPage = $this->Page->save($data);
-
+		$actualPage = $this->Page->savePage($data);
 		$this->assertEquals('test/test03', $actualPage['Page']['permalink']);
 	}
 }

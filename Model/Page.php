@@ -227,7 +227,7 @@ class Page extends PagesAppModel {
 		$this->BoxesPage->setDataSource('master');
 
 		$dataSource = $this->getDataSource();
-		$transactionStarted = $dataSource->begin();
+		$dataSource->begin();
 
 		try {
 			$exists = $this->exists();

@@ -10,4 +10,3 @@
  */
 
 Configure::load('Pages.config');
-Configure::load('Containers.config');

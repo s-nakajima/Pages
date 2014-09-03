@@ -310,7 +310,7 @@ class Page extends PagesAppModel {
 		$this->Container->create();
 		$data = array(
 			'Container' => array(
-				'type' => Configure::read('Containers.type.main')
+				'type' => Container::TYPE_MAIN
 			)
 		);
 
@@ -346,7 +346,7 @@ class Page extends PagesAppModel {
 		$query = array(
 			'conditions' => array(
 				'ContainersPage.page_id' => $this->__getReferencePageId(),
-				'Container.type !=' => Configure::read('Containers.type.main')
+				'Container.type !=' => Container::TYPE_MAIN
 			)
 		);
 		$containersPages = $this->ContainersPage->find('all', $query);

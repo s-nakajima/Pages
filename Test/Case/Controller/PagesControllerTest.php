@@ -48,6 +48,7 @@ class PagesControllerTest extends ControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 		Configure::write('NetCommons.installed', true);
+		Page::unsetIsSetting();
 	}
 
 /**
@@ -87,7 +88,7 @@ class PagesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndexSetting() {
-		$url = '/' . Configure::read('Pages.settingModeWord') . '/';
+		$url = '/' . Page::SETTING_MODE_WORD . '/';
 		$needle = '<div class="modal fade" ' .
 			'id="pluginList" ' .
 			'tabindex="-1" ' .

@@ -44,8 +44,8 @@
 					</li>
 
 					<li>
-						<?php if (!Configure::read('Pages.isSetting')): ?>
-							<?php echo $this->Html->link(__('Setting mode on'), '/' . Configure::read('Pages.settingModeWord') . '/' . $path) ?>
+						<?php if (!Page::isSetting()): ?>
+							<?php echo $this->Html->link(__('Setting mode on'), '/' . Page::SETTING_MODE_WORD . '/' . $path) ?>
 						<?php else: ?>
 							<?php echo $this->Html->link(__('Setting mode off'), '/' . $path) ?>
 						<?php endif; ?>
@@ -66,7 +66,7 @@
 
 <div>
 <?php
-if (Configure::read('Pages.isSetting')) {
+if (Page::isSetting()) {
 	echo $this->element('Pages.plugin_list');
 	echo $this->element('Pages.setting_menu');
 }

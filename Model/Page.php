@@ -24,6 +24,18 @@ App::uses('PagesAppModel', 'Pages.Model');
 class Page extends PagesAppModel {
 
 /**
+ * constant value
+ */
+	const SETTING_MODE_WORD = 'setting';
+
+/**
+ * is setting mode true
+ *
+ * @var boolean
+ */
+	private static $__isSetting = null;
+
+/**
  * Default behaviors
  *
  * @var array
@@ -162,6 +174,33 @@ class Page extends PagesAppModel {
 			'finderQuery' => '',
 		)
 	);
+
+/**
+ * Check setting mode
+ *
+ * @return bool
+ */
+	public static function isSetting() {
+		if (isset(self::$__isSetting)) {
+			return self::$__isSetting;
+		}
+
+		$offset = strlen(Router::url('/'));
+		$pos = strpos(Router::url(), self::SETTING_MODE_WORD, $offset);
+		$pos = $pos - $offset;
+		self::$__isSetting = ($pos === 0);
+
+		return self::$__isSetting;
+	}
+
+/**
+ * Unset setting mode value. Use for test.
+ *
+ * @return void
+ */
+	public static function unsetIsSetting() {
+		self::$__isSetting = null;
+	}
 
 /**
  * Get page with frame

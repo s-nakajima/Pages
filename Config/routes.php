@@ -8,9 +8,12 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-//require APP . 'Plugin' . DS . 'ThemeSettings' . DS . 'Config' . DS . 'routes.php';
+App::uses('Page', 'Pages.Model');
 
-Router::connect('/' . Configure::read('Pages.settingModeWord') . '/*',
+Router::connect('/' . Page::SETTING_MODE_WORD . '/:plugin/:controller/:action/*',
+	array());
+
+Router::connect('/' . Page::SETTING_MODE_WORD . '/*',
 	array(
 		'plugin' => 'pages',
 		'controller' => 'pages',
@@ -18,8 +21,7 @@ Router::connect('/' . Configure::read('Pages.settingModeWord') . '/*',
 
 Router::connect('/:plugin/:controller/:action/*',
 	array());
-Router::connect('/:plugin/:action/*',
-	array());
+
 
 Router::connect('/*',
 	array(

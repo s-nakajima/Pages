@@ -23,9 +23,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 		'page_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'language_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'name' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'created_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
@@ -44,9 +44,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 1,
 			'language_id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 1,
+			'created_user' => 1,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 1,
+			'modified_user' => 1,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -54,9 +54,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 1,
 			'language_id' => 2,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 2,
+			'created_user' => 2,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 2,
+			'modified_user' => 2,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -64,9 +64,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 2,
 			'language_id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 3,
+			'created_user' => 3,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 3,
+			'modified_user' => 3,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -74,9 +74,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 2,
 			'language_id' => 2,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 4,
+			'created_user' => 4,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 4,
+			'modified_user' => 4,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -84,9 +84,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 5,
 			'language_id' => 5,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 5,
+			'created_user' => 5,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 5,
+			'modified_user' => 5,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -94,9 +94,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 6,
 			'language_id' => 6,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 6,
+			'created_user' => 6,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 6,
+			'modified_user' => 6,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -104,9 +104,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 7,
 			'language_id' => 7,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 7,
+			'created_user' => 7,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 7,
+			'modified_user' => 7,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -114,9 +114,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 8,
 			'language_id' => 8,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 8,
+			'created_user' => 8,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 8,
+			'modified_user' => 8,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -124,9 +124,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 9,
 			'language_id' => 9,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 9,
+			'created_user' => 9,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 9,
+			'modified_user' => 9,
 			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
@@ -134,9 +134,9 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'page_id' => 10,
 			'language_id' => 10,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user_id' => 10,
+			'created_user' => 10,
 			'created' => '2014-08-04 04:47:08',
-			'modified_user_id' => 10,
+			'modified_user' => 10,
 			'modified' => '2014-08-04 04:47:08'
 		),
 	);

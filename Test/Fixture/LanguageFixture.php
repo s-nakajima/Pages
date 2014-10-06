@@ -23,9 +23,9 @@ class LanguageFixture extends CakeTestFixture {
 		'code' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 3, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'is_active' => array('type' => 'boolean', 'null' => true, 'default' => null),
-		'created_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
@@ -44,9 +44,9 @@ class LanguageFixture extends CakeTestFixture {
 			'code' => 'eng',
 			'weight' => '1',
 			'is_active' => 1,
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-07-03 05:00:39',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-07-03 05:00:39'
 		),
 		array(
@@ -54,9 +54,9 @@ class LanguageFixture extends CakeTestFixture {
 			'code' => 'jpn',
 			'weight' => '2',
 			'is_active' => 1,
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-07-03 05:00:39',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-07-03 05:00:39'
 		),
 	);

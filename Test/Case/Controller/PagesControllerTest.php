@@ -22,7 +22,6 @@ class PagesControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'app.SiteSetting',
-		'app.SiteSettingValue',
 		'plugin.pages.room',
 		'plugin.pages.page',
 		'plugin.pages.container',

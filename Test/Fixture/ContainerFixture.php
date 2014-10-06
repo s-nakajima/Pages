@@ -21,9 +21,9 @@ class ContainerFixture extends CakeTestFixture {
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'type' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'created_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
@@ -40,49 +40,49 @@ class ContainerFixture extends CakeTestFixture {
 		array(
 			'id' => '1',
 			'type' => '1',
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-05-12 05:04:42',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-05-12 05:04:42'
 		),
 		array(
 			'id' => '2',
 			'type' => '2',
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-05-12 05:04:42',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-05-12 05:04:42'
 		),
 		array(
 			'id' => '3',
 			'type' => '3',
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-05-12 05:04:42',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-05-12 05:04:42'
 		),
 		array(
 			'id' => '4',
 			'type' => '4',
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-05-12 05:04:42',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-05-12 05:04:42'
 		),
 		array(
 			'id' => '5',
 			'type' => '5',
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-05-12 05:04:42',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-05-12 05:04:42'
 		),
 		array(
 			'id' => '6',
 			'type' => '3',
-			'created_user_id' => null,
+			'created_user' => null,
 			'created' => '2014-05-12 05:04:42',
-			'modified_user_id' => null,
+			'modified_user' => null,
 			'modified' => '2014-05-12 05:04:42'
 		),
 	);

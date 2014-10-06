@@ -153,7 +153,7 @@ class Page extends PagesAppModel {
 			'foreignKey' => 'page_id',
 			'associationForeignKey' => 'container_id',
 			'unique' => 'keepExisting',
-			'conditions' => array('ContainersPage.is_visible' => true),
+			'conditions' => array('ContainersPage.is_published' => true),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
@@ -218,7 +218,7 @@ class Page extends PagesAppModel {
 				'Container' => array(
 					'conditions' => array(
 						// It must check settingmode
-						'ContainersPage.is_visible' => true
+						'ContainersPage.is_published' => true
 					)
 				),
 				'Language' => array(
@@ -392,7 +392,7 @@ class Page extends PagesAppModel {
 			'ContainersPage' => array(
 				'page_id' => $this->getLastInsertID(),
 				'container_id' => $this->Container->getLastInsertID(),
-				'is_visible' => true
+				'is_published' => true
 			)
 		);
 
@@ -400,7 +400,7 @@ class Page extends PagesAppModel {
 			$data = array(
 				'page_id' => $this->getLastInsertID(),
 				'container_id' => $containersPage['ContainersPage']['container_id'],
-				'is_visible' => $containersPage['ContainersPage']['is_visible']
+				'is_published' => $containersPage['ContainersPage']['is_published']
 			);
 
 			$this->ContainersPage->create();
@@ -429,7 +429,7 @@ class Page extends PagesAppModel {
 			'BoxesPage' => array(
 				'page_id' => $this->getLastInsertID(),
 				'box_id' => $this->Box->getLastInsertID(),
-				'is_visible' => true
+				'is_published' => true
 			)
 		);
 
@@ -437,7 +437,7 @@ class Page extends PagesAppModel {
 			$data = array(
 				'page_id' => $this->getLastInsertID(),
 				'box_id' => $boxesPage['BoxesPage']['box_id'],
-				'is_visible' => $boxesPage['BoxesPage']['is_visible']
+				'is_published' => $boxesPage['BoxesPage']['is_published']
 			);
 
 			$this->BoxesPage->create();

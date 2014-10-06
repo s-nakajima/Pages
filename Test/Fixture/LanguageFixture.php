@@ -41,7 +41,7 @@ class LanguageFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'code' => 'eng',
+			'code' => 'en',
 			'weight' => '1',
 			'is_active' => 1,
 			'created_user' => null,
@@ -51,7 +51,7 @@ class LanguageFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => '2',
-			'code' => 'jpn',
+			'code' => 'ja',
 			'weight' => '2',
 			'is_active' => 1,
 			'created_user' => null,

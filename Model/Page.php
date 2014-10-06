@@ -223,7 +223,7 @@ class Page extends PagesAppModel {
 				),
 				'Language' => array(
 					'conditions' => array(
-						'Language.code' => 'jpn'
+						'Language.code' => 'ja'
 					)
 				)
 			)

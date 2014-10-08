@@ -27,7 +27,7 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="/"><?php echo __("ホーム"); ?></a></li>
+				<li><a href="/"><?php echo __("Home"); ?></a></li>
 
 				<?php if ($User = AuthComponent::user()): ?>
 					<li>
@@ -40,7 +40,7 @@
 						echo 'class="active"';
 						}
 					?>>
-						<?php echo $this->Html->link(__('テーマ設定'), '/theme_settings/site/') ?>
+						<?php echo $this->Html->link(__('Theme setting'), '/theme_settings/site/') ?>
 					</li>
 
 					<li>
@@ -52,7 +52,7 @@
 					</li>
 
 					<li>
-						<?php echo $this->Html->link(__('Control Panel'), '/control_panel/index') ?>
+						<?php //echo $this->Html->link(__('Control Panel'), '/control_panel/index') ?>
 					</li>
 				<?php else: ?>
 					<li>

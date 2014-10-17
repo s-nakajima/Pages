@@ -34,7 +34,7 @@ class Page extends PagesAppModel {
 /**
  * is setting mode true
  *
- * @var boolean
+ * @var bool
  */
 	private static $__isSetting = null;
 
@@ -381,7 +381,7 @@ class Page extends PagesAppModel {
 /**
  * Save containersPage for page
  *
- * @return boolean True on success
+ * @return bool True on success
  */
 	private function __saveContainersPage() {
 		$query = array(
@@ -418,7 +418,7 @@ class Page extends PagesAppModel {
 /**
  * Save boxesPage for page
  *
- * @return boolean True on success
+ * @return bool True on success
  */
 	private function __saveBoxesPage() {
 		$query = array(

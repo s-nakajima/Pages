@@ -1,4 +1,20 @@
 <?php
+/**
+ * Pages All Test Suite
+ *
+ * @copyright Copyright 2014, NetCommons Project
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ */
+
+/**
+ * Pages All Test Suite
+ *
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @package NetCommons\Pages\Test\Case
+ * @codeCoverageIgnore
+ */
 class AllPagesTest extends CakeTestSuite {
 
 /**

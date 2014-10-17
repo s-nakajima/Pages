@@ -9,6 +9,7 @@
  */
 
 App::uses('PagesController', 'Controller');
+App::uses('Page', 'Pages.Model');
 
 /**
  * Summary for PagesController Test Case
@@ -31,10 +32,7 @@ class PagesControllerTest extends ControllerTestCase {
 		'plugin.pages.box',
 		'plugin.pages.boxes_page',
 		'plugin.pages.frame',
-		'plugin.pages.frames_language',
-		//'plugin.boxes.plugin',
 		'plugin.pages.plugin',
-		'plugin.pages.languages_plugin',
 		'plugin.pages.plugins_room',
 		'plugin.pages.block',
 	);

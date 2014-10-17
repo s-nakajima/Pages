@@ -10,6 +10,12 @@
 
 App::uses('PagesAppController', 'Pages.Controller');
 
+/**
+ * Pages Controller
+ *
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @package NetCommons\Pages\Controller
+ */
 class PagesController extends PagesAppController {
 
 /**

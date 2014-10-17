@@ -30,8 +30,6 @@ class PageTest extends CakeTestCase {
 		'plugin.pages.box',
 		'plugin.pages.boxes_page',
 		'plugin.pages.frame',
-		'plugin.pages.frames_language',
-		//'plugin.boxes.plugin',
 		'plugin.pages.plugin',
 	);
 
@@ -66,45 +64,41 @@ class PageTest extends CakeTestCase {
 
 		$this->assertCount(4, $page);
 
-		$this->assertArrayHasKey('Page', $page);
-		$this->assertInternalType('array', $page['Page']);
-		$this->assertGreaterThanOrEqual(1, count($page['Page']));
+		$this->assertArrayHasKey('Page', $page, 'Page');
+		$this->assertInternalType('array', $page['Page'], 'Page');
+		$this->assertGreaterThanOrEqual(1, count($page['Page']), 'Page');
 
-		$this->assertArrayHasKey('Container', $page);
-		$this->assertInternalType('array', $page['Container']);
+		$this->assertArrayHasKey('Container', $page, 'Container');
+		$this->assertInternalType('array', $page['Container'], 'Container');
 		$this->assertGreaterThanOrEqual(1, count($page['Container']));
 
-		$this->assertArrayHasKey('ContainersPage', $page['Container'][0]);
-		$this->assertInternalType('array', $page['Container'][0]['ContainersPage']);
-		$this->assertGreaterThanOrEqual(1, count($page['Container'][0]['ContainersPage']));
+		$this->assertArrayHasKey('ContainersPage', $page['Container'][0], 'ContainersPage');
+		$this->assertInternalType('array', $page['Container'][0]['ContainersPage'], 'ContainersPage');
+		$this->assertGreaterThanOrEqual(1, count($page['Container'][0]['ContainersPage']), 'ContainersPage');
 
-		$this->assertArrayHasKey('Box', $page);
-		$this->assertInternalType('array', $page['Box']);
-		$this->assertGreaterThanOrEqual(1, count($page['Box']));
+		$this->assertArrayHasKey('Box', $page, 'Box');
+		$this->assertInternalType('array', $page['Box'], 'Box');
+		$this->assertGreaterThanOrEqual(1, count($page['Box']), 'Box');
 
-		$this->assertArrayHasKey('Frame', $page['Box'][0]);
-		$this->assertInternalType('array', $page['Box'][0]['Frame']);
-		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame']));
+		$this->assertArrayHasKey('Frame', $page['Box'][0], 'Frame');
+		$this->assertInternalType('array', $page['Box'][0]['Frame'], 'Frame');
+		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame']), 'Frame');
 
-		$this->assertArrayHasKey('Plugin', $page['Box'][0]['Frame'][0]);
-		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Plugin']);
+		$this->assertArrayHasKey('Plugin', $page['Box'][0]['Frame'][0], 'Plugin');
+		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Plugin'], 'Plugin');
 		//$this->assertEqual(0, count($page['Box'][0]['Frame'][0]['Plugin']));
 
-		$this->assertArrayHasKey('Language', $page['Box'][0]['Frame'][0]);
-		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Language']);
-		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame'][0]['Language']));
+		$this->assertArrayHasKey('Language', $page['Box'][0]['Frame'][0], 'Frame.Language');
+		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Language'], 'Frame.Language');
+		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame'][0]['Language']), 'Frame.Language');
 
-		$this->assertArrayHasKey('FramesLanguage', $page['Box'][0]['Frame'][0]['Language'][0]);
-		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Language'][0]['FramesLanguage']);
-		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame'][0]['Language'][0]['FramesLanguage']));
+		$this->assertArrayHasKey('Language', $page, 'page.Language');
+		$this->assertInternalType('array', $page['Language'], 'page.Language');
+		$this->assertGreaterThanOrEqual(1, count($page['Language']), 'page.Language');
 
-		$this->assertArrayHasKey('Language', $page);
-		$this->assertInternalType('array', $page['Language']);
-		$this->assertGreaterThanOrEqual(1, count($page['Language']));
-
-		$this->assertArrayHasKey('LanguagesPage', $page['Language'][0]);
-		$this->assertInternalType('array', $page['Language'][0]['LanguagesPage']);
-		$this->assertGreaterThanOrEqual(1, count($page['Language'][0]['LanguagesPage']));
+		$this->assertArrayHasKey('LanguagesPage', $page['Language'][0], 'LanguagesPage');
+		$this->assertInternalType('array', $page['Language'][0]['LanguagesPage'], 'LanguagesPage');
+		$this->assertGreaterThanOrEqual(1, count($page['Language'][0]['LanguagesPage']), 'LanguagesPage');
 	}
 
 /**

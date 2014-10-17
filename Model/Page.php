@@ -19,7 +19,10 @@
 App::uses('PagesAppModel', 'Pages.Model');
 
 /**
- * Summary for Page Model
+ * Page Model
+ *
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @package NetCommons\Pages\Model
  */
 class Page extends PagesAppModel {
 

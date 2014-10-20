@@ -14,16 +14,16 @@
 
 <div id="settingMenu"  class="panel-body btn-group-vertical" title="Setting menu">
 	<button type="button" class="btn btn-default" ng-click="changePluginSetting()" ng-disabled="true">
-		<?php echo __('Plugin')?>
+		<?php echo __d('pages', 'Plugin')?>
 	</button>
 	<button type="button" class="btn btn-default" ng-click="changeLayoutSetting()" ng-disabled="true">
-		<?php echo __('Layout')?>
+		<?php echo __d('pages', 'Layout')?>
 	</button>
 	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#pageSetting">
-		<?php echo __('Page')?>
+		<?php echo __d('pages', 'Page')?>
 	</button>
 	<button type="button" class="btn btn-default" ng-disabled="true">
-		<?php echo $this->Html->link(__('Setting mode off'), $path) ?>
+		<?php echo $this->Html->link(__d('pages', 'Setting mode off'), $path) ?>
 	</button>
 </div>
 
@@ -32,7 +32,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<?php echo __('Page Setting'); ?>
+				<?php echo __d('pages', 'Page Setting'); ?>
 			</div>
 
 			<?php
@@ -67,7 +67,7 @@
 							echo $this->Form->input(
 								'Language.0.LanguagesPage.name',
 								array(
-									'label' => __('Page name'),
+									'label' => __d('pages', 'Page name'),
 									'class' => 'form-control'
 								));
 						?>
@@ -77,7 +77,7 @@
 							echo $this->Form->input(
 								'Page.slug',
 								array(
-									'label' => __('Slug'),
+									'label' => __d('pages', 'Slug'),
 									'class' => 'form-control'
 								));
 						?>
@@ -85,9 +85,9 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __('Close') ?></button>
-					<button type="submit" class="btn btn-primary"><?php echo __('Add') ?></button>
-					<button type="submit" class="btn btn-primary"><?php echo __('Add and close') ?></button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __d('net_commons', 'Close') ?></button>
+					<button type="submit" class="btn btn-primary"><?php echo __d('pages', 'Add') ?></button>
+					<button type="submit" class="btn btn-primary"><?php echo __d('pages', 'Add and close') ?></button>
 					</div>
 			<?php echo $this->Form->end(); ?>
 		</div>

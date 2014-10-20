@@ -13,7 +13,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<?php echo __('Plugin list'); ?>
+				<?php echo __d('pages', 'Plugin list'); ?>
 			</div>
 
 			<div class="modal-body"
@@ -43,7 +43,7 @@
 								<div class="text-center">
 									<h3>{{plugin.Plugin.name}}</h3>
 									<button type="button" class="btn btn-primary" ng-click="selectPlugin(plugin.Plugin.key)">
-										<?php echo __('Add')?>
+										<?php echo __d('pages', 'Add')?>
 									</button>
 								</div>
 							</div>

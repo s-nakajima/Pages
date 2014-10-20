@@ -27,12 +27,12 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="/"><?php echo __("Home"); ?></a></li>
+				<li><a href="/"><?php echo __d('net_commons', 'Home'); ?></a></li>
 
 				<?php if ($User = AuthComponent::user()): ?>
 					<li>
 						<?php //echo h($User['handle']) ?>
-						<?php echo $this->Html->link(__('Logout'), '/auth/logout') ?>
+						<?php echo $this->Html->link(__d('net_commons', 'Logout'), '/auth/logout') ?>
 					</li>
 					<li <?php
 						if (isset($this->request->params['plugin'])
@@ -40,23 +40,23 @@
 						echo 'class="active"';
 						}
 					?>>
-						<?php echo $this->Html->link(__('Theme setting'), '/theme_settings/site/') ?>
+						<?php echo $this->Html->link(__d('net_commons', 'Theme setting'), '/theme_settings/site/') ?>
 					</li>
 
 					<li>
 						<?php if (!Page::isSetting()): ?>
-							<?php echo $this->Html->link(__('Setting mode on'), '/' . Page::SETTING_MODE_WORD . '/' . $path) ?>
+							<?php echo $this->Html->link(__d('pages', 'Setting mode on'), '/' . Page::SETTING_MODE_WORD . '/' . $path) ?>
 						<?php else: ?>
-							<?php echo $this->Html->link(__('Setting mode off'), '/' . $path) ?>
+							<?php echo $this->Html->link(__d('pages', 'Setting mode off'), '/' . $path) ?>
 						<?php endif; ?>
 					</li>
 
 					<li>
-						<?php //echo $this->Html->link(__('Control Panel'), '/control_panel/index') ?>
+						<?php //echo $this->Html->link(__d('pages', 'Control Panel'), '/control_panel/index') ?>
 					</li>
 				<?php else: ?>
 					<li>
-						<?php echo $this->Html->link(__('Login'), '/auth/login') ?>
+						<?php echo $this->Html->link(__d('net_commons', 'Login'), '/auth/login') ?>
 					</li>
 				<?php endif; ?>
 			</ul>

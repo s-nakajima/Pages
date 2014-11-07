@@ -1,7 +1,9 @@
 <?php
 /**
  * SlugRoute
- *
+ */
+
+/**
  * Automatically slugs routes based on named parameters
  *
  */

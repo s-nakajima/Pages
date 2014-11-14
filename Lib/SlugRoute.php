@@ -22,8 +22,14 @@ class SlugRoute extends CakeRoute {
 			return false;
 		}
 
-		$path = implode('/', $params['pass']);
 		$Page = ClassRegistry::init('Pages.Page');
+		$dataSource = ConnectionManager::getDataSource($Page->useDbConfig);
+		$tables = $dataSource->listSources();
+		if (!in_array($Page->useTable, $tables)) {
+			return false;
+		}
+
+		$path = implode('/', $params['pass']);
 		$count = $Page->find('count', array(
 			'conditions' => array('Page.permalink' => $path),
 			'recursive' => -1

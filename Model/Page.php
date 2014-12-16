@@ -95,7 +95,7 @@ class Page extends PagesAppModel {
  */
 	public $belongsTo = array(
 		'Room' => array(
-			'className' => 'Room',
+			'className' => 'Rooms.Room',
 			'foreignKey' => 'room_id',
 			'conditions' => '',
 			'fields' => '',

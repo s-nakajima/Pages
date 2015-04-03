@@ -23,7 +23,8 @@ class ContainersPageTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.pages.containers_page',
 		'plugin.pages.page',
-		'plugin.pages.container'
+		'plugin.pages.container',
+		'plugin.users.user',
 	);
 
 /**

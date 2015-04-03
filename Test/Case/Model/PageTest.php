@@ -31,6 +31,7 @@ class PageTest extends CakeTestCase {
 		'plugin.pages.boxes_page',
 		'plugin.pages.frame',
 		'plugin.pages.plugin',
+		'plugin.users.user',
 	);
 
 /**

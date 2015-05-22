@@ -51,13 +51,16 @@ class PagesController extends PagesAppController {
 		$this->set('path', $path);
 		$this->set('page', $page);
 
-		//プラグイン追加用のデータ取得
-		if (Page::isSetting()) {
-			$roomId = 1;
-			$langId = 2;
-			$plugins = $this->PluginsRoom->getPlugins($roomId, $langId);
-			$this->set('plugins', $plugins);
+		//プラグインデータ取得
+		$roomId = 1;
+		$langId = 2;
+		$plugins = $this->PluginsRoom->getPlugins($roomId, $langId);
+		$this->set('plugins', $plugins);
+		$pluginMap = [];
+		foreach ($plugins as $plugin) {
+			$pluginMap[$plugin['Plugin']['key']] = $plugin['Plugin'];
 		}
+		$this->set('pluginMap', $pluginMap);
 	}
 
 /**

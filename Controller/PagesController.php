@@ -28,6 +28,10 @@ class PagesController extends PagesAppController {
 		'Rooms.PluginsRoom'
 	);
 
+	public $components = array(
+		'Pages.Layout'
+	);
+
 /**
  * index method
  *
@@ -47,15 +51,18 @@ class PagesController extends PagesAppController {
 
 		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
 		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
-
 		$this->set('path', $path);
 		$this->set('page', $page);
+
+		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
+		$this->set('pageMainContainer', $page);
 
 		//プラグインデータ取得
 		$roomId = 1;
 		$langId = 2;
 		$plugins = $this->PluginsRoom->getPlugins($roomId, $langId);
 		$this->set('plugins', $plugins);
+
 		$pluginMap = [];
 		foreach ($plugins as $plugin) {
 			$pluginMap[$plugin['Plugin']['key']] = $plugin['Plugin'];

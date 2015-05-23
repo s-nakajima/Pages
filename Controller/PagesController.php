@@ -48,11 +48,11 @@ class PagesController extends PagesAppController {
 		if (empty($page)) {
 			throw new NotFoundException();
 		}
+		$this->set('page', $page);
 
 		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
 		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
 		$this->set('path', $path);
-		$this->set('page', $page);
 
 		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);

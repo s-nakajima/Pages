@@ -10,17 +10,11 @@
 ?>
 <?php echo $this->Html->script('/pages/js/pages.js', false); ?>
 
-<div>
 <?php
 if (Page::isSetting()) {
 	echo $this->element('Pages.plugin_list');
 	echo $this->element('Pages.setting_menu');
 }
 
-echo $this->element('Containers.render_containers',
-	array(
-		'containers' => $pageMainContainer['Container'],
-		'boxes' => $pageMainContainer['Box']
-	));
-?>
-</div>
+echo $this->element('Boxes.render_boxes',
+	array('boxes' => $pageMainContainer['Box'][$pageMainContainer['Container'][Container::TYPE_MAIN]['id']]));

@@ -9,8 +9,8 @@
  */
 ?>
 
-<script src="/net_commons/jqueryui/jquery-ui.js"></script>
-<link href="/net_commons/jqueryui/themes/overcast/jquery-ui.min.css" rel="stylesheet">
+<?php echo $this->Html->script('/components/jqueryui/ui/jquery-ui.js', false); ?>
+<?php echo $this->Html->css('/components/jqueryui/themes/overcast/jquery-ui.min.css', false); ?>
 
 <div id="settingMenu"  class="panel-body btn-group-vertical" title="Setting menu">
 	<button type="button" class="btn btn-default" ng-click="changePluginSetting()" ng-disabled="true">

@@ -17,6 +17,34 @@ App::uses('AppHelper', 'View/Helper');
 class LayoutHelper extends AppHelper {
 
 /**
+ * Bootstrap col max size
+ *
+ * @var int
+ */
+	const COL_MAX_SIZE = 12;
+
+/**
+ * Bootstrap col default size
+ *
+ * @var int
+ */
+	const COL_DEFAULT_SIZE = 3;
+
+/**
+ * Containers data
+ *
+ * @var array
+ */
+	private $__containers;
+
+/**
+ * Boxes data
+ *
+ * @var array
+ */
+	private $__boxes;
+
+/**
  * Before layout callback. beforeLayout is called before the layout is rendered.
  *
  * Overridden in subclasses.
@@ -27,35 +55,6 @@ class LayoutHelper extends AppHelper {
 	public function afterRender($layoutFile) {
 CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
 
-//		if (!empty($this->request->params['requested'])) {
-//			return;
-//		}
-//
-//		$pageModel = ClassRegistry::init('Pages.Page');
-//		$path = '';
-//		$page = $pageModel->getPageWithFrame($path);
-//		if (empty($page)) {
-//			throw new NotFoundException();
-//		}
-
-/* 		$boxes = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
-		foreach ($page['Container'] as $container) {
-			$containerId = $container['id'];
-
-			$out = $this->_View->element(
-				'Boxes.render_boxes',
-				array('boxes' => $boxes[$container['id']])
-			);
-		}
- */
-//		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
-//		unset($page['Container'][Container::TYPE_MAIN]);
-//		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
-////var_dump(this->_View->);
-////$this->_View->layout = 'Pages.default';
-//		$this->_View->set('containers', $page['Container']);
-//		$this->_View->set('boxes', $page['Box']);
-////var_Dump($layoutFile);
 	}
 
 /**
@@ -67,41 +66,92 @@ CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
  * @return void
  */
 	public function beforeLayout($layoutFile) {
-		CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
-
-		//$this->_View->set('aaaaa', 'aaaaaaaaaaaaaaa');
-		//CakeLog::debug(print_r($this->_View->viewVars, true));
-		//CakeLog::debug(print_r($this->settings, true));
+CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 
 		if (isset($this->_View->viewVars['page'])) {
 			$page = $this->_View->viewVars['page'];
 		} else {
 			$pageModel = ClassRegistry::init('Pages.Page');
-			$path = '';
+			$path = $this->_View->request->data['current']['Page']['permalink'];
 			$page = $pageModel->getPageWithFrame($path);
 			if (empty($page)) {
 				throw new NotFoundException();
 			}
 		}
 
-		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
-		unset($page['Container'][Container::TYPE_MAIN]);
-		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
-
-		$this->_View->set('containers', $page['Container']);
-		$this->_View->set('boxes', $page['Box']);
+		$this->__containers = Hash::combine($page['Container'], '{n}.type', '{n}');
+		$this->__boxes = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
 	}
 
 /**
- * After layout callback. afterLayout is called after the layout has rendered.
- *
- * Overridden in subclasses.
- *
- * @param string $layoutFile The layout file that was rendered.
- * @return void
+ * Get the container size for layout
+  *
+ * @param string $containerType Container type.
+ *    e.g.) Container::TYPE_MAJOR or Container::TYPE_MAIN or Container::TYPE_MINOR
+ * @return string Html class attribute
  */
-	public function afterLayout($layoutFile) {
-		CakeLog::debug('LayoutHelper::afterLayout(' . $layoutFile . ')');
+	public function getContainerSize($containerType) {
+CakeLog::debug('LayoutHelper::getContainerSize(' . $containerType . ')');
+
+		$result = '';
+		switch ($containerType) {
+			case Container::TYPE_MAJOR:
+				if ($this->hasContainer($containerType)) {
+					$result = 'col-sm-' . self::COL_DEFAULT_SIZE;
+				}
+				break;
+			case Container::TYPE_MINOR:
+				if ($this->hasContainer($containerType)) {
+					$result = 'col-sm-' . self::COL_DEFAULT_SIZE;
+				}
+				break;
+			default:
+				$col = self::COL_MAX_SIZE;
+				if ($this->hasContainer(Container::TYPE_MAJOR)) {
+					$col -= self::COL_DEFAULT_SIZE;
+				}
+				if ($this->hasContainer(Container::TYPE_MINOR)) {
+					$col -= self::COL_DEFAULT_SIZE;
+				}
+				$result = 'col-sm-' . $col;
+		}
+
+		return $result;
+	}
+
+/**
+ * Get the container size for layout
+  *
+ * @param string $containerType Container type.
+ *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
+ * @return bool The layout have container
+ */
+	public function hasContainer($containerType) {
+CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
+		$result = false;
+
+		if (Page::isSetting()) {
+			$result = isset($this->__containers[$containerType]);
+		} else {
+			$box = $this->getBox($containerType);
+			$frames = Hash::combine($box, '{n}.Frame.{n}.id', '{n}.Frame.{n}');
+			$result = isset($this->__containers[$containerType]) && count($frames);
+		}
+
+		return $result;
+	}
+
+/**
+ * Get the box data for container
+  *
+ * @param string $containerType Container type.
+ *    e.g.) Container::TYPE_MAJOR or Container::TYPE_MAIN or Container::TYPE_MINOR
+ * @return array Box data
+ */
+	public function getBox($containerType) {
+CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
+
+		return $this->__boxes[$this->__containers[$containerType]['id']];
 	}
 
 }

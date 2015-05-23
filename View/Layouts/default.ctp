@@ -10,82 +10,58 @@
 ?>
 <?php $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework'); ?>
 <!DOCTYPE html>
-<html lang="en" ng-app="NetCommonsApp">
+<html lang="<?php echo Configure::read('Config.language') ?>" ng-app="NetCommonsApp">
 	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title><?php echo (isset($pageTitle) ? h($pageTitle) : ''); ?></title>
+		<title><?php echo (isset($pageTitle) ? h($pageTitle) : ''); ?></title>
 
-	<?php
-		echo $this->fetch('meta');
+		<?php
+			echo $this->fetch('meta');
 
-		echo $this->element('NetCommons.common_css');
-		echo $this->Html->css(array('style'),
-			array('plugin' => false)
-		);
-		echo $this->fetch('css');
+			echo $this->element('NetCommons.common_css');
+			echo $this->Html->css(array('style'),
+				array('plugin' => false)
+			);
+			echo $this->fetch('css');
 
-		echo $this->element('NetCommons.common_js');
-		echo $this->fetch('script');
-	?>
-</head>
+			echo $this->element('NetCommons.common_js');
+			echo $this->Html->script('/frames/js/frames.js', false);
+			echo $this->fetch('script');
+		?>
+	</head>
 
-<body ng-controller="NetCommons.base">
-	<?php echo $this->element('NetCommons.common_alert'); ?>
+	<body ng-controller="NetCommons.base">
+		<?php echo $this->element('NetCommons.common_alert'); ?>
 
-	<?php echo $this->element('NetCommons.common_header'); ?>
+		<?php echo $this->element('NetCommons.common_header'); ?>
 
-	<main class="container">
-		<?php if ($this->Layout->hasContainer(Container::TYPE_HEADER)): ?>
-			<!-- container-header -->
-			<header id="container-header">
-				<?php
-					echo $this->element('Boxes.render_boxes',
-						array('boxes' => $this->Layout->getBox(Container::TYPE_HEADER)));
-				?>
-			</header>
-		<?php endif; ?>
+		<main class="<?php echo $this->Layout->getContainerFluid(); ?>">
+			<?php echo $this->element('Pages.page_header'); ?>
 
-		<div class="row">
-			<?php if ($this->Layout->hasContainer(Container::TYPE_MAJOR)): ?>
-				<!-- container-major -->
-				<div id="container-major" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MAJOR); ?>">
-					<?php
-						echo $this->element('Boxes.render_boxes',
-							array('boxes' => $this->Layout->getBox(Container::TYPE_MAJOR)));
-					?>
+			<div class="row">
+				<?php echo $this->element('Pages.page_major'); ?>
+
+				<!-- container-main -->
+				<div role="main" id="container-main" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MAIN); ?>">
+					<?php if ($this->request->params['plugin'] === 'pages') : ?>
+						<?php echo $this->fetch('content'); ?>
+					<?php else : ?>
+						<?php echo $this->element('Frames.frame', array(
+								'frame' => $frame,
+								'view' => $this->fetch('content')
+							)); ?>
+					<?php endif; ?>
 				</div>
-			<?php endif; ?>
 
-			<!-- container-main -->
-			<div id="container-main" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MAIN); ?>" role="main">
-				<?php echo $this->fetch('content'); ?>
+				<?php echo $this->element('Pages.page_minor'); ?>
 			</div>
 
-			<?php if ($this->Layout->hasContainer(Container::TYPE_MINOR)): ?>
-				<!-- container-minor  -->
-				<div id="container-minor" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MINOR); ?>">
-					<?php
-						echo $this->element('Boxes.render_boxes',
-							array('boxes' => $this->Layout->getBox(Container::TYPE_MINOR)));
-					?>
-				</div>
-			<?php endif; ?>
-		</div>
+			<?php echo $this->element('Pages.page_footer'); ?>
+		</main>
 
-		<?php if ($this->Layout->hasContainer(Container::TYPE_FOOTER)): ?>
-			<!-- area-footer  -->
-			<footer id="container-footer" role="contentinfo">
-				<?php
-					echo $this->element('Boxes.render_boxes',
-						array('boxes' => $this->Layout->getBox(Container::TYPE_FOOTER)));
-				?>
-			</footer>
-		<?php endif; ?>
-	</main>
-
-	<?php echo $this->element('NetCommons.common_footer'); ?>
-</body>
+		<?php echo $this->element('NetCommons.common_footer'); ?>
+	</body>
 </html>

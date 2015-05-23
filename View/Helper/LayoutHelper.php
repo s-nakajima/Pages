@@ -24,11 +24,25 @@ class LayoutHelper extends AppHelper {
 	const COL_MAX_SIZE = 12;
 
 /**
- * Bootstrap col default size
+ * Bootstrap col-sm default size
  *
  * @var int
  */
-	const COL_DEFAULT_SIZE = 3;
+	const COL_DEFAULT_SM_SIZE = 3;
+
+/**
+ * Bootstrap col-md default size
+ *
+ * @var int
+ */
+	const COL_DEFAULT_MD_SIZE = 3;
+
+/**
+ * Bootstrap col-lg default size
+ *
+ * @var int
+ */
+	const COL_DEFAULT_LG_SIZE = 3;
 
 /**
  * Containers data
@@ -54,7 +68,9 @@ class LayoutHelper extends AppHelper {
  */
 	public function afterRender($layoutFile) {
 CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
-
+		if ($this->_View->layout === 'NetCommons.setting') {
+			$this->_View->layout = 'Frames.setting';
+		}
 	}
 
 /**
@@ -68,19 +84,47 @@ CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
 	public function beforeLayout($layoutFile) {
 CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 
+		//ページデータ取得
 		if (isset($this->_View->viewVars['page'])) {
 			$page = $this->_View->viewVars['page'];
+			$this->_View->request->data['current']['Page'] = $page['Page'];
 		} else {
-			$pageModel = ClassRegistry::init('Pages.Page');
+			if (! isset($this->_View->request->data['current'])) {
+				return;
+			}
 			$path = $this->_View->request->data['current']['Page']['permalink'];
+			$this->_View->set('frame', $this->_View->request->data['current']['Frame']);
+
+			$pageModel = ClassRegistry::init('Pages.Page');
 			$page = $pageModel->getPageWithFrame($path);
 			if (empty($page)) {
 				throw new NotFoundException();
 			}
 		}
 
+		if (! isset($this->_View->viewVars['cancelUrl'])) {
+			$this->_View->set('cancelUrl', $this->_View->request->data['current']['Page']['permalink']);
+		}
+
 		$this->__containers = Hash::combine($page['Container'], '{n}.type', '{n}');
 		$this->__boxes = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
+
+		//プラグインデータ取得
+		if (! isset($this->_View->viewVars['plugins'])) {
+			$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
+			$plugins = $pluginsRoom->getPlugins(
+				$this->_View->request->data['current']['Frame']['room_id'],
+				$this->_View->request->data['current']['Frame']['language_id']
+			);
+			if (empty($plugins)) {
+				throw new NotFoundException();
+			}
+			$pluginMap = Hash::combine($plugins, '{n}.Plugin.key', '{{n}.Plugin}');
+
+			$this->_View->set('plugins', $plugins);
+			$this->_View->set('pluginMap', $pluginMap);
+		}
+
 	}
 
 /**
@@ -97,23 +141,33 @@ CakeLog::debug('LayoutHelper::getContainerSize(' . $containerType . ')');
 		switch ($containerType) {
 			case Container::TYPE_MAJOR:
 				if ($this->hasContainer($containerType)) {
-					$result = 'col-sm-' . self::COL_DEFAULT_SIZE;
+					$result = 'col-sm-' . self::COL_DEFAULT_SM_SIZE .
+							' col-md-' . self::COL_DEFAULT_MD_SIZE .
+							' col-lg-' . self::COL_DEFAULT_LG_SIZE;
 				}
 				break;
 			case Container::TYPE_MINOR:
 				if ($this->hasContainer($containerType)) {
-					$result = 'col-sm-' . self::COL_DEFAULT_SIZE;
+					$result = 'col-sm-' . self::COL_DEFAULT_SM_SIZE .
+							' col-md-' . self::COL_DEFAULT_MD_SIZE .
+							' col-lg-' . self::COL_DEFAULT_LG_SIZE;
 				}
 				break;
 			default:
-				$col = self::COL_MAX_SIZE;
+				$smCol = self::COL_MAX_SIZE;
+				$mdCol = self::COL_MAX_SIZE;
+				$lgCol = self::COL_MAX_SIZE;
 				if ($this->hasContainer(Container::TYPE_MAJOR)) {
-					$col -= self::COL_DEFAULT_SIZE;
+					$smCol -= self::COL_DEFAULT_SM_SIZE;
+					$mdCol -= self::COL_DEFAULT_MD_SIZE;
+					$lgCol -= self::COL_DEFAULT_LG_SIZE;
 				}
 				if ($this->hasContainer(Container::TYPE_MINOR)) {
-					$col -= self::COL_DEFAULT_SIZE;
+					$smCol -= self::COL_DEFAULT_SM_SIZE;
+					$mdCol -= self::COL_DEFAULT_MD_SIZE;
+					$lgCol -= self::COL_DEFAULT_LG_SIZE;
 				}
-				$result = 'col-sm-' . $col;
+				$result = 'col-sm-' . $smCol . ' col-md-' . $mdCol . ' col-lg-' . $lgCol;
 		}
 
 		return $result;
@@ -152,6 +206,27 @@ CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
 CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
 
 		return $this->__boxes[$this->__containers[$containerType]['id']];
+	}
+
+/**
+ * Get the style sheet for container fluid
+  *
+ * @return string Box data
+ */
+	public function getContainerFluid() {
+CakeLog::debug('LayoutHelper::getContainerFluid()');
+
+		$result = '';
+		if (! isset($this->_View->request->data['current']['Page'])) {
+			return $result;
+		}
+		if ($this->_View->request->data['current']['Page']['is_container_fluid']) {
+			$result = 'container-fluid';
+		} else {
+			$result = 'container';
+		}
+
+		return $result;
 	}
 
 }

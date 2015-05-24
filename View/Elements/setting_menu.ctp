@@ -52,13 +52,13 @@
 					'Language.0.id',
 					array(
 						'type' => 'hidden',
-						'value' => $page['Language'][0]['id']
+						'value' => $page['language'][0]['id']
 					));
 				echo $this->Form->input(
 					'Language.0.LanguagesPage.language_id',
 					array(
 						'type' => 'hidden',
-						'value' => $page['Language'][0]['LanguagesPage']['language_id']
+						'value' => $page['language'][0]['languagesPage']['languageId']
 					));
 			?>
 				<div class="modal-body" ng-controller="PluginController">

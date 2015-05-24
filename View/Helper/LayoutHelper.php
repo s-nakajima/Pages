@@ -71,6 +71,9 @@ CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
 		if ($this->_View->layout === 'NetCommons.setting') {
 			$this->_View->layout = 'Frames.setting';
 		}
+		if ($this->_View->layout === 'NetCommons.default') {
+			$this->_View->layout = 'Pages.default';
+		}
 	}
 
 /**
@@ -87,39 +90,43 @@ CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 		//ページデータ取得
 		if (isset($this->_View->viewVars['page'])) {
 			$page = $this->_View->viewVars['page'];
-			$this->_View->request->data['current']['Page'] = $page['Page'];
+			$this->_View->viewVars['current']['page'] = NetCommonsAppController::camelizeKeyRecursive($page['page']);
 		} else {
-			if (! isset($this->_View->request->data['current'])) {
+			if (! isset($this->_View->viewVars['current'])) {
 				return;
 			}
-			$path = $this->_View->request->data['current']['Page']['permalink'];
-			$this->_View->set('frame', $this->_View->request->data['current']['Frame']);
+			$path = $this->_View->viewVars['current']['page']['permalink'];
+			$this->_View->set('frame', $this->_View->viewVars['current']['frame']);
 
 			$pageModel = ClassRegistry::init('Pages.Page');
 			$page = $pageModel->getPageWithFrame($path);
 			if (empty($page)) {
 				throw new NotFoundException();
 			}
+			$page = NetCommonsAppController::camelizeKeyRecursive($page);
 		}
 
 		if (! isset($this->_View->viewVars['cancelUrl'])) {
-			$this->_View->set('cancelUrl', $this->_View->request->data['current']['Page']['permalink']);
+			$this->_View->set('cancelUrl', $this->_View->viewVars['current']['page']['permalink']);
 		}
+//var_dump($this->__containers);
 
-		$this->__containers = Hash::combine($page['Container'], '{n}.type', '{n}');
-		$this->__boxes = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
+		$this->__containers = Hash::combine($page['container'], '{n}.type', '{n}');
+		$this->__boxes = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
 
 		//プラグインデータ取得
 		if (! isset($this->_View->viewVars['plugins'])) {
 			$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
 			$plugins = $pluginsRoom->getPlugins(
-				$this->_View->request->data['current']['Frame']['room_id'],
-				$this->_View->request->data['current']['Frame']['language_id']
+				$this->_View->viewVars['current']['frame']['roomId'],
+				$this->_View->viewVars['current']['frame']['languageId']
 			);
 			if (empty($plugins)) {
 				throw new NotFoundException();
 			}
-			$pluginMap = Hash::combine($plugins, '{n}.Plugin.key', '{{n}.Plugin}');
+
+			$plugins = NetCommonsAppController::camelizeKeyRecursive($plugins);
+			$pluginMap = Hash::combine($plugins, '{n}.plugin.key', '{n}.plugin');
 
 			$this->_View->set('plugins', $plugins);
 			$this->_View->set('pluginMap', $pluginMap);
@@ -188,7 +195,7 @@ CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
 			$result = isset($this->__containers[$containerType]);
 		} else {
 			$box = $this->getBox($containerType);
-			$frames = Hash::combine($box, '{n}.Frame.{n}.id', '{n}.Frame.{n}');
+			$frames = Hash::combine($box, '{n}.frame.{n}.id', '{n}.frame.{n}');
 			$result = isset($this->__containers[$containerType]) && count($frames);
 		}
 
@@ -217,10 +224,10 @@ CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
 CakeLog::debug('LayoutHelper::getContainerFluid()');
 
 		$result = '';
-		if (! isset($this->_View->request->data['current']['Page'])) {
+		if (! isset($this->_View->viewVars['current']['page'])) {
 			return $result;
 		}
-		if ($this->_View->request->data['current']['Page']['is_container_fluid']) {
+		if ($this->_View->viewVars['current']['page']['isContainerFluid']) {
 			$result = 'container-fluid';
 		} else {
 			$result = 'container';

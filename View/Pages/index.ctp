@@ -17,4 +17,4 @@ if (Page::isSetting()) {
 }
 
 echo $this->element('Boxes.render_boxes',
-	array('boxes' => $pageMainContainer['Box'][$pageMainContainer['Container'][Container::TYPE_MAIN]['id']]));
+	array('boxes' => $pageMainContainer['box'][$pageMainContainer['container'][Container::TYPE_MAIN]['id']]));

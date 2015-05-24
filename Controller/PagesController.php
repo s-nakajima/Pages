@@ -19,6 +19,13 @@ App::uses('PagesAppController', 'Pages.Controller');
 class PagesController extends PagesAppController {
 
 /**
+ * use layout
+ *
+ * @var string
+ */
+	public $layout = 'Pages.default';
+
+/**
  * uses
  *
  * @var array
@@ -28,9 +35,9 @@ class PagesController extends PagesAppController {
 		'Rooms.PluginsRoom'
 	);
 
-	public $components = array(
-		'Pages.Layout'
-	);
+	//public $components = array(
+	//	'Pages.Layout'
+	//);
 
 /**
  * index method
@@ -48,24 +55,26 @@ class PagesController extends PagesAppController {
 		if (empty($page)) {
 			throw new NotFoundException();
 		}
+		$page = $this->camelizeKeyRecursive($page);
 		$this->set('page', $page);
 
-		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
-		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
+		$page['container'] = Hash::combine($page['container'], '{n}.type', '{n}');
+		$page['box'] = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
 		$this->set('path', $path);
 
-		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
+		$page['container'] = array(Container::TYPE_MAIN => $page['container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
 
 		//プラグインデータ取得
 		$roomId = 1;
 		$langId = 2;
 		$plugins = $this->PluginsRoom->getPlugins($roomId, $langId);
+		$plugins = $this->camelizeKeyRecursive($plugins);
 		$this->set('plugins', $plugins);
 
 		$pluginMap = [];
 		foreach ($plugins as $plugin) {
-			$pluginMap[$plugin['Plugin']['key']] = $plugin['Plugin'];
+			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
 		}
 		$this->set('pluginMap', $pluginMap);
 	}

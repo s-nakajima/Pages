@@ -13,7 +13,8 @@
 <?php
 if (Page::isSetting()) {
 	echo $this->element('Pages.plugin_list');
-	echo $this->element('Pages.setting_menu');
+	echo $this->element('Pages.add_page');
+	//echo $this->element('Pages.setting_menu');
 }
 
 echo $this->element('Boxes.render_boxes',

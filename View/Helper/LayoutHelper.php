@@ -233,14 +233,10 @@ CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
 	public function getContainerFluid() {
 CakeLog::debug('LayoutHelper::getContainerFluid()');
 
-		$result = '';
-		if (! isset($this->_View->viewVars['current']['page'])) {
-			return $result;
-		}
-		if ($this->_View->viewVars['current']['page']['isContainerFluid']) {
+		$result = 'container';
+		if (isset($this->_View->viewVars['current']['page']) &&
+				$this->_View->viewVars['current']['page']['isContainerFluid']) {
 			$result = 'container-fluid';
-		} else {
-			$result = 'container';
 		}
 
 		return $result;

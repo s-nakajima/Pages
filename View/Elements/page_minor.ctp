@@ -8,7 +8,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php if (is_object($this->Layout) && $this->Layout->hasContainer(Container::TYPE_MINOR)): ?>
+<?php if (! empty($this->Layout) && $this->Layout->hasContainer(Container::TYPE_MINOR)): ?>
 	<!-- container-minor  -->
 	<div id="container-minor" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MINOR); ?>">
 		<?php

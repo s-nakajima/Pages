@@ -35,9 +35,19 @@ class PagesController extends PagesAppController {
 		'Rooms.PluginsRoom'
 	);
 
-	//public $components = array(
-	//	'Pages.Layout'
-	//);
+/**
+ * use components
+ *
+ * @var array
+ */
+	public $components = array(
+		'NetCommons.NetCommonsRoomRole' => array(
+			//コンテンツの権限設定
+			'allowedActions' => array(
+				'pageEditable' => array('add'),
+			),
+		),
+	);
 
 /**
  * use helpers
@@ -55,6 +65,13 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
+		if (Page::isSetting() && ! $this->viewVars['pageEditable']) {
+			$paths = func_get_args();
+			$path = implode('/', $paths);
+			$this->redirect('/' . $path);
+			return;
+		}
+
 		Configure::write('Pages.isSetting', Page::isSetting());
 
 		$paths = func_get_args();
@@ -75,9 +92,7 @@ class PagesController extends PagesAppController {
 		$this->set('pageMainContainer', $page);
 
 		//プラグインデータ取得
-		$roomId = 1;
-		$langId = 2;
-		$plugins = $this->PluginsRoom->getPlugins($roomId, $langId);
+		$plugins = $this->PluginsRoom->getPlugins($page['page']['roomId'], $page['language'][0]['id']);
 		$plugins = $this->camelizeKeyRecursive($plugins);
 		$this->set('plugins', $plugins);
 

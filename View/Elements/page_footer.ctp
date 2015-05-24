@@ -8,7 +8,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php if (is_object($this->Layout) && $this->Layout->hasContainer(Container::TYPE_FOOTER)): ?>
+<?php if (! empty($this->Layout) && $this->Layout->hasContainer(Container::TYPE_FOOTER)): ?>
 	<!-- area-footer -->
 	<footer id="container-footer" role="contentinfo">
 		<?php

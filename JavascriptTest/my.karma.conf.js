@@ -21,12 +21,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../NetCommons/webroot/angular/angular.js',
-      '../../NetCommons/webroot/jquery/jquery.min.js',
-      '../../NetCommons/webroot/angular-bootstrap/ui-bootstrap.min.js',
-      '../../NetCommons/webroot/base/js/base.js',
-      '../../NetCommons/webroot/angular-ui-tinymce/src/tinymce.js',
-      '../../../../vendors/bower_components/angular-mocks/angular-mocks.js',
+      '../../../webroot/components/angular/angular.min.js',
+      '../../../webroot/components/jquery/jquery.min.js',
+      '../../../webroot/components/angular-bootstrap/ui-bootstrap.min.js',
+      '../../NetCommons/webroot/js/base.js',
+      '../../../webroot/components/angular-ui-tinymce/src/tinymce.js',
+      '../../../webroot/components/angular-mocks/angular-mocks.js',
       '../webroot/js/pages.js',
       'spec/javascripts/pages.spec.js'
     ],

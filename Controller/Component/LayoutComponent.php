@@ -21,6 +21,7 @@ class LayoutComponent extends Component {
  *
  * @param Controller $controller Controller
  * @return void
+ * @throws NotFoundException
  */
 	public function beforeRender(Controller $controller) {
 		if (!empty($controller->request->params['requested'])) {

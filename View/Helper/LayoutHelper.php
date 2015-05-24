@@ -68,7 +68,8 @@ class LayoutHelper extends AppHelper {
  * @return void
  */
 	public function afterRender($layoutFile) {
-CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
+		CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
+
 		if ($this->_View->layout === 'NetCommons.setting') {
 			//TODO:各プラグインで制御
 			$this->_View->layout = 'Frames.setting';
@@ -85,9 +86,10 @@ CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
  *
  * @param string $layoutFile The layout about to be rendered.
  * @return void
+ * @throws NotFoundException
  */
 	public function beforeLayout($layoutFile) {
-CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
+		CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 
 		//ページデータ取得
 		if (isset($this->_View->viewVars['page'])) {
@@ -116,7 +118,6 @@ CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 		if (! isset($this->_View->viewVars['cancelUrl'])) {
 			$this->_View->set('cancelUrl', $this->_View->viewVars['current']['page']['permalink']);
 		}
-//var_dump($this->__containers);
 
 		$this->__containers = Hash::combine($page['container'], '{n}.type', '{n}');
 		$this->__boxes = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
@@ -138,18 +139,17 @@ CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 			$this->_View->set('plugins', $plugins);
 			$this->_View->set('pluginMap', $pluginMap);
 		}
-
 	}
 
 /**
  * Get the container size for layout
-  *
+ *
  * @param string $containerType Container type.
  *    e.g.) Container::TYPE_MAJOR or Container::TYPE_MAIN or Container::TYPE_MINOR
  * @return string Html class attribute
  */
 	public function getContainerSize($containerType) {
-CakeLog::debug('LayoutHelper::getContainerSize(' . $containerType . ')');
+		CakeLog::debug('LayoutHelper::getContainerSize(' . $containerType . ')');
 
 		$result = '';
 		switch ($containerType) {
@@ -188,14 +188,15 @@ CakeLog::debug('LayoutHelper::getContainerSize(' . $containerType . ')');
 	}
 
 /**
- * Get the container size for layout
-  *
+ * The layout have container
+ *
  * @param string $containerType Container type.
  *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
+		CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
+
 		$result = false;
 
 		if (Page::isSetting()) {
@@ -211,13 +212,14 @@ CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
 
 /**
  * Get the box data for container
-  *
+ *
  * @param string $containerType Container type.
  *    e.g.) Container::TYPE_MAJOR or Container::TYPE_MAIN or Container::TYPE_MINOR
  * @return array Box data
  */
 	public function getBox($containerType) {
-CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
+		CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
+
 		if (isset($this->__boxes[$this->__containers[$containerType]['id']])) {
 			return $this->__boxes[$this->__containers[$containerType]['id']];
 		}
@@ -227,11 +229,11 @@ CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
 
 /**
  * Get the style sheet for container fluid
-  *
+ *
  * @return string Box data
  */
 	public function getContainerFluid() {
-CakeLog::debug('LayoutHelper::getContainerFluid()');
+		CakeLog::debug('LayoutHelper::getContainerFluid()');
 
 		$result = 'container';
 		if (isset($this->_View->viewVars['current']['page']) &&

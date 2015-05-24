@@ -21,9 +21,9 @@ class ContainersPageTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.containers_page',
+		'plugin.containers.container',
+		'plugin.containers.containers_page',
 		'plugin.pages.page',
-		'plugin.pages.container',
 		'plugin.users.user',
 	);
 

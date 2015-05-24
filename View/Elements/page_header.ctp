@@ -8,7 +8,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php if ($this->Layout->hasContainer(Container::TYPE_HEADER)): ?>
+<?php if (is_object($this->Layout) && $this->Layout->hasContainer(Container::TYPE_HEADER)): ?>
 	<!-- container-header -->
 	<header id="container-header">
 		<?php echo $this->element('Boxes.render_boxes', array(

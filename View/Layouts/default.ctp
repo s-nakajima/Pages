@@ -50,7 +50,7 @@
 						<?php echo $this->fetch('content'); ?>
 					<?php else : ?>
 						<?php echo $this->element('Frames.frame', array(
-								'frame' => $frame,
+								'frame' => isset($frame) ? $frame : null,
 								'view' => $this->fetch('content')
 							)); ?>
 					<?php endif; ?>

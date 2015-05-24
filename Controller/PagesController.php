@@ -40,6 +40,15 @@ class PagesController extends PagesAppController {
 	//);
 
 /**
+ * use helpers
+ *
+ * @var array
+ */
+	public $helpers = array(
+		'Pages.Layout'
+	);
+
+/**
  * index method
  *
  * @throws NotFoundException

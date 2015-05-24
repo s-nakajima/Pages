@@ -9,6 +9,7 @@
  */
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('Container', 'Containers.Model');
 
 /**
  * LayoutHelper
@@ -69,6 +70,7 @@ class LayoutHelper extends AppHelper {
 	public function afterRender($layoutFile) {
 CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
 		if ($this->_View->layout === 'NetCommons.setting') {
+			//TODO:各プラグインで制御
 			$this->_View->layout = 'Frames.setting';
 		}
 		if ($this->_View->layout === 'NetCommons.default') {
@@ -90,13 +92,13 @@ CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 		//ページデータ取得
 		if (isset($this->_View->viewVars['page'])) {
 			$page = $this->_View->viewVars['page'];
-			$this->_View->viewVars['current']['page'] = NetCommonsAppController::camelizeKeyRecursive($page['page']);
 		} else {
-			if (! isset($this->_View->viewVars['current'])) {
-				return;
+			if (isset($this->_View->viewVars['current'])) {
+				$path = $this->_View->viewVars['current']['page']['permalink'];
+				$this->_View->set('frame', $this->_View->viewVars['current']['frame']);
+			} else {
+				$path = '';
 			}
-			$path = $this->_View->viewVars['current']['page']['permalink'];
-			$this->_View->set('frame', $this->_View->viewVars['current']['frame']);
 
 			$pageModel = ClassRegistry::init('Pages.Page');
 			$page = $pageModel->getPageWithFrame($path);
@@ -104,6 +106,11 @@ CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
 				throw new NotFoundException();
 			}
 			$page = NetCommonsAppController::camelizeKeyRecursive($page);
+		}
+		if (! isset($this->_View->viewVars['current'])) {
+			$this->_View->viewVars['current']['page'] = NetCommonsAppController::camelizeKeyRecursive($page['page']);
+			$this->_View->viewVars['current']['frame']['roomId'] = $this->_View->viewVars['current']['page']['roomId'];
+			$this->_View->viewVars['current']['frame']['languageId'] = $page['language'][0]['id'];
 		}
 
 		if (! isset($this->_View->viewVars['cancelUrl'])) {
@@ -211,8 +218,11 @@ CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
  */
 	public function getBox($containerType) {
 CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
+		if (isset($this->__boxes[$this->__containers[$containerType]['id']])) {
+			return $this->__boxes[$this->__containers[$containerType]['id']];
+		}
 
-		return $this->__boxes[$this->__containers[$containerType]['id']];
+		return array();
 	}
 
 /**

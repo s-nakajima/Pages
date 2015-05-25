@@ -23,7 +23,7 @@ class PagesController extends PagesAppController {
  *
  * @var string
  */
-	public $layout = 'Pages.default';
+//	public $layout = 'Pages.default';
 
 /**
  * uses
@@ -32,7 +32,8 @@ class PagesController extends PagesAppController {
  */
 	public $uses = array(
 		'Pages.Page',
-		'Rooms.PluginsRoom'
+		'Rooms.PluginsRoom',
+		'M17n.Language'
 	);
 
 /**
@@ -44,9 +45,10 @@ class PagesController extends PagesAppController {
 		'NetCommons.NetCommonsRoomRole' => array(
 			//コンテンツの権限設定
 			'allowedActions' => array(
-				'pageEditable' => array('add'),
+				'pageEditable' => array('add', 'edit', 'delete'),
 			),
 		),
+		'Security',
 	);
 
 /**
@@ -108,19 +110,50 @@ class PagesController extends PagesAppController {
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Page->create();
-			$page = $this->Page->savePage($this->request->data);
-			if ($page) {
-				$this->Session->setFlash(__('The page has been saved.'));
-				return $this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-			} else {
-				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
-				// It should review error handling
-				return $this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-			}
+	public function add($roomId = null, $pageId = null) {
+		$this->view = 'edit';
+
+		$language = $this->Language->findByCode(Configure::read('Config.language'));
+		$this->set('languageId', $language['Language']['id']);
+
+		if (! $page = $this->Page->getPage($pageId, $roomId)) {
+			$this->throwBadRequest();
+			return;
 		}
+		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
+		$this->set('cancelUrl', $cancelUrl);
+
+		$formPage = $this->Page->create(array(
+			'id' => null,
+			'parent_id' => null,
+		));
+
+		if ($this->request->isPost()) {
+			$page = $this->Page->savePage($this->request->data);
+			if ($this->handleValidationError($this->Page->validationErrors)) {
+				//正常の場合
+				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+				return;
+			}
+
+			$formPage = Hash::merge($formPage, $this->request->data);
+		}
+
+		$formPage = $this->camelizeKeyRecursive($formPage);
+		$this->set('formPage', $formPage);
+
+//		if ($this->request->is('post')) {
+//			$this->Page->create();
+//			$page = $this->Page->savePage($this->request->data);
+//			if ($page) {
+//				$this->Session->setFlash(__('The page has been saved.'));
+//				return $this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+//			} else {
+//				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
+//				// It should review error handling
+//				return $this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+//			}
+//		}
 	}
 
 }

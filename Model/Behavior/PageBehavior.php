@@ -1,6 +1,6 @@
 <?php
 /**
- * PageAssociate Behavior
+ * Page Behavior
  *
  * @property Room $Room
  * @property Page $ParentPage
@@ -19,12 +19,12 @@
 App::uses('ModelBehavior', 'Model');
 
 /**
- * PageAssociate Behavior
+ * Page Behavior
  *
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @package NetCommons\Pages\Model
  */
-class PageAssociateBehavior extends ModelBehavior {
+class PageBehavior extends ModelBehavior {
 
 /**
  * use model
@@ -34,22 +34,13 @@ class PageAssociateBehavior extends ModelBehavior {
 	public $model;
 
 /**
- * Setup
- *
- * @param Model $model instance of model
- * @param array $config array of configuration settings.
- * @return void
- */
-	public function setup(Model $model, $config = array()) {
-		$this->model = $model;
-	}
-
-/**
  * Save container data.
  *
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	public function saveContainer(Model $model, $data) {
+	public function saveContainer(Model $model) {
+		$this->model = $model;
+
 		$this->model->Container->create();
 		$data = array(
 			'Container' => array(
@@ -65,15 +56,17 @@ class PageAssociateBehavior extends ModelBehavior {
  *
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	public function saveBox(Model $model, $data) {
+	public function saveBox(Model $model, $page) {
+		$this->model = $model;
+
 		$this->model->Box->create();
 		$data = array(
 			'Box' => array(
-				'container_id' => $data['Container']['id'],
+				'container_id' => $page['Container']['id'],
 				'type' => Box::TYPE_WITH_PAGE,
 				'space_id' => 1,//$this->model->data['Box']['space_id'],
-				'room_id' => $data['Page']['room_id'],
-				'page_id' => $data['Page']['id']
+				'room_id' => $page['Page']['room_id'],
+				'page_id' => $page['Page']['id']
 			)
 		);
 
@@ -85,25 +78,28 @@ class PageAssociateBehavior extends ModelBehavior {
  *
  * @return bool True on success
  */
-	public function saveContainersPage(Model $model, $data) {
+	public function saveContainersPage(Model $model, $page) {
+		$this->model = $model;
+
 		$query = array(
 			'conditions' => array(
-				'ContainersPage.page_id' => $this->getReferencePageId($model, $data),
+				'ContainersPage.page_id' => $this->getReferencePageId($model, $page),
 				'Container.type !=' => Container::TYPE_MAIN
 			)
 		);
+
 		$containersPages = $this->model->ContainersPage->find('all', $query);
 		$containersPages[] = array(
 			'ContainersPage' => array(
-				'page_id' => $data['Page']['id'],
-				'container_id' => $data['Container']['id'],
+				'page_id' => $page['Page']['id'],
+				'container_id' => $page['Container']['id'],
 				'is_published' => true
 			)
 		);
 
 		foreach ($containersPages as $containersPage) {
 			$data = array(
-				'page_id' => $data['Page']['id'],
+				'page_id' => $page['Page']['id'],
 				'container_id' => $containersPage['ContainersPage']['container_id'],
 				'is_published' => $containersPage['ContainersPage']['is_published']
 			);
@@ -122,25 +118,27 @@ class PageAssociateBehavior extends ModelBehavior {
  *
  * @return bool True on success
  */
-	public function saveBoxesPage(Model $model, $data) {
+	public function saveBoxesPage(Model $model, $page) {
+		$this->model = $model;
+
 		$query = array(
 			'conditions' => array(
-				'BoxesPage.page_id' => $this->getReferencePageId($model, $data),
+				'BoxesPage.page_id' => $this->getReferencePageId($model, $page),
 				'Box.type !=' => Box::TYPE_WITH_PAGE
 			)
 		);
 		$boxesPages = $this->model->BoxesPage->find('all', $query);
 		$boxesPages[] = array(
 			'BoxesPage' => array(
-				'page_id' => $data['Page']['id'],
-				'box_id' => $data['Box']['id'],
+				'page_id' => $page['Page']['id'],
+				'box_id' => $page['Box']['id'],
 				'is_published' => true
 			)
 		);
 
 		foreach ($boxesPages as $boxesPage) {
 			$data = array(
-				'page_id' => $data['Page']['id'],
+				'page_id' => $page['Page']['id'],
 				'box_id' => $boxesPage['BoxesPage']['box_id'],
 				'is_published' => $boxesPage['BoxesPage']['is_published']
 			);
@@ -159,11 +157,10 @@ class PageAssociateBehavior extends ModelBehavior {
  *
  * @return string
  */
-	public function getTopPageId() {
+	private function __getTopPageId() {
 		$topPageId = null;
 		$topPage = $this->model->findByLft('1', array('id'));
-
-		if (!empty($topPage)) {
+		if (! empty($topPage)) {
 			$topPageId = $topPage['Page']['id'];
 		}
 
@@ -175,12 +172,63 @@ class PageAssociateBehavior extends ModelBehavior {
  *
  * @return string
  */
-	public function getReferencePageId(Model $model, $data) {
-		if (!empty($data['Page']['parent_id'])) {
-			return $data['Page']['parent_id'];
+	public function getReferencePageId(Model $model, $page) {
+		$this->model = $model;
+
+		if (! empty($page['Page']['parent_id'])) {
+			return $page['Page']['parent_id'];
 		}
 
-		return $this->getTopPageId();
+		return $this->__getTopPageId();
+	}
+
+/**
+ * delete containersPage for page
+ *
+ * @return bool True on success
+ */
+	public function deleteContainers(Model $model, $pageId) {
+		$this->model = $model;
+
+		$conditions = array(
+			'ContainersPage.page_id' => $pageId,
+			'Container.type' => Container::TYPE_MAIN
+		);
+		$containers = $this->model->ContainersPage->find('list', array(
+			'recursive' => 0,
+			'fields' => 'Container.id',
+			'conditions' => $conditions
+		));
+		$containerIds = array_values($containers);
+
+		if (! $this->model->Container->deleteAll(array('Container.id' => $containerIds), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		if (! $this->model->ContainersPage->deleteAll(array('ContainersPage.page_id' => $pageId), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		return true;
+	}
+
+/**
+ * delete boxesPage for page
+ *
+ * @return bool True on success
+ */
+	public function deleteBoxes(Model $model, $pageId) {
+		$this->model = $model;
+
+		if (! $this->model->Box->deleteAll(array('Box.page_id' => $pageId), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		if (! $this->model->BoxesPage->deleteAll(array('BoxesPage.page_id' => $pageId), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		return true;
 	}
 
 }

@@ -32,8 +32,9 @@ class PagesController extends PagesAppController {
  */
 	public $uses = array(
 		'Pages.Page',
+		'Pages.LanguagesPage',
 		'Rooms.PluginsRoom',
-		'M17n.Language'
+		'M17n.Language',
 	);
 
 /**
@@ -88,7 +89,7 @@ class PagesController extends PagesAppController {
 
 		$page['container'] = Hash::combine($page['container'], '{n}.type', '{n}');
 		$page['box'] = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
-		$this->set('path', $path);
+		$this->set('path', '/' . $path);
 
 		$page['container'] = array(Container::TYPE_MAIN => $page['container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
@@ -106,7 +107,7 @@ class PagesController extends PagesAppController {
 	}
 
 /**
- * add method
+ * add
  *
  * @return void
  */
@@ -120,13 +121,23 @@ class PagesController extends PagesAppController {
 			$this->throwBadRequest();
 			return;
 		}
+		$this->set('path', '/' . $page['Page']['slug']);
+
 		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
 		$this->set('cancelUrl', $cancelUrl);
 
-		$formPage = $this->Page->create(array(
+		$page = $this->Page->create(array(
 			'id' => null,
 			'parent_id' => null,
+			'slug' => Security::hash($this->params['plugin'] . mt_rand() . microtime(), 'md5')
 		));
+		$languagesPage = $this->LanguagesPage->create(array(
+			'id' => null,
+			'language_id' => $this->viewVars['languageId'],
+			'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
+		));
+
+		$formPage = Hash::merge($page, $languagesPage);
 
 		if ($this->request->isPost()) {
 			$page = $this->Page->savePage($this->request->data);
@@ -141,19 +152,82 @@ class PagesController extends PagesAppController {
 
 		$formPage = $this->camelizeKeyRecursive($formPage);
 		$this->set('formPage', $formPage);
+	}
 
-//		if ($this->request->is('post')) {
-//			$this->Page->create();
-//			$page = $this->Page->savePage($this->request->data);
-//			if ($page) {
-//				$this->Session->setFlash(__('The page has been saved.'));
-//				return $this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-//			} else {
-//				$this->Session->setFlash(__('The page could not be saved. Please, try again.'));
-//				// It should review error handling
-//				return $this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-//			}
-//		}
+/**
+ * edit
+ *
+ * @return void
+ */
+	public function edit($roomId = null, $pageId = null) {
+		$language = $this->Language->findByCode(Configure::read('Config.language'));
+		$this->set('languageId', $language['Language']['id']);
+
+		if (! $page = $this->Page->getPage($pageId, $roomId)) {
+			$this->throwBadRequest();
+			return;
+		}
+		$this->set('path', '/' . $page['Page']['slug']);
+
+		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
+		$this->set('cancelUrl', $cancelUrl);
+
+		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($pageId, $this->viewVars['languageId'])) {
+			$this->throwBadRequest();
+			return;
+		}
+
+		$formPage = Hash::merge($page, $languagesPage);
+
+		if ($this->request->isPost()) {
+			$page = $this->Page->savePage($this->request->data);
+			if ($this->handleValidationError($this->Page->validationErrors)) {
+				//正常の場合
+				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+				return;
+			}
+
+			$formPage = Hash::merge($formPage, $this->request->data);
+		}
+
+		$formPage = $this->camelizeKeyRecursive($formPage);
+		$this->set('formPage', $formPage);
+	}
+
+/**
+ * delete
+ *
+ * @return void
+ */
+	public function delete($roomId = null, $pageId = null) {
+		$language = $this->Language->findByCode(Configure::read('Config.language'));
+		$this->set('languageId', $language['Language']['id']);
+
+		if (! $page = $this->Page->getPage($pageId, $roomId)) {
+			$this->throwBadRequest();
+			return;
+		}
+		$this->set('path', '/' . $page['Page']['slug']);
+
+		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
+		$this->set('cancelUrl', $cancelUrl);
+
+		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($pageId, $this->viewVars['languageId'])) {
+			$this->throwBadRequest();
+			return;
+		}
+
+		$formPage = Hash::merge($page, $languagesPage);
+
+		if ($this->request->isDelete()) {
+			if ($this->Page->deletePage($this->data)) {
+				$this->redirect('/' . Page::SETTING_MODE_WORD);
+				return;
+			}
+		}
+
+		$formPage = $this->camelizeKeyRecursive($formPage);
+		$this->set('formPage', $formPage);
 	}
 
 }

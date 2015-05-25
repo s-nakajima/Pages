@@ -63,7 +63,7 @@ class LanguagesPage extends AppModel {
 			'name' => array(
 				'notEmpty' => array(
 					'rule' => array('notEmpty'),
-					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Name')),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name')),
 					'required' => true
 				),
 			),
@@ -106,6 +106,27 @@ class LanguagesPage extends AppModel {
 		}
 
 		return true;
+	}
+
+/**
+ * Get page data
+ *
+ * @param int $pageId pages.id
+ * @param int $languageId languages.id
+ * @return array
+ */
+	public function getLanguagesPage($pageId, $languageId) {
+		$conditions = array(
+			'LanguagesPage.page_id' => $pageId,
+			'LanguagesPage.language_id' => $languageId,
+		);
+
+		$languagesPage = $this->find('first', array(
+			'recursive' => -1,
+			'conditions' => $conditions,
+		));
+
+		return $languagesPage;
 	}
 
 }

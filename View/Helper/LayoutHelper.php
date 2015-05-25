@@ -97,7 +97,6 @@ class LayoutHelper extends AppHelper {
 		} else {
 			if (isset($this->_View->viewVars['current'])) {
 				$path = $this->_View->viewVars['current']['page']['permalink'];
-				$this->_View->set('frame', $this->_View->viewVars['current']['frame']);
 			} else {
 				$path = '';
 			}
@@ -108,16 +107,17 @@ class LayoutHelper extends AppHelper {
 				throw new NotFoundException();
 			}
 			$page = NetCommonsAppController::camelizeKeyRecursive($page);
+			$this->_View->set('page', $page);
 		}
-		if (! isset($this->_View->viewVars['current'])) {
-			$this->_View->viewVars['current']['page'] = NetCommonsAppController::camelizeKeyRecursive($page['page']);
-			$this->_View->viewVars['current']['frame']['roomId'] = $this->_View->viewVars['current']['page']['roomId'];
-			$this->_View->viewVars['current']['frame']['languageId'] = $page['language'][0]['id'];
-		}
+		$this->_View->viewVars['current']['page'] = NetCommonsAppController::camelizeKeyRecursive($page['page']);
+		$this->_View->viewVars['current']['frame']['roomId'] = $this->_View->viewVars['current']['page']['roomId'];
+		$this->_View->viewVars['current']['frame']['languageId'] = $page['language'][0]['id'];
+		$this->_View->set('frame', $this->_View->viewVars['current']['frame']);
 
 		if (! isset($this->_View->viewVars['cancelUrl'])) {
 			$this->_View->set('cancelUrl', $this->_View->viewVars['current']['page']['permalink']);
 		}
+		$this->_View->set('path', '/' . $this->_View->viewVars['current']['page']['permalink']);
 
 		$this->__containers = Hash::combine($page['container'], '{n}.type', '{n}');
 		$this->__boxes = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');

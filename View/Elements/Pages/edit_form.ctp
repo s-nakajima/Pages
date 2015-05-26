@@ -1,6 +1,6 @@
 <?php
 /**
- * Setting menu element.
+ * Element of edit form.
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -9,15 +9,14 @@
  */
 ?>
 
-
 <?php echo $this->Form->input('Page.id', array(
 		'type' => 'hidden',
-		'value' => $formPage['page']['id']
+		'value' => isset($formPage['page']['id']) ? $formPage['page']['id'] : null
 	)); ?>
 
 <?php echo $this->Form->input('Page.parent_id', array(
 		'type' => 'hidden',
-		'value' => $formPage['page']['parentId']
+		'value' => isset($formPage['page']['parentId']) ? $formPage['page']['parentId'] : null
 	)); ?>
 
 <?php echo $this->Form->input('LanguagesPage.id', array(
@@ -46,7 +45,7 @@
 		]) ?>
 </div>
 
-<?php if ($formPage['page']['permalink']) : ?>
+<?php if ($action === 'add' || isset($formPage['page']['permalink']) && $formPage['page']['permalink']) : ?>
 	<div class="form-group">
 		<?php echo $this->Form->input('Page.slug', array(
 				'label' => __d('pages', 'Slug') . $this->element('NetCommons.required'),

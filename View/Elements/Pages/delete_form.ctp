@@ -1,6 +1,6 @@
 <?php
 /**
- * Delete template
+ * Element of delete form
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>

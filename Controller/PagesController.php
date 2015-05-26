@@ -50,7 +50,7 @@ class PagesController extends PagesAppController {
 			),
 		),
 		'Security' => array(
-			'unlockedActions' => array('index')
+			'unlockedActions' => array('index') //インストーラの最後のページからのアクセスがPOSTのため
 		),
 	);
 
@@ -106,6 +106,19 @@ class PagesController extends PagesAppController {
 			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
 		}
 		$this->set('pluginMap', $pluginMap);
+
+		//カレントのページ取得
+		if (! $page = $this->__initPage($this->viewVars['page']['page']['roomId'], $this->viewVars['page']['page']['id'])) {
+			return;
+		}
+		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($this->viewVars['page']['page']['id'], $this->viewVars['languageId'])) {
+			$this->throwBadRequest();
+			return;
+		}
+
+		$formPage = Hash::merge($page, $languagesPage);
+		$formPage = $this->camelizeKeyRecursive($formPage);
+		$this->set('formPage', $formPage);
 	}
 
 /**
@@ -115,6 +128,7 @@ class PagesController extends PagesAppController {
  */
 	public function add($roomId = null, $pageId = null) {
 		$this->view = 'edit';
+		$this->layout = 'Pages.dialog';
 
 		if (! $page = $this->__initPage($roomId, $pageId)) {
 			return;
@@ -162,6 +176,7 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function edit($roomId = null, $pageId = null) {
+		$this->layout = 'Pages.dialog';
 		if (! $page = $this->__initPage($roomId, $pageId)) {
 			return;
 		}
@@ -180,12 +195,15 @@ class PagesController extends PagesAppController {
 			$data = $this->request->data;
 			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
+
 			if ($this->handleValidationError($this->Page->validationErrors)) {
 				//正常の場合
+
 				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;
 			}
 
+			var_dump($formPage, $this->request->data);
 			$formPage = Hash::merge($formPage, $this->request->data);
 		}
 

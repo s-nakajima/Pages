@@ -13,7 +13,18 @@
 <?php
 if (Page::isSetting()) {
 	echo $this->element('Pages.plugin_list');
-	echo $this->element('Pages.add_page');
+	echo $this->element('Pages.edit_page', array(
+			'action' => 'add',
+			'roomId' => $formPage['page']['roomId'],
+			'pageId' => $formPage['page']['id'],
+			'formPage' => array()
+		));
+	echo $this->element('Pages.edit_page', array(
+			'action' => 'edit',
+			'roomId' => $formPage['page']['roomId'],
+			'pageId' => $formPage['page']['id'],
+			'formPage' => $formPage
+		));
 	//echo $this->element('Pages.setting_menu');
 }
 

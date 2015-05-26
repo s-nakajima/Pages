@@ -14,10 +14,14 @@
 </a>
 <ul id="dropdown-page-menu" class="dropdown-menu" role="menu">
 	<li>
-		<?php echo $this->Html->link(__d('pages', 'Add page'), '/pages/pages/add/' . $page['page']['roomId'] . '/' . $page['page']['id']) ?>
+		<a href="#" data-toggle="modal" data-target="#page-add">
+			<?php echo __d('pages', 'Add page'); ?>
+		</a>
 	</li>
 	<li>
-		<?php echo $this->Html->link(__d('pages', 'Edit page'), '/pages/pages/edit/' . $page['page']['roomId'] . '/' . $page['page']['id']) ?>
+		<a href="#" data-toggle="modal" data-target="#page-edit">
+			<?php echo __d('pages', 'Edit page'); ?>
+		</a>
 	</li>
 	<li class="divider"></li>
 	<li>

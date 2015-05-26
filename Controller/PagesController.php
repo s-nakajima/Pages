@@ -49,7 +49,9 @@ class PagesController extends PagesAppController {
 				'pageEditable' => array('add', 'edit', 'delete'),
 			),
 		),
-		'Security',
+		'Security' => array(
+			'unlockedActions' => array('index')
+		),
 	);
 
 /**
@@ -139,7 +141,7 @@ class PagesController extends PagesAppController {
 
 		if ($this->request->isPost()) {
 			$data = $this->request->data;
-			$data['Box']['space_id'] = $room['Room']['space_id'];
+			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
 			if ($this->handleValidationError($this->Page->validationErrors)) {
 				//正常の場合
@@ -176,7 +178,7 @@ class PagesController extends PagesAppController {
 
 		if ($this->request->isPost()) {
 			$data = $this->request->data;
-			$data['Box']['space_id'] = $room['Room']['space_id'];
+			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
 			if ($this->handleValidationError($this->Page->validationErrors)) {
 				//正常の場合
@@ -184,7 +186,7 @@ class PagesController extends PagesAppController {
 				return;
 			}
 
-			$formPage = Hash::merge($formPage, $data);
+			$formPage = Hash::merge($formPage, $this->request->data);
 		}
 
 		$formPage = $this->camelizeKeyRecursive($formPage);

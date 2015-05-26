@@ -40,6 +40,6 @@
 	<?php echo $this->Form->end(); ?>
 </div>
 
-<?php if ($formPage['page']['permalink']) : ?>
+<?php if ($this->params['action'] === 'edit' && $formPage['page']['permalink']) : ?>
 	<?php echo $this->element('Pages/delete_form'); ?>
-<?php endif; 
+<?php endif;

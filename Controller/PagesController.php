@@ -60,7 +60,8 @@ class PagesController extends PagesAppController {
  * @var array
  */
 	public $helpers = array(
-		'Pages.Layout'
+		'Pages.Layout',
+		'NetCommons.Composer'
 	);
 
 /**

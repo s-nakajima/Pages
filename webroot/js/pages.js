@@ -1,12 +1,45 @@
-var ncPutBoxId = null;
+/**
+ * @fileoverview Announcements Javascript
+ * @author nakajimashouhei@gmail.com (Shohei Nakajima)
+ */
 
-NetCommonsApp.controller('PagesController', function($scope, $filter) {
-  //フレームの削除
-  $scope.deleteFrame = function(flameId) {
-    var FrameTag = '#frame-wrap-' + flameId;
-    $(FrameTag).addClass('hidden');
-  };
+
+/**
+ * PagesController Javascript
+ *
+ * @param {string} Controller name
+ * @param {function($scope, NetCommonsWysiwyg)} Controller
+ */
+NetCommonsApp.controller('PagesController', function($scope) {
+
+
+  
+//  //フレームの削除
+//  $scope.deleteFrame = function(flameId) {
+//    var FrameTag = '#frame-wrap-' + flameId;
+//    $(FrameTag).addClass('hidden');
+//  };
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 NetCommonsApp.controller('PluginController', function($scope, $filter) {
   $scope.plugins = null;
@@ -56,9 +89,4 @@ NetCommonsApp.controller('PluginController', function($scope, $filter) {
     $(FrameTag).addClass('hidden'); */
   };
 
-});
-
-NetCommonsApp.controller('PagesBlockSetting', function($scope, $http, $filter) {
-  $scope.PluginId = 0;
-  $scope.frameId = 0;
 });

@@ -12,7 +12,8 @@
 
 <?php
 if (Page::isSetting()) {
-	echo $this->element('Pages.plugin_list');
+	//echo $this->element('Pages.plugin_list');
+	//echo $this->element('Pages.add_plugin');
 	//echo $this->element('Pages.edit_page', array(
 	//		'action' => 'add',
 	//		'roomId' => $formPage['page']['roomId'],

@@ -106,19 +106,6 @@ class PagesController extends PagesAppController {
 			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
 		}
 		$this->set('pluginMap', $pluginMap);
-
-		//カレントのページ取得
-		if (! $page = $this->__initPage($this->viewVars['page']['page']['roomId'], $this->viewVars['page']['page']['id'])) {
-			return;
-		}
-		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($this->viewVars['page']['page']['id'], $this->viewVars['languageId'])) {
-			$this->throwBadRequest();
-			return;
-		}
-
-		$formPage = Hash::merge($page, $languagesPage);
-		$formPage = $this->camelizeKeyRecursive($formPage);
-		$this->set('formPage', $formPage);
 	}
 
 /**
@@ -152,7 +139,6 @@ class PagesController extends PagesAppController {
 		));
 
 		$formPage = Hash::merge($page, $languagesPage);
-
 		if ($this->request->isPost()) {
 			$data = $this->request->data;
 			$data['Room']['space_id'] = $room['Room']['space_id'];
@@ -191,24 +177,24 @@ class PagesController extends PagesAppController {
 
 		$formPage = Hash::merge($page, $languagesPage);
 
-		if ($this->request->isPost()) {
+		if ($this->request->isPut()) {
 			$data = $this->request->data;
 			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
 
 			if ($this->handleValidationError($this->Page->validationErrors)) {
 				//正常の場合
-
 				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;
 			}
 
-			var_dump($formPage, $this->request->data);
 			$formPage = Hash::merge($formPage, $this->request->data);
 		}
 
 		$formPage = $this->camelizeKeyRecursive($formPage);
 		$this->set('formPage', $formPage);
+
+		$this->request->data['Page']['id'] = $formPage['page']['id'];
 	}
 
 /**

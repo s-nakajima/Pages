@@ -247,7 +247,7 @@ class Page extends PagesAppModel {
 		);
 
 		$page = $this->find('first', array(
-			'recursive' => -1,
+			'recursive' => 0,
 			'conditions' => $conditions,
 		));
 

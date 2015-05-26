@@ -19,11 +19,6 @@
 	<li>
 		<?php echo $this->Html->link(__d('pages', 'Edit page'), '/pages/pages/edit/' . $page['page']['roomId'] . '/' . $page['page']['id']) ?>
 	</li>
-	<?php if ($page['page']['permalink']) : ?>
-		<li>
-			<?php echo $this->Html->link(__d('pages', 'Delete page'), '/pages/pages/delete/' . $page['page']['roomId'] . '/' . $page['page']['id']) ?>
-		</li>
-	<?php endif; ?>
 	<li class="divider"></li>
 	<li>
 		<a href="#">

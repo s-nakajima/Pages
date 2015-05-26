@@ -64,7 +64,7 @@ class PageBehavior extends ModelBehavior {
 			'Box' => array(
 				'container_id' => $page['Container']['id'],
 				'type' => Box::TYPE_WITH_PAGE,
-				'space_id' => 1,//$this->model->data['Box']['space_id'],
+				'space_id' => $page['Box']['space_id'],
 				'room_id' => $page['Page']['room_id'],
 				'page_id' => $page['Page']['id']
 			)

@@ -114,22 +114,20 @@ class PagesController extends PagesAppController {
 	public function add($roomId = null, $pageId = null) {
 		$this->view = 'edit';
 
-		$language = $this->Language->findByCode(Configure::read('Config.language'));
-		$this->set('languageId', $language['Language']['id']);
-
-		if (! $page = $this->Page->getPage($pageId, $roomId)) {
-			$this->throwBadRequest();
+		if (! $page = $this->__initPage($roomId, $pageId)) {
 			return;
 		}
-		$this->set('path', '/' . $page['Page']['slug']);
+		$room = array(
+			'Room' => $page['Room']
+		);
 
-		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
-		$this->set('cancelUrl', $cancelUrl);
-
+		$slug = Security::hash($this->params['plugin'] . mt_rand() . microtime(), 'md5');
 		$page = $this->Page->create(array(
 			'id' => null,
 			'parent_id' => null,
-			'slug' => Security::hash($this->params['plugin'] . mt_rand() . microtime(), 'md5')
+			'slug' => $slug,
+			'permalink' => $slug,
+			'room_id' => $roomId,
 		));
 		$languagesPage = $this->LanguagesPage->create(array(
 			'id' => null,
@@ -140,7 +138,9 @@ class PagesController extends PagesAppController {
 		$formPage = Hash::merge($page, $languagesPage);
 
 		if ($this->request->isPost()) {
-			$page = $this->Page->savePage($this->request->data);
+			$data = $this->request->data;
+			$data['Box']['space_id'] = $room['Room']['space_id'];
+			$page = $this->Page->savePage($data);
 			if ($this->handleValidationError($this->Page->validationErrors)) {
 				//正常の場合
 				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
@@ -160,17 +160,12 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function edit($roomId = null, $pageId = null) {
-		$language = $this->Language->findByCode(Configure::read('Config.language'));
-		$this->set('languageId', $language['Language']['id']);
-
-		if (! $page = $this->Page->getPage($pageId, $roomId)) {
-			$this->throwBadRequest();
+		if (! $page = $this->__initPage($roomId, $pageId)) {
 			return;
 		}
-		$this->set('path', '/' . $page['Page']['slug']);
-
-		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
-		$this->set('cancelUrl', $cancelUrl);
+		$room = array(
+			'Room' => $page['Room']
+		);
 
 		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($pageId, $this->viewVars['languageId'])) {
 			$this->throwBadRequest();
@@ -180,14 +175,16 @@ class PagesController extends PagesAppController {
 		$formPage = Hash::merge($page, $languagesPage);
 
 		if ($this->request->isPost()) {
-			$page = $this->Page->savePage($this->request->data);
+			$data = $this->request->data;
+			$data['Box']['space_id'] = $room['Room']['space_id'];
+			$page = $this->Page->savePage($data);
 			if ($this->handleValidationError($this->Page->validationErrors)) {
 				//正常の場合
 				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;
 			}
 
-			$formPage = Hash::merge($formPage, $this->request->data);
+			$formPage = Hash::merge($formPage, $data);
 		}
 
 		$formPage = $this->camelizeKeyRecursive($formPage);
@@ -200,24 +197,9 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function delete($roomId = null, $pageId = null) {
-		$language = $this->Language->findByCode(Configure::read('Config.language'));
-		$this->set('languageId', $language['Language']['id']);
-
-		if (! $page = $this->Page->getPage($pageId, $roomId)) {
-			$this->throwBadRequest();
+		if (! $this->__initPage($roomId, $pageId)) {
 			return;
 		}
-		$this->set('path', '/' . $page['Page']['slug']);
-
-		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
-		$this->set('cancelUrl', $cancelUrl);
-
-		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($pageId, $this->viewVars['languageId'])) {
-			$this->throwBadRequest();
-			return;
-		}
-
-		$formPage = Hash::merge($page, $languagesPage);
 
 		if ($this->request->isDelete()) {
 			if ($this->Page->deletePage($this->data)) {
@@ -226,8 +208,29 @@ class PagesController extends PagesAppController {
 			}
 		}
 
-		$formPage = $this->camelizeKeyRecursive($formPage);
-		$this->set('formPage', $formPage);
+		$this->throwBadRequest();
+	}
+
+/**
+ * Initialize page data
+ *
+ * @param array $contains Optional result sets
+ * @return array Page data
+ */
+	private function __initPage($roomId, $pageId) {
+		$language = $this->Language->findByCode(Configure::read('Config.language'));
+		$this->set('languageId', $language['Language']['id']);
+
+		if (! $page = $this->Page->getPage($pageId, $roomId)) {
+			$this->throwBadRequest();
+			return false;
+		}
+		$this->set('path', '/' . $page['Page']['slug']);
+
+		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
+		$this->set('cancelUrl', $cancelUrl);
+
+		return $page;
 	}
 
 }

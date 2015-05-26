@@ -12,7 +12,8 @@
 	<!-- container-major -->
 	<div id="container-major" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MAJOR); ?>">
 		<?php echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->Layout->getBox(Container::TYPE_MAJOR)
+				'boxes' => $this->Layout->getBox(Container::TYPE_MAJOR),
+				'containerType' => Container::TYPE_MAJOR
 			)); ?>
 	</div>
 <?php endif;

@@ -28,5 +28,7 @@ if (Page::isSetting()) {
 	//echo $this->element('Pages.setting_menu');
 }
 
-echo $this->element('Boxes.render_boxes',
-	array('boxes' => $pageMainContainer['box'][$pageMainContainer['container'][Container::TYPE_MAIN]['id']]));
+echo $this->element('Boxes.render_boxes', array(
+		'boxes' => $pageMainContainer['box'][$pageMainContainer['container'][Container::TYPE_MAIN]['id']],
+		'containerType' => Container::TYPE_MAIN
+	));

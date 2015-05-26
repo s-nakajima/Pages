@@ -12,8 +12,10 @@
 	<!-- area-footer -->
 	<footer id="container-footer" role="contentinfo">
 		<?php
-			echo $this->element('Boxes.render_boxes',
-				array('boxes' => $this->Layout->getBox(Container::TYPE_FOOTER)));
+			echo $this->element('Boxes.render_boxes', array(
+				'boxes' => $this->Layout->getBox(Container::TYPE_FOOTER),
+				'containerType' => Container::TYPE_FOOTER
+			));
 		?>
 	</footer>
 <?php endif;

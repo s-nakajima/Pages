@@ -12,7 +12,8 @@
 	<!-- container-header -->
 	<header id="container-header">
 		<?php echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->Layout->getBox(Container::TYPE_HEADER)
+				'boxes' => $this->Layout->getBox(Container::TYPE_HEADER),
+				'containerType' => Container::TYPE_HEADER
 			)); ?>
 	</header>
 <?php endif;

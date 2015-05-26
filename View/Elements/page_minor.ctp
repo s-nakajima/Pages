@@ -12,8 +12,10 @@
 	<!-- container-minor  -->
 	<div id="container-minor" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MINOR); ?>">
 		<?php
-			echo $this->element('Boxes.render_boxes',
-				array('boxes' => $this->Layout->getBox(Container::TYPE_MINOR)));
+			echo $this->element('Boxes.render_boxes', array(
+					'boxes' => $this->Layout->getBox(Container::TYPE_MINOR),
+					'containerType' => Container::TYPE_MINOR
+				));
 		?>
 	</div>
 <?php endif;

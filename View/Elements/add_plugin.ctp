@@ -20,8 +20,16 @@
 				<div class="list-group">
 					<?php foreach ($plugins as $plugin) : ?>
 						<article class="list-group-item clearfix">
-							<?php echo $this->Form->create(null, array('type' => 'post' ,'url' => '/frames/frames/add')); ?>
+							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post' ,'url' => '/frames/frames/add/' . (int)$pageId)); ?>
 								<div class="pull-left inline-block">
+									<?php echo $this->Form->hidden('Frame.room_id', array(
+											'value' => $roomId,
+										)); ?>
+
+									<?php echo $this->Form->hidden('Frame.language_id', array(
+											'value' => $languageId,
+										)); ?>
+
 									<?php echo $this->Form->hidden('Frame.box_id', array(
 											'value' => $boxId,
 										)); ?>
@@ -30,10 +38,13 @@
 											'value' => $plugin['plugin']['key'],
 										)); ?>
 
-									<button type="submit" name="save" class="btn btn-success">
-										<span class="glyphicon glyphicon-plus"> </span>
-										<?php echo __d('pages', 'Add'); ?>
-									</button>
+									<?php echo $this->Form->button(
+											'<span class="glyphicon glyphicon-plus"> </span>' . __d('pages', 'Add'),
+											array(
+												'class' => 'btn btn-success btn-workflow',
+												'name' => 'save'
+											)
+										); ?>
 								</div>
 								<div class="pull-left">
 									<h4 class="list-group-item-heading">

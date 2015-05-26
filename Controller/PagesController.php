@@ -107,6 +107,9 @@ class PagesController extends PagesAppController {
 			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
 		}
 		$this->set('pluginMap', $pluginMap);
+		
+		$language = $this->Language->findByCode(Configure::read('Config.language'));
+		$this->set('languageId', $language['Language']['id']);
 	}
 
 /**

@@ -211,7 +211,7 @@ class Page extends PagesAppModel {
  *
  * @return bool
  */
-	public static function isSetting($isSetting = null) {
+	public static function isSetting() {
 		if (isset(self::$__isSetting)) {
 			return self::$__isSetting;
 		}

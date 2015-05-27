@@ -21,7 +21,13 @@
 					<?php foreach ($plugins as $plugin) : ?>
 						<article class="list-group-item clearfix">
 							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post' ,'url' => '/frames/frames/add/' . (int)$pageId)); ?>
-								<div class="pull-left inline-block">
+								<div class="pull-left">
+									<h4 class="list-group-item-heading">
+										<?php echo h($plugin['plugin']['name']); ?>
+									</h4>
+									<?php echo $this->Composer->getAuthors($plugin['plugin']['key']); ?>
+								</div>
+								<div class="pull-right">
 									<?php echo $this->Form->hidden('Frame.room_id', array(
 											'value' => $roomId,
 										)); ?>
@@ -45,12 +51,6 @@
 												'name' => 'save'
 											)
 										); ?>
-								</div>
-								<div class="pull-left">
-									<h4 class="list-group-item-heading">
-										<?php echo h($plugin['plugin']['name']); ?>
-									</h4>
-									<?php echo $this->Composer->getAuthors($plugin['plugin']['key']); ?>
 								</div>
 							<?php echo $this->Form->end(); ?>
 						</article>

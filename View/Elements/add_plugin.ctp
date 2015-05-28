@@ -20,7 +20,7 @@
 				<div class="list-group">
 					<?php foreach ($plugins as $plugin) : ?>
 						<article class="list-group-item clearfix">
-							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post' ,'url' => '/frames/frames/add/' . (int)$pageId)); ?>
+							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post' ,'url' => '/frames/frames/add')); ?>
 								<div class="pull-left">
 									<h4 class="list-group-item-heading">
 										<?php echo h($plugin['plugin']['name']); ?>

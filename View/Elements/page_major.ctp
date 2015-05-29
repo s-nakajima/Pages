@@ -8,11 +8,11 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php if (! empty($this->Layout) && $this->Layout->hasContainer(Container::TYPE_MAJOR)): ?>
+<?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_MAJOR)): ?>
 	<!-- container-major -->
-	<div id="container-major" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MAJOR); ?>">
+	<div id="container-major" class="<?php echo $this->PageLayout->getContainerSize(Container::TYPE_MAJOR); ?>">
 		<?php echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->Layout->getBox(Container::TYPE_MAJOR),
+				'boxes' => $this->PageLayout->getBox(Container::TYPE_MAJOR),
 				'containerType' => Container::TYPE_MAJOR
 			)); ?>
 	</div>

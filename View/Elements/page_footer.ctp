@@ -8,12 +8,12 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php if (! empty($this->Layout) && $this->Layout->hasContainer(Container::TYPE_FOOTER)): ?>
+<?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_FOOTER)): ?>
 	<!-- area-footer -->
 	<footer id="container-footer" role="contentinfo">
 		<?php
 			echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->Layout->getBox(Container::TYPE_FOOTER),
+				'boxes' => $this->PageLayout->getBox(Container::TYPE_FOOTER),
 				'containerType' => Container::TYPE_FOOTER
 			));
 		?>

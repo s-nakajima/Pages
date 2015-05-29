@@ -38,19 +38,19 @@
 
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
-		<main class="<?php echo $this->Layout->getContainerFluid(); ?>">
+		<main class="<?php echo $this->PageLayout->getContainerFluid(); ?>">
 			<?php echo $this->element('Pages.page_header'); ?>
 
 			<div class="row">
 				<?php echo $this->element('Pages.page_major'); ?>
 
 				<!-- container-main -->
-				<div role="main" id="container-main" class="<?php echo $this->Layout->getContainerSize(Container::TYPE_MAIN); ?>">
+				<div role="main" id="container-main" class="<?php echo $this->PageLayout->getContainerSize(Container::TYPE_MAIN); ?>">
 					<?php if ($this->request->params['plugin'] === 'pages') : ?>
 						<?php echo $this->fetch('content'); ?>
 					<?php else : ?>
 						<?php echo $this->element('Frames.frame', array(
-								'frame' => isset($frame) ? $frame : null,
+								'frame' => PageLayoutHelper::$frame,
 								'view' => $this->fetch('content')
 							)); ?>
 					<?php endif; ?>

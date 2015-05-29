@@ -15,7 +15,7 @@ App::uses('Container', 'Containers.Model');
  * LayoutHelper
  *
  */
-class LayoutHelper extends AppHelper {
+class PageLayoutHelper extends AppHelper {
 
 /**
  * Bootstrap col max size
@@ -74,6 +74,13 @@ class LayoutHelper extends AppHelper {
 	private $__pluginMap;
 
 /**
+ * Plugins map data
+ *
+ * @var array
+ */
+	public static $frame = null;
+
+/**
  * Default Constructor
  *
  * @param View $View The View this helper is being attached to.
@@ -86,6 +93,10 @@ class LayoutHelper extends AppHelper {
 		$this->__boxes = $settings['boxes'];
 		$this->__plugins = $settings['plugins'];
 		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.plugin.key', '{n}.plugin');
+
+		if (isset($settings['current']['frame'])) {
+			self::$frame = $settings['current']['frame'];
+		}
 	}
 
 /**
@@ -96,8 +107,6 @@ class LayoutHelper extends AppHelper {
  * @return string Html class attribute
  */
 	public function getContainerSize($containerType) {
-		CakeLog::debug('LayoutHelper::getContainerSize(' . $containerType . ')');
-
 		$result = '';
 		switch ($containerType) {
 			case Container::TYPE_MAJOR:
@@ -142,8 +151,6 @@ class LayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		CakeLog::debug('LayoutHelper::hasContainer(' . $containerType . ')');
-
 		$result = false;
 
 		if (Page::isSetting()) {
@@ -165,8 +172,6 @@ class LayoutHelper extends AppHelper {
  * @return array Box data
  */
 	public function getBox($containerType) {
-		CakeLog::debug('LayoutHelper::getBox(' . $containerType . ')');
-
 		if (isset($this->__boxes[$this->__containers[$containerType]['id']])) {
 			return $this->__boxes[$this->__containers[$containerType]['id']];
 		}
@@ -175,13 +180,20 @@ class LayoutHelper extends AppHelper {
 	}
 
 /**
+ * Get the plugins data
+ *
+ * @return array P;ugins data
+ */
+	public function getPlugins() {
+		return $this->__plugins;
+	}
+
+/**
  * Get the style sheet for container fluid
  *
  * @return string Box data
  */
 	public function getContainerFluid() {
-		CakeLog::debug('LayoutHelper::getContainerFluid()');
-
 		$result = 'container';
 		if (isset($this->_View->viewVars['current']['page']) &&
 				$this->_View->viewVars['current']['page']['isContainerFluid']) {
@@ -202,6 +214,22 @@ class LayoutHelper extends AppHelper {
 			$action = $this->__pluginMap[$pluginKey]['defaultAction'];
 		} else {
 			$action = $pluginKey . '/index';
+		}
+
+		return $action;
+	}
+
+/**
+ * Get the plugin default setting action
+ *
+ * @param string $pluginKey plugins.key
+ * @return array action name
+ */
+	public function getDefaultSettingAction($pluginKey) {
+		if (isset($this->__pluginMap[$pluginKey]['defaultSettingAction']) && $this->__pluginMap[$pluginKey]['defaultSettingAction'] !== '') {
+			$action = $this->__pluginMap[$pluginKey]['defaultSettingAction'];
+		} else {
+			$action = '';
 		}
 
 		return $action;

@@ -8,11 +8,11 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php if (! empty($this->Layout) && $this->Layout->hasContainer(Container::TYPE_HEADER)): ?>
+<?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_HEADER)): ?>
 	<!-- container-header -->
 	<header id="container-header">
 		<?php echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->Layout->getBox(Container::TYPE_HEADER),
+				'boxes' => $this->PageLayout->getBox(Container::TYPE_HEADER),
 				'containerType' => Container::TYPE_HEADER
 			)); ?>
 	</header>

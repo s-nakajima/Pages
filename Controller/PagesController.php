@@ -52,7 +52,7 @@ class PagesController extends PagesAppController {
 		'Security' => array(
 			'unlockedActions' => array('index') //インストーラの最後のページからのアクセスがPOSTのため
 		),
-		'Pages.Layout',
+		'Pages.PageLayout',
 	);
 
 /**
@@ -71,8 +71,6 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
-var_dump('PagesController');
-
 		if (Page::isSetting() && ! $this->viewVars['pageEditable']) {
 			$paths = func_get_args();
 			$path = implode('/', $paths);
@@ -99,11 +97,11 @@ var_dump('PagesController');
 		$page['container'] = array(Container::TYPE_MAIN => $page['container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
 
-		//プラグインデータ取得
-		$plugins = $this->PluginsRoom->getPlugins($page['page']['roomId'], $page['language'][0]['id']);
-		$plugins = $this->camelizeKeyRecursive($plugins);
-		$this->set('plugins', $plugins);
-
+//		//プラグインデータ取得
+//		$plugins = $this->PluginsRoom->getPlugins($page['page']['roomId'], $page['language'][0]['id']);
+//		$plugins = $this->camelizeKeyRecursive($plugins);
+//		$this->set('plugins', $plugins);
+//
 //		$pluginMap = [];
 //		foreach ($plugins as $plugin) {
 //			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];

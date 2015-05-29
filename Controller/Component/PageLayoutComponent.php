@@ -14,7 +14,7 @@ App::uses('Component', 'Controller');
  * LayoutComponent
  *
  */
-class LayoutComponent extends Component {
+class PageLayoutComponent extends Component {
 
 /**
  * beforeRender
@@ -40,8 +40,10 @@ class LayoutComponent extends Component {
 		if (isset($controller->viewVars['page'])) {
 			$page = $controller->viewVars['page'];
 		} else {
-			if (isset($controller->current)) {
+			if (isset($controller->current['page'])) {
 				$path = $controller->current['page']['permalink'];
+			} elseif (isset($controller->viewVars['path'])) {
+				$path = substr($controller->viewVars['path'], 1);
 			} else {
 				$path = '';
 			}
@@ -110,7 +112,7 @@ class LayoutComponent extends Component {
 //		}
 
 		$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
-		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $page['language'][0]['id']);
+		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $controller->viewVars['languageId']);
 		if (empty($plugins)) {
 			throw new NotFoundException();
 		}
@@ -133,10 +135,9 @@ class LayoutComponent extends Component {
 //		$controller->layout = 'Pages.default';
 
 		//ページHelper読み込み
-		if (in_array('Pages.Layout', $controller->helpers)) {
-			unset($controller->helpers['Pages.Layout']);
+		if (in_array('Pages.PageLayout', $controller->helpers)) {
+			unset($controller->helpers['Pages.PageLayout']);
 		}
-
 		$results = array(
 			'current' => $controller->current,
 			'containers' => Hash::combine($page['container'], '{n}.type', '{n}'),
@@ -144,7 +145,7 @@ class LayoutComponent extends Component {
 			'plugins' => $controller->camelizeKeyRecursive($plugins),
 //			'pluginMap' => Hash::combine($plugins, '{n}.plugin.key', '{n}.plugin')
 		);
-		$controller->helpers['Pages.Layout'] = $controller->camelizeKeyRecursive($results);
+		$controller->helpers['Pages.PageLayout'] = $controller->camelizeKeyRecursive($results);
 
 	}
 

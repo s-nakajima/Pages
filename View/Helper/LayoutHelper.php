@@ -60,85 +60,32 @@ class LayoutHelper extends AppHelper {
 	private $__boxes;
 
 /**
- * Before layout callback. beforeLayout is called before the layout is rendered.
+ * Plugins data
  *
- * Overridden in subclasses.
- *
- * @param string $layoutFile The layout about to be rendered.
- * @return void
+ * @var array
  */
-	public function afterRender($layoutFile) {
-		CakeLog::debug('LayoutHelper::afterRender(' . $layoutFile . ')');
-
-		if ($this->_View->layout === 'NetCommons.setting') {
-			//TODO:各プラグインで制御
-			$this->_View->layout = 'Frames.setting';
-		}
-		if ($this->_View->layout === 'NetCommons.default') {
-			$this->_View->layout = 'Pages.default';
-		}
-	}
+	private $__plugins;
 
 /**
- * Before layout callback. beforeLayout is called before the layout is rendered.
+ * Plugins map data
  *
- * Overridden in subclasses.
- *
- * @param string $layoutFile The layout about to be rendered.
- * @return void
- * @throws NotFoundException
+ * @var array
  */
-	public function beforeLayout($layoutFile) {
-		CakeLog::debug('LayoutHelper::beforeLayout(' . $layoutFile . ')');
+	private $__pluginMap;
 
-		//ページデータ取得
-		if (isset($this->_View->viewVars['page'])) {
-			$page = $this->_View->viewVars['page'];
-		} else {
-			if (isset($this->_View->viewVars['current'])) {
-				$path = $this->_View->viewVars['current']['page']['permalink'];
-			} else {
-				$path = '';
-			}
+/**
+ * Default Constructor
+ *
+ * @param View $View The View this helper is being attached to.
+ * @param array $settings Configuration settings for the helper.
+ */
+	public function __construct(View $View, $settings = array()) {
+		parent::__construct($View, $settings);
 
-			$pageModel = ClassRegistry::init('Pages.Page');
-			$page = $pageModel->getPageWithFrame($path);
-			if (empty($page)) {
-				throw new NotFoundException();
-			}
-			$page = NetCommonsAppController::camelizeKeyRecursive($page);
-			$this->_View->set('page', $page);
-		}
-		$this->_View->viewVars['current']['page'] = NetCommonsAppController::camelizeKeyRecursive($page['page']);
-		$this->_View->viewVars['current']['frame']['roomId'] = $this->_View->viewVars['current']['page']['roomId'];
-		$this->_View->viewVars['current']['frame']['languageId'] = $page['language'][0]['id'];
-		$this->_View->set('frame', $this->_View->viewVars['current']['frame']);
-
-		if (! isset($this->_View->viewVars['cancelUrl'])) {
-			$this->_View->set('cancelUrl', $this->_View->viewVars['current']['page']['permalink']);
-		}
-		$this->_View->set('path', '/' . $this->_View->viewVars['current']['page']['permalink']);
-
-		$this->__containers = Hash::combine($page['container'], '{n}.type', '{n}');
-		$this->__boxes = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
-
-		//プラグインデータ取得
-		if (! isset($this->_View->viewVars['plugins'])) {
-			$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
-			$plugins = $pluginsRoom->getPlugins(
-				$this->_View->viewVars['current']['frame']['roomId'],
-				$this->_View->viewVars['current']['frame']['languageId']
-			);
-			if (empty($plugins)) {
-				throw new NotFoundException();
-			}
-
-			$plugins = NetCommonsAppController::camelizeKeyRecursive($plugins);
-			$pluginMap = Hash::combine($plugins, '{n}.plugin.key', '{n}.plugin');
-
-			$this->_View->set('plugins', $plugins);
-			$this->_View->set('pluginMap', $pluginMap);
-		}
+		$this->__containers = $settings['containers'];
+		$this->__boxes = $settings['boxes'];
+		$this->__plugins = $settings['plugins'];
+		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.plugin.key', '{n}.plugin');
 	}
 
 /**
@@ -242,6 +189,22 @@ class LayoutHelper extends AppHelper {
 		}
 
 		return $result;
+	}
+
+/**
+ * Get the plugin default action
+ *
+ * @param string $pluginKey plugins.key
+ * @return array action name
+ */
+	public function getDefaultAction($pluginKey) {
+		if (isset($this->__pluginMap[$pluginKey]['defaultAction']) && $this->__pluginMap[$pluginKey]['defaultAction'] !== '') {
+			$action = $this->__pluginMap[$pluginKey]['defaultAction'];
+		} else {
+			$action = $pluginKey . '/index';
+		}
+
+		return $action;
 	}
 
 }

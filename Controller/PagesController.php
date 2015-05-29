@@ -52,6 +52,7 @@ class PagesController extends PagesAppController {
 		'Security' => array(
 			'unlockedActions' => array('index') //インストーラの最後のページからのアクセスがPOSTのため
 		),
+		'Pages.Layout',
 	);
 
 /**
@@ -60,7 +61,6 @@ class PagesController extends PagesAppController {
  * @var array
  */
 	public $helpers = array(
-		'Pages.Layout',
 		'NetCommons.Composer'
 	);
 
@@ -71,6 +71,8 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
+var_dump('PagesController');
+
 		if (Page::isSetting() && ! $this->viewVars['pageEditable']) {
 			$paths = func_get_args();
 			$path = implode('/', $paths);
@@ -92,7 +94,7 @@ class PagesController extends PagesAppController {
 
 		$page['container'] = Hash::combine($page['container'], '{n}.type', '{n}');
 		$page['box'] = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
-		$this->set('path', '/' . $path);
+//		$this->set('path', '/' . $path);
 
 		$page['container'] = array(Container::TYPE_MAIN => $page['container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
@@ -102,12 +104,12 @@ class PagesController extends PagesAppController {
 		$plugins = $this->camelizeKeyRecursive($plugins);
 		$this->set('plugins', $plugins);
 
-		$pluginMap = [];
-		foreach ($plugins as $plugin) {
-			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
-		}
-		$this->set('pluginMap', $pluginMap);
-		
+//		$pluginMap = [];
+//		foreach ($plugins as $plugin) {
+//			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
+//		}
+//		$this->set('pluginMap', $pluginMap);
+
 		$language = $this->Language->findByCode(Configure::read('Config.language'));
 		$this->set('languageId', $language['Language']['id']);
 	}

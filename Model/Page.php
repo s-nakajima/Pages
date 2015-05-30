@@ -288,7 +288,7 @@ class Page extends PagesAppModel {
  * Save page each association model
  *
  * @param array $data request data
- * @throws Exception
+ * @throws InternalErrorException
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function savePage($data) {
@@ -344,8 +344,8 @@ class Page extends PagesAppModel {
 /**
  * Save page
  *
- * @param array $data request data
  * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @throws InternalErrorException
  */
 	private function __savePage() {
 		if (! $page = $this->save(null, false)) {
@@ -417,7 +417,7 @@ class Page extends PagesAppModel {
  * Delete page each association model
  *
  * @param array $data request data
- * @throws Exception
+ * @throws InternalErrorException
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function deletePage($data) {
@@ -446,19 +446,17 @@ class Page extends PagesAppModel {
 			//Container関連の削除
 			//$this->deleteContainers($data[$this->alias]['id']);
 
-			//Container関連の削除
+			//Box関連の削除
 			//$this->deleteBoxes($data[$this->alias]['id']);
 
 			$dataSource->commit();
-			//$dataSource->rollback();
+			return true;
 
 		} catch (Exception $ex) {
 			$dataSource->rollback();
 			CakeLog::error($ex);
 			throw $ex;
 		}
-
-		return true;
 	}
 
 }

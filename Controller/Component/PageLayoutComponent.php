@@ -64,14 +64,6 @@ class PageLayoutComponent extends Component {
 		//Pluginデータ取得
 		$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
 		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $controller->viewVars['languageId']);
-		if (empty($plugins)) {
-			throw new NotFoundException();
-		}
-
-		//ページHelper読み込み
-		if (in_array('Pages.PageLayout', $controller->helpers)) {
-			unset($controller->helpers['Pages.PageLayout']);
-		}
 
 		//ページHelperにセット
 		$results = array(

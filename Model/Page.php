@@ -45,7 +45,8 @@ class Page extends PagesAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Containable'
+		'Containable',
+		'Pages.Page'
 	);
 
 /**
@@ -53,38 +54,7 @@ class Page extends PagesAppModel {
  *
  * @var array
  */
-	public $validate = array(
-		'permalink' => array(
-			'isUnique' => array(
-				'rule' => array('isUnique'),
-				'message' => 'Permalink is already in use.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'from' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-				'message' => 'Please enter a valid date and time.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'to' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-				'message' => 'Please enter a valid date and time.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+	public $validate = array();
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -179,6 +149,64 @@ class Page extends PagesAppModel {
 	);
 
 /**
+ * Called during validation operations, before validation. Please note that custom
+ * validation rules can be defined in $validate.
+ *
+ * @param array $options Options passed from Model::save().
+ * @return bool True if validate operation should continue, false to abort
+ * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#beforevalidate
+ * @see Model::save()
+ */
+	public function beforeValidate($options = array()) {
+		$this->validate = Hash::merge($this->validate, array(
+			'slug' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug')),
+					'required' => true
+				),
+			),
+			'permalink' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true
+				),
+				'isUnique' => array(
+					'rule' => array('isUnique'),
+					'message' => sprintf(__d('net_commons', '%s is already in use.'), __d('pages', 'Permalink')),
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'from' => array(
+				'datetime' => array(
+					'rule' => array('datetime'),
+					'message' => 'Please enter a valid date and time.',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+			'to' => array(
+				'datetime' => array(
+					'rule' => array('datetime'),
+					'message' => 'Please enter a valid date and time.',
+					//'allowEmpty' => false,
+					//'required' => false,
+					//'last' => false, // Stop validation after this rule
+					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+			),
+		));
+
+		return parent::beforeValidate($options);
+	}
+
+/**
  * Check setting mode
  *
  * @return bool
@@ -203,6 +231,27 @@ class Page extends PagesAppModel {
  */
 	public static function unsetIsSetting() {
 		self::$__isSetting = null;
+	}
+
+/**
+ * Get page data
+ *
+ * @param int $pageId pages.id
+ * @param int $roomId rooms.id
+ * @return array
+ */
+	public function getPage($pageId, $roomId) {
+		$conditions = array(
+			'Page.id' => $pageId,
+			'Page.room_id' => $roomId,
+		);
+
+		$page = $this->find('first', array(
+			'recursive' => 0,
+			'conditions' => $conditions,
+		));
+
+		return $page;
 	}
 
 /**
@@ -236,21 +285,6 @@ class Page extends PagesAppModel {
 	}
 
 /**
- * Get page ID of top.
- *
- * @return string
- */
-	private function __getTopPageId() {
-		$topPageId = null;
-		$topPage = $this->findByLft('1', array('id'));
-		if (!empty($topPage)) {
-			$topPageId = $topPage['Page']['id'];
-		}
-
-		return $topPageId;
-	}
-
-/**
  * Save page each association model
  *
  * @param array $data request data
@@ -258,46 +292,52 @@ class Page extends PagesAppModel {
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function savePage($data) {
-		$this->ContainersPage = ClassRegistry::init('Pages.ContainersPage');
-		$this->BoxesPage = ClassRegistry::init('Pages.BoxesPage');
+		$this->loadModels([
+			'ContainersPage' => 'Pages.ContainersPage',
+			'BoxesPage' => 'Pages.BoxesPage',
+			'Container' => 'Containers.Container',
+			'Box' => 'Boxes.Box',
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
 
+		//トランザクションBegin
 		$this->setDataSource('master');
-		$this->Container->setDataSource('master');
-		$this->Box->setDataSource('master');
-		$this->ContainersPage->setDataSource('master');
-		$this->BoxesPage->setDataSource('master');
-
 		$dataSource = $this->getDataSource();
 		$dataSource->begin();
 
 		try {
-			$exists = $this->exists();
-			$page = $this->__savePage($data);
-			if (!$page) {
-				throw new Exception();
+			if (! $this->validatePage($data, ['languagesPage'])) {
+				return false;
 			}
+			$exists = $this->exists();
 
-			if (!$exists) {
-				if (!$this->__saveContainer()) {
-					throw new Exception();
+			$page = $this->__savePage();
+			if (! $exists) {
+				if (! $container = $this->saveContainer($page)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
-				if (!$this->__saveBox()) {
-					throw new Exception();
+				$page = Hash::merge($page, $container);
+
+				if (! $box = $this->saveBox($page)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
-				if (!$this->__saveContainersPage()) {
-					throw new Exception();
+				$page = Hash::merge($page, $box);
+
+				if (! $this->saveContainersPage($page)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
-				if (!$this->__saveBoxesPage()) {
-					throw new Exception();
+				if (! $this->saveBoxesPage($page)) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 			}
 
 			$dataSource->commit();
 			return $page;
 
-		} catch (Exception $e) {
+		} catch (Exception $ex) {
 			$dataSource->rollback();
-			return false;
+			CakeLog::error($ex);
+			throw $ex;
 		}
 	}
 
@@ -307,11 +347,29 @@ class Page extends PagesAppModel {
  * @param array $data request data
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	private function __savePage($data) {
-		$this->set($data);
+	private function __savePage() {
+		if (! $page = $this->save(null, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
 
-		$referencePageId = $this->__getReferencePageId();
+		$this->LanguagesPage->data['LanguagesPage']['page_id'] = $page['Page']['id'];
+		if (! $this->LanguagesPage->save(null, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
 
+		return $page;
+	}
+
+/**
+ * validate page
+ *
+ * @param array $data received post data
+ * @param array $contains Optional validate sets
+ * @return bool True on success, false on error
+ */
+	public function validatePage($data, $contains = []) {
+		//ページデータをセット
+		$referencePageId = $this->getReferencePageId($data);
 		$fields = array(
 			'room_id',
 			'permalink'
@@ -320,149 +378,87 @@ class Page extends PagesAppModel {
 		if (empty($targetPage)) {
 			return false;
 		}
+		$data['Page']['room_id'] = $targetPage['Page']['room_id'];
 
-		$this->set('room_id', $targetPage['Page']['room_id']);
-
-		$slug = $this->data['Page']['slug'];
-		if (!isset($slug)) {
+		$slug = $data['Page']['slug'];
+		if (! isset($slug)) {
 			$slug = '';
 		}
-		$this->set('slug', $slug);
+		$data['Page']['slug'] = $slug;
 
 		$permalink = '';
 		if (strlen($targetPage['Page']['permalink']) !== 0) {
 			$permalink = $targetPage['Page']['permalink'] . '/';
 		}
 		$permalink .= $slug;
-		$this->set('permalink', $permalink);
+		$data['Page']['permalink'] = $permalink;
 
-		// It should check parts
-		$this->set('is_published', true);
+		$data['Page']['is_published'] = true;
+		$data['Page']['is_container_fluid'] = false;
 
-		return $this->save();
-	}
+		//バリデーション
+		$this->set($data);
+		$this->validates();
 
-/**
- * Save container data.
- *
- * @return mixed On success Model::$data if its not empty or true, false on failure
- */
-	private function __saveContainer() {
-		$this->Container->create();
-		$data = array(
-			'Container' => array(
-				'type' => Container::TYPE_MAIN
-			)
-		);
-
-		return $this->Container->save($data);
-	}
-
-/**
- * Save box data.
- *
- * @return mixed On success Model::$data if its not empty or true, false on failure
- */
-	private function __saveBox() {
-		$this->Box->create();
-		$data = array(
-			'Box' => array(
-				'container_id' => $this->Container->getLastInsertID(),
-				'type' => Box::TYPE_WITH_PAGE,
-				'space_id' => '1',	// It should modify value
-				'room_id' => $this->data['Page']['room_id'],
-				'page_id' => $this->getLastInsertID()
-			)
-		);
-
-		return $this->Box->save($data);
-	}
-
-/**
- * Save containersPage for page
- *
- * @return bool True on success
- */
-	private function __saveContainersPage() {
-		$query = array(
-			'conditions' => array(
-				'ContainersPage.page_id' => $this->__getReferencePageId(),
-				'Container.type !=' => Container::TYPE_MAIN
-			)
-		);
-		$containersPages = $this->ContainersPage->find('all', $query);
-		$containersPages[] = array(
-			'ContainersPage' => array(
-				'page_id' => $this->getLastInsertID(),
-				'container_id' => $this->Container->getLastInsertID(),
-				'is_published' => true
-			)
-		);
-
-		foreach ($containersPages as $containersPage) {
-			$data = array(
-				'page_id' => $this->getLastInsertID(),
-				'container_id' => $containersPage['ContainersPage']['container_id'],
-				'is_published' => $containersPage['ContainersPage']['is_published']
-			);
-
-			$this->ContainersPage->create();
-			if (!$this->ContainersPage->save($data)) {
-				return false;
+		if (in_array('languagesPage', $contains, true)) {
+			if (! $this->LanguagesPage->validateLanguagesPage($data)) {
+				$this->validationErrors = Hash::merge($this->validationErrors, $this->LanguagesPage->validationErrors);
 			}
+		}
+
+		if ($this->validationErrors) {
+			return false;
 		}
 
 		return true;
 	}
 
 /**
- * Save boxesPage for page
+ * Delete page each association model
  *
- * @return bool True on success
+ * @param array $data request data
+ * @throws Exception
+ * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	private function __saveBoxesPage() {
-		$query = array(
-			'conditions' => array(
-				'BoxesPage.page_id' => $this->__getReferencePageId(),
-				'Box.type !=' => Box::TYPE_WITH_PAGE
-			)
-		);
-		$boxesPages = $this->BoxesPage->find('all', $query);
-		$boxesPages[] = array(
-			'BoxesPage' => array(
-				'page_id' => $this->getLastInsertID(),
-				'box_id' => $this->Box->getLastInsertID(),
-				'is_published' => true
-			)
-		);
+	public function deletePage($data) {
+		$this->loadModels([
+			'ContainersPage' => 'Pages.ContainersPage',
+			'BoxesPage' => 'Pages.BoxesPage',
+			'Container' => 'Containers.Container',
+			'Box' => 'Boxes.Box',
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
 
-		foreach ($boxesPages as $boxesPage) {
-			$data = array(
-				'page_id' => $this->getLastInsertID(),
-				'box_id' => $boxesPage['BoxesPage']['box_id'],
-				'is_published' => $boxesPage['BoxesPage']['is_published']
-			);
+		//トランザクションBegin
+		$this->setDataSource('master');
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
 
-			$this->BoxesPage->create();
-			if (!$this->BoxesPage->save($data)) {
-				return false;
+		try {
+			//Pageの削除
+			if (! $this->deleteAll(array($this->alias . '.id' => $data[$this->alias]['id']), false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
+			if (! $this->LanguagesPage->deleteAll(array($this->LanguagesPage->alias . '.page_id' => $data[$this->alias]['id']), false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			//Container関連の削除
+			//$this->deleteContainers($data[$this->alias]['id']);
+
+			//Container関連の削除
+			//$this->deleteBoxes($data[$this->alias]['id']);
+
+			$dataSource->commit();
+			//$dataSource->rollback();
+
+		} catch (Exception $ex) {
+			$dataSource->rollback();
+			CakeLog::error($ex);
+			throw $ex;
 		}
 
 		return true;
-	}
-
-/**
- * Get Reference page ID. Return top page ID if it has no parent.
- *
- * @return string
- */
-	private function __getReferencePageId() {
-		if (!empty($this->data['Page']['parent_id'])) {
-			return $this->data['Page']['parent_id'];
-		}
-
-		return $this->__getTopPageId();
 	}
 
 }

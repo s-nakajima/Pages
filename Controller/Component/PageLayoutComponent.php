@@ -40,6 +40,7 @@ class PageLayoutComponent extends Component {
 		//pathからページデータ取得
 		if (isset($controller->viewVars['page'])) {
 			$page = $controller->viewVars['page'];
+			$controller->current['page'] = $page['page'];
 		} else {
 			if (isset($controller->current['page'])) {
 				$path = $controller->current['page']['permalink'];

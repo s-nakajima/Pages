@@ -172,7 +172,8 @@ class PageLayoutHelper extends AppHelper {
  * @return array Box data
  */
 	public function getBox($containerType) {
-		if (isset($this->__boxes[$this->__containers[$containerType]['id']])) {
+		if (isset($this->__containers[$containerType]['id']) &&
+				isset($this->__boxes[$this->__containers[$containerType]['id']])) {
 			return $this->__boxes[$this->__containers[$containerType]['id']];
 		}
 

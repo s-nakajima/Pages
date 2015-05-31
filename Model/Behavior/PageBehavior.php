@@ -36,6 +36,7 @@ class PageBehavior extends ModelBehavior {
 /**
  * Save container data.
  *
+ * @param Model $model Model using this behavior
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function saveContainer(Model $model) {
@@ -54,6 +55,8 @@ class PageBehavior extends ModelBehavior {
 /**
  * Save box data.
  *
+ * @param Model $model Model using this behavior
+ * @param array $page The page data
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function saveBox(Model $model, $page) {
@@ -76,6 +79,8 @@ class PageBehavior extends ModelBehavior {
 /**
  * Save containersPage for page
  *
+ * @param Model $model Model using this behavior
+ * @param array $page The page data
  * @return bool True on success
  */
 	public function saveContainersPage(Model $model, $page) {
@@ -116,6 +121,8 @@ class PageBehavior extends ModelBehavior {
 /**
  * Save boxesPage for page
  *
+ * @param Model $model Model using this behavior
+ * @param array $page The page data
  * @return bool True on success
  */
 	public function saveBoxesPage(Model $model, $page) {
@@ -170,6 +177,8 @@ class PageBehavior extends ModelBehavior {
 /**
  * Get Reference page ID. Return top page ID if it has no parent.
  *
+ * @param Model $model Model using this behavior
+ * @param array $page The page data
  * @return string
  */
 	public function getReferencePageId(Model $model, $page) {
@@ -185,6 +194,9 @@ class PageBehavior extends ModelBehavior {
 /**
  * delete containersPage for page
  *
+ * @param Model $model Model using this behavior
+ * @param int $pageId pages.id
+ * @throws InternalErrorException
  * @return bool True on success
  */
 	public function deleteContainers(Model $model, $pageId) {
@@ -215,7 +227,10 @@ class PageBehavior extends ModelBehavior {
 /**
  * delete boxesPage for page
  *
+ * @param Model $model Model using this behavior
+ * @param int $pageId pages.id
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function deleteBoxes(Model $model, $pageId) {
 		$this->model = $model;

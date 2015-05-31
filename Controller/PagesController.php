@@ -19,13 +19,6 @@ App::uses('PagesAppController', 'Pages.Controller');
 class PagesController extends PagesAppController {
 
 /**
- * use layout
- *
- * @var string
- */
-//	public $layout = 'Pages.default';
-
-/**
  * uses
  *
  * @var array
@@ -92,21 +85,9 @@ class PagesController extends PagesAppController {
 
 		$page['container'] = Hash::combine($page['container'], '{n}.type', '{n}');
 		$page['box'] = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
-//		$this->set('path', '/' . $path);
 
 		$page['container'] = array(Container::TYPE_MAIN => $page['container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
-
-//		//プラグインデータ取得
-//		$plugins = $this->PluginsRoom->getPlugins($page['page']['roomId'], $page['language'][0]['id']);
-//		$plugins = $this->camelizeKeyRecursive($plugins);
-//		$this->set('plugins', $plugins);
-//
-//		$pluginMap = [];
-//		foreach ($plugins as $plugin) {
-//			$pluginMap[$plugin['plugin']['key']] = $plugin['plugin'];
-//		}
-//		$this->set('pluginMap', $pluginMap);
 
 		$language = $this->Language->findByCode(Configure::read('Config.language'));
 		$this->set('languageId', $language['Language']['id']);
@@ -115,6 +96,8 @@ class PagesController extends PagesAppController {
 /**
  * add
  *
+ * @param int $roomId rooms.id
+ * @param int $pageId pages.id
  * @return void
  */
 	public function add($roomId = null, $pageId = null) {
@@ -163,6 +146,8 @@ class PagesController extends PagesAppController {
 /**
  * edit
  *
+ * @param int $roomId rooms.id
+ * @param int $pageId pages.id
  * @return void
  */
 	public function edit($roomId = null, $pageId = null) {
@@ -204,6 +189,8 @@ class PagesController extends PagesAppController {
 /**
  * delete
  *
+ * @param int $roomId rooms.id
+ * @param int $pageId pages.id
  * @return void
  */
 	public function delete($roomId = null, $pageId = null) {
@@ -224,7 +211,8 @@ class PagesController extends PagesAppController {
 /**
  * Initialize page data
  *
- * @param array $contains Optional result sets
+ * @param int $roomId rooms.id
+ * @param int $pageId pages.id
  * @return array Page data
  */
 	private function __initPage($roomId, $pageId) {

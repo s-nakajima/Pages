@@ -8,13 +8,18 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
+App::uses('NetCommonsRoomRoleComponent', 'NetCommons.Controller/Component');
+App::uses('YAControllerTestCase', 'NetCommons.TestSuite');
+App::uses('RolesControllerTest', 'Roles.Test/Case/Controller');
+App::uses('AuthGeneralControllerTest', 'AuthGeneral.Test/Case/Controller');
+
 App::uses('PagesController', 'Controller');
 App::uses('Page', 'Pages.Model');
 
 /**
  * Summary for PagesController Test Case
  */
-class PagesControllerTest extends ControllerTestCase {
+class PagesControllerTest extends YAControllerTestCase {
 
 /**
  * Fixtures
@@ -30,11 +35,12 @@ class PagesControllerTest extends ControllerTestCase {
 		'plugin.containers.containers_page',
 		'plugin.frames.frame',
 		'plugin.m17n.language',
-		'plugin.m17n.languages_page',
-		'plugin.net_commons.plugin',
 		'plugin.net_commons.site_setting',
+		'plugin.pages.languages_page',
 		'plugin.pages.page',
+		'plugin.plugin_manager.plugin',
 		'plugin.roles.default_role_permission',
+		'plugin.rooms.roles_room',
 		'plugin.rooms.roles_rooms_user',
 		'plugin.rooms.plugins_room',
 		'plugin.rooms.room',
@@ -49,9 +55,20 @@ class PagesControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->generate('Pages.Pages');
 
-		Configure::write('NetCommons.installed', true);
+		Configure::write('Config.language', 'ja');
+		YACakeTestCase::loadTestPlugin($this, 'NetCommons', 'TestPlugin');
+
+		$this->generate(
+			'Pages.Pages',
+			[
+				'components' => [
+					'Auth' => ['user'],
+					'Session',
+					'Security',
+				],
+			]
+		);
 		Page::unsetIsSetting();
 	}
 
@@ -62,8 +79,8 @@ class PagesControllerTest extends ControllerTestCase {
  */
 	public function testIndex() {
 		$this->testAction('/', array('return' => 'view'));
-		$this->assertTextContains('<header id="container-header">', $this->view);
-		$this->assertEquals(5, count($this->vars['page']['Container']));
+		$this->assertTextContains('<div class="box-site">', $this->view);
+		$this->assertEquals(5, count($this->vars['page']['container']));
 	}
 
 /**
@@ -73,7 +90,8 @@ class PagesControllerTest extends ControllerTestCase {
  */
 	public function testPermalink() {
 		$this->testAction('/test', array('return' => 'vars'));
-		$this->assertEquals(1, count($this->vars['page']['Container']));
+
+		$this->assertEquals(1, count($this->vars['page']['container']));
 	}
 
 /**
@@ -93,16 +111,15 @@ class PagesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndexSetting() {
+		RolesControllerTest::login($this);
+
 		$url = '/' . Page::SETTING_MODE_WORD . '/';
-		$needle = '<div class="modal fade" ' .
-			'id="pluginList" ' .
-			'tabindex="-1" ' .
-			'role="dialog" ' .
-			'aria-labelledby="pluginListLabel" ' .
-			'aria-hidden="true">';
+		$needle = '<section class="modal fade" id="add-plugin-';
 
 		$this->testAction($url, array('return' => 'view'));
 		$this->assertTextContains($needle, $this->view);
+
+		AuthGeneralControllerTest::logout($this);
 	}
 
 /**
@@ -111,6 +128,11 @@ class PagesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdd() {
+		RolesControllerTest::login($this);
+
+		$roomId = '1';
+		$pageId = '1';
+
 		$controller = $this->generate('Pages.Pages', array(
 			'models' => array(
 				'Pages.Page' => array('savePage')
@@ -120,7 +142,9 @@ class PagesControllerTest extends ControllerTestCase {
 			->method('savePage')
 			->will($this->returnValue(true));
 
-		$this->testAction('/pages/pages/add');
+		$this->testAction('/pages/pages/add/' . $roomId . '/' . $pageId);
+
+		AuthGeneralControllerTest::logout($this);
 	}
 
 /**
@@ -129,6 +153,11 @@ class PagesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAddError() {
+		RolesControllerTest::login($this);
+
+		$roomId = '1';
+		$pageId = '1';
+
 		$controller = $this->generate('Pages.Pages', array(
 			'models' => array(
 				'Pages.Page' => array('savePage')
@@ -138,6 +167,8 @@ class PagesControllerTest extends ControllerTestCase {
 			->method('savePage')
 			->will($this->returnValue(false));
 
-		$this->testAction('/pages/pages/add');
+		$this->testAction('/pages/pages/add/' . $roomId . '/' . $pageId);
+
+		AuthGeneralControllerTest::logout($this);
 	}
 }

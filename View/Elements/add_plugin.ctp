@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages template.
+ * Element of add page
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -21,7 +21,7 @@
 				<div class="list-group">
 					<?php foreach ($plugins as $plugin) : ?>
 						<article class="list-group-item clearfix">
-							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post' ,'url' => '/frames/frames/add')); ?>
+							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post', 'url' => '/frames/frames/add')); ?>
 								<div class="pull-left">
 									<h4 class="list-group-item-heading clearfix">
 										<?php echo h($plugin['plugin']['name']); ?>

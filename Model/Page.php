@@ -258,9 +258,14 @@ class Page extends PagesAppModel {
  * Get page with frame
  *
  * @param string $permalink Permalink
+ * @param string $language Language.code
  * @return array
  */
-	public function getPageWithFrame($permalink) {
+	public function getPageWithFrame($permalink, $language = null) {
+		if (! isset($language)) {
+			$language = Configure::read('Config.language');
+		}
+
 		$query = array(
 			'conditions' => array(
 				'Page.permalink' => $permalink
@@ -275,12 +280,11 @@ class Page extends PagesAppModel {
 				),
 				'Language' => array(
 					'conditions' => array(
-						'Language.code' => 'ja'
+						'Language.code' => $language
 					)
 				)
 			)
 		);
-
 		return $this->find('first', $query);
 	}
 

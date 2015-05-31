@@ -74,11 +74,18 @@ class PageLayoutHelper extends AppHelper {
 	private $__pluginMap;
 
 /**
- * Plugins map data
+ * frame data
  *
  * @var array
  */
 	public static $frame = null;
+
+/**
+ * page data
+ *
+ * @var array
+ */
+	public static $page = null;
 
 /**
  * Default Constructor
@@ -96,6 +103,9 @@ class PageLayoutHelper extends AppHelper {
 
 		if (isset($settings['current']['frame'])) {
 			self::$frame = $settings['current']['frame'];
+		}
+		if (isset($settings['current']['page'])) {
+			self::$page = $settings['current']['page'];
 		}
 	}
 
@@ -235,5 +245,4 @@ class PageLayoutHelper extends AppHelper {
 
 		return $action;
 	}
-
 }

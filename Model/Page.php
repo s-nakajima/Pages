@@ -216,10 +216,12 @@ class Page extends PagesAppModel {
 			return self::$__isSetting;
 		}
 
-		$offset = strlen(Router::url('/'));
-		$pos = strpos(Router::url(), self::SETTING_MODE_WORD, $offset);
-		$pos = $pos - $offset;
-		self::$__isSetting = ($pos === 0);
+		$pattern = preg_quote('/' . self::SETTING_MODE_WORD . '/', '/');
+		if (preg_match('/' . $pattern . '/', Router::url())) {
+			self::$__isSetting = true;
+		} else {
+			self::$__isSetting = false;
+		}
 
 		return self::$__isSetting;
 	}

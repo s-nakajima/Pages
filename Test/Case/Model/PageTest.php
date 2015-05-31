@@ -8,13 +8,12 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('YACakeTestCase', 'NetCommons.TestSuite');
 App::uses('Page', 'Pages.Model');
 
 /**
  * Summary for Page Test Case
  */
-class PageTest extends YACakeTestCase {
+class PageTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -28,8 +27,8 @@ class PageTest extends YACakeTestCase {
 		'plugin.containers.containers_page',
 		'plugin.frames.frame',
 		'plugin.m17n.language',
-		'plugin.plugin_manager.plugin',
-		'plugin.pages.languages_page',
+		'plugin.m17n.languages_page',
+		'plugin.net_commons.plugin',
 		'plugin.pages.page',
 		'plugin.rooms.room',
 		'plugin.users.user',
@@ -62,7 +61,7 @@ class PageTest extends YACakeTestCase {
  * @return void
  */
 	public function testGetPageWithFrame() {
-		$page = $this->Page->getPageWithFrame('', 'en');
+		$page = $this->Page->getPageWithFrame('');
 
 		$this->assertCount(4, $page);
 
@@ -86,9 +85,17 @@ class PageTest extends YACakeTestCase {
 		$this->assertInternalType('array', $page['Box'][0]['Frame'], 'Frame');
 		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame']), 'Frame');
 
-		$this->assertArrayHasKey('Language', $page, 'Page.Language');
-		$this->assertInternalType('array', $page['Language'], 'Page.Language');
-		$this->assertGreaterThanOrEqual(1, count($page['Language']), 'Page.Language');
+		$this->assertArrayHasKey('Plugin', $page['Box'][0]['Frame'][0], 'Plugin');
+		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Plugin'], 'Plugin');
+		//$this->assertEqual(0, count($page['Box'][0]['Frame'][0]['Plugin']));
+
+		$this->assertArrayHasKey('Language', $page['Box'][0]['Frame'][0], 'Frame.Language');
+		$this->assertInternalType('array', $page['Box'][0]['Frame'][0]['Language'], 'Frame.Language');
+		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame'][0]['Language']), 'Frame.Language');
+
+		$this->assertArrayHasKey('Language', $page, 'page.Language');
+		$this->assertInternalType('array', $page['Language'], 'page.Language');
+		$this->assertGreaterThanOrEqual(1, count($page['Language']), 'page.Language');
 
 		$this->assertArrayHasKey('LanguagesPage', $page['Language'][0], 'LanguagesPage');
 		$this->assertInternalType('array', $page['Language'][0]['LanguagesPage'], 'LanguagesPage');
@@ -104,21 +111,22 @@ class PageTest extends YACakeTestCase {
 		$data = array(
 			'Page' => array(
 				'parent_id' => null,
-				'slug' => 'test01',
+				'slug' => 'test01'
 			),
-			'LanguagesPage' => array(
-				'language_id' => '1',
-				'name' => 'テスト０１'
-			),
-			'Room' => array(
-				'id' => '1',
-				'space_id' => '1'
+			'Language' => array(
+				array(
+					'LanguagesPage' => array(
+						'language_id' => '1',
+						'name' => 'テスト０１'
+					)
+				)
 			)
 		);
 
 		$this->Page->create();
 		$this->Page->savePage($data);
 		$actualPage = $this->Page->findById($this->Page->getLastInsertID());
+
 		$this->assertEquals('test01', $actualPage['Page']['permalink']);
 		$actualContainer = array(
 			$actualPage['Container'][0]['ContainersPage']['container_id'],
@@ -148,13 +156,13 @@ class PageTest extends YACakeTestCase {
 				'parent_id' => '1',
 				'slug' => 'test'
 			),
-			'LanguagesPage' => array(
-				'language_id' => '1',
-				'name' => 'テスト０２'
-			),
-			'Room' => array(
-				'id' => '1',
-				'space_id' => '1'
+			'Language' => array(
+				array(
+					'LanguagesPage' => array(
+						'language_id' => '1',
+						'name' => 'テスト０２'
+					)
+				)
 			)
 		);
 
@@ -173,13 +181,13 @@ class PageTest extends YACakeTestCase {
 				'parent_id' => '2',
 				'slug' => 'test03'
 			),
-			'LanguagesPage' => array(
-				'language_id' => '1',
-				'name' => 'テスト０３'
-			),
-			'Room' => array(
-				'id' => '1',
-				'space_id' => '1'
+			'Language' => array(
+				array(
+					'LanguagesPage' => array(
+						'language_id' => '1',
+						'name' => 'テスト０３'
+					)
+				)
 			)
 		);
 

@@ -28,7 +28,7 @@ class PageTest extends YACakeTestCase {
 		'plugin.containers.containers_page',
 		'plugin.frames.frame',
 		'plugin.m17n.language',
-		'plugin.net_commons.plugin',
+		'plugin.plugin_manager.plugin',
 		'plugin.pages.languages_page',
 		'plugin.pages.page',
 		'plugin.rooms.room',

@@ -61,6 +61,12 @@ class PageLayoutComponent extends Component {
 			$controller->set('cancelUrl', $page['page']['permalink']);
 		}
 
+		if (! isset($controller->viewVars['languageId'])) {
+			$pageModel = ClassRegistry::init('M17n.Language');
+			$language = $controller->Language->findByCode(Configure::read('Config.language'));
+			$controller->set('languageId', $language['Language']['id']);
+		}
+
 		//Pluginデータ取得
 		$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
 		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $controller->viewVars['languageId']);

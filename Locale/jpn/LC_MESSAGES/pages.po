@@ -1,17 +1,19 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"PO-Revision-Date: 2015-06-01 18:19+0900\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"POT-Creation-Date: \n"
+"Language: ja\n"
+"X-Generator: Poedit 1.8.1\n"
 
 #: NetCommons/View/Elements/common_header.ctp:64
 msgid "Setting mode on"
@@ -25,13 +27,11 @@ msgstr "セッティングモードOFF"
 msgid "New page %s"
 msgstr "新しいページ %s"
 
-#: Pages/Model/LanguagesPage.php:66
-#: Pages/View/Elements/Pages/edit_form.ctp:34
+#: Pages/Model/LanguagesPage.php:66 Pages/View/Elements/Pages/edit_form.ctp:34
 msgid "Page name"
 msgstr "ページ名"
 
-#: Pages/Model/Page.php:165
-#: Pages/View/Elements/Pages/edit_form.ctp:51
+#: Pages/Model/Page.php:165 Pages/View/Elements/Pages/edit_form.ctp:51
 msgid "Slug"
 msgstr "固定リンク"
 
@@ -47,13 +47,11 @@ msgstr "プラグイン追加"
 msgid "Page Setting"
 msgstr "ページ設定"
 
-#: Pages/View/Elements/dropdown_menu.ctp:17
-#: Pages/View/Pages/edit.ctp:19
+#: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
 msgid "Add page"
 msgstr "ページ追加"
 
-#: Pages/View/Elements/dropdown_menu.ctp:20
-#: Pages/View/Pages/edit.ctp:21
+#: Pages/View/Elements/dropdown_menu.ctp:20 Pages/View/Pages/edit.ctp:21
 msgid "Edit page"
 msgstr "ページ編集"
 
@@ -64,4 +62,3 @@ msgstr "レイアウト編集"
 #: Pages/View/Elements/Pages/delete_form.ctp:28;38
 msgid "Page"
 msgstr "ページ"
-

@@ -57,7 +57,7 @@
 										)); ?>
 
 									<?php echo $this->Form->button(
-											'<span class="glyphicon glyphicon-plus"> </span>' . __d('pages', 'Add'),
+											'<span class="glyphicon glyphicon-plus"> </span>' . __d('net_commons', 'Add'),
 											array(
 												'class' => 'btn btn-success btn-workflow',
 												'name' => 'save'

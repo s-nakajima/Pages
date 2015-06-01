@@ -1,61 +1,67 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-10-20 10:50+0000\n"
-"PO-Revision-Date: 2014-10-20 20:02+0900\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language: ja\n"
-"X-Generator: Poedit 1.6.10\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /Pages/View/Elements/plugin_list.ctp:16
-msgid "Plugin list"
-msgstr "プラグインリスト"
+#: NetCommons/View/Elements/common_header.ctp:64
+msgid "Setting mode on"
+msgstr "セッティングモードON"
 
-#: /Pages/View/Elements/setting_menu.ctp:89
-#: /Pages/View/Elements/plugin_list.ctp:46
-msgid "Add"
-msgstr "追加"
-
-#: /Pages/View/Elements/setting_menu.ctp:17
-msgid "Plugin"
-msgstr "プラグイン"
-
-#: /Pages/View/Elements/setting_menu.ctp:20
-msgid "Layout"
-msgstr "レイアウト"
-
-#: /Pages/View/Elements/setting_menu.ctp:23
-msgid "Page"
-msgstr "ページ"
-
-#: /Pages/View/Elements/setting_menu.ctp:26 /Pages/View/Pages/index.ctp:50
+#: NetCommons/View/Elements/common_header.ctp:66
 msgid "Setting mode off"
 msgstr "セッティングモードOFF"
 
-#: /Pages/View/Elements/setting_menu.ctp:35
-msgid "Page Setting"
-msgstr "ページ設定"
+#: Pages/Controller/PagesController.php:125
+msgid "New page %s"
+msgstr "新しいページ %s"
 
-#: /Pages/View/Elements/setting_menu.ctp:70
+#: Pages/Model/LanguagesPage.php:66
+#: Pages/View/Elements/Pages/edit_form.ctp:34
 msgid "Page name"
 msgstr "ページ名"
 
-#: /Pages/View/Elements/setting_menu.ctp:80
+#: Pages/Model/Page.php:165
+#: Pages/View/Elements/Pages/edit_form.ctp:51
 msgid "Slug"
-msgstr ""
+msgstr "固定リンク"
 
-#: /Pages/View/Elements/setting_menu.ctp:90
-msgid "Add and close"
-msgstr "追加＆閉じる"
+#: Pages/Model/Page.php:177
+msgid "Permalink"
+msgstr "パーマリンク"
 
-#: /Pages/View/Pages/index.ctp:48
-msgid "Setting mode on"
-msgstr "セッティングモードON"
+#: Pages/View/Elements/add_plugin.ctp:16
+msgid "Add plugin"
+msgstr "プラグイン追加"
+
+#: Pages/View/Elements/dropdown_menu.ctp:13
+msgid "Page Setting"
+msgstr "ページ設定"
+
+#: Pages/View/Elements/dropdown_menu.ctp:17
+#: Pages/View/Pages/edit.ctp:19
+msgid "Add page"
+msgstr "ページ追加"
+
+#: Pages/View/Elements/dropdown_menu.ctp:20
+#: Pages/View/Pages/edit.ctp:21
+msgid "Edit page"
+msgstr "ページ編集"
+
+#: Pages/View/Elements/dropdown_menu.ctp:24
+msgid "Edit layout"
+msgstr "レイアウト編集"
+
+#: Pages/View/Elements/Pages/delete_form.ctp:28;38
+msgid "Page"
+msgstr "ページ"
+

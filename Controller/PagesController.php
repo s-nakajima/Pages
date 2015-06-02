@@ -130,7 +130,7 @@ class PagesController extends PagesAppController {
 			$data = $this->request->data;
 			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
-			if ($this->handleValidationError($this->Page->validationErrors)) {
+			if (! $this->Page->validationErrors) {
 				//正常の場合
 				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;
@@ -171,7 +171,7 @@ class PagesController extends PagesAppController {
 			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
 
-			if ($this->handleValidationError($this->Page->validationErrors)) {
+			if (! $this->Page->validationErrors) {
 				//正常の場合
 				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;

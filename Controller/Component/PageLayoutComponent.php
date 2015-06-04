@@ -25,55 +25,76 @@ class PageLayoutComponent extends Component {
  */
 	public function beforeRender(Controller $controller) {
 		//RequestActionの場合、スキップする
-		if (! empty($controller->request->params['requested'])) {
+		if (! empty($this->controller->request->params['requested'])) {
 			return;
 		}
 
+		$this->controller = $controller;
+
 		//Layoutのセット
-		if ($controller->layout === 'NetCommons.setting') {
-			$controller->layout = 'Frames.setting';
+		if ($this->controller->layout === 'NetCommons.setting') {
+			$this->controller->layout = 'Frames.setting';
 		}
-		if ($controller->layout === 'NetCommons.default') {
-			$controller->layout = 'Pages.default';
+		if ($this->controller->layout === 'NetCommons.default') {
+			$this->controller->layout = 'Pages.default';
 		}
 
 		//pathからページデータ取得
-		if (isset($controller->viewVars['page'])) {
-			$page = $controller->viewVars['page'];
-			$controller->current['page'] = $page['page'];
+		if (isset($this->controller->viewVars['page'])) {
+			$page = $this->controller->viewVars['page'];
+			$this->controller->current['page'] = $page['page'];
 		} else {
-			if (isset($controller->current['page'])) {
-				$path = $controller->current['page']['permalink'];
-			} elseif (isset($controller->viewVars['path'])) {
-				$path = substr($controller->viewVars['path'], 1);
-			} else {
-				$path = '';
-			}
-			$pageModel = ClassRegistry::init('Pages.Page');
-			$page = $pageModel->getPageWithFrame($path);
+			$this->Page = ClassRegistry::init('Pages.Page');
+			$path = $this->__getPagePath();
+			$page = $this->Page->getPageWithFrame($path);
 			if (empty($page)) {
 				throw new NotFoundException();
 			}
-			$page = $controller->camelizeKeyRecursive($page);
+			$page = $this->controller->camelizeKeyRecursive($page);
 		}
 
 		//cancelUrlをセット
-		if (! isset($controller->viewVars['cancelUrl'])) {
-			$controller->set('cancelUrl', $page['page']['permalink']);
+		if (! isset($this->controller->viewVars['cancelUrl'])) {
+			$this->controller->set('cancelUrl', $page['page']['permalink']);
 		}
 
 		//Pluginデータ取得
 		$pluginsRoom = ClassRegistry::init('Rooms.PluginsRoom');
-		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $controller->viewVars['languageId']);
+		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $this->controller->viewVars['languageId']);
 
 		//ページHelperにセット
 		$results = array(
-			'current' => $controller->current,
+			'current' => $this->controller->current,
 			'containers' => Hash::combine($page['container'], '{n}.type', '{n}'),
 			'boxes' => Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId'),
-			'plugins' => $controller->camelizeKeyRecursive($plugins),
+			'plugins' => $this->controller->camelizeKeyRecursive($plugins),
 		);
-		$controller->helpers['Pages.PageLayout'] = $controller->camelizeKeyRecursive($results);
+		$this->controller->helpers['Pages.PageLayout'] = $this->controller->camelizeKeyRecursive($results);
+	}
+
+/**
+ * Get page path
+ *
+ * @return string Page path
+ */
+	private function __getPagePath() {
+		$path = '';
+		if (isset($this->controller->current['page'])) {
+			$path = $this->controller->current['page']['permalink'];
+		} elseif (isset($this->controller->viewVars['path'])) {
+			$path = substr($this->controller->viewVars['path'], 1);
+		} elseif (isset($this->controller->current['Room']['page_id_top'])) {
+			$options = array(
+				'recursive' => -1,
+				'conditions' => array('id' => (int)$this->controller->current['Room']['page_id_top']),
+			);
+			if ($page = $this->Page->find('first', $options)) {
+				$this->controller->current['page'] = $page['Page'];
+				$path = $this->controller->current['page']['permalink'];
+			}
+		}
+
+		return $path;
 	}
 
 }

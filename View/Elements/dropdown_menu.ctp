@@ -9,10 +9,10 @@
  */
 ?>
 
-<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#dropdown-page-menu" aria-expanded="false">
+<a href="" class="dropdown-toggle" data-toggle="dropdown">
 	<?php echo __d('pages', 'Page Setting'); ?> <span class="caret"></span>
 </a>
-<ul id="dropdown-page-menu" class="dropdown-menu" role="menu">
+<ul class="dropdown-menu">
 	<li>
 		<?php echo $this->Html->link(__d('pages', 'Add page'), '/' . Page::SETTING_MODE_WORD . '/pages/pages/add/' . PageLayoutHelper::$page['roomId'] . '/' . PageLayoutHelper::$page['id']) ?>
 	</li>

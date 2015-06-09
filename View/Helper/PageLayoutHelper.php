@@ -223,4 +223,19 @@ class PageLayoutHelper extends AppHelper {
 
 		return $action;
 	}
+
+/**
+ * Get the plugins data
+ *
+ * @return array P;ugins data
+ */
+	public function getLayouts() {
+		$dir = new Folder(
+			CakePlugin::path('Pages') . WEBROOT_DIR . DS . 'img' . DS . 'layouts'
+		);
+		$files = $dir->find('.*\.png', true);
+
+		return $files;
+	}
+
 }

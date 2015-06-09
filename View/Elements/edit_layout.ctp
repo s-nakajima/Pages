@@ -38,7 +38,13 @@ echo $this->Html->script(
 									(int)$this->PageLayout->hasContainer(Container::TYPE_FOOTER); ?>)">
 
 						<?php foreach ($layouts as $layout) : ?>
-							<a href="" class="pull-left" style="margin: 8px; padding: 2px" ng-class="{(currentLayout === '<?php echo $layout; ?>'): 'bg-primary'}">
+							<a href="" class="pull-left" style="margin: 8px; padding: 2px"
+								ng-class="{'bg-primary': (currentLayout === '<?php echo $layout; ?>')}"
+								ng-click="selectLayout(<?php echo (int)substr($layout, 0, 1) . ', ' .
+									(int)substr($layout, 2, 1) . ', ' .
+									(int)substr($layout, 4, 1) . ', ' .
+									(int)substr($layout, 6, 1); ?>)">
+
 								<?php echo $this->Html->image('Pages.layouts/' . $layout, array('class' => 'img-thumbnail')); ?>
 							</a>
 						<?php endforeach; ?>

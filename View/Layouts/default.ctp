@@ -39,8 +39,6 @@
 			<?php echo $this->element('Pages.page_header'); ?>
 
 			<div class="row">
-				<?php echo $this->element('Pages.page_major'); ?>
-
 				<!-- container-main -->
 				<div role="main" id="container-main" class="<?php echo $this->PageLayout->getContainerSize(Container::TYPE_MAIN); ?>">
 					<?php if ($this->request->params['plugin'] === 'pages') : ?>
@@ -52,6 +50,8 @@
 							)); ?>
 					<?php endif; ?>
 				</div>
+
+				<?php echo $this->element('Pages.page_major'); ?>
 
 				<?php echo $this->element('Pages.page_minor'); ?>
 			</div>

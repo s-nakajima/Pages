@@ -29,21 +29,7 @@ class PageLayoutHelper extends AppHelper {
  *
  * @var int
  */
-	const COL_DEFAULT_SM_SIZE = 3;
-
-/**
- * Bootstrap col-md default size
- *
- * @var int
- */
-	const COL_DEFAULT_MD_SIZE = 3;
-
-/**
- * Bootstrap col-lg default size
- *
- * @var int
- */
-	const COL_DEFAULT_LG_SIZE = 3;
+	const COL_DEFAULT_SIZE = 3;
 
 /**
  * Containers data
@@ -118,36 +104,28 @@ class PageLayoutHelper extends AppHelper {
  */
 	public function getContainerSize($containerType) {
 		$result = '';
+
+		$mainCol = self::COL_MAX_SIZE;
+		if ($this->hasContainer(Container::TYPE_MAJOR)) {
+			$mainCol -= self::COL_DEFAULT_SIZE;
+		}
+		if ($this->hasContainer(Container::TYPE_MINOR)) {
+			$mainCol -= self::COL_DEFAULT_SIZE;
+		}
+
 		switch ($containerType) {
 			case Container::TYPE_MAJOR:
 				if ($this->hasContainer($containerType)) {
-					$result = 'col-sm-' . self::COL_DEFAULT_SM_SIZE .
-							' col-md-' . self::COL_DEFAULT_MD_SIZE .
-							' col-lg-' . self::COL_DEFAULT_LG_SIZE;
+					$result = ' col-md-' . self::COL_DEFAULT_SIZE . ' col-md-pull-' . $mainCol;
 				}
 				break;
 			case Container::TYPE_MINOR:
 				if ($this->hasContainer($containerType)) {
-					$result = 'col-sm-' . self::COL_DEFAULT_SM_SIZE .
-							' col-md-' . self::COL_DEFAULT_MD_SIZE .
-							' col-lg-' . self::COL_DEFAULT_LG_SIZE;
+					$result = ' col-md-' . self::COL_DEFAULT_SIZE;
 				}
 				break;
 			default:
-				$smCol = self::COL_MAX_SIZE;
-				$mdCol = self::COL_MAX_SIZE;
-				$lgCol = self::COL_MAX_SIZE;
-				if ($this->hasContainer(Container::TYPE_MAJOR)) {
-					$smCol -= self::COL_DEFAULT_SM_SIZE;
-					$mdCol -= self::COL_DEFAULT_MD_SIZE;
-					$lgCol -= self::COL_DEFAULT_LG_SIZE;
-				}
-				if ($this->hasContainer(Container::TYPE_MINOR)) {
-					$smCol -= self::COL_DEFAULT_SM_SIZE;
-					$mdCol -= self::COL_DEFAULT_MD_SIZE;
-					$lgCol -= self::COL_DEFAULT_LG_SIZE;
-				}
-				$result = 'col-sm-' . $smCol . ' col-md-' . $mdCol . ' col-lg-' . $lgCol;
+				$result = ' col-md-' . $mainCol . ' col-md-push-' . self::COL_DEFAULT_SIZE;
 		}
 
 		return $result;

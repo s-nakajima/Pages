@@ -27,7 +27,8 @@ NetCommonsApp.controller('PagesController', function($scope) {
    * @return {void}
    */
   $scope.selectLayout = function(header, major, minor, footer) {
-    $scope.currentLayout = header + '_' + major + '_' + minor + '_' + footer + '.png';
+    $scope.currentLayout =
+        header + '_' + major + '_' + minor + '_' + footer + '.png';
     $scope.header = header;
     $scope.major = major;
     $scope.minor = minor;

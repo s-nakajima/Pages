@@ -72,7 +72,7 @@ class Page extends PagesAppModel {
 			'order' => ''
 		),
 		'ParentPage' => array(
-			'className' => 'Page',
+			'className' => 'Pages.Page',
 			'foreignKey' => 'parent_id',
 			'conditions' => '',
 			'fields' => '',
@@ -87,7 +87,7 @@ class Page extends PagesAppModel {
  */
 	public $hasMany = array(
 		'ChildPage' => array(
-			'className' => 'Page',
+			'className' => 'Pages.Page',
 			'foreignKey' => 'parent_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -126,7 +126,8 @@ class Page extends PagesAppModel {
 			'foreignKey' => 'page_id',
 			'associationForeignKey' => 'container_id',
 			'unique' => 'keepExisting',
-			'conditions' => array('ContainersPage.is_published' => true),
+			//'conditions' => array('ContainersPage.is_published' => true),
+			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
@@ -134,7 +135,7 @@ class Page extends PagesAppModel {
 			'finderQuery' => '',
 		),
 		'Language' => array(
-			'className' => 'Language',
+			'className' => 'M17n.Language',
 			'joinTable' => 'languages_pages',
 			'foreignKey' => 'page_id',
 			'associationForeignKey' => 'language_id',
@@ -275,10 +276,10 @@ class Page extends PagesAppModel {
 			'contain' => array(
 				'Box' => $this->Box->getContainableQueryNotAssociatedPage(),
 				'Container' => array(
-					'conditions' => array(
-						// It must check settingmode
-						'ContainersPage.is_published' => true
-					)
+					//'conditions' => array(
+					//	// It must check settingmode
+					//	'ContainersPage.is_published' => true
+					//)
 				),
 				'Language' => array(
 					'conditions' => array(

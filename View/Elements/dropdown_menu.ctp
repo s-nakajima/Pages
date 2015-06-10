@@ -19,8 +19,8 @@
 	<li>
 		<?php echo $this->Html->link(__d('pages', 'Edit page'), '/' . Page::SETTING_MODE_WORD . '/pages/pages/edit/' . PageLayoutHelper::$page['roomId'] . '/' . PageLayoutHelper::$page['id']) ?>
 	<li class="divider"></li>
-	<li class="disabled">
-		<a href="#">
+	<li>
+		<a href="" data-toggle="modal" data-target="#edit-layout">
 			<?php echo __d('pages', 'Edit layout')?>
 		</a>
 	</li>

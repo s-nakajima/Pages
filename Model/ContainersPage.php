@@ -27,7 +27,7 @@ class ContainersPage extends PagesAppModel {
  */
 	public $belongsTo = array(
 		'Page' => array(
-			'className' => 'Page',
+			'className' => 'Pages.Page',
 			'foreignKey' => 'page_id',
 			'conditions' => '',
 			'fields' => '',
@@ -41,4 +41,53 @@ class ContainersPage extends PagesAppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * Save page each association model
+ *
+ * @param array $data request data
+ * @throws InternalErrorException
+ * @return mixed On success Model::$data if its not empty or true, false on failure
+ */
+	public function saveContainersPage($data) {
+		//トランザクションBegin
+		$this->setDataSource('master');
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
+
+		try {
+			if (! $this->validateContainersPage($data['ContainersPage'])) {
+				return false;
+			}
+
+			if (! $this->saveMany($data['ContainersPage'], ['validate' => false])) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$dataSource->commit();
+
+		} catch (Exception $ex) {
+			$dataSource->rollback();
+			CakeLog::error($ex);
+			throw $ex;
+		}
+	}
+
+/**
+ * validate ContainersPage
+ *
+ * @param array $data received post data
+ * @return bool True on success, false on error
+ */
+	public function validateContainersPage($data) {
+		//バリデーション
+		$this->validateMany($data);
+
+		if ($this->validationErrors) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

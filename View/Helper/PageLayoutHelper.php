@@ -10,6 +10,7 @@
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('Container', 'Containers.Model');
+App::uses('Folder', 'Utility');
 
 /**
  * LayoutHelper
@@ -125,7 +126,10 @@ class PageLayoutHelper extends AppHelper {
 				}
 				break;
 			default:
-				$result = ' col-md-' . $mainCol . ' col-md-push-' . self::COL_DEFAULT_SIZE;
+				$result = ' col-md-' . $mainCol;
+				if ($this->hasContainer(Container::TYPE_MAJOR)) {
+					$result .= ' col-md-push-' . self::COL_DEFAULT_SIZE;
+				}
 		}
 
 		return $result;
@@ -139,17 +143,28 @@ class PageLayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		$result = false;
+		if (! $result = isset($this->__containers[$containerType]) && $this->__containers[$containerType]['containersPage']['isPublished']) {
+			return false;
+		}
 
-		if (Page::isSetting()) {
-			$result = isset($this->__containers[$containerType]);
-		} else {
+		if (! Page::isSetting()) {
 			$box = $this->getBox($containerType);
 			$frames = Hash::combine($box, '{n}.frame.{n}.id', '{n}.frame.{n}');
-			$result = isset($this->__containers[$containerType]) && count($frames);
+			$result = count($frames);
 		}
 
 		return $result;
+	}
+
+/**
+ * Get containers_pages.id
+ *
+ * @param string $containerType Container type.
+ *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
+ * @return int containers_pages.id
+ */
+	public function getContainersPageId($containerType) {
+		return (int)$this->__containers[$containerType]['containersPage']['id'];
 	}
 
 /**
@@ -223,4 +238,19 @@ class PageLayoutHelper extends AppHelper {
 
 		return $action;
 	}
+
+/**
+ * Get the plugins data
+ *
+ * @return array P;ugins data
+ */
+	public function getLayouts() {
+		$dir = new Folder(
+			CakePlugin::path('Pages') . WEBROOT_DIR . DS . 'img' . DS . 'layouts'
+		);
+		$files = $dir->find('.*\.png', true);
+
+		return $files;
+	}
+
 }

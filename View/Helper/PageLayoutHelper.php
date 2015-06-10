@@ -157,11 +157,11 @@ class PageLayoutHelper extends AppHelper {
 	}
 
 /**
- * Get containerId
+ * Get containers_pages.id
  *
  * @param string $containerType Container type.
  *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
- * @return bool The layout have container
+ * @return int containers_pages.id
  */
 	public function getContainersPageId($containerType) {
 		return (int)$this->__containers[$containerType]['containersPage']['id'];

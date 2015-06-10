@@ -70,6 +70,15 @@
 				</div>
 				<?php endif; ?>
 			</div>
+
+			<div class="modal-footer">
+				<div class="text-center">
+					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+						<span class="glyphicon glyphicon-remove"></span>
+						<?php echo __d('net_commons', 'Close') ?>
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>

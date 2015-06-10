@@ -26,6 +26,7 @@ class PagesController extends PagesAppController {
 	public $uses = array(
 		'Pages.Page',
 		'Pages.LanguagesPage',
+		'Pages.ContainersPage',
 		'Rooms.PluginsRoom',
 		'M17n.Language',
 	);
@@ -39,7 +40,7 @@ class PagesController extends PagesAppController {
 		'NetCommons.NetCommonsRoomRole' => array(
 			//コンテンツの権限設定
 			'allowedActions' => array(
-				'pageEditable' => array('add', 'edit', 'delete'),
+				'pageEditable' => array('add', 'edit', 'delete', 'layout'),
 			),
 		),
 		'Security' => array(
@@ -167,6 +168,11 @@ class PagesController extends PagesAppController {
 		$formPage = Hash::merge($page, $languagesPage);
 
 		if ($this->request->isPut()) {
+			if ((int)$this->request->data['Page']['id'] !== (int)$pageId) {
+				$this->throwBadRequest();
+				return;
+			}
+
 			$data = $this->request->data;
 			$data['Room']['space_id'] = $room['Room']['space_id'];
 			$page = $this->Page->savePage($data);
@@ -199,10 +205,48 @@ class PagesController extends PagesAppController {
 		}
 
 		if ($this->request->isDelete()) {
+			if ((int)$this->request->data['Page']['id'] !== (int)$pageId) {
+				$this->throwBadRequest();
+				return;
+			}
+
 			if ($this->Page->deletePage($this->data)) {
 				$this->redirect('/' . Page::SETTING_MODE_WORD);
 				return;
 			}
+		}
+
+		$this->throwBadRequest();
+	}
+
+/**
+ * edit
+ *
+ * @param int $roomId rooms.id
+ * @param int $pageId pages.id
+ * @return void
+ */
+	public function layout($roomId = null, $pageId = null) {
+		if (! $page = $this->__initPage($roomId, $pageId)) {
+			return;
+		}
+
+		if ($this->request->isPost()) {
+			if ((int)$this->request->data['Page']['id'] !== (int)$pageId) {
+				$this->throwBadRequest();
+				return;
+			}
+
+			$data = $this->request->data;
+			unset($data['save']);
+
+			$this->ContainersPage->saveContainersPage($data);
+			if ($this->handleValidationError($this->ContainersPage->validationErrors)) {
+				//正常の場合
+				$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
+			}
+			$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+			return;
 		}
 
 		$this->throwBadRequest();

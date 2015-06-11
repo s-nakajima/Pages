@@ -25,7 +25,6 @@
 			echo $this->fetch('css');
 
 			echo $this->element('NetCommons.common_js');
-			echo $this->Html->script('/frames/js/frames.js', false);
 			echo $this->fetch('script');
 		?>
 	</head>

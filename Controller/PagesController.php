@@ -112,7 +112,8 @@ class PagesController extends PagesAppController {
 			'Room' => $page['Room']
 		);
 
-		$slug = Security::hash($this->params['plugin'] . mt_rand() . microtime(), 'md5');
+		//$slug = Security::hash($this->params['plugin'] . mt_rand() . microtime(), 'md5');
+		$slug = 'page_' . date('YmdHis');
 		$page = $this->Page->create(array(
 			'id' => null,
 			'parent_id' => null,

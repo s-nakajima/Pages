@@ -300,10 +300,10 @@ class Page extends PagesAppModel {
  */
 	public function savePage($data) {
 		$this->loadModels([
-			'ContainersPage' => 'Pages.ContainersPage',
-			'BoxesPage' => 'Pages.BoxesPage',
-			'Container' => 'Containers.Container',
 			'Box' => 'Boxes.Box',
+			'BoxesPage' => 'Boxes.BoxesPage',
+			'Container' => 'Containers.Container',
+			'ContainersPage' => 'Containers.ContainersPage',
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 

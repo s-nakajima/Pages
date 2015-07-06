@@ -26,8 +26,8 @@ class PagesController extends PagesAppController {
 	public $uses = array(
 		'Pages.Page',
 		'Pages.LanguagesPage',
-		'Pages.ContainersPage',
-		'Rooms.PluginsRoom',
+		'Containers.ContainersPage',
+		'PluginManager.PluginsRoom',
 		'M17n.Language',
 	);
 

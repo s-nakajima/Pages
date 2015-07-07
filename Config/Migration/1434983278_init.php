@@ -94,6 +94,20 @@ class Init extends CakeMigration {
 				'to' => null,
 			),
 		),
+		'LanguagesPage' => array(
+			array(
+				'id' => '1',
+				'page_id' => '1',
+				'language_id' => '1',
+				'name' => 'Home',
+			),
+			array(
+				'id' => '2',
+				'page_id' => '1',
+				'language_id' => '2',
+				'name' => 'ホーム',
+			),
+		),
 	);
 
 /**

@@ -71,10 +71,11 @@ class PageLayoutComponent extends Component {
 		);
 		$this->controller->helpers['Pages.PageLayout'] = $this->controller->camelizeKeyRecursive($results);
 
+		$this->controller->set('isControlPanel', false);
 		if (AuthComponent::user('id')) {
-			$this->controller->set('isControlPanel', true);
+			$this->controller->set('hasControlPanel', true);
 		} else {
-			$this->controller->set('isControlPanel', false);
+			$this->controller->set('hasControlPanel', false);
 		}
 	}
 

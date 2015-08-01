@@ -34,14 +34,14 @@ class LanguagesPage extends AppModel {
  */
 	public $belongsTo = array(
 		'Page' => array(
-			'className' => 'Page',
+			'className' => 'Pages.Page',
 			'foreignKey' => 'page_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
 		'Language' => array(
-			'className' => 'Language',
+			'className' => 'M17n.Language',
 			'foreignKey' => 'language_id',
 			'conditions' => '',
 			'fields' => '',

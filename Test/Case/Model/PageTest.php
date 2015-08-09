@@ -84,7 +84,7 @@ class PageTest extends YACakeTestCase {
 
 		$this->assertArrayHasKey('Frame', $page['Box'][0], 'Frame');
 		$this->assertInternalType('array', $page['Box'][0]['Frame'], 'Frame');
-		$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame']), 'Frame');
+		//$this->assertGreaterThanOrEqual(1, count($page['Box'][0]['Frame']), 'Frame');
 
 		$this->assertArrayHasKey('Language', $page, 'Page.Language');
 		$this->assertInternalType('array', $page['Language'], 'Page.Language');

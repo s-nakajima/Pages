@@ -294,11 +294,17 @@ class Page extends PagesAppModel {
 /**
  * Save page each association model
  *
+ * #### Options
+ *
+ * - `atomic`: If true (default), will attempt to save all records in a single transaction.
+ *   Should be set to false if database/table does not support transactions.
+ *
  * @param array $data request data
+ * @param array $options Options to use when saving record data, See $options above.
  * @throws InternalErrorException
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	public function savePage($data) {
+	public function savePage($data, $options = array()) {
 		$this->loadModels([
 			'Box' => 'Boxes.Box',
 			'BoxesPage' => 'Boxes.BoxesPage',
@@ -307,43 +313,31 @@ class Page extends PagesAppModel {
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
+		$options = Hash::merge(array('atomic' => true), $options);
+
 		//トランザクションBegin
-		$this->setDataSource('master');
-		$dataSource = $this->getDataSource();
-		$dataSource->begin();
+		if ($options['atomic']) {
+			$this->setDataSource('master');
+			$dataSource = $this->getDataSource();
+			$dataSource->begin();
+		}
 
 		try {
 			if (! $this->validatePage($data, ['languagesPage'])) {
 				return false;
 			}
-			$exists = $this->exists();
-
 			$page = $this->__savePage();
-			if (! $exists) {
-				if (! $container = $this->saveContainer($page)) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
-				$page = Hash::merge($page, $container);
 
-				if (! $box = $this->saveBox($page)) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
-				$page = Hash::merge($page, $box);
-
-				if (! $this->saveContainersPage($page)) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
-				if (! $this->saveBoxesPage($page)) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
+			if ($options['atomic']) {
+				$dataSource->commit();
 			}
-
-			$dataSource->commit();
 			return $page;
 
 		} catch (Exception $ex) {
-			$dataSource->rollback();
-			CakeLog::error($ex);
+			if ($options['atomic']) {
+				$dataSource->rollback();
+				CakeLog::error($ex);
+			}
 			throw $ex;
 		}
 	}
@@ -355,6 +349,8 @@ class Page extends PagesAppModel {
  * @throws InternalErrorException
  */
 	private function __savePage() {
+		$exists = $this->exists();
+
 		if (! $page = $this->save(null, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
@@ -362,6 +358,25 @@ class Page extends PagesAppModel {
 		$this->LanguagesPage->data['LanguagesPage']['page_id'] = $page['Page']['id'];
 		if (! $this->LanguagesPage->save(null, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		if (! $exists) {
+			if (! $container = $this->saveContainer($page)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+			$page = Hash::merge($page, $container);
+
+			if (! $box = $this->saveBox($page)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+			$page = Hash::merge($page, $box);
+
+			if (! $this->saveContainersPage($page)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+			if (! $this->saveBoxesPage($page)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
 		}
 
 		return $page;
@@ -385,7 +400,7 @@ class Page extends PagesAppModel {
 		if (empty($targetPage)) {
 			return false;
 		}
-		$data['Page']['room_id'] = $targetPage['Page']['room_id'];
+		//$data['Page']['room_id'] = $targetPage['Page']['room_id'];
 
 		$slug = $data['Page']['slug'];
 		if (! isset($slug)) {

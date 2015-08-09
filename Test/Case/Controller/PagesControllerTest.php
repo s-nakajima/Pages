@@ -39,12 +39,13 @@ class PagesControllerTest extends YAControllerTestCase {
 		'plugin.pages.languages_page',
 		'plugin.pages.page',
 		'plugin.plugin_manager.plugin',
+		'plugin.plugin_manager.plugins_room',
 		'plugin.roles.default_role_permission',
 		'plugin.rooms.roles_room',
 		'plugin.rooms.roles_rooms_user',
-		'plugin.rooms.plugins_room',
 		'plugin.rooms.room',
 		'plugin.rooms.room_role_permission',
+		'plugin.rooms.space',
 		'plugin.users.user',
 	);
 

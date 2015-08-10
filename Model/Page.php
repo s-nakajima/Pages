@@ -316,8 +316,8 @@ class Page extends PagesAppModel {
 		$options = Hash::merge(array('atomic' => true), $options);
 
 		//トランザクションBegin
+		$this->setDataSource('master');
 		if ($options['atomic']) {
-			$this->setDataSource('master');
 			$dataSource = $this->getDataSource();
 			$dataSource->begin();
 		}
@@ -437,24 +437,31 @@ class Page extends PagesAppModel {
 
 /**
  * Delete page each association model
+ * - `atomic`: If true (default), will attempt to save all records in a single transaction.
+ *   Should be set to false if database/table does not support transactions.
  *
  * @param array $data request data
+ * @param array $options Options to use when saving record data, See $options above.
  * @throws InternalErrorException
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	public function deletePage($data) {
+	public function deletePage($data, $options = array()) {
 		$this->loadModels([
-			'ContainersPage' => 'Pages.ContainersPage',
-			'BoxesPage' => 'Pages.BoxesPage',
-			'Container' => 'Containers.Container',
 			'Box' => 'Boxes.Box',
+			'BoxesPage' => 'Boxes.BoxesPage',
+			'Container' => 'Containers.Container',
+			'ContainersPage' => 'Containers.ContainersPage',
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
+		$options = Hash::merge(array('atomic' => true), $options);
+
 		//トランザクションBegin
 		$this->setDataSource('master');
-		$dataSource = $this->getDataSource();
-		$dataSource->begin();
+		if ($options['atomic']) {
+			$dataSource = $this->getDataSource();
+			$dataSource->begin();
+		}
 
 		try {
 			//Pageの削除
@@ -471,12 +478,16 @@ class Page extends PagesAppModel {
 			//Box関連の削除
 			//$this->deleteBoxes($data[$this->alias]['id']);
 
-			$dataSource->commit();
+			if ($options['atomic']) {
+				$dataSource->commit();
+			}
 			return true;
 
 		} catch (Exception $ex) {
-			$dataSource->rollback();
-			CakeLog::error($ex);
+			if ($options['atomic']) {
+				$dataSource->rollback();
+				CakeLog::error($ex);
+			}
 			throw $ex;
 		}
 	}

@@ -24,7 +24,7 @@ class PageTest extends YACakeTestCase {
 	public $fixtures = array(
 		//'plugin.boxes.box',
 		//'plugin.boxes.boxes_page',
-		//'plugin.containers.container',
+		'plugin.containers.container',
 		//'plugin.containers.containers_page',
 		//'plugin.frames.frame',
 		//'plugin.m17n.language',
@@ -105,6 +105,7 @@ class PageTest extends YACakeTestCase {
 			'Page' => array(
 				'parent_id' => null,
 				'slug' => 'test01',
+				'room_id' => '1',
 			),
 			'LanguagesPage' => array(
 				'language_id' => '1',
@@ -171,7 +172,8 @@ class PageTest extends YACakeTestCase {
 		$data = array(
 			'Page' => array(
 				'parent_id' => '2',
-				'slug' => 'test03'
+				'slug' => 'test03',
+				'room_id' => '1',
 			),
 			'LanguagesPage' => array(
 				'language_id' => '1',

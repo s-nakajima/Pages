@@ -22,17 +22,8 @@ class PageTest extends YACakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		//'plugin.boxes.box',
-		//'plugin.boxes.boxes_page',
-		'plugin.containers.container',
-		//'plugin.containers.containers_page',
-		//'plugin.frames.frame',
-		//'plugin.m17n.language',
-		//'plugin.plugin_manager.plugin',
 		'plugin.pages.languages_page',
 		'plugin.pages.page',
-		//'plugin.rooms.room',
-		//'plugin.users.user',
 	);
 
 /**

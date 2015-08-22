@@ -244,7 +244,7 @@ class PagesController extends PagesAppController {
 			$this->ContainersPage->saveContainersPage($data);
 			if ($this->handleValidationError($this->ContainersPage->validationErrors)) {
 				//正常の場合
-				$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
+				$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('type' => 'success'));
 			}
 			$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 			return;

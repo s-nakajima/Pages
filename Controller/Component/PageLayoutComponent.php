@@ -31,6 +31,11 @@ class PageLayoutComponent extends Component {
 
 		$this->controller = $controller;
 
+		//helpersの追加
+		if (! isset($this->controller->helpers['NetCommons.Composer']) || ! in_array('NetCommons.Composer', $this->controller->helpers, true)) {
+			$this->controller->helpers[] = 'NetCommons.Composer';
+		}
+
 		//Layoutのセット
 		if ($this->controller->layout === 'NetCommons.setting') {
 			$this->controller->layout = 'Frames.setting';

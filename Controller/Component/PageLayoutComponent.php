@@ -30,19 +30,7 @@ class PageLayoutComponent extends Component {
 		}
 
 		$this->controller = $controller;
-
-		//helpersの追加
-		if (! isset($this->controller->helpers['NetCommons.Composer']) || ! in_array('NetCommons.Composer', $this->controller->helpers, true)) {
-			$this->controller->helpers[] = 'NetCommons.Composer';
-		}
-
-		//Layoutのセット
-		if ($this->controller->layout === 'NetCommons.setting') {
-			$this->controller->layout = 'Frames.setting';
-		}
-		if ($this->controller->layout === 'NetCommons.default') {
-			$this->controller->layout = 'Pages.default';
-		}
+		$this->__prepare();
 
 		//pathからページデータ取得
 		if (isset($this->controller->viewVars['page'])) {
@@ -75,6 +63,27 @@ class PageLayoutComponent extends Component {
 			'plugins' => $this->controller->camelizeKeyRecursive($plugins),
 		);
 		$this->controller->helpers['Pages.PageLayout'] = $this->controller->camelizeKeyRecursive($results);
+	}
+
+/**
+ * Prepare
+ *
+ * @return void
+ */
+	private function __prepare() {
+		//helpersの追加
+		if (! isset($this->controller->helpers['NetCommons.Composer']) ||
+				! in_array('NetCommons.Composer', $this->controller->helpers, true)) {
+			$this->controller->helpers[] = 'NetCommons.Composer';
+		}
+
+		//Layoutのセット
+		if ($this->controller->layout === 'NetCommons.setting') {
+			$this->controller->layout = 'Frames.setting';
+		}
+		if ($this->controller->layout === 'NetCommons.default') {
+			$this->controller->layout = 'Pages.default';
+		}
 
 		$this->controller->set('isControlPanel', false);
 		if (AuthComponent::user('id')) {

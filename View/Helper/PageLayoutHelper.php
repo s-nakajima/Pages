@@ -86,13 +86,13 @@ class PageLayoutHelper extends AppHelper {
 		$this->__containers = $settings['containers'];
 		$this->__boxes = $settings['boxes'];
 		$this->__plugins = $settings['plugins'];
-		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.plugin.key', '{n}.plugin');
+		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.Plugin.key', '{n}.Plugin');
 
-		if (isset($settings['current']['frame'])) {
-			self::$frame = $settings['current']['frame'];
+		if (isset($settings['current']['Frame'])) {
+			self::$frame = $settings['current']['Frame'];
 		}
-		if (isset($settings['current']['page'])) {
-			self::$page = $settings['current']['page'];
+		if (isset($settings['current']['Page'])) {
+			self::$page = $settings['current']['Page'];
 		}
 	}
 
@@ -143,13 +143,13 @@ class PageLayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		if (! $result = isset($this->__containers[$containerType]) && $this->__containers[$containerType]['containersPage']['isPublished']) {
+		if (! $result = isset($this->__containers[$containerType]) && $this->__containers[$containerType]['ContainersPage']['is_published']) {
 			return false;
 		}
 
 		if (! Page::isSetting()) {
 			$box = $this->getBox($containerType);
-			$frames = Hash::combine($box, '{n}.frame.{n}.id', '{n}.frame.{n}');
+			$frames = Hash::combine($box, '{n}.Frame.{n}.id', '{n}.Frame.{n}');
 			$result = count($frames);
 		}
 
@@ -164,7 +164,7 @@ class PageLayoutHelper extends AppHelper {
  * @return int containers_pages.id
  */
 	public function getContainersPageId($containerType) {
-		return (int)$this->__containers[$containerType]['containersPage']['id'];
+		return (int)$this->__containers[$containerType]['ContainersPage']['id'];
 	}
 
 /**
@@ -199,8 +199,8 @@ class PageLayoutHelper extends AppHelper {
  */
 	public function getContainerFluid() {
 		$result = 'container';
-		if (isset($this->_View->viewVars['current']['page']) &&
-				$this->_View->viewVars['current']['page']['isContainerFluid']) {
+		if (isset($this->_View->viewVars['current']['Page']) &&
+				$this->_View->viewVars['current']['Page']['is_container_fluid']) {
 			$result = 'container-fluid';
 		}
 
@@ -214,8 +214,8 @@ class PageLayoutHelper extends AppHelper {
  * @return array action name
  */
 	public function getDefaultAction($pluginKey) {
-		if (isset($this->__pluginMap[$pluginKey]['defaultAction']) && $this->__pluginMap[$pluginKey]['defaultAction'] !== '') {
-			$action = $this->__pluginMap[$pluginKey]['defaultAction'];
+		if (isset($this->__pluginMap[$pluginKey]['default_action']) && $this->__pluginMap[$pluginKey]['default_action'] !== '') {
+			$action = $this->__pluginMap[$pluginKey]['default_action'];
 		} else {
 			$action = $pluginKey . '/index';
 		}
@@ -230,8 +230,8 @@ class PageLayoutHelper extends AppHelper {
  * @return array action name
  */
 	public function getDefaultSettingAction($pluginKey) {
-		if (isset($this->__pluginMap[$pluginKey]['defaultSettingAction']) && $this->__pluginMap[$pluginKey]['defaultSettingAction'] !== '') {
-			$action = $this->__pluginMap[$pluginKey]['defaultSettingAction'];
+		if (isset($this->__pluginMap[$pluginKey]['default_setting_action']) && $this->__pluginMap[$pluginKey]['default_setting_action'] !== '') {
+			$action = $this->__pluginMap[$pluginKey]['default_setting_action'];
 		} else {
 			$action = '';
 		}

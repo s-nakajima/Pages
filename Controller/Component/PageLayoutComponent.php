@@ -35,7 +35,8 @@ class PageLayoutComponent extends Component {
 		//pathからページデータ取得
 		if (isset($this->controller->viewVars['page'])) {
 			$page = $this->controller->viewVars['page'];
-			$this->controller->current['page'] = $page['page'];
+//			$this->controller->current['page'] = $page['Page'];
+			$this->controller->current = $page;
 		} else {
 			$this->Page = ClassRegistry::init('Pages.Page');
 			$path = $this->__getPagePath();
@@ -43,26 +44,28 @@ class PageLayoutComponent extends Component {
 			if (empty($page)) {
 				throw new NotFoundException();
 			}
-			$page = $this->controller->camelizeKeyRecursive($page);
+//			$page = $this->controller->camelizeKeyRecursive($page);
 		}
 
 		//cancelUrlをセット
 		if (! isset($this->controller->viewVars['cancelUrl'])) {
-			$this->controller->set('cancelUrl', $page['page']['permalink']);
+			$this->controller->set('cancelUrl', $page['Page']['permalink']);
 		}
 
 		//Pluginデータ取得
 		$pluginsRoom = ClassRegistry::init('PluginManager.PluginsRoom');
-		$plugins = $pluginsRoom->getPlugins($page['page']['roomId'], $this->controller->viewVars['languageId']);
+		$plugins = $pluginsRoom->getPlugins($page['Page']['room_id'], $this->controller->viewVars['languageId']);
 
 		//ページHelperにセット
 		$results = array(
 			'current' => $this->controller->current,
-			'containers' => Hash::combine($page['container'], '{n}.type', '{n}'),
-			'boxes' => Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId'),
-			'plugins' => $this->controller->camelizeKeyRecursive($plugins),
+			'containers' => Hash::combine($page['Container'], '{n}.type', '{n}'),
+			'boxes' => Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id'),
+//			'plugins' => $this->controller->camelizeKeyRecursive($plugins),
+			'plugins' => $plugins,
 		);
-		$this->controller->helpers['Pages.PageLayout'] = $this->controller->camelizeKeyRecursive($results);
+//		$this->controller->helpers['Pages.PageLayout'] = $this->controller->camelizeKeyRecursive($results);
+		$this->controller->helpers['Pages.PageLayout'] = $results;
 	}
 
 /**
@@ -100,8 +103,8 @@ class PageLayoutComponent extends Component {
  */
 	private function __getPagePath() {
 		$path = '';
-		if (isset($this->controller->current['page'])) {
-			$path = $this->controller->current['page']['permalink'];
+		if (isset($this->controller->current['Page'])) {
+			$path = $this->controller->current['Page']['permalink'];
 		} elseif (isset($this->controller->viewVars['path'])) {
 			$path = substr($this->controller->viewVars['path'], 1);
 		} elseif (isset($this->controller->current['Room']['page_id_top'])) {
@@ -110,8 +113,8 @@ class PageLayoutComponent extends Component {
 				'conditions' => array('id' => (int)$this->controller->current['Room']['page_id_top']),
 			);
 			if ($page = $this->Page->find('first', $options)) {
-				$this->controller->current['page'] = $page['Page'];
-				$path = $this->controller->current['page']['permalink'];
+				$this->controller->current = $page;
+				$path = $this->controller->current['Page']['permalink'];
 			}
 		}
 

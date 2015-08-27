@@ -43,9 +43,6 @@ class PagesController extends PagesAppController {
 				'pageEditable' => array('add', 'edit', 'delete', 'layout'),
 			),
 		),
-		'Security' => array(
-			'unlockedActions' => array('index') //インストーラの最後のページからのアクセスがPOSTのため
-		),
 		'Pages.PageLayout',
 	);
 
@@ -81,13 +78,14 @@ class PagesController extends PagesAppController {
 		if (empty($page)) {
 			throw new NotFoundException();
 		}
-		$page = $this->camelizeKeyRecursive($page);
+//		$page = $this->camelizeKeyRecursive($page);
 		$this->set('page', $page);
+//var_dump($page);
 
-		$page['container'] = Hash::combine($page['container'], '{n}.type', '{n}');
-		$page['box'] = Hash::combine($page['box'], '{n}.id', '{n}', '{n}.containerId');
+		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
+		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
 
-		$page['container'] = array(Container::TYPE_MAIN => $page['container'][Container::TYPE_MAIN]);
+		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
 
 		$language = $this->Language->findByCode(Configure::read('Config.language'));

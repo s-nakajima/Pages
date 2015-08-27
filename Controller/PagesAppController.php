@@ -18,4 +18,12 @@ App::uses('AppController', 'Controller');
  */
 class PagesAppController extends AppController {
 
+/**
+ * use components
+ *
+ * @var array
+ */
+	public $components = array(
+		'Security'
+	);
 }

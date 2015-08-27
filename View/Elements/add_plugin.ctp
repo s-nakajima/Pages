@@ -21,23 +21,23 @@
 				<div class="list-group">
 					<?php foreach ($plugins as $plugin) : ?>
 						<article class="list-group-item clearfix">
-							<?php echo $this->Form->create('FrameAdd' . $plugin['plugin']['id'], array('type' => 'post', 'url' => '/frames/frames/add')); ?>
+							<?php echo $this->Form->create('FrameAdd' . $plugin['Plugin']['id'], array('type' => 'post', 'url' => '/frames/frames/add')); ?>
 								<div class="pull-left">
 									<h4 class="list-group-item-heading clearfix">
-										<?php echo h($plugin['plugin']['name']); ?>
+										<?php echo h($plugin['Plugin']['name']); ?>
 
 										<div class="dropdown inline-block">
-											<a id="plugin-authors-<?php echo (int)$boxId . '-' . $plugin['plugin']['id']; ?>"
+											<a id="plugin-authors-<?php echo (int)$boxId . '-' . $plugin['Plugin']['id']; ?>"
 													class="btn btn-info btn-xs"
 													type="button" data-toggle="dropdown" aria-expanded="false">
 												<span class="glyphicon glyphicon-user"></span>
 											</a>
-											<ul class="dropdown-menu" role="menu" aria-labelledby="plugin-authors-<?php echo (int)$boxId . '-' . $plugin['plugin']['id']; ?>">
-												<?php echo $this->Composer->getAuthors($plugin['plugin']['key']); ?>
+											<ul class="dropdown-menu" role="menu" aria-labelledby="plugin-authors-<?php echo (int)$boxId . '-' . $plugin['Plugin']['id']; ?>">
+												<?php echo $this->Composer->getAuthors($plugin['Plugin']['key']); ?>
 											</ul>
 										</div>
 									</h4>
-									<?php echo $this->Composer->getDescription($plugin['plugin']['key']); ?>
+									<?php echo $this->Composer->getDescription($plugin['Plugin']['key']); ?>
 								</div>
 								<div class="pull-right">
 									<?php echo $this->Form->hidden('Frame.room_id', array(
@@ -53,7 +53,7 @@
 										)); ?>
 
 									<?php echo $this->Form->hidden('Frame.plugin_key', array(
-											'value' => $plugin['plugin']['key'],
+											'value' => $plugin['Plugin']['key'],
 										)); ?>
 
 									<?php echo $this->Form->button(

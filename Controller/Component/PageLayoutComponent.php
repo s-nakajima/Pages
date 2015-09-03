@@ -35,7 +35,6 @@ class PageLayoutComponent extends Component {
 		//pathからページデータ取得
 		if (isset($this->controller->viewVars['page'])) {
 			$page = $this->controller->viewVars['page'];
-//			$this->controller->current['page'] = $page['Page'];
 			$this->controller->current = $page;
 		} else {
 			$this->Page = ClassRegistry::init('Pages.Page');
@@ -44,7 +43,6 @@ class PageLayoutComponent extends Component {
 			if (empty($page)) {
 				throw new NotFoundException();
 			}
-//			$page = $this->controller->camelizeKeyRecursive($page);
 		}
 
 		//cancelUrlをセット
@@ -61,10 +59,8 @@ class PageLayoutComponent extends Component {
 			'current' => $this->controller->current,
 			'containers' => Hash::combine($page['Container'], '{n}.type', '{n}'),
 			'boxes' => Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id'),
-//			'plugins' => $this->controller->camelizeKeyRecursive($plugins),
 			'plugins' => $plugins,
 		);
-//		$this->controller->helpers['Pages.PageLayout'] = $this->controller->camelizeKeyRecursive($results);
 		$this->controller->helpers['Pages.PageLayout'] = $results;
 	}
 

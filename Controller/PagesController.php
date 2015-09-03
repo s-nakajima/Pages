@@ -78,9 +78,7 @@ class PagesController extends PagesAppController {
 		if (empty($page)) {
 			throw new NotFoundException();
 		}
-//		$page = $this->camelizeKeyRecursive($page);
 		$this->set('page', $page);
-//var_dump($page);
 
 		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
 		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');

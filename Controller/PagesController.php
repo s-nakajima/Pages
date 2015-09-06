@@ -27,8 +27,6 @@ class PagesController extends PagesAppController {
 		'Pages.Page',
 		'Pages.LanguagesPage',
 		'Containers.ContainersPage',
-		'PluginManager.PluginsRoom',
-		'M17n.Language',
 	);
 
 /**
@@ -52,7 +50,8 @@ class PagesController extends PagesAppController {
  * @var array
  */
 	public $helpers = array(
-		'NetCommons.Composer'
+		'NetCommons.Composer',
+		'Workflow.Workflow'
 	);
 
 /**
@@ -69,8 +68,6 @@ class PagesController extends PagesAppController {
 			return;
 		}
 
-		//Configure::write('Pages.isSetting', Pages::isSetting());
-
 		$paths = func_get_args();
 		$path = implode('/', $paths);
 
@@ -85,135 +82,84 @@ class PagesController extends PagesAppController {
 
 		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
-
-		//$language = $this->Language->findByCode(Configure::read('Config.language'));
-		//$this->set('languageId', $language['Language']['id']);
 	}
 
 /**
  * add
  *
  * @param int $roomId rooms.id
- * @param int $pageId pages.id
  * @return void
  */
-	public function add($roomId = null, $pageId = null) {
+	public function add() {
 		$this->view = 'edit';
 		$this->layout = 'Pages.dialog';
 
-		if (! $page = $this->__initPage($roomId, $pageId)) {
-			return;
-		}
-		$room = array(
-			'Room' => $page['Room']
-		);
-
-		//$slug = Security::hash($this->params['plugin'] . mt_rand() . microtime(), 'md5');
-		$slug = 'page_' . date('YmdHis');
-		$page = $this->Page->create(array(
-			'id' => null,
-			'parent_id' => null,
-			'slug' => $slug,
-			'permalink' => $slug,
-			'room_id' => $roomId,
-		));
-		$languagesPage = $this->LanguagesPage->create(array(
-			'id' => null,
-			'language_id' => $this->viewVars['languageId'],
-			'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
-		));
-
-		$formPage = Hash::merge($page, $languagesPage);
 		if ($this->request->isPost()) {
+			//登録処理
 			$data = $this->request->data;
-			$data['Room']['space_id'] = $room['Room']['space_id'];
-			$page = $this->Page->savePage($data);
-			if (! $this->Page->validationErrors) {
+			if ($page = $this->Page->savePage($data)) {
 				//正常の場合
 				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-				return;
 			}
 
-			$formPage = Hash::merge($formPage, $this->request->data);
+		} else {
+			//表示処理
+			$slug = 'page_' . date('YmdHis');
+			$this->request->data = Hash::merge($this->request->data,
+				$this->Page->create(array(
+					'id' => null,
+					'slug' => $slug,
+					'permalink' => $slug,
+					'room_id' => Current::read('Room.id'),
+				)),
+				$this->LanguagesPage->create(array(
+					'id' => null,
+					'language_id' => Current::read('Language.id'),
+					'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
+				))
+			);
+			$this->request->data['Room'] = Current::read('Room');
 		}
-
-		$formPage = $this->camelizeKeyRecursive($formPage);
-		$this->set('formPage', $formPage);
 	}
 
 /**
  * edit
  *
- * @param int $roomId rooms.id
- * @param int $pageId pages.id
  * @return void
  */
-	public function edit($roomId = null, $pageId = null) {
+	public function edit() {
 		$this->layout = 'Pages.dialog';
-		if (! $page = $this->__initPage($roomId, $pageId)) {
-			return;
-		}
-		$room = array(
-			'Room' => $page['Room']
-		);
-
-		if (! $languagesPage = $this->LanguagesPage->getLanguagesPage($pageId, $this->viewVars['languageId'])) {
-			$this->throwBadRequest();
-			return;
-		}
-
-		$formPage = Hash::merge($page, $languagesPage);
 
 		if ($this->request->isPut()) {
-			if ((int)$this->request->data['Page']['id'] !== (int)$pageId) {
-				$this->throwBadRequest();
-				return;
-			}
-
+			//登録処理
 			$data = $this->request->data;
-			$data['Room']['space_id'] = $room['Room']['space_id'];
-			$page = $this->Page->savePage($data);
-
-			if (! $this->Page->validationErrors) {
+			if ($page = $this->Page->savePage($data)) {
 				//正常の場合
 				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-				return;
 			}
 
-			$formPage = Hash::merge($formPage, $this->request->data);
+		} else {
+			//表示処理
+			$this->request->data = Hash::merge($this->request->data,
+				$this->LanguagesPage->getLanguagesPage(Current::read('Page.id'), Current::read('Language.id'))
+			);
+			$this->request->data['Room'] = Current::read('Room');
 		}
-
-		$formPage = $this->camelizeKeyRecursive($formPage);
-		$this->set('formPage', $formPage);
-
-		$this->request->data['Page']['id'] = $formPage['page']['id'];
 	}
 
 /**
  * delete
  *
- * @param int $roomId rooms.id
- * @param int $pageId pages.id
  * @return void
  */
-	public function delete($roomId = null, $pageId = null) {
-		if (! $this->__initPage($roomId, $pageId)) {
+	public function delete() {
+		if (! $this->request->isDelete()) {
+			$this->throwBadRequest();
 			return;
 		}
-
-		if ($this->request->isDelete()) {
-			if ((int)$this->request->data['Page']['id'] !== (int)$pageId) {
-				$this->throwBadRequest();
-				return;
-			}
-
-			if ($this->Page->deletePage($this->data)) {
-				$this->redirect('/' . Current::SETTING_MODE_WORD);
-				return;
-			}
+		if ($this->Page->deletePage($this->data)) {
+			$this->redirect('/' . Current::SETTING_MODE_WORD);
 		}
-
-		$this->throwBadRequest();
 	}
 
 /**
@@ -223,53 +169,22 @@ class PagesController extends PagesAppController {
  * @param int $pageId pages.id
  * @return void
  */
-	public function layout($roomId = null, $pageId = null) {
-		if (! $page = $this->__initPage($roomId, $pageId)) {
-			return;
-		}
-
-		if ($this->request->isPost()) {
-			if ((int)$this->request->data['Page']['id'] !== (int)$pageId) {
-				$this->throwBadRequest();
-				return;
-			}
-
-			$data = $this->request->data;
-			unset($data['save']);
-
-			$this->ContainersPage->saveContainersPage($data);
-			if ($this->handleValidationError($this->ContainersPage->validationErrors)) {
-				//正常の場合
-				$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
-			}
-			$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-			return;
-		}
-
-		$this->throwBadRequest();
-	}
-
-/**
- * Initialize page data
- *
- * @param int $roomId rooms.id
- * @param int $pageId pages.id
- * @return array Page data
- */
-	private function __initPage($roomId, $pageId) {
-		$language = $this->Language->findByCode(Configure::read('Config.language'));
-		$this->set('languageId', $language['Language']['id']);
-
-		if (! $page = $this->Page->getPage($pageId, $roomId)) {
+	public function layout() {
+		if (! $this->request->isPost()) {
 			$this->throwBadRequest();
-			return false;
+			return;
 		}
-		$this->set('path', '/' . $page['Page']['slug']);
+		$data = $this->request->data;
+		unset($data['save']);
 
-		$cancelUrl = '/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
-		$this->set('cancelUrl', $cancelUrl);
-
-		return $page;
+		$this->ContainersPage->saveContainersPage($data);
+		if ($this->ContainersPage->saveContainersPage($data)) {
+			//正常の場合
+			$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
+		} else {
+			$this->handleValidationError($this->ContainersPage->validationErrors);
+		}
+		$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . Current::read('Page.permalink'));
 	}
 
 }

@@ -14,10 +14,10 @@
 </a>
 <ul class="dropdown-menu">
 	<li>
-		<?php echo $this->Html->link(__d('pages', 'Add page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/add/' . PageLayoutHelper::$page['roomId'] . '/' . PageLayoutHelper::$page['id']) ?>
+		<?php echo $this->Html->link(__d('pages', 'Add page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/add/' . Current::read('Page.id')) ?>
 	</li>
 	<li>
-		<?php echo $this->Html->link(__d('pages', 'Edit page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/edit/' . PageLayoutHelper::$page['roomId'] . '/' . PageLayoutHelper::$page['id']) ?>
+		<?php echo $this->Html->link(__d('pages', 'Edit page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/edit/' . Current::read('Page.id')) ?>
 	<li class="divider"></li>
 	<li>
 		<a href="" data-toggle="modal" data-target="#edit-layout">

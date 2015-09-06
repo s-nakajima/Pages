@@ -27,223 +27,101 @@ App::uses('ModelBehavior', 'Model');
 class PageBehavior extends ModelBehavior {
 
 /**
- * use model
- *
- * @var array
- */
-	public $model;
-
-/**
- * Save container data.
+ * beforeValidate is called before a model is validated, you can use this callback to
+ * add behavior validation rules into a models validate array. Returning false
+ * will allow you to make the validation fail.
  *
  * @param Model $model Model using this behavior
- * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @param array $options Options passed from Model::save().
+ * @return mixed False or null will abort the operation. Any other result will continue.
+ * @see Model::save()
  */
-	public function saveContainer(Model $model) {
-		$this->model = $model;
-
-		$this->model->Container->create();
-		$data = array(
-			'Container' => array(
-				'type' => Container::TYPE_MAIN
-			)
+	public function beforeValidate(Model $model, $options = array()) {
+		//ページデータをセット
+		$referencePageId = $model->getReferencePageId($model->data);
+		$fields = array(
+			'room_id',
+			'permalink'
 		);
+		$targetPage = $model->findById($referencePageId, $fields);
+		if (empty($targetPage)) {
+			return false;
+		}
+		$model->data['Page']['room_id'] = Current::read('Room.id');
 
-		return $this->model->Container->save($data);
+		$slug = $model->data['Page']['slug'];
+		if (! isset($slug)) {
+			$slug = '';
+		}
+		$model->data['Page']['slug'] = $slug;
+
+		$permalink = '';
+		if (strlen($targetPage['Page']['permalink']) !== 0) {
+			$permalink = $targetPage['Page']['permalink'] . '/';
+		}
+		$permalink .= $slug;
+		$model->data['Page']['permalink'] = $permalink;
+		$model->data['Page']['is_published'] = true;
+		$model->data['Page']['is_container_fluid'] = false;
+
+		return parent::beforeValidate($model, $options);
 	}
 
 /**
- * Save box data.
+ * afterValidate is called just after model data was validated, you can use this callback
+ * to perform any data cleanup or preparation if needed
  *
  * @param Model $model Model using this behavior
- * @param array $page The page data
- * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @return mixed False will stop this event from being passed to other behaviors
  */
-	public function saveBox(Model $model, $page) {
-		$this->model = $model;
+	public function afterValidate(Model $model) {
+		$model->LanguagesPage->set($model->data['LanguagesPage']);
+		if (! $model->LanguagesPage->validates()) {
+			$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);
+			return false;
+		}
 
-		$this->model->Box->create();
-		$data = array(
-			'Box' => array(
-				'container_id' => $page['Container']['id'],
-				'type' => Box::TYPE_WITH_PAGE,
-				'space_id' => $page['Room']['space_id'],
-				'room_id' => $page['Page']['room_id'],
-				'page_id' => $page['Page']['id']
-			)
-		);
-
-		return $this->model->Box->save($data);
+		return true;
 	}
 
 /**
- * Save containersPage for page
+ * afterSave is called after a model is saved.
  *
  * @param Model $model Model using this behavior
- * @param array $page The page data
- * @return bool True on success
+ * @param bool $created True if this save created a new record
+ * @param array $options Options passed from Model::save().
+ * @return bool
+ * @see Model::save()
  */
-	public function saveContainersPage(Model $model, $page) {
-		$this->model = $model;
+	public function afterSave(Model $model, $created, $options = array()) {
+		$model->LanguagesPage->data['LanguagesPage']['page_id'] = $model->data['Page']['id'];
+		if (! $model->LanguagesPage->save(null, false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
 
-		$query = array(
-			'conditions' => array(
-				'ContainersPage.page_id' => $this->getReferencePageId($model, $page),
-				'Container.type !=' => Container::TYPE_MAIN
-			)
-		);
-
-		$containersPages = $this->model->ContainersPage->find('all', $query);
-		$containersPages[] = array(
-			'ContainersPage' => array(
-				'page_id' => $page['Page']['id'],
-				'container_id' => $page['Container']['id'],
-				'is_published' => true
-			)
-		);
-
-		foreach ($containersPages as $containersPage) {
-			$data = array(
-				'page_id' => $page['Page']['id'],
-				'container_id' => $containersPage['ContainersPage']['container_id'],
-				'is_published' => $containersPage['ContainersPage']['is_published']
-			);
-
-			$this->model->ContainersPage->create();
-			if (!$this->model->ContainersPage->save($data)) {
-				return false;
+		if ($created) {
+			if (! $result = $model->saveContainer($model->data)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-		}
+			$model->data = Hash::merge($model->data, $result);
 
-		return true;
-	}
-
-/**
- * Save boxesPage for page
- *
- * @param Model $model Model using this behavior
- * @param array $page The page data
- * @return bool True on success
- */
-	public function saveBoxesPage(Model $model, $page) {
-		$this->model = $model;
-
-		$query = array(
-			'conditions' => array(
-				'BoxesPage.page_id' => $this->getReferencePageId($model, $page),
-				'Box.type !=' => Box::TYPE_WITH_PAGE
-			)
-		);
-		$boxesPages = $this->model->BoxesPage->find('all', $query);
-		$boxesPages[] = array(
-			'BoxesPage' => array(
-				'page_id' => $page['Page']['id'],
-				'box_id' => $page['Box']['id'],
-				'is_published' => true
-			)
-		);
-
-		foreach ($boxesPages as $boxesPage) {
-			$data = array(
-				'page_id' => $page['Page']['id'],
-				'box_id' => $boxesPage['BoxesPage']['box_id'],
-				'is_published' => $boxesPage['BoxesPage']['is_published']
-			);
-
-			$this->model->BoxesPage->create();
-			if (!$this->model->BoxesPage->save($data)) {
-				return false;
+			if (! $result = $model->saveBox($model->data)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
+			$model->data = Hash::merge($model->data, $result);
+
+			if (! $result = $model->saveContainersPage($model->data)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+			$model->data = Hash::merge($model->data, $result);
+
+			if (! $result = $model->saveBoxesPage($model->data)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+			$model->data = Hash::merge($model->data, $result);
 		}
 
-		return true;
-	}
-
-/**
- * Get page ID of top.
- *
- * @return string
- */
-	private function __getTopPageId() {
-		$topPageId = null;
-		$topPage = $this->model->findByLft('1', array('id'));
-		if (! empty($topPage)) {
-			$topPageId = $topPage['Page']['id'];
-		}
-
-		return $topPageId;
-	}
-
-/**
- * Get Reference page ID. Return top page ID if it has no parent.
- *
- * @param Model $model Model using this behavior
- * @param array $page The page data
- * @return string
- */
-	public function getReferencePageId(Model $model, $page) {
-		$this->model = $model;
-
-		if (! empty($page['Page']['parent_id'])) {
-			return $page['Page']['parent_id'];
-		}
-
-		return $this->__getTopPageId();
-	}
-
-/**
- * delete containersPage for page
- *
- * @param Model $model Model using this behavior
- * @param int $pageId pages.id
- * @throws InternalErrorException
- * @return bool True on success
- */
-	public function deleteContainers(Model $model, $pageId) {
-		$this->model = $model;
-
-		$conditions = array(
-			'ContainersPage.page_id' => $pageId,
-			'Container.type' => Container::TYPE_MAIN
-		);
-		$containers = $this->model->ContainersPage->find('list', array(
-			'recursive' => 0,
-			'fields' => 'Container.id',
-			'conditions' => $conditions
-		));
-		$containerIds = array_values($containers);
-
-		if (! $this->model->Container->deleteAll(array('Container.id' => $containerIds), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		if (! $this->model->ContainersPage->deleteAll(array('ContainersPage.page_id' => $pageId), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		return true;
-	}
-
-/**
- * delete boxesPage for page
- *
- * @param Model $model Model using this behavior
- * @param int $pageId pages.id
- * @return bool True on success
- * @throws InternalErrorException
- */
-	public function deleteBoxes(Model $model, $pageId) {
-		$this->model = $model;
-
-		if (! $this->model->Box->deleteAll(array('Box.page_id' => $pageId), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		if (! $this->model->BoxesPage->deleteAll(array('BoxesPage.page_id' => $pageId), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		return true;
+		return parent::afterSave($model, $created, $options);
 	}
 
 }

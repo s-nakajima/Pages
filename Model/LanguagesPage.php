@@ -122,7 +122,7 @@ class LanguagesPage extends AppModel {
 		);
 
 		$languagesPage = $this->find('first', array(
-			'recursive' => -1,
+			'recursive' => 0,
 			'conditions' => $conditions,
 		));
 

@@ -68,13 +68,6 @@ class PageLayoutHelper extends AppHelper {
 	public $frame = null;
 
 /**
- * page data
- *
- * @var array
- */
-	public static $page = null;
-
-/**
  * Default Constructor
  *
  * @param View $View The View this helper is being attached to.
@@ -89,10 +82,6 @@ class PageLayoutHelper extends AppHelper {
 		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.Plugin.key', '{n}.Plugin');
 
 		$this->frame = Current::read('Frame');
-
-		if (isset($settings['current']['Page'])) {
-			self::$page = $settings['current']['Page'];
-		}
 	}
 
 /**
@@ -156,17 +145,6 @@ class PageLayoutHelper extends AppHelper {
 	}
 
 /**
- * Get containers_pages.id
- *
- * @param string $containerType Container type.
- *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
- * @return int containers_pages.id
- */
-	public function getContainersPageId($containerType) {
-		return (int)$this->__containers[$containerType]['ContainersPage']['id'];
-	}
-
-/**
  * Get the box data for container
  *
  * @param string $containerType Container type.
@@ -198,8 +176,7 @@ class PageLayoutHelper extends AppHelper {
  */
 	public function getContainerFluid() {
 		$result = 'container';
-		if (isset($this->_View->viewVars['current']['Page']) &&
-				$this->_View->viewVars['current']['Page']['is_container_fluid']) {
+		if (Current::read('Page.is_container_fluid')) {
 			$result = 'container-fluid';
 		}
 

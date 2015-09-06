@@ -32,23 +32,32 @@ class PageLayoutComponent extends Component {
 		$this->controller = $controller;
 		$this->__prepare();
 
-		//pathからページデータ取得
-		if (isset($this->controller->viewVars['page'])) {
-			$page = $this->controller->viewVars['page'];
-			$this->controller->current = $page;
-		} else {
-			$this->Page = ClassRegistry::init('Pages.Page');
-			$path = $this->__getPagePath();
-			$page = $this->Page->getPageWithFrame($path);
-			if (empty($page)) {
-				throw new NotFoundException();
-			}
+		////pathからページデータ取得
+		//if (isset($this->controller->viewVars['page'])) {
+		//	$page = $this->controller->viewVars['page'];
+		//	$this->controller->current = $page;
+		//} else {
+		//	$this->Page = ClassRegistry::init('Pages.Page');
+		//	$path = $this->__getPagePath();
+		//	$page = $this->Page->getPageWithFrame($path);
+		//	if (empty($page)) {
+		//		throw new NotFoundException();
+		//	}
+		//}
+		$this->Page = ClassRegistry::init('Pages.Page');
+		$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
+		if (empty($page)) {
+			throw new NotFoundException();
 		}
 
-		//cancelUrlをセット
-		if (! isset($this->controller->viewVars['cancelUrl'])) {
-			$this->controller->set('cancelUrl', $page['Page']['permalink']);
+		if (Current::hasSettingMode() && Current::isSettingMode() && Current::permission('page_editable')) {
+			$this->controller->request->data['ContainersPage'] = Hash::combine($page, 'Container.{n}.type', 'Container.{n}.ContainersPage');
 		}
+
+		////cancelUrlをセット
+		//if (! isset($this->controller->viewVars['cancelUrl'])) {
+		//	$this->controller->set('cancelUrl', $page['Page']['permalink']);
+		//}
 
 		//Pluginデータ取得
 		$pluginsRoom = ClassRegistry::init('PluginManager.PluginsRoom');
@@ -56,7 +65,7 @@ class PageLayoutComponent extends Component {
 
 		//ページHelperにセット
 		$results = array(
-			'current' => $this->controller->current,
+			//'current' => $this->controller->current,
 			'containers' => Hash::combine($page['Container'], '{n}.type', '{n}'),
 			'boxes' => Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id'),
 			'plugins' => $plugins,
@@ -84,12 +93,12 @@ class PageLayoutComponent extends Component {
 			$this->controller->layout = 'Pages.default';
 		}
 
-		$this->controller->set('isControlPanel', false);
-		if (AuthComponent::user('id')) {
-			$this->controller->set('hasControlPanel', true);
-		} else {
-			$this->controller->set('hasControlPanel', false);
-		}
+		//$this->controller->set('isControlPanel', false);
+		//if (AuthComponent::user('id')) {
+		//	$this->controller->set('hasControlPanel', true);
+		//} else {
+		//	$this->controller->set('hasControlPanel', false);
+		//}
 	}
 
 /**
@@ -97,24 +106,24 @@ class PageLayoutComponent extends Component {
  *
  * @return string Page path
  */
-	private function __getPagePath() {
-		$path = '';
-		if (isset($this->controller->current['Page'])) {
-			$path = $this->controller->current['Page']['permalink'];
-		} elseif (isset($this->controller->viewVars['path'])) {
-			$path = substr($this->controller->viewVars['path'], 1);
-		} elseif (isset($this->controller->current['Room']['page_id_top'])) {
-			$options = array(
-				'recursive' => -1,
-				'conditions' => array('id' => (int)$this->controller->current['Room']['page_id_top']),
-			);
-			if ($page = $this->Page->find('first', $options)) {
-				$this->controller->current = $page;
-				$path = $this->controller->current['Page']['permalink'];
-			}
-		}
-
-		return $path;
-	}
+	//private function __getPagePath() {
+	//	$path = '';
+	//	if (isset($this->controller->current['Page'])) {
+	//		$path = $this->controller->current['Page']['permalink'];
+	//	} elseif (isset($this->controller->viewVars['path'])) {
+	//		$path = substr($this->controller->viewVars['path'], 1);
+	//	} elseif (isset($this->controller->current['Room']['page_id_top'])) {
+	//		$options = array(
+	//			'recursive' => -1,
+	//			'conditions' => array('id' => (int)$this->controller->current['Room']['page_id_top']),
+	//		);
+	//		if ($page = $this->Page->find('first', $options)) {
+	//			$this->controller->current = $page;
+	//			$path = $this->controller->current['Page']['permalink'];
+	//		}
+	//	}
+	//
+	//	return $path;
+	//}
 
 }

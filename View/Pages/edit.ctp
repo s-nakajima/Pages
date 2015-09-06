@@ -8,13 +8,12 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
-<?php echo $this->Html->script('/pages/js/pages.js', false); ?>
 
 <div class="modal fade in" id="page-setting" tabindex="-1" aria-hidden="false" role="dialog" style="display: block;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" aria-hidden="true" onclick="location.href = '<?php echo $cancelUrl; ?>'">&times;</button>
+				<button type="button" class="close" aria-hidden="true" onclick="location.href = '<?php echo $this->Workflow->cancelUrl(); ?>'">&times;</button>
 				<?php if ($this->params['action'] === 'add') : ?>
 					<?php echo __d('pages', 'Add page'); ?>
 				<?php else : ?>
@@ -31,20 +30,15 @@
 						</div>
 
 						<div class="panel-footer text-center">
-							<button type="button" class="btn btn-default btn-workflow" onclick="location.href = '<?php echo $cancelUrl; ?>'">
-								<span class="glyphicon glyphicon-remove"></span>
-								<?php echo __d('net_commons', 'Cancel'); ?>
-							</button>
-
-							<?php echo $this->Form->button(__d('net_commons', 'OK'), array(
-									'class' => 'btn btn-primary btn-workflow',
-									'name' => 'save',
-								)); ?>
+							<?php echo $this->NetCommonsForm->cancelButton(__d('net_commons', 'Cancel'),
+									$this->Workflow->cancelUrl()
+								); ?>
+							<?php echo $this->NetCommonsForm->saveButton(__d('net_commons', 'OK')); ?>
 						</div>
 					<?php echo $this->Form->end(); ?>
 				</div>
 
-				<?php if ($this->params['action'] === 'edit' && $formPage['page']['permalink']) : ?>
+				<?php if ($this->params['action'] === 'edit' && $this->data['Page']['permalink']) : ?>
 					<?php echo $this->element('Pages/delete_form'); ?>
 				<?php endif; ?>
 			</div>

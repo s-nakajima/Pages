@@ -37,10 +37,10 @@ class PagesController extends PagesAppController {
  * @var array
  */
 	public $components = array(
-		'NetCommons.NetCommonsRoomRole' => array(
-			//コンテンツの権限設定
-			'allowedActions' => array(
-				'pageEditable' => array('add', 'edit', 'delete', 'layout'),
+		'NetCommons.Permission' => array(
+			//アクセスの権限
+			'allow' => array(
+				'add,edit,delete,layout' => 'page_editable',
 			),
 		),
 		'Pages.PageLayout',
@@ -62,14 +62,14 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
-		if (Page::isSetting() && ! $this->viewVars['pageEditable']) {
+		if (Current::isSettingMode() && ! Current::permission('page_editable')) {
 			$paths = func_get_args();
 			$path = implode('/', $paths);
 			$this->redirect('/' . $path);
 			return;
 		}
 
-		Configure::write('Pages.isSetting', Page::isSetting());
+		//Configure::write('Pages.isSetting', Pages::isSetting());
 
 		$paths = func_get_args();
 		$path = implode('/', $paths);
@@ -86,8 +86,8 @@ class PagesController extends PagesAppController {
 		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
 		$this->set('pageMainContainer', $page);
 
-		$language = $this->Language->findByCode(Configure::read('Config.language'));
-		$this->set('languageId', $language['Language']['id']);
+		//$language = $this->Language->findByCode(Configure::read('Config.language'));
+		//$this->set('languageId', $language['Language']['id']);
 	}
 
 /**
@@ -130,7 +130,7 @@ class PagesController extends PagesAppController {
 			$page = $this->Page->savePage($data);
 			if (! $this->Page->validationErrors) {
 				//正常の場合
-				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;
 			}
 
@@ -176,7 +176,7 @@ class PagesController extends PagesAppController {
 
 			if (! $this->Page->validationErrors) {
 				//正常の場合
-				$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 				return;
 			}
 
@@ -208,7 +208,7 @@ class PagesController extends PagesAppController {
 			}
 
 			if ($this->Page->deletePage($this->data)) {
-				$this->redirect('/' . Page::SETTING_MODE_WORD);
+				$this->redirect('/' . Current::SETTING_MODE_WORD);
 				return;
 			}
 		}
@@ -242,7 +242,7 @@ class PagesController extends PagesAppController {
 				//正常の場合
 				$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
 			}
-			$this->redirect('/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+			$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 			return;
 		}
 
@@ -266,7 +266,7 @@ class PagesController extends PagesAppController {
 		}
 		$this->set('path', '/' . $page['Page']['slug']);
 
-		$cancelUrl = '/' . Page::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
+		$cancelUrl = '/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['slug'];
 		$this->set('cancelUrl', $cancelUrl);
 
 		return $page;

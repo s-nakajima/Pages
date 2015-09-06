@@ -17,6 +17,7 @@
  */
 
 App::uses('PagesAppModel', 'Pages.Model');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * Page Model
@@ -27,16 +28,19 @@ App::uses('PagesAppModel', 'Pages.Model');
 class Page extends PagesAppModel {
 
 /**
+ * 後で削除
  * constant value
  */
-	const SETTING_MODE_WORD = 'setting';
+	//const SETTING_MODE_WORD = 'setting';
+	const SETTING_MODE_WORD = Current::SETTING_MODE_WORD;
 
 /**
+ * 後で削除
  * is setting mode true
  *
  * @var bool
  */
-	private static $__isSetting = null;
+	//private static $__isSetting = null;
 
 /**
  * Default behaviors
@@ -208,33 +212,36 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * 後で削除
  * Check setting mode
  *
  * @return bool
  */
-	public static function isSetting() {
-		if (isset(self::$__isSetting)) {
-			return self::$__isSetting;
-		}
-
-		$pattern = preg_quote('/' . self::SETTING_MODE_WORD . '/', '/');
-		if (preg_match('/' . $pattern . '/', Router::url())) {
-			self::$__isSetting = true;
-		} else {
-			self::$__isSetting = false;
-		}
-
-		return self::$__isSetting;
+	public static function isSettingMode() {
+		//if (isset(self::$__isSetting)) {
+		//	return self::$__isSetting;
+		//}
+		//
+		//$pattern = preg_quote('/' . self::SETTING_MODE_WORD . '/', '/');
+		//if (preg_match('/' . $pattern . '/', Router::url())) {
+		//	self::$__isSetting = true;
+		//} else {
+		//	self::$__isSetting = false;
+		//}
+		//
+		//return self::$__isSetting;
+		return Current::isSettingMode();
 	}
 
 /**
+ * 後で削除
  * Unset setting mode value. Use for test.
  *
  * @return void
  */
-	public static function unsetIsSetting() {
-		self::$__isSetting = null;
-	}
+	//public static function unsetIsSetting() {
+	//	self::$__isSetting = null;
+	//}
 
 /**
  * Get page data

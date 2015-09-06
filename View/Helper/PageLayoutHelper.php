@@ -65,7 +65,7 @@ class PageLayoutHelper extends AppHelper {
  *
  * @var array
  */
-	public static $frame = null;
+	public $frame = null;
 
 /**
  * page data
@@ -88,9 +88,8 @@ class PageLayoutHelper extends AppHelper {
 		$this->__plugins = $settings['plugins'];
 		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.Plugin.key', '{n}.Plugin');
 
-		if (isset($settings['current']['Frame'])) {
-			self::$frame = $settings['current']['Frame'];
-		}
+		$this->frame = Current::read('Frame');
+
 		if (isset($settings['current']['Page'])) {
 			self::$page = $settings['current']['Page'];
 		}
@@ -147,7 +146,7 @@ class PageLayoutHelper extends AppHelper {
 			return false;
 		}
 
-		if (! Page::isSetting()) {
+		if (! Current::isSettingMode()) {
 			$box = $this->getBox($containerType);
 			$frames = Hash::combine($box, '{n}.Frame.{n}.id', '{n}.Frame.{n}');
 			$result = count($frames);

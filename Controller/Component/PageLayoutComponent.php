@@ -52,7 +52,7 @@ class PageLayoutComponent extends Component {
 
 		//Pluginデータ取得
 		$pluginsRoom = ClassRegistry::init('PluginManager.PluginsRoom');
-		$plugins = $pluginsRoom->getPlugins($page['Page']['room_id'], $this->controller->viewVars['languageId']);
+		$plugins = $pluginsRoom->getPlugins($page['Page']['room_id'], Current::read('Language.id'));
 
 		//ページHelperにセット
 		$results = array(

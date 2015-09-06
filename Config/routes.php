@@ -16,7 +16,7 @@ Router::connect('/' . Page::SETTING_MODE_WORD . '/*', array('plugin' => 'pages',
 Router::connect('/*', array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'), array('routeClass' => 'SlugRoute'));
 
 $params = array();
-if (!Page::isSetting()) {
+if (! Page::isSettingMode()) {
 	$params = array(Page::SETTING_MODE_WORD => false);
 }
 $indexParams = $params + array('action' => 'index');

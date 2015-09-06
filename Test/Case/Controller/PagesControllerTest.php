@@ -96,7 +96,7 @@ class PagesControllerTest extends YAControllerTestCase {
 	public function testIndexSetting() {
 		RolesControllerTest::login($this);
 
-		$url = '/' . Page::SETTING_MODE_WORD . '/';
+		$url = '/' . Current::SETTING_MODE_WORD . '/';
 		$needle = '<section class="modal fade" id="add-plugin-';
 
 		$this->testAction($url, array('return' => 'view'));

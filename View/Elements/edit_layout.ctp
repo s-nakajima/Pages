@@ -83,13 +83,11 @@
 
 			<div class="modal-footer">
 				<div class="text-center">
-					<?php echo $this->NetCommonsForm->cancelButton(__d('net_commons', 'Cancel'), '',
-							array(
-								'data-dismiss' => 'modal',
-								'aria-hidden' => 'true',
-							)
-						); ?>
-					<?php echo $this->NetCommonsForm->saveButton(__d('net_commons', 'OK')); ?>
+					<?php echo $this->Button->cancel(__d('net_commons', 'Cancel'), '', array(
+							'data-dismiss' => 'modal',
+							'aria-hidden' => 'true',
+						)); ?>
+					<?php echo $this->Button->save(__d('net_commons', 'OK')); ?>
 				</div>
 			</div>
 

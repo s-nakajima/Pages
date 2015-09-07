@@ -81,7 +81,7 @@ class PageLayoutHelper extends AppHelper {
 		$this->__plugins = $settings['plugins'];
 		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.Plugin.key', '{n}.Plugin');
 
-		$this->frame = Current::read('Frame');
+		//$this->frame = Current::read('Frame');
 	}
 
 /**

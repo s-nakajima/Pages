@@ -13,7 +13,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" aria-hidden="true" onclick="location.href = '<?php echo $this->Workflow->cancelUrl(); ?>'">&times;</button>
+				<button type="button" class="close" aria-hidden="true" onclick="location.href = '<?php echo Current::backToPageUrl(true); ?>'">&times;</button>
 				<?php if ($this->params['action'] === 'add') : ?>
 					<?php echo __d('pages', 'Add page'); ?>
 				<?php else : ?>
@@ -30,10 +30,7 @@
 						</div>
 
 						<div class="panel-footer text-center">
-							<?php echo $this->NetCommonsForm->cancelButton(__d('net_commons', 'Cancel'),
-									$this->Workflow->cancelUrl()
-								); ?>
-							<?php echo $this->NetCommonsForm->saveButton(__d('net_commons', 'OK')); ?>
+							<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), Current::backToPageUrl(true)); ?>
 						</div>
 					<?php echo $this->Form->end(); ?>
 				</div>

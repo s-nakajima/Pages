@@ -25,29 +25,22 @@ class PageLayoutComponent extends Component {
  */
 	public function beforeRender(Controller $controller) {
 		//RequestActionの場合、スキップする
-		if (! empty($this->controller->request->params['requested'])) {
+		if (! empty($controller->request->params['requested'])) {
 			return;
 		}
 
 		$this->controller = $controller;
 		$this->__prepare();
 
-		////pathからページデータ取得
-		//if (isset($this->controller->viewVars['page'])) {
-		//	$page = $this->controller->viewVars['page'];
-		//	$this->controller->current = $page;
-		//} else {
-		//	$this->Page = ClassRegistry::init('Pages.Page');
-		//	$path = $this->__getPagePath();
-		//	$page = $this->Page->getPageWithFrame($path);
-		//	if (empty($page)) {
-		//		throw new NotFoundException();
-		//	}
-		//}
-		$this->Page = ClassRegistry::init('Pages.Page');
-		$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
-		if (empty($page)) {
-			throw new NotFoundException();
+		//pathからページデータ取得
+		if (isset($this->controller->viewVars['page'])) {
+			$page = $this->controller->viewVars['page'];
+		} else {
+			$this->Page = ClassRegistry::init('Pages.Page');
+			$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
+			if (empty($page)) {
+				throw new NotFoundException();
+			}
 		}
 
 		if (Current::hasSettingMode() && Current::isSettingMode() && Current::permission('page_editable')) {

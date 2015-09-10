@@ -43,6 +43,15 @@
 					<?php if ($this->request->params['plugin'] === 'pages') : ?>
 						<?php echo $this->fetch('content'); ?>
 					<?php else : ?>
+						<?php if (Current::isSettingMode()) : ?>
+							<?php echo $this->element('Frames.add_plugin', array(
+									'boxId' => Current::read('Box.id'),
+									'roomId' => Current::read('Room.id'),
+									'containerType' => Container::TYPE_MAIN,
+								)); ?>
+						<?php endif; ?>
+
+
 						<?php echo $this->element('Frames.frame', array(
 								'frame' => Current::read('Frame'),
 								'view' => $this->fetch('content')

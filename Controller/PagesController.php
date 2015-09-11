@@ -180,9 +180,9 @@ class PagesController extends PagesAppController {
 		$this->ContainersPage->saveContainersPage($data);
 		if ($this->ContainersPage->saveContainersPage($data)) {
 			//正常の場合
-			$this->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
+			$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
 		} else {
-			$this->handleValidationError($this->ContainersPage->validationErrors);
+			$this->NetCommons->handleValidationError($this->ContainersPage->validationErrors);
 		}
 		$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . Current::read('Page.permalink'));
 	}

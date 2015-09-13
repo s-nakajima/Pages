@@ -87,7 +87,6 @@ class PagesController extends PagesAppController {
 /**
  * add
  *
- * @param int $roomId rooms.id
  * @return void
  */
 	public function add() {
@@ -163,10 +162,8 @@ class PagesController extends PagesAppController {
 	}
 
 /**
- * edit
+ * layout
  *
- * @param int $roomId rooms.id
- * @param int $pageId pages.id
  * @return void
  */
 	public function layout() {

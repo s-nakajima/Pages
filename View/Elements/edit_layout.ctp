@@ -13,7 +13,7 @@
 	<div class="modal-dialog">
 		<?php echo $this->Form->create('EditLayout', array(
 				'type' => 'post',
-				'url' => '/pages/pages/layout/' . PageLayoutHelper::$page['roomId'] . '/' . PageLayoutHelper::$page['id']
+				'url' => '/pages/pages/layout/' . Current::read('Page.id')
 			)); ?>
 
 		<div class="modal-content">
@@ -32,40 +32,30 @@
 										(int)$this->PageLayout->hasContainer(Container::TYPE_FOOTER); ?>)">
 
 						<?php echo $this->Form->hidden('Page.id', array(
-								'value' => PageLayoutHelper::$page['id'],
+								'value' => Current::read('Page.id'),
 							)); ?>
 
-						<?php echo $this->Form->hidden('ContainersPage.0.id', array(
-								'value' => $this->PageLayout->getContainersPageId(Container::TYPE_HEADER)
-							)); ?>
-						<?php echo $this->Form->hidden('ContainersPage.0.is_published', array(
-								'ng-value' => 'header',
-							)); ?>
-						<?php $this->Form->unlockField('ContainersPage.0.is_published'); ?>
+						<?php foreach (array(Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MINOR, Container::TYPE_FOOTER) as $containerType) : ?>
+							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.id'); ?>
+							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.page_id'); ?>
+							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
 
-						<?php echo $this->Form->hidden('ContainersPage.1.id', array(
-								'value' => $this->PageLayout->getContainersPageId(Container::TYPE_MAJOR)
-							)); ?>
-						<?php echo $this->Form->hidden('ContainersPage.1.is_published', array(
-								'ng-value' => 'major',
-							)); ?>
-						<?php $this->Form->unlockField('ContainersPage.1.is_published'); ?>
-
-						<?php echo $this->Form->hidden('ContainersPage.2.id', array(
-								'value' => $this->PageLayout->getContainersPageId(Container::TYPE_MINOR)
-							)); ?>
-						<?php echo $this->Form->hidden('ContainersPage.2.is_published', array(
-								'ng-value' => 'minor',
-							)); ?>
-						<?php $this->Form->unlockField('ContainersPage.2.is_published'); ?>
-
-						<?php echo $this->Form->hidden('ContainersPage.3.id', array(
-								'value' => $this->PageLayout->getContainersPageId(Container::TYPE_FOOTER)
-							)); ?>
-						<?php echo $this->Form->hidden('ContainersPage.3.is_published', array(
-								'ng-value' => 'footer',
-							)); ?>
-						<?php $this->Form->unlockField('ContainersPage.3.is_published'); ?>
+							<?php
+								if ($containerType === Container::TYPE_HEADER) {
+									$ngValue = 'header';
+								} elseif ($containerType === Container::TYPE_MAJOR) {
+									$ngValue = 'major';
+								} elseif ($containerType === Container::TYPE_MINOR) {
+									$ngValue = 'minor';
+								} elseif ($containerType === Container::TYPE_FOOTER) {
+									$ngValue = 'footer';
+								}
+							?>
+							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.is_published', array(
+									'ng-value' => $ngValue,
+								)); ?>
+							<?php $this->Form->unlockField('ContainersPage.' . $containerType . '.is_published'); ?>
+						<?php endforeach; ?>
 
 						<?php foreach ($layouts as $layout) : ?>
 							<a href="" class="pull-left page-edit-layout"
@@ -93,15 +83,11 @@
 
 			<div class="modal-footer">
 				<div class="text-center">
-					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
-						<span class="glyphicon glyphicon-remove"></span>
-						<?php echo __d('net_commons', 'Cancel'); ?>
-					</button>
-
-					<?php echo $this->Form->button(__d('net_commons', 'OK'), array(
-							'class' => 'btn btn-primary btn-workflow',
-							'name' => 'save',
+					<?php echo $this->Button->cancel(__d('net_commons', 'Cancel'), '', array(
+							'data-dismiss' => 'modal',
+							'aria-hidden' => 'true',
 						)); ?>
+					<?php echo $this->Button->save(__d('net_commons', 'OK')); ?>
 				</div>
 			</div>
 

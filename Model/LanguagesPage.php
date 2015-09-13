@@ -61,8 +61,8 @@ class LanguagesPage extends AppModel {
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge($this->validate, array(
 			'name' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name')),
 					'required' => true
 				),
@@ -122,7 +122,7 @@ class LanguagesPage extends AppModel {
 		);
 
 		$languagesPage = $this->find('first', array(
-			'recursive' => -1,
+			'recursive' => 0,
 			'conditions' => $conditions,
 		));
 

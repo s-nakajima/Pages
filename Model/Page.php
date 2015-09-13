@@ -17,6 +17,7 @@
  */
 
 App::uses('PagesAppModel', 'Pages.Model');
+App::uses('Current', 'NetCommons.Utility');
 
 /**
  * Page Model
@@ -29,14 +30,7 @@ class Page extends PagesAppModel {
 /**
  * constant value
  */
-	const SETTING_MODE_WORD = 'setting';
-
-/**
- * is setting mode true
- *
- * @var bool
- */
-	private static $__isSetting = null;
+	const SETTING_MODE_WORD = Current::SETTING_MODE_WORD;
 
 /**
  * Default behaviors
@@ -46,7 +40,8 @@ class Page extends PagesAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Containable',
-		'Pages.Page'
+		'Pages.Page',
+		'Pages.PageAssociations'
 	);
 
 /**
@@ -161,15 +156,15 @@ class Page extends PagesAppModel {
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge($this->validate, array(
 			'slug' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug')),
 					'required' => true
 				),
 			),
 			'permalink' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true
 				),
@@ -212,28 +207,8 @@ class Page extends PagesAppModel {
  *
  * @return bool
  */
-	public static function isSetting() {
-		if (isset(self::$__isSetting)) {
-			return self::$__isSetting;
-		}
-
-		$pattern = preg_quote('/' . self::SETTING_MODE_WORD . '/', '/');
-		if (preg_match('/' . $pattern . '/', Router::url())) {
-			self::$__isSetting = true;
-		} else {
-			self::$__isSetting = false;
-		}
-
-		return self::$__isSetting;
-	}
-
-/**
- * Unset setting mode value. Use for test.
- *
- * @return void
- */
-	public static function unsetIsSetting() {
-		self::$__isSetting = null;
+	public static function isSettingMode() {
+		return Current::isSettingMode();
 	}
 
 /**
@@ -318,121 +293,32 @@ class Page extends PagesAppModel {
 		//トランザクションBegin
 		$this->setDataSource('master');
 		if ($options['atomic']) {
-			$dataSource = $this->getDataSource();
-			$dataSource->begin();
+			$this->begin();
 		}
-
-		try {
-			if (! $this->validatePage($data, ['languagesPage'])) {
-				return false;
-			}
-			$page = $this->__savePage();
-
-			if ($options['atomic']) {
-				$dataSource->commit();
-			}
-			return $page;
-
-		} catch (Exception $ex) {
-			if ($options['atomic']) {
-				$dataSource->rollback();
-				CakeLog::error($ex);
-			}
-			throw $ex;
-		}
-	}
-
-/**
- * Save page
- *
- * @return mixed On success Model::$data if its not empty or true, false on failure
- * @throws InternalErrorException
- */
-	private function __savePage() {
-		$exists = $this->exists();
-
-		if (! $page = $this->save(null, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		$this->LanguagesPage->data['LanguagesPage']['page_id'] = $page['Page']['id'];
-		if (! $this->LanguagesPage->save(null, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		if (! $exists) {
-			if (! $container = $this->saveContainer($page)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-			$page = Hash::merge($page, $container);
-
-			if (! $box = $this->saveBox($page)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-			$page = Hash::merge($page, $box);
-
-			if (! $this->saveContainersPage($page)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-			if (! $this->saveBoxesPage($page)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-		}
-
-		return $page;
-	}
-
-/**
- * validate page
- *
- * @param array $data received post data
- * @param array $contains Optional validate sets
- * @return bool True on success, false on error
- */
-	public function validatePage($data, $contains = []) {
-		//ページデータをセット
-		$referencePageId = $this->getReferencePageId($data);
-		$fields = array(
-			'room_id',
-			'permalink'
-		);
-		$targetPage = $this->findById($referencePageId, $fields);
-		if (empty($targetPage)) {
-			return false;
-		}
-		//$data['Page']['room_id'] = $targetPage['Page']['room_id'];
-
-		$slug = $data['Page']['slug'];
-		if (! isset($slug)) {
-			$slug = '';
-		}
-		$data['Page']['slug'] = $slug;
-
-		$permalink = '';
-		if (strlen($targetPage['Page']['permalink']) !== 0) {
-			$permalink = $targetPage['Page']['permalink'] . '/';
-		}
-		$permalink .= $slug;
-		$data['Page']['permalink'] = $permalink;
-
-		$data['Page']['is_published'] = true;
-		$data['Page']['is_container_fluid'] = false;
 
 		//バリデーション
 		$this->set($data);
-		$this->validates();
-
-		if (in_array('languagesPage', $contains, true)) {
-			if (! $this->LanguagesPage->validateLanguagesPage($data)) {
-				$this->validationErrors = Hash::merge($this->validationErrors, $this->LanguagesPage->validationErrors);
-			}
-		}
-
-		if ($this->validationErrors) {
+		if (! $this->validates()) {
 			return false;
 		}
 
-		return true;
+		try {
+			if (! $page = $this->save(null, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			if ($options['atomic']) {
+				$this->commit();
+			}
+
+		} catch (Exception $ex) {
+			if ($options['atomic']) {
+				$this->rollback($ex);
+			}
+			throw $ex;
+		}
+
+		return $page;
 	}
 
 /**
@@ -459,8 +345,7 @@ class Page extends PagesAppModel {
 		//トランザクションBegin
 		$this->setDataSource('master');
 		if ($options['atomic']) {
-			$dataSource = $this->getDataSource();
-			$dataSource->begin();
+			$this->begin();
 		}
 
 		try {
@@ -479,14 +364,13 @@ class Page extends PagesAppModel {
 			//$this->deleteBoxes($data[$this->alias]['id']);
 
 			if ($options['atomic']) {
-				$dataSource->commit();
+				$this->commit();
 			}
 			return true;
 
 		} catch (Exception $ex) {
 			if ($options['atomic']) {
-				$dataSource->rollback();
-				CakeLog::error($ex);
+				$this->rollback($ex);
 			}
 			throw $ex;
 		}

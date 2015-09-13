@@ -9,56 +9,25 @@
  */
 ?>
 
-<?php echo $this->Form->input('Page.id', array(
-		'type' => 'hidden',
-		'value' => isset($formPage['page']['id']) ? $formPage['page']['id'] : null
+<?php echo $this->Form->hidden('Page.id'); ?>
+<?php echo $this->Form->hidden('Page.parent_id'); ?>
+<?php echo $this->Form->hidden('Page.permalink'); ?>
+<?php echo $this->Form->hidden('Page.room_id'); ?>
+<?php echo $this->Form->hidden('Room.id'); ?>
+<?php echo $this->Form->hidden('Room.space_id'); ?>
+<?php echo $this->Form->hidden('LanguagesPage.id'); ?>
+<?php echo $this->Form->hidden('LanguagesPage.language_id'); ?>
+
+<?php echo $this->NetCommonsForm->input('LanguagesPage.name', array(
+		'type' => 'text',
+		'label' => __d('pages', 'Page name'),
+		'required' => true,
 	)); ?>
 
-<?php echo $this->Form->input('Page.parent_id', array(
-		'type' => 'hidden',
-		'value' => isset($formPage['page']['parentId']) ? $formPage['page']['parentId'] : null
-	)); ?>
-
-<?php echo $this->Form->input('LanguagesPage.id', array(
-		'type' => 'hidden',
-		'value' => isset($formPage['languagesPage']['id']) ? $formPage['languagesPage']['id'] : null
-	)); ?>
-
-<?php echo $this->Form->input('LanguagesPage.language_id', array(
-		'type' => 'hidden',
-		'value' => isset($formPage['languagesPage']['languageId']) ? $formPage['languagesPage']['languageId'] : $languageId
-	)); ?>
-
-<div class="form-group">
-	<?php echo $this->Form->input('LanguagesPage.name', array(
-			'label' => __d('pages', 'Page name') . $this->element('NetCommons.required'),
-			'class' => 'form-control',
-			'error' => false,
-			'value' => isset($formPage['languagesPage']['name']) ? $formPage['languagesPage']['name'] : null
+<?php if ($action === 'add' || isset($this->data['Page']['permalink']) && $this->data['Page']['permalink']) : ?>
+	<?php echo $this->NetCommonsForm->input('Page.slug', array(
+			'type' => 'text',
+			'label' => __d('pages', 'Slug'),
+			'required' => true,
 		)); ?>
-
-	<?php echo $this->element(
-		'NetCommons.errors', [
-			'errors' => $this->validationErrors,
-			'model' => 'LanguagesPage',
-			'field' => 'name',
-		]) ?>
-</div>
-
-<?php if ($action === 'add' || isset($formPage['page']['permalink']) && $formPage['page']['permalink']) : ?>
-	<div class="form-group">
-		<?php echo $this->Form->input('Page.slug', array(
-				'label' => __d('pages', 'Slug') . $this->element('NetCommons.required'),
-				'class' => 'form-control',
-				'error' => false,
-				'value' => isset($formPage['page']['slug']) ? $formPage['page']['slug'] : null
-			)); ?>
-
-		<?php echo $this->element(
-			'NetCommons.errors', [
-				'errors' => $this->validationErrors,
-				'model' => 'Page',
-				'field' => 'slug',
-			]) ?>
-	</div>
 <?php endif;

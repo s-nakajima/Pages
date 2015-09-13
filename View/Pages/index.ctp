@@ -12,6 +12,6 @@
 
 <?php
 echo $this->element('Boxes.render_boxes', array(
-		'boxes' => $pageMainContainer['box'][$pageMainContainer['container'][Container::TYPE_MAIN]['id']],
+		'boxes' => $pageMainContainer['Box'][$pageMainContainer['Container'][Container::TYPE_MAIN]['id']],
 		'containerType' => Container::TYPE_MAIN
 	));

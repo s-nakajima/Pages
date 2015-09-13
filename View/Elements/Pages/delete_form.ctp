@@ -8,11 +8,13 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+$this->NetCommonsHtml->css('/blocks/css/style.css');
 ?>
 
-<div ng-init="dangerZone=false;">
+<div class="block-danger-zone" ng-init="dangerZone=false;">
 	<?php echo $this->Form->create('Page', array(
-			'type' => 'delete', 'action' => 'delete/' . $formPage['page']['roomId'] . '/' . $formPage['page']['id']
+			'type' => 'delete', 'action' => 'delete/' . $this->data['Page']['room_id'] . '/' . $this->data['Page']['id']
 		)); ?>
 
 		<accordion close-others="false">
@@ -28,10 +30,7 @@
 					<?php echo sprintf(__d('net_commons', 'Delete all data associated with the %s.'), __d('pages', 'Page')); ?>
 				</div>
 
-				<?php echo $this->Form->input('Page.id', array(
-						'type' => 'hidden',
-						'value' => $formPage['page']['id']
-					)); ?>
+				<?php echo $this->Form->input('Page.id'); ?>
 				<?php echo $this->Form->button('<span class="glyphicon glyphicon-trash"> </span> ' . __d('net_commons', 'Delete'), array(
 						'name' => 'delete',
 						'class' => 'btn btn-danger pull-right',

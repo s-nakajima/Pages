@@ -44,7 +44,7 @@
 						<?php echo $this->fetch('content'); ?>
 					<?php else : ?>
 						<?php echo $this->element('Frames.frame', array(
-								'frame' => PageLayoutHelper::$frame,
+								'frame' => Current::read('Frame'),
 								'view' => $this->fetch('content')
 							)); ?>
 					<?php endif; ?>

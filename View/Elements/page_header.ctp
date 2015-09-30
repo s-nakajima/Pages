@@ -8,6 +8,11 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 ?>
+
+<?php if (Current::permission('page_editable')): ?>
+	<?php echo $this->element('Pages.edit_layout'); ?>
+<?php endif; ?>
+
 <?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_HEADER)): ?>
 	<!-- container-header -->
 	<header id="container-header">

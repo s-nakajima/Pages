@@ -8,7 +8,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
-App::uses('SlugRoute', 'Pages.Lib');
+App::uses('SlugRoute', 'Pages.Routing/Route');
 App::uses('Current', 'NetCommons.Utility');
 
 Router::connect('/' . Current::SETTING_MODE_WORD . '/', array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'), array('routeClass' => 'SlugRoute'));

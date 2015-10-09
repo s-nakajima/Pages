@@ -3,6 +3,8 @@
  * SlugRoute
  */
 
+App::uses('ClassRegistry', 'Utility');
+
 /**
  * Automatically slugs routes based on named parameters
  *

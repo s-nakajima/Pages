@@ -39,6 +39,7 @@ class LanguagesPageFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		//メインページ
 		array(
 			'id' => 1,
 			'page_id' => 1,
@@ -59,6 +60,7 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'modified_user' => 2,
 			'modified' => '2014-08-04 04:47:08'
 		),
+		//page.permalink=test
 		array(
 			'id' => 3,
 			'page_id' => 2,
@@ -79,65 +81,31 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'modified_user' => 4,
 			'modified' => '2014-08-04 04:47:08'
 		),
+		//別ルーム(room_id=2)
 		array(
 			'id' => 5,
-			'page_id' => 5,
-			'language_id' => 5,
+			'page_id' => 3,
+			'language_id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user' => 5,
-			'created' => '2014-08-04 04:47:08',
-			'modified_user' => 5,
-			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
 			'id' => 6,
-			'page_id' => 6,
-			'language_id' => 6,
+			'page_id' => 3,
+			'language_id' => 2,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user' => 6,
-			'created' => '2014-08-04 04:47:08',
-			'modified_user' => 6,
-			'modified' => '2014-08-04 04:47:08'
 		),
+		//別ルーム(room_id=3、ブロックなし)
 		array(
 			'id' => 7,
-			'page_id' => 7,
-			'language_id' => 7,
+			'page_id' => 4,
+			'language_id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user' => 7,
-			'created' => '2014-08-04 04:47:08',
-			'modified_user' => 7,
-			'modified' => '2014-08-04 04:47:08'
 		),
 		array(
 			'id' => 8,
-			'page_id' => 8,
-			'language_id' => 8,
+			'page_id' => 4,
+			'language_id' => 2,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user' => 8,
-			'created' => '2014-08-04 04:47:08',
-			'modified_user' => 8,
-			'modified' => '2014-08-04 04:47:08'
-		),
-		array(
-			'id' => 9,
-			'page_id' => 9,
-			'language_id' => 9,
-			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user' => 9,
-			'created' => '2014-08-04 04:47:08',
-			'modified_user' => 9,
-			'modified' => '2014-08-04 04:47:08'
-		),
-		array(
-			'id' => 10,
-			'page_id' => 10,
-			'language_id' => 10,
-			'name' => 'Lorem ipsum dolor sit amet',
-			'created_user' => 10,
-			'created' => '2014-08-04 04:47:08',
-			'modified_user' => 10,
-			'modified' => '2014-08-04 04:47:08'
 		),
 	);
 

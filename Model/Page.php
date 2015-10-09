@@ -28,11 +28,6 @@ App::uses('Current', 'NetCommons.Utility');
 class Page extends PagesAppModel {
 
 /**
- * constant value
- */
-	const SETTING_MODE_WORD = Current::SETTING_MODE_WORD;
-
-/**
  * Default behaviors
  *
  * @var array
@@ -200,15 +195,6 @@ class Page extends PagesAppModel {
 		));
 
 		return parent::beforeValidate($options);
-	}
-
-/**
- * Check setting mode
- *
- * @return bool
- */
-	public static function isSettingMode() {
-		return Current::isSettingMode();
 	}
 
 /**

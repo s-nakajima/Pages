@@ -47,7 +47,9 @@ class PageBehavior extends ModelBehavior {
 		if (empty($targetPage)) {
 			return false;
 		}
-		$model->data['Page']['room_id'] = Current::read('Room.id');
+		if (! $model->data['Page']['room_id']) {
+			$model->data['Page']['room_id'] = Current::read('Room.id');
+		}
 
 		$slug = $model->data['Page']['slug'];
 		if (! isset($slug)) {

@@ -8,11 +8,9 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
-
-$this->NetCommonsHtml->css('/blocks/css/style.css');
 ?>
 
-<div class="block-danger-zone" ng-init="dangerZone=false;">
+<div class="nc-danger-zone" ng-init="dangerZone=false;">
 	<?php echo $this->Form->create('Page', array(
 			'type' => 'delete', 'action' => 'delete/' . $this->data['Page']['room_id'] . '/' . $this->data['Page']['id']
 		)); ?>

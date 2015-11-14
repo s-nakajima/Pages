@@ -23,7 +23,7 @@
 
 			<div class="modal-body">
 				<div class="panel panel-default">
-					<?php echo $this->Form->create('Page', array('novalidate' => true)); ?>
+					<?php echo $this->NetCommonsForm->create('Page'); ?>
 
 						<div class="panel-body has-feedback">
 							<?php echo $this->element('Pages/edit_form', array('action' => $this->params['action'])); ?>
@@ -32,7 +32,7 @@
 						<div class="panel-footer text-center">
 							<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), NetCommonsUrl::backToPageUrl(true)); ?>
 						</div>
-					<?php echo $this->Form->end(); ?>
+					<?php echo $this->NetCommonsForm->end(); ?>
 				</div>
 
 				<?php if ($this->params['action'] === 'edit' && $this->data['Page']['permalink']) : ?>

@@ -15,7 +15,6 @@
 	<?php endif; ?>
 
 	<?php if ($this->PageLayout->hasContainer(Container::TYPE_HEADER)): ?>
-		<!-- container-header -->
 		<header id="container-header">
 			<?php echo $this->element('Boxes.render_boxes', array(
 					'boxes' => $this->PageLayout->getBox(Container::TYPE_HEADER),

@@ -11,7 +11,7 @@
 ?>
 
 <div class="nc-danger-zone" ng-init="dangerZone=false;">
-	<?php echo $this->Form->create('Page', array(
+	<?php echo $this->NetCommonsForm->create('Page', array(
 			'type' => 'delete', 'action' => 'delete/' . $this->data['Page']['room_id'] . '/' . $this->data['Page']['id']
 		)); ?>
 
@@ -28,13 +28,13 @@
 					<?php echo sprintf(__d('net_commons', 'Delete all data associated with the %s.'), __d('pages', 'Page')); ?>
 				</div>
 
-				<?php echo $this->Form->input('Page.id'); ?>
-				<?php echo $this->Form->button('<span class="glyphicon glyphicon-trash"> </span> ' . __d('net_commons', 'Delete'), array(
+				<?php echo $this->NetCommonsForm->input('Page.id'); ?>
+				<?php echo $this->NetCommonsForm->button('<span class="glyphicon glyphicon-trash"> </span> ' . __d('net_commons', 'Delete'), array(
 						'name' => 'delete',
 						'class' => 'btn btn-danger pull-right',
 						'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('pages', 'Page')) . '\')'
 					)); ?>
 			</accordion-group>
 		</accordion>
-	<?php echo $this->Form->end(); ?>
+	<?php echo $this->NetCommonsForm->end(); ?>
 </div>

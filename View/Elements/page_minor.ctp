@@ -9,7 +9,6 @@
  */
 ?>
 <?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_MINOR)): ?>
-	<!-- container-minor  -->
 	<div id="container-minor" class="<?php echo $this->PageLayout->getContainerSize(Container::TYPE_MINOR); ?>">
 		<?php
 			echo $this->element('Boxes.render_boxes', array(

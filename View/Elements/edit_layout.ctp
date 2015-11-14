@@ -11,9 +11,9 @@
 
 <section class="modal fade" id="edit-layout" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
-		<?php echo $this->Form->create('EditLayout', array(
+		<?php echo $this->NetCommonsForm->create('EditLayout', array(
 				'type' => 'post',
-				'url' => '/pages/pages/layout/' . Current::read('Page.id')
+				'url' => $this->NetCommonsHtml->url('/pages/pages/layout/' . Current::read('Page.id'))
 			)); ?>
 
 		<div class="modal-content">
@@ -31,14 +31,14 @@
 										(int)$this->PageLayout->hasContainer(Container::TYPE_MINOR) . ', ' .
 										(int)$this->PageLayout->hasContainer(Container::TYPE_FOOTER); ?>)">
 
-						<?php echo $this->Form->hidden('Page.id', array(
+						<?php echo $this->NetCommonsForm->hidden('Page.id', array(
 								'value' => Current::read('Page.id'),
 							)); ?>
 
 						<?php foreach (array(Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MINOR, Container::TYPE_FOOTER) as $containerType) : ?>
-							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.id'); ?>
-							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.page_id'); ?>
-							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
+							<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.id'); ?>
+							<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.page_id'); ?>
+							<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
 
 							<?php
 								if ($containerType === Container::TYPE_HEADER) {
@@ -51,10 +51,10 @@
 									$ngValue = 'footer';
 								}
 							?>
-							<?php echo $this->Form->hidden('ContainersPage.' . $containerType . '.is_published', array(
+							<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.is_published', array(
 									'ng-value' => $ngValue,
 								)); ?>
-							<?php $this->Form->unlockField('ContainersPage.' . $containerType . '.is_published'); ?>
+							<?php $this->NetCommonsForm->unlockField('ContainersPage.' . $containerType . '.is_published'); ?>
 						<?php endforeach; ?>
 
 						<?php foreach ($layouts as $layout) : ?>
@@ -69,15 +69,6 @@
 							</a>
 						<?php endforeach; ?>
 					</div>
-
-					<div class="page-edit-layout">
-						<?php echo $this->Form->checkbox('allPages', array(
-								'div' => false,
-								'value' => true,
-								'disabled' => true
-							)); ?>
-						<?php echo $this->Form->label('all', __d('pages', 'Save all pages')); ?>
-					</div>
 				<?php endif; ?>
 			</div>
 
@@ -91,7 +82,7 @@
 				</div>
 			</div>
 
-			<?php echo $this->Form->end(); ?>
+			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
 	</div>
 </section>

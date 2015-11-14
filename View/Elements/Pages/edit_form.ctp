@@ -9,14 +9,14 @@
  */
 ?>
 
-<?php echo $this->Form->hidden('Page.id'); ?>
-<?php echo $this->Form->hidden('Page.parent_id'); ?>
-<?php echo $this->Form->hidden('Page.permalink'); ?>
-<?php echo $this->Form->hidden('Page.room_id'); ?>
-<?php echo $this->Form->hidden('Room.id'); ?>
-<?php echo $this->Form->hidden('Room.space_id'); ?>
-<?php echo $this->Form->hidden('LanguagesPage.id'); ?>
-<?php echo $this->Form->hidden('LanguagesPage.language_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Page.parent_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Page.permalink'); ?>
+<?php echo $this->NetCommonsForm->hidden('Page.room_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Room.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Room.space_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('LanguagesPage.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('LanguagesPage.language_id'); ?>
 
 <?php echo $this->NetCommonsForm->input('LanguagesPage.name', array(
 		'type' => 'text',

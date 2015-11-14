@@ -9,7 +9,6 @@
  */
 ?>
 <?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_FOOTER)): ?>
-	<!-- area-footer -->
 	<footer id="container-footer" role="contentinfo">
 		<?php
 			echo $this->element('Boxes.render_boxes', array(

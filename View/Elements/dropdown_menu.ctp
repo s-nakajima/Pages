@@ -14,10 +14,10 @@
 </a>
 <ul class="dropdown-menu">
 	<li>
-		<?php echo $this->Html->link(__d('pages', 'Add page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/add/' . Current::read('Page.id')) ?>
+		<?php echo $this->NetCommonsHtml->link(__d('pages', 'Add page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/add/' . Current::read('Page.id')) ?>
 	</li>
 	<li>
-		<?php echo $this->Html->link(__d('pages', 'Edit page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/edit/' . Current::read('Page.id')) ?>
+		<?php echo $this->NetCommonsHtml->link(__d('pages', 'Edit page'), '/' . Current::SETTING_MODE_WORD . '/pages/pages/edit/' . Current::read('Page.id')) ?>
 	<li class="divider"></li>
 	<li>
 		<a href="" data-toggle="modal" data-target="#edit-layout">
@@ -25,6 +25,6 @@
 		</a>
 	</li>
 	<li>
-		<?php echo $this->Html->link(__d('net_commons', 'Theme setting'), '/theme_settings/site/') ?>
+		<?php echo $this->NetCommonsHtml->link(__d('net_commons', 'Theme setting'), '/theme_settings/site/') ?>
 	</li>
 </ul>

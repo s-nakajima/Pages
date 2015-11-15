@@ -9,7 +9,6 @@
  */
 ?>
 <?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_MAJOR)): ?>
-	<!-- container-major -->
 	<div id="container-major" class="<?php echo $this->PageLayout->getContainerSize(Container::TYPE_MAJOR); ?>">
 		<?php echo $this->element('Boxes.render_boxes', array(
 				'boxes' => $this->PageLayout->getBox(Container::TYPE_MAJOR),

@@ -75,42 +75,6 @@ class Init extends CakeMigration {
 	);
 
 /**
- * Records keyed by model name.
- *
- * @var array $records
- */
-	public $records = array(
-		'Page' => array(
-			array(
-				'id' => '1',
-				'room_id' => '1',
-				'parent_id' => null,
-				'lft' => '1',
-				'rght' => '2',
-				'permalink' => '',
-				'slug' => null,
-				'is_published' => true,
-				'from' => null,
-				'to' => null,
-			),
-		),
-		'LanguagesPage' => array(
-			array(
-				'id' => '1',
-				'page_id' => '1',
-				'language_id' => '1',
-				'name' => 'Home',
-			),
-			array(
-				'id' => '2',
-				'page_id' => '1',
-				'language_id' => '2',
-				'name' => 'ホーム',
-			),
-		),
-	);
-
-/**
  * Before migration callback
  *
  * @param string $direction Direction of migration process (up or down)
@@ -127,16 +91,6 @@ class Init extends CakeMigration {
  * @return bool Should process continue
  */
 	public function after($direction) {
-		if ($direction === 'down') {
-			return true;
-		}
-
-		foreach ($this->records as $model => $records) {
-			if (!$this->updateRecords($model, $records)) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 

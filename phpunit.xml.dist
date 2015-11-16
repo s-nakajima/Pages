@@ -4,12 +4,12 @@
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".ctp">app/Plugin/Pages</directory>
             <directory suffix=".php">app/Plugin/Pages</directory>
-			<exclude>
-				<directory suffix=".php">app/Plugin/Pages/Config/Migration</directory>
-				<directory suffix=".php">app/Plugin/Pages/Config/Schema</directory>
-				<directory suffix=".php">app/Plugin/Pages/Test/Case</directory>
-				<directory suffix=".php">app/Plugin/Pages/Test/Fixture</directory>
-			</exclude>
+            <exclude>
+                <directory suffix=".php">app/Plugin/Pages/Config/Migration</directory>
+                <directory suffix=".php">app/Plugin/Pages/Config/Schema</directory>
+                <directory suffix=".php">app/Plugin/Pages/Test/Case</directory>
+                <directory suffix=".php">app/Plugin/Pages/Test/Fixture</directory>
+            </exclude>
         </whitelist>
     </filter>
     <logging>

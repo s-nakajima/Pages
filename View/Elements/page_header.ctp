@@ -9,7 +9,7 @@
  */
 ?>
 
-<?php if (! empty($this->PageLayout)): ?>
+<?php if (! empty($this->PageLayout) && Current::isSettingMode()): ?>
 	<?php if (Current::permission('page_editable')): ?>
 		<?php echo $this->element('Pages.edit_layout'); ?>
 	<?php endif; ?>

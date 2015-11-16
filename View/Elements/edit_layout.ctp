@@ -7,6 +7,8 @@
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
+
+echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 ?>
 
 <section class="modal fade" id="edit-layout" tabindex="-1" role="dialog" aria-hidden="true">

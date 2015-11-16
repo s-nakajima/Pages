@@ -36,7 +36,6 @@ class PagesController extends PagesAppController {
  */
 	public $components = array(
 		'NetCommons.Permission' => array(
-			//アクセスの権限
 			'allow' => array(
 				'add,edit,delete,layout' => 'page_editable',
 			),
@@ -61,6 +60,8 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
+		$this->components[] = 'Pages.PageLayout';
+
 		if (Current::isSettingMode() && ! Current::permission('page_editable')) {
 			$paths = func_get_args();
 			$path = implode('/', $paths);
@@ -76,12 +77,6 @@ class PagesController extends PagesAppController {
 			throw new NotFoundException();
 		}
 		$this->set('page', $page);
-
-		$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
-		$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
-
-		$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
-		$this->set('pageMainContainer', $page);
 	}
 
 /**
@@ -91,7 +86,7 @@ class PagesController extends PagesAppController {
  */
 	public function add() {
 		$this->view = 'edit';
-		$this->layout = 'Pages.dialog';
+		$this->PageLayout->modal = true;
 
 		if ($this->request->isPost()) {
 			//登録処理
@@ -127,12 +122,11 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function edit() {
-		$this->layout = 'Pages.dialog';
+		$this->PageLayout->modal = true;
 
 		if ($this->request->isPut()) {
 			//登録処理
-			$data = $this->request->data;
-			if ($page = $this->Page->savePage($data)) {
+			if ($page = $this->Page->savePage($this->request->data)) {
 				//正常の場合
 				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
 			}
@@ -152,6 +146,8 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function delete() {
+		$this->components[] = 'Pages.PageLayout';
+
 		if (! $this->request->isDelete()) {
 			$this->throwBadRequest();
 			return;
@@ -167,6 +163,8 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function layout() {
+		$this->components[] = 'Pages.PageLayout';
+
 		if (! $this->request->isPost()) {
 			$this->throwBadRequest();
 			return;
@@ -174,7 +172,6 @@ class PagesController extends PagesAppController {
 		$data = $this->request->data;
 		unset($data['save']);
 
-		$this->ContainersPage->saveContainersPage($data);
 		if ($this->ContainersPage->saveContainersPage($data)) {
 			//正常の場合
 			$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));

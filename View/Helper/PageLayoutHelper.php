@@ -46,21 +46,21 @@ class PageLayoutHelper extends AppHelper {
  *
  * @var array
  */
-	private $__containers;
+	public $containers;
 
 /**
  * Boxes data
  *
  * @var array
  */
-	private $__boxes;
+	public $boxes;
 
 /**
  * Plugins data
  *
  * @var array
  */
-	private $__plugins;
+	public $plugins;
 
 /**
  * Default Constructor
@@ -71,9 +71,9 @@ class PageLayoutHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 
-		$this->__containers = Hash::combine($View->viewVars['page']['Container'], '{n}.type', '{n}');
-		$this->__boxes = Hash::combine($View->viewVars['page']['Box'], '{n}.id', '{n}', '{n}.container_id');
-		$this->__plugins = Hash::combine(Current::read('PluginsRoom'), '{n}.Plugin.key', '{n}.Plugin');
+		$this->containers = Hash::combine($View->viewVars['page']['Container'], '{n}.type', '{n}');
+		$this->boxes = Hash::combine($View->viewVars['page']['Box'], '{n}.id', '{n}', '{n}.container_id');
+		$this->plugins = Hash::combine(Current::read('PluginsRoom'), '{n}.Plugin.key', '{n}.Plugin');
 	}
 
 /**
@@ -200,8 +200,8 @@ class PageLayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		if (! $result = isset($this->__containers[$containerType]) &&
-				$this->__containers[$containerType]['ContainersPage']['is_published']) {
+		if (! $result = isset($this->containers[$containerType]) &&
+				$this->containers[$containerType]['ContainersPage']['is_published']) {
 			return false;
 		}
 
@@ -222,45 +222,13 @@ class PageLayoutHelper extends AppHelper {
  * @return array Box data
  */
 	public function getBox($containerType) {
-		if (Hash::get($this->__containers, $containerType . '.id') &&
-				Hash::get($this->__boxes, Hash::get($this->__containers, $containerType . '.id'))) {
+		if (Hash::get($this->containers, $containerType . '.id') &&
+				Hash::get($this->boxes, Hash::get($this->containers, $containerType . '.id'))) {
 
-			return Hash::get($this->__boxes, Hash::get($this->__containers, $containerType . '.id'));
+			return Hash::get($this->boxes, Hash::get($this->containers, $containerType . '.id'));
 		}
 
 		return array();
-	}
-
-/**
- * デフォルトAction取得
- *
- * @param string $pluginKey プラグインKey
- * @return array action name
- */
-	public function getDefaultAction($pluginKey) {
-		if (Hash::get($this->__plugins, $pluginKey . '.default_action')) {
-			$action = Hash::get($this->__plugins, $pluginKey . '.default_action');
-		} else {
-			$action = $pluginKey . '/index';
-		}
-
-		return $action;
-	}
-
-/**
- * デフォルトセッティングAction取得
- *
- * @param string $pluginKey plugins.key
- * @return array action name
- */
-	public function getDefaultSettingAction($pluginKey) {
-		if (Hash::get($this->__plugins, $pluginKey . '.default_setting_action')) {
-			$action = Hash::get($this->__plugins, $pluginKey . '.default_setting_action');
-		} else {
-			$action = '';
-		}
-
-		return $action;
 	}
 
 /**

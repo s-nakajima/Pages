@@ -19,6 +19,15 @@ App::uses('Folder', 'Utility');
 class PageLayoutHelper extends AppHelper {
 
 /**
+ * Other helpers used by FormHelper
+ *
+ * @var array
+ */
+	public $helpers = array(
+		'Html'
+	);
+
+/**
  * Bootstrap col max size
  *
  * @var int
@@ -37,35 +46,21 @@ class PageLayoutHelper extends AppHelper {
  *
  * @var array
  */
-	private $__containers;
+	public $containers;
 
 /**
  * Boxes data
  *
  * @var array
  */
-	private $__boxes;
+	public $boxes;
 
 /**
  * Plugins data
  *
  * @var array
  */
-	private $__plugins;
-
-/**
- * Plugins map data
- *
- * @var array
- */
-	private $__pluginMap;
-
-/**
- * frame data
- *
- * @var array
- */
-	public $frame = null;
+	public $plugins;
 
 /**
  * Default Constructor
@@ -76,12 +71,86 @@ class PageLayoutHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 
-		$this->__containers = $settings['containers'];
-		$this->__boxes = $settings['boxes'];
-		$this->__plugins = $settings['plugins'];
-		$this->__pluginMap = Hash::combine($this->__plugins, '{n}.Plugin.key', '{n}.Plugin');
+		$this->containers = Hash::combine($View->viewVars['page']['Container'], '{n}.type', '{n}');
+		$this->boxes = Hash::combine($View->viewVars['page']['Box'], '{n}.id', '{n}', '{n}.container_id');
+		$this->plugins = Hash::combine(Current::read('PluginsRoom'), '{n}.Plugin.key', '{n}.Plugin');
+	}
 
-		//$this->frame = Current::read('Frame');
+/**
+ * Before layout callback. beforeLayout is called before the layout is rendered.
+ *
+ * Overridden in subclasses.
+ *
+ * @param string $layoutFile The layout about to be rendered.
+ * @return void
+ */
+	public function beforeLayout($layoutFile) {
+		$this->_View->viewVars['pageHeader'] = $this->_View->element('Pages.page_header');
+		$this->_View->viewVars['pageMajor'] = $this->_View->element('Pages.page_major');
+		$this->_View->viewVars['pageMinor'] = $this->_View->element('Pages.page_minor');
+		$this->_View->viewVars['pageFooter'] = $this->_View->element('Pages.page_footer');
+
+		parent::beforeLayout($layoutFile);
+	}
+
+/**
+ * After render callback. afterRender is called after the view file is rendered
+ * but before the layout has been rendered.
+ *
+ * Overridden in subclasses.
+ *
+ * @param string $viewFile The view file that was rendered.
+ * @return void
+ */
+	public function afterRender($viewFile) {
+		$attributes = array(
+			'id' => 'container-main',
+			'role' => 'main'
+		);
+
+		if ($this->_View->layout === 'NetCommons.setting') {
+			//Frame設定も含めたコンテンツElement
+			$element = $this->_View->element('Frames.setting_frame', array(
+				'view' => $this->_View->fetch('content')
+			));
+
+			//属性
+			$attributes['ng-controller'] = 'FrameSettingsController';
+
+			$frameCamelize = NetCommonsAppController::camelizeKeyRecursive(Current::read('Frame'));
+			$attributes['ng-init'] = 'initialize({frame: ' . json_encode($frameCamelize) . '})';
+
+			//セッティングモード
+			$this->_View->viewVars['isSettingMode'] = true;
+
+		} else {
+			//コンテンツElement
+			if ($this->_View->request->params['plugin'] === 'pages') {
+				$element = $this->_View->fetch('content');
+			} else {
+				$element = $this->_View->element('Frames.frame', array(
+					'frame' => Current::read('Frame'),
+					'view' => $this->_View->fetch('content')
+				));
+			}
+			//セッティングモード
+			$this->_View->viewVars['isSettingMode'] = Current::isSettingMode();
+		}
+
+		//ページコンテンツのセット
+		$this->_View->viewVars['pageContent'] = $this->Html->div(
+			array($this->containerSize(Container::TYPE_MAIN)), $element, $attributes
+		);
+
+		//Layoutのセット
+		$this->_View->layout = 'Pages.default';
+
+		//
+		if (Current::read('Page.is_container_fluid')) {
+			$this->_View->viewVars['pageContainerCss'] = 'container-fluid';
+		} else {
+			$this->_View->viewVars['pageContainerCss'] = 'container';
+		}
 	}
 
 /**
@@ -91,7 +160,7 @@ class PageLayoutHelper extends AppHelper {
  *    e.g.) Container::TYPE_MAJOR or Container::TYPE_MAIN or Container::TYPE_MINOR
  * @return string Html class attribute
  */
-	public function getContainerSize($containerType) {
+	public function containerSize($containerType) {
 		$result = '';
 
 		$mainCol = self::COL_MAX_SIZE;
@@ -131,7 +200,8 @@ class PageLayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		if (! $result = isset($this->__containers[$containerType]) && $this->__containers[$containerType]['ContainersPage']['is_published']) {
+		if (! $result = isset($this->containers[$containerType]) &&
+				$this->containers[$containerType]['ContainersPage']['is_published']) {
 			return false;
 		}
 
@@ -152,73 +222,19 @@ class PageLayoutHelper extends AppHelper {
  * @return array Box data
  */
 	public function getBox($containerType) {
-		if (isset($this->__containers[$containerType]['id']) &&
-				isset($this->__boxes[$this->__containers[$containerType]['id']])) {
-			return $this->__boxes[$this->__containers[$containerType]['id']];
+		if (Hash::get($this->containers, $containerType . '.id') &&
+				Hash::get($this->boxes, Hash::get($this->containers, $containerType . '.id'))) {
+
+			return Hash::get($this->boxes, Hash::get($this->containers, $containerType . '.id'));
 		}
 
 		return array();
 	}
 
 /**
- * Get the plugins data
+ * レイアウト変更のimgデータ取得
  *
- * @return array P;ugins data
- */
-	public function getPlugins() {
-		return $this->__plugins;
-	}
-
-/**
- * Get the style sheet for container fluid
- *
- * @return string Box data
- */
-	public function getContainerFluid() {
-		$result = 'container';
-		if (Current::read('Page.is_container_fluid')) {
-			$result = 'container-fluid';
-		}
-
-		return $result;
-	}
-
-/**
- * Get the plugin default action
- *
- * @param string $pluginKey plugins.key
- * @return array action name
- */
-	public function getDefaultAction($pluginKey) {
-		if (isset($this->__pluginMap[$pluginKey]['default_action']) && $this->__pluginMap[$pluginKey]['default_action'] !== '') {
-			$action = $this->__pluginMap[$pluginKey]['default_action'];
-		} else {
-			$action = $pluginKey . '/index';
-		}
-
-		return $action;
-	}
-
-/**
- * Get the plugin default setting action
- *
- * @param string $pluginKey plugins.key
- * @return array action name
- */
-	public function getDefaultSettingAction($pluginKey) {
-		if (isset($this->__pluginMap[$pluginKey]['default_setting_action']) && $this->__pluginMap[$pluginKey]['default_setting_action'] !== '') {
-			$action = $this->__pluginMap[$pluginKey]['default_setting_action'];
-		} else {
-			$action = '';
-		}
-
-		return $action;
-	}
-
-/**
- * Get the plugins data
- *
- * @return array P;ugins data
+ * @return array imgリスト
  */
 	public function getLayouts() {
 		$dir = new Folder(

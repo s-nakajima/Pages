@@ -7,11 +7,12 @@
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
-?>
-<?php echo $this->Html->script('/pages/js/pages.js', false); ?>
 
-<?php
+$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
+$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
+$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
+
 echo $this->element('Boxes.render_boxes', array(
-		'boxes' => $pageMainContainer['Box'][$pageMainContainer['Container'][Container::TYPE_MAIN]['id']],
+		'boxes' => Hash::get($page['Box'], Hash::get($page, 'Container.' . Container::TYPE_MAIN . '.id')),
 		'containerType' => Container::TYPE_MAIN
 	));

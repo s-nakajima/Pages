@@ -29,44 +29,31 @@
 		?>
 	</head>
 
-	<body ng-controller="NetCommons.base" ng-init="baseUrl='<?php echo h(Configure::read('App.fullBaseUrl')) ?>';">
+	<body class="<?php echo $modal ? 'modal-open' : ''; ?>"
+			ng-controller="NetCommons.base"
+			ng-init="baseUrl='<?php echo h(Configure::read('App.fullBaseUrl')) ?>';">
 		<?php echo $this->Session->flash(); ?>
 
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
-		<main class="<?php echo $this->PageLayout->getContainerFluid(); ?>">
-			<?php echo $this->element('Pages.page_header'); ?>
+		<main class="<?php echo $pageContainerCss; ?>">
+			<?php echo $pageHeader; ?>
 
 			<div class="row">
-				<!-- container-main -->
-				<div role="main" id="container-main" class="<?php echo $this->PageLayout->getContainerSize(Container::TYPE_MAIN); ?>">
-					<?php if ($this->request->params['plugin'] === 'pages') : ?>
-						<?php echo $this->fetch('content'); ?>
-					<?php else : ?>
-						<?php if (Current::isSettingMode()) : ?>
-							<?php echo $this->element('Frames.add_plugin', array(
-									'boxId' => Current::read('Box.id'),
-									'roomId' => Current::read('Room.id'),
-									'containerType' => Container::TYPE_MAIN,
-								)); ?>
-						<?php endif; ?>
+				<?php echo $pageContent; ?>
 
+				<?php echo $pageMajor; ?>
 
-						<?php echo $this->element('Frames.frame', array(
-								'frame' => Current::read('Frame'),
-								'view' => $this->fetch('content')
-							)); ?>
-					<?php endif; ?>
-				</div>
-
-				<?php echo $this->element('Pages.page_major'); ?>
-
-				<?php echo $this->element('Pages.page_minor'); ?>
+				<?php echo $pageMinor; ?>
 			</div>
 
-			<?php echo $this->element('Pages.page_footer'); ?>
+			<?php echo $pageFooter; ?>
 		</main>
 
 		<?php echo $this->element('NetCommons.common_footer'); ?>
+
+		<?php if ($modal) : ?>
+			<div class="modal-backdrop fade in"></div>
+		<?php endif; ?>
 	</body>
 </html>

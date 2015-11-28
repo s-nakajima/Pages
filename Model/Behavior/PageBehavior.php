@@ -77,6 +77,7 @@ class PageBehavior extends ModelBehavior {
  * @return mixed False will stop this event from being passed to other behaviors
  */
 	public function afterValidate(Model $model) {
+		$model->LanguagesPage->create(false);
 		$model->LanguagesPage->set($model->data['LanguagesPage']);
 		if (! $model->LanguagesPage->validates()) {
 			$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);

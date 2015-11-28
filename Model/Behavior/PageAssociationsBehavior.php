@@ -42,7 +42,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 	public function saveContainer(Model $model) {
 		$this->model = $model;
 
-		$this->model->Container->create();
+		$this->model->Container->create(false);
 		$data = array(
 			'Container' => array(
 				'type' => Container::TYPE_MAIN
@@ -62,7 +62,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 	public function saveBox(Model $model, $page) {
 		$this->model = $model;
 
-		$this->model->Box->create();
+		$this->model->Box->create(false);
 		$data = array(
 			'Box' => array(
 				'container_id' => $page['Container']['id'],
@@ -109,7 +109,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 				'is_published' => $containersPage['ContainersPage']['is_published']
 			);
 
-			$this->model->ContainersPage->create();
+			$this->model->ContainersPage->create(false);
 			if (!$this->model->ContainersPage->save($data)) {
 				return false;
 			}
@@ -150,7 +150,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 				'is_published' => $boxesPage['BoxesPage']['is_published']
 			);
 
-			$this->model->BoxesPage->create();
+			$this->model->BoxesPage->create(false);
 			if (!$this->model->BoxesPage->save($data)) {
 				return false;
 			}

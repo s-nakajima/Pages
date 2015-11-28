@@ -277,7 +277,6 @@ class Page extends PagesAppModel {
 		$options = Hash::merge(array('atomic' => true), $options);
 
 		//トランザクションBegin
-		$this->setDataSource('master');
 		if ($options['atomic']) {
 			$this->begin();
 		}
@@ -329,7 +328,6 @@ class Page extends PagesAppModel {
 		$options = Hash::merge(array('atomic' => true), $options);
 
 		//トランザクションBegin
-		$this->setDataSource('master');
 		if ($options['atomic']) {
 			$this->begin();
 		}

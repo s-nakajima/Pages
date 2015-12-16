@@ -19,6 +19,11 @@
  */
 class PagesSchema extends CakeSchema {
 
+/**
+ * Database connection
+ *
+ * @var string
+ */
 	public $connection = 'master';
 
 /**

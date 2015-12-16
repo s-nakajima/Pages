@@ -14,7 +14,7 @@
  * * テーマ設定フィールド(theme)の追加
  *
  * @package NetCommons\UserAttributes\Config\Migration
- * @link https://github.com/NetCommons3/Pages/issues/20
+ * @link https://github.com/NetCommons3/Pages/issues/33
  */
 class AddTheme extends CakeMigration {
 

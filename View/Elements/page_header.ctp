@@ -10,10 +10,6 @@
 ?>
 
 <?php if (! empty($this->PageLayout) && Current::isSettingMode()): ?>
-	<?php if (Current::permission('page_editable')): ?>
-		<?php echo $this->element('Pages.edit_layout'); ?>
-	<?php endif; ?>
-
 	<?php if ($this->PageLayout->hasContainer(Container::TYPE_HEADER)): ?>
 		<header id="container-header">
 			<?php echo $this->element('Boxes.render_boxes', array(

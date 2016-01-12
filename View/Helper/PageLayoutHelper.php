@@ -231,18 +231,4 @@ class PageLayoutHelper extends AppHelper {
 		return array();
 	}
 
-/**
- * レイアウト変更のimgデータ取得
- *
- * @return array imgリスト
- */
-	public function getLayouts() {
-		$dir = new Folder(
-			CakePlugin::path('Pages') . WEBROOT_DIR . DS . 'img' . DS . 'layouts'
-		);
-		$files = $dir->find('.*\.png', true);
-
-		return $files;
-	}
-
 }

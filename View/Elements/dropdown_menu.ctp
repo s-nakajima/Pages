@@ -1,6 +1,7 @@
 <?php
 /**
  * Element of dropdown menu
+ * 後で削除
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>

@@ -55,9 +55,17 @@ msgstr "ページ追加"
 msgid "Edit page"
 msgstr "ページ編集"
 
+#: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
+msgid "Add new page"
+msgstr "ページ追加"
+
 #: Pages/View/Elements/dropdown_menu.ctp:24
 msgid "Edit layout"
 msgstr "レイアウト編集"
+
+#: Pages/View/Elements/dropdown_menu.ctp:24
+msgid "Theme setting"
+msgstr "テーマ設定"
 
 #: Pages/View/Elements/Pages/delete_form.ctp:28;38
 msgid "Page"
@@ -65,3 +73,11 @@ msgstr "ページ"
 
 msgid "Save all pages"
 msgstr "全てのページに反映(未実装)"
+
+#: Pages/View/Elements/dropdown_menu.ctp:13
+msgid "Page Setting on"
+msgstr "ページ設定"
+
+#: Pages/View/Elements/dropdown_menu.ctp:13
+msgid "Page Setting off"
+msgstr "ページ設定終了"

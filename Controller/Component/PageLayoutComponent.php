@@ -49,10 +49,6 @@ class PageLayoutComponent extends Component {
 			$controller->set('page', $page);
 		}
 
-		if (Current::hasSettingMode() && Current::isSettingMode() && Current::permission('page_editable')) {
-			$controller->request->data['ContainersPage'] = Hash::combine($page, 'Container.{n}.type', 'Container.{n}.ContainersPage');
-		}
-
 		$controller->set('modal', $this->modal);
 
 		//ヘルパーセット

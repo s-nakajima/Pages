@@ -17,12 +17,14 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 		<?php
 			if ($this->params['action'] === 'add') {
 				$title = __d('pages', 'Add page');
+				$action = 'add';
 			} else {
 				$title = __d('pages', 'Edit page');
+				$action = 'edit';
 			}
 			if (! $disactive) {
 				echo $this->NetCommonsHtml->link($title,
-						array('action' => 'index', 'key' => Current::read('Room.id'), Current::read('Page.id')));
+						array('action' => $action, 'key' => Current::read('Room.id'), Current::read('Page.id')));
 			} else {
 				echo '<a>' . $title . '</a>';
 			}

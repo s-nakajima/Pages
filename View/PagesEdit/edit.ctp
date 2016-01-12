@@ -27,7 +27,7 @@
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
 
-		<?php if ($this->params['action'] === 'edit' && $this->data['Page']['permalink']) : ?>
+		<?php if ($this->params['action'] === 'edit' && $this->data['Page']['id'] !== $this->data['Room']['page_id_top']) : ?>
 			<?php echo $this->element('PagesEdit/delete_form'); ?>
 		<?php endif; ?>
 	</article>

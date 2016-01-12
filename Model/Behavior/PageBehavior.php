@@ -58,9 +58,9 @@ class PageBehavior extends ModelBehavior {
 		$model->data['Page']['slug'] = $slug;
 
 		$permalink = '';
-		//if (strlen($targetPage['Page']['permalink']) !== 0) {
-		//	$permalink = $targetPage['Page']['permalink'] . '/';
-		//}
+		if (strlen($targetPage['Page']['permalink']) !== 0) {
+			$permalink = $targetPage['Page']['permalink'] . '/';
+		}
 		$permalink .= $slug;
 		$model->data['Page']['permalink'] = $permalink;
 		$model->data['Page']['is_published'] = true;

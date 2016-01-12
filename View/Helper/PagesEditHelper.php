@@ -97,7 +97,7 @@ class PagesEditHelper extends AppHelper {
 		if (isset($nest)) {
 			$output .= str_repeat('<span class="pages-tree"> </span>', $nest);
 		}
-		if (Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
+		if (Hash::get($page, 'Page.parent_id') && Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
 			$output .= h($this->roomName());
 		} else {
 			$output .= h($page['LanguagesPage']['name']);

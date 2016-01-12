@@ -223,17 +223,22 @@ class Page extends PagesAppModel {
 /**
  * ページデータ取得
  *
+ * @param int|array $roomIds Room.id
  * @return array
  */
-	public function getPages() {
+	public function getPages($roomIds = null) {
 		$this->loadModels([
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
+		if (! isset($roomIds)) {
+			$roomIds = Current::read('Room.id');
+		}
+
 		$pages = $this->find('all', array(
 			'recursive' => 1,
 			'conditions' => array(
-				'Page.room_id' => Current::read('Room.id'),
+				'Page.room_id' => $roomIds,
 			),
 		));
 

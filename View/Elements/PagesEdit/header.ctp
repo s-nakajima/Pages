@@ -15,8 +15,7 @@ echo $this->NetCommonsHtml->css('/control_panel/css/style.css');
 <h1>
 	<?php echo __d('pages', 'Page Setting'); ?>
 	<small>
-		<?php echo sprintf(__d('pages', '(%s)'),
-				Hash::get(Hash::extract($room, 'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'), '0.name')); ?>
+		<?php echo sprintf(__d('pages', '(%s)'), $this->PagesEdit->roomName()); ?>
 	</small>
 </h1>
 <hr>

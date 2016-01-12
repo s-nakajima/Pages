@@ -89,7 +89,6 @@ class PagesEditController extends PagesAppController {
 			$this->throwBadRequest();
 			return;
 		}
-
 		$this->set('pages', $pages);
 
 		//Treeリスト取得
@@ -111,7 +110,13 @@ class PagesEditController extends PagesAppController {
 			$data = $this->request->data;
 			if ($page = $this->Page->savePage($data)) {
 				//正常の場合
-				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+				$this->redirect(NetCommonsUrl::actionUrl(array(
+					'plugin' => $this->params['plugin'],
+					'controller' => $this->params['controller'],
+					'action' => 'index',
+					'key' => Current::read('Room.id'),
+					$page['Page']['id'],
+				)));
 			}
 
 		} else {
@@ -145,7 +150,13 @@ class PagesEditController extends PagesAppController {
 			//登録処理
 			if ($page = $this->Page->savePage($this->request->data)) {
 				//正常の場合
-				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
+				$this->redirect(NetCommonsUrl::actionUrl(array(
+					'plugin' => $this->params['plugin'],
+					'controller' => $this->params['controller'],
+					'action' => 'index',
+					'key' => Current::read('Room.id'),
+					$page['Page']['id'],
+				)));
 			}
 
 		} else {

@@ -44,6 +44,20 @@ class PagesEditHelper extends AppHelper {
 	}
 
 /**
+ * レイアウト変更のimgデータ取得
+ *
+ * @return array imgリスト
+ */
+	public function getLayouts() {
+		$dir = new Folder(
+			CakePlugin::path('Pages') . WEBROOT_DIR . DS . 'img' . DS . 'layouts'
+		);
+		$files = $dir->find('.*\.png', true);
+
+		return $files;
+	}
+
+/**
  * ページの出力
  *
  * @param int $pageId ページデータ
@@ -58,6 +72,20 @@ class PagesEditHelper extends AppHelper {
 	}
 
 /**
+ * ルーム名の出力
+ *
+ * @return string HTML
+ */
+	public function roomName() {
+		$room = Hash::extract(
+			$this->_View->viewVars['room'],
+			'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+		);
+
+		return Hash::get($room, '0.name');
+	}
+
+/**
  * ページ名の出力
  *
  * @param array $page ページデータ配列
@@ -69,7 +97,12 @@ class PagesEditHelper extends AppHelper {
 		if (isset($nest)) {
 			$output .= str_repeat('<span class="pages-tree"> </span>', $nest);
 		}
-		$output .= h($page['LanguagesPage']['name']);
+		if (Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
+			$output .= h($this->roomName());
+		} else {
+			$output .= h($page['LanguagesPage']['name']);
+		}
+
 		return $output;
 	}
 
@@ -85,20 +118,6 @@ class PagesEditHelper extends AppHelper {
 			$output .= 'active';
 		}
 		return $output;
-	}
-
-/**
- * レイアウト変更のimgデータ取得
- *
- * @return array imgリスト
- */
-	public function getLayouts() {
-		$dir = new Folder(
-			CakePlugin::path('Pages') . WEBROOT_DIR . DS . 'img' . DS . 'layouts'
-		);
-		$files = $dir->find('.*\.png', true);
-
-		return $files;
 	}
 
 }

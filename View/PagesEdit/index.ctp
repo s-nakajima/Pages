@@ -20,10 +20,12 @@
 						<?php echo __d('pages', 'Page name'); ?>
 					</th>
 					<th class="text-right">
-						<?php echo $this->Button->addLink(__d('pages', 'Add page'),
-								array('action' => 'add', 'key' => $page['Page']['room_id']),
-								array('iconSize' => 'btn-xs')
-							); ?>
+						<?php if ($room['Room']['id'] === Room::PUBLIC_PARENT_ID) : ?>
+							<?php echo $this->LinkButton->add(__d('pages', 'Add page'),
+									array('action' => 'add', 'key' => $page['Page']['room_id']),
+									array('iconSize' => 'btn-xs')
+								); ?>
+						<?php endif; ?>
 					</th>
 				</tr>
 			</thead>

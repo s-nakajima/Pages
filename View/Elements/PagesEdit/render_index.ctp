@@ -16,14 +16,14 @@
 			<?php echo $this->PagesEdit->pageName($page, $nest); ?>
 		</a>
 
-		<?php echo $this->Button->editLink('',
+		<?php echo $this->LinkButton->edit('',
 				array('action' => 'edit', 'key' => $page['Page']['room_id'], $page['Page']['id']),
 				array('iconSize' => 'btn-xs')
 			); ?>
 	</td>
 
 	<td class="text-right">
-		<?php echo $this->Button->addLink(__d('pages', 'Add new page'),
+		<?php echo $this->LinkButton->add(__d('pages', 'Add new page'),
 				array('action' => 'add', 'key' => $page['Page']['room_id'], $page['Page']['id']),
 				array('iconSize' => 'btn-xs')
 			); ?>

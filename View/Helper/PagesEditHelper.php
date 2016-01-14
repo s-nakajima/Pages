@@ -95,13 +95,19 @@ class PagesEditHelper extends AppHelper {
 	public function pageName($page, $nest = null) {
 		$output = '';
 		if (isset($nest)) {
-			$output .= str_repeat('<span class="pages-tree"> </span>', $nest);
+			$output .= str_repeat('<span class="pages-tree"> </span> ', $nest);
 		}
+
+		$output .= $this->moveButton($page);
+
 		if (Current::read('Room.id') !== Room::PUBLIC_PARENT_ID && Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
-			$output .= h($this->roomName());
+			$title = h($this->roomName());
 		} else {
-			$output .= h($page['LanguagesPage']['name']);
+			$title = h($page['LanguagesPage']['name']);
 		}
+		$output .= $this->NetCommonsHtml->link($title,
+				array('key' => $page['Page']['room_id'], $page['Page']['id']),
+				array('escapeTitle' => true));
 
 		return $output;
 	}
@@ -118,6 +124,18 @@ class PagesEditHelper extends AppHelper {
 			$output .= 'active';
 		}
 		return $output;
+	}
+
+/**
+ * 移動ボタンを返す
+ *
+ * @param array $page ページデータ配列
+ * @return string HTML
+ */
+	public function moveButton($page) {
+		$output = '';
+
+		return $this->_View->element('PagesEdit/page_move');
 	}
 
 }

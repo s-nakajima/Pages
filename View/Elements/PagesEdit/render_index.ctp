@@ -12,15 +12,16 @@
 
 <tr class="<?php echo $this->PagesEdit->activeCss($page); ?>">
 	<td>
-		<a class="text-muted" href="<?php echo $this->NetCommonsHtml->url(array('key' => $page['Page']['room_id'], $page['Page']['id'])); ?>">
-			<?php echo $this->PagesEdit->pageName($page, $nest); ?>
-		</a>
+		<?php echo $this->PagesEdit->pageName($page, $nest); ?>
 
 		<?php echo $this->LinkButton->edit('',
 				array('action' => 'edit', 'key' => $page['Page']['room_id'], $page['Page']['id']),
 				array('iconSize' => 'btn-xs')
 			); ?>
+
 	</td>
+
+
 
 	<td class="text-right">
 		<?php echo $this->LinkButton->add(__d('pages', 'Add new page'),

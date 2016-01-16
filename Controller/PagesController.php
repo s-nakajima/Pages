@@ -25,8 +25,6 @@ class PagesController extends PagesAppController {
  */
 	public $uses = array(
 		'Pages.Page',
-		'Pages.LanguagesPage',
-		'Containers.ContainersPage',
 	);
 
 /**
@@ -35,22 +33,7 @@ class PagesController extends PagesAppController {
  * @var array
  */
 	public $components = array(
-		'NetCommons.Permission' => array(
-			'allow' => array(
-				'add,edit,delete,layout' => 'page_editable',
-			),
-		),
 		'Pages.PageLayout',
-	);
-
-/**
- * use helpers
- *
- * @var array
- */
-	public $helpers = array(
-		'NetCommons.Composer',
-		'Workflow.Workflow'
 	);
 
 /**
@@ -77,108 +60,6 @@ class PagesController extends PagesAppController {
 			throw new NotFoundException();
 		}
 		$this->set('page', $page);
-	}
-
-/**
- * add
- *
- * @return void
- */
-	public function add() {
-		$this->view = 'edit';
-		$this->PageLayout->modal = true;
-
-		if ($this->request->isPost()) {
-			//登録処理
-			$data = $this->request->data;
-			if ($page = $this->Page->savePage($data)) {
-				//正常の場合
-				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-			}
-
-		} else {
-			//表示処理
-			$slug = 'page_' . date('YmdHis');
-			$this->request->data = Hash::merge($this->request->data,
-				$this->Page->create(array(
-					'id' => null,
-					'slug' => $slug,
-					'permalink' => $slug,
-					'room_id' => Current::read('Room.id'),
-				)),
-				$this->LanguagesPage->create(array(
-					'id' => null,
-					'language_id' => Current::read('Language.id'),
-					'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
-				))
-			);
-			$this->request->data['Room'] = Current::read('Room');
-		}
-	}
-
-/**
- * edit
- *
- * @return void
- */
-	public function edit() {
-		$this->PageLayout->modal = true;
-
-		if ($this->request->isPut()) {
-			//登録処理
-			if ($page = $this->Page->savePage($this->request->data)) {
-				//正常の場合
-				$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . $page['Page']['permalink']);
-			}
-
-		} else {
-			//表示処理
-			$this->request->data = Hash::merge($this->request->data,
-				$this->LanguagesPage->getLanguagesPage(Current::read('Page.id'), Current::read('Language.id'))
-			);
-			$this->request->data['Room'] = Current::read('Room');
-		}
-	}
-
-/**
- * delete
- *
- * @return void
- */
-	public function delete() {
-		$this->components[] = 'Pages.PageLayout';
-
-		if (! $this->request->isDelete()) {
-			$this->throwBadRequest();
-			return;
-		}
-		if ($this->Page->deletePage($this->data)) {
-			$this->redirect('/' . Current::SETTING_MODE_WORD);
-		}
-	}
-
-/**
- * layout
- *
- * @return void
- */
-	public function layout() {
-		$this->components[] = 'Pages.PageLayout';
-
-		if (! $this->request->isPost()) {
-			$this->throwBadRequest();
-			return;
-		}
-		$data = $this->request->data;
-		unset($data['save']);
-
-		if ($this->ContainersPage->saveContainersPage($data)) {
-			//正常の場合
-			$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
-		} else {
-			$this->NetCommons->handleValidationError($this->ContainersPage->validationErrors);
-		}
-		$this->redirect('/' . Current::SETTING_MODE_WORD . '/' . Current::read('Page.permalink'));
 	}
 
 }

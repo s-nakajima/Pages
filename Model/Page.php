@@ -28,6 +28,14 @@ App::uses('Current', 'NetCommons.Utility');
 class Page extends PagesAppModel {
 
 /**
+ * TreeParser
+ * __constructでセットする
+ *
+ * @var array
+ */
+	public static $treeParser;
+
+/**
  * Default behaviors
  *
  * @var array
@@ -140,6 +148,21 @@ class Page extends PagesAppModel {
 	);
 
 /**
+ * Constructor. Binds the model's database table to the object.
+ *
+ * @param bool|int|string|array $id Set this ID for this model on startup,
+ * can also be an array of options, see above.
+ * @param string $table Name of database table to use.
+ * @param string $ds DataSource connection name.
+ * @see Model::__construct()
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		self::$treeParser = chr(9);
+	}
+
+/**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
  *
@@ -198,24 +221,39 @@ class Page extends PagesAppModel {
 	}
 
 /**
- * Get page data
+ * ページデータ取得
  *
- * @param int $pageId pages.id
- * @param int $roomId rooms.id
+ * @param int|array $roomIds Room.id
  * @return array
  */
-	public function getPage($pageId, $roomId) {
-		$conditions = array(
-			'Page.id' => $pageId,
-			'Page.room_id' => $roomId,
-		);
+	public function getPages($roomIds = null) {
+		$this->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
 
-		$page = $this->find('first', array(
-			'recursive' => 0,
-			'conditions' => $conditions,
+		if (! isset($roomIds)) {
+			$roomIds = Current::read('Room.id');
+		}
+
+		$pages = $this->find('all', array(
+			'recursive' => 1,
+			'conditions' => array(
+				'Page.room_id' => $roomIds,
+			),
 		));
 
-		return $page;
+		$pagesLanguages = $this->LanguagesPage->find('all', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'LanguagesPage.page_id' => Hash::extract($pages, '{n}.Page.id'),
+				'LanguagesPage.language_id' => Current::read('Language.id'),
+			),
+		));
+
+		return Hash::merge(
+			Hash::combine($pages, '{n}.Page.id', '{n}'),
+			Hash::combine($pagesLanguages, '{n}.LanguagesPage.page_id', '{n}')
+		);
 	}
 
 /**
@@ -304,6 +342,32 @@ class Page extends PagesAppModel {
 		}
 
 		return $page;
+	}
+
+/**
+ * テーマ
+ *
+ * @param array $data request data
+ * @throws InternalErrorException
+ * @return mixed True on success, false on failure
+ */
+	public function saveTheme($data) {
+		//トランザクションBegin
+		$this->begin();
+
+		try {
+			$this->id = $data[$this->alias]['id'];
+			if (! $this->saveField('theme', $data[$this->alias]['theme'], array('callbacks' => false))) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return true;
 	}
 
 /**

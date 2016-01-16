@@ -79,7 +79,6 @@ class PagesEditController extends PagesAppController {
 /**
  * index method
  *
- * @throws NotFoundException
  * @return void
  */
 	public function index() {
@@ -187,6 +186,7 @@ class PagesEditController extends PagesAppController {
  * layout
  *
  * @return void
+ * @throws NotFoundException
  */
 	public function layout() {
 		if ($this->request->isPost()) {

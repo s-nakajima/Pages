@@ -133,8 +133,6 @@ class PagesEditHelper extends AppHelper {
  * @return string HTML
  */
 	public function moveButton($page) {
-		$output = '';
-
 		return $this->_View->element('PagesEdit/page_move');
 	}
 

@@ -127,7 +127,7 @@ class PagesEditController extends PagesAppController {
 					'slug' => $slug,
 					'permalink' => $slug,
 					'room_id' => Current::read('Room.id'),
-					'parent_id' => Current::read('Page.id'),
+					'parent_id' => (int)Hash::get($this->request->params, 'pass.1', '0'),
 				)),
 				$this->LanguagesPage->create(array(
 					'id' => null,

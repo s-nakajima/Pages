@@ -32,6 +32,11 @@ class PageLayoutComponent extends Component {
  * @throws NotFoundException
  */
 	public function beforeRender(Controller $controller) {
+		// Ajax用
+		if ($controller->request->is('ajax')) {
+			return;
+		}
+
 		//RequestActionの場合、スキップする
 		if (! empty($controller->request->params['requested'])) {
 			return;

@@ -257,6 +257,24 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * ページデータの存在チェック
+ *
+ * @param int $pageId ページID
+ * @return bool
+ */
+	public function existPage($pageId) {
+		$result = $this->find('count', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'Page.id' => $pageId,
+				'Page.room_id' => Current::read('Room.id')
+			),
+		));
+
+		return (bool)$result;
+	}
+
+/**
  * Get page with frame
  *
  * @param string $permalink Permalink

@@ -106,8 +106,8 @@ class PagesEditController extends PagesAppController {
 
 		if ($this->request->isPost()) {
 			//登録処理
-			$data = $this->request->data;
-			if ($page = $this->Page->savePage($data)) {
+			$page = $this->Page->savePage($this->request->data);
+			if ($page) {
 				//正常の場合
 				$this->redirect(NetCommonsUrl::actionUrl(array(
 					'plugin' => $this->params['plugin'],
@@ -120,6 +120,12 @@ class PagesEditController extends PagesAppController {
 
 		} else {
 			//表示処理
+			if (Hash::get($this->request->params, 'pass.1')) {
+				$result = $this->Page->existPage(Hash::get($this->request->params, 'pass.1'));
+				if (! $result) {
+					return $this->throwBadRequest();
+				}
+			}
 			$slug = 'page_' . date('YmdHis');
 			$this->request->data = Hash::merge($this->request->data,
 				$this->Page->create(array(
@@ -127,7 +133,7 @@ class PagesEditController extends PagesAppController {
 					'slug' => $slug,
 					'permalink' => $slug,
 					'room_id' => Current::read('Room.id'),
-					'parent_id' => (int)Hash::get($this->request->params, 'pass.1', '0'),
+					'parent_id' => Hash::get($this->request->params, 'pass.1'),
 				)),
 				$this->LanguagesPage->create(array(
 					'id' => null,
@@ -147,7 +153,8 @@ class PagesEditController extends PagesAppController {
 	public function edit() {
 		if ($this->request->isPut()) {
 			//登録処理
-			if ($page = $this->Page->savePage($this->request->data)) {
+			$page = $this->Page->savePage($this->request->data);
+			if ($page) {
 				//正常の場合
 				$this->redirect(NetCommonsUrl::actionUrl(array(
 					'plugin' => $this->params['plugin'],
@@ -159,6 +166,10 @@ class PagesEditController extends PagesAppController {
 			}
 
 		} else {
+			$result = $this->Page->existPage(Current::read('Page.id'));
+			if (! $result) {
+				return $this->throwBadRequest();
+			}
 			//表示処理
 			$this->request->data = Hash::merge($this->request->data,
 				$this->LanguagesPage->getLanguagesPage(Current::read('Page.id'), Current::read('Language.id'))

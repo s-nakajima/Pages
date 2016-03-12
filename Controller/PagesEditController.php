@@ -42,6 +42,7 @@ class PagesEditController extends PagesAppController {
 			),
 		),
 		'Pages.PageLayout',
+		'Security',
 		'ThemeSettings.ThemeSettings',
 	);
 

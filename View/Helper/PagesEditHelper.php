@@ -23,10 +23,18 @@ class PagesEditHelper extends AppHelper {
  * @var array
  */
 	public $helpers = array(
-		//'NetCommons.Button',
+		'NetCommons.LinkButton',
 		'NetCommons.NetCommonsHtml',
-		//'NetCommons.NetCommonsForm'
+		'NetCommons.NetCommonsForm',
+		'NetCommons.Token'
 	);
+
+/**
+ * ページ順序配列
+ *
+ * @var array
+ */
+	protected $_pageWeight = array();
 
 /**
  * Before render callback. beforeRender is called before the view file is rendered.
@@ -58,15 +66,48 @@ class PagesEditHelper extends AppHelper {
 /**
  * ページの出力
  *
- * @param int $pageId ページデータ
- * @param string $tree Treeデータ
  * @return string HTML
  */
-	public function pageRender($pageId, $tree) {
-		$page = Hash::get($this->_View->viewVars['pages'], $pageId);
-		$nest = substr_count($tree, Page::$treeParser);
+	public function getPagesEditJsInit() {
+		$pages = array();
 
-		return $this->_View->element('PagesEdit/render_index', array('page' => $page, 'nest' => $nest));
+		foreach ($this->_View->viewVars['treeList'] as $pageId) {
+			$page = Hash::get($this->_View->viewVars['pages'], $pageId);
+			$parentId = (int)$page['Page']['parent_id'];
+			$page['Page']['parent_id'] = (string)$parentId;
+			$page['Page']['type'] = '';
+
+			// * ページ名
+			if (Current::read('Room.id') !== Room::PUBLIC_PARENT_ID &&
+					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
+
+				$page['LanguagesPage']['name'] = $this->roomName();
+			}
+
+			// * Tokenの値セット
+			$data = array(
+				'Page' => array(
+					'id' => $page['Page']['id'],
+					'parent_id' => $page['Page']['parent_id'],
+					'type' => '',
+				),
+			);
+			$tokenFields = Hash::flatten($data);
+			$hiddenFields = $tokenFields;
+			unset($hiddenFields['Page.type']);
+
+			$this->_View->request->data = Hash::merge($this->_View->request->data, $data);
+			$tokens = $this->Token->getToken('PagesEdit', '/pages/pages_edit/move.json', $tokenFields, array_keys($hiddenFields));
+
+			$pages[$pageId] = Hash::merge(array(
+				'Page' => $page['Page'],
+				'LanguagesPage' => $page['LanguagesPage'],
+			), $tokens);
+		}
+
+		return h(json_encode($pages)) . ', ' .
+				h(json_encode($this->_View->viewVars['treeList'])) . ', ' .
+				h(json_encode($this->_View->viewVars['parentList']));
 	}
 
 /**
@@ -81,57 +122,6 @@ class PagesEditHelper extends AppHelper {
 		);
 
 		return Hash::get($room, '0.name');
-	}
-
-/**
- * ページ名の出力
- *
- * @param array $page ページデータ配列
- * @param int|null $nest インデント
- * @return string HTML
- */
-	public function pageName($page, $nest = null) {
-		$output = '';
-		if (isset($nest)) {
-			$output .= str_repeat('<span class="pages-tree"> </span> ', $nest);
-		}
-
-		$output .= $this->moveButton($page);
-
-		if (Current::read('Room.id') !== Room::PUBLIC_PARENT_ID && Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
-			$title = h($this->roomName());
-		} else {
-			$title = h($page['LanguagesPage']['name']);
-		}
-		$output .= $this->NetCommonsHtml->link($title,
-				array('key' => $page['Page']['room_id'], $page['Page']['id']),
-				array('escapeTitle' => true));
-
-		return $output;
-	}
-
-/**
- * 状態によるCSSのクラス定義を返す
- *
- * @param array $page ページデータ配列
- * @return string HTML
- */
-	public function activeCss($page) {
-		$output = '';
-		if (Hash::get($page, 'Page.id') === Current::read('Page.id')) {
-			$output .= 'active';
-		}
-		return $output;
-	}
-
-/**
- * 移動ボタンを返す
- *
- * @param array $page ページデータ配列
- * @return string HTML
- */
-	public function moveButton($page) {
-		return $this->_View->element('PagesEdit/page_move');
 	}
 
 }

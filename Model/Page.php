@@ -393,6 +393,43 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * 移動
+ *
+ * @param array $data request data
+ * @return bool
+ * @throws InternalErrorException
+ */
+	public function saveMove($data) {
+		//トランザクションBegin
+		$this->begin();
+
+		try {
+			$this->id = $data[$this->alias]['id'];
+
+			if ($data[$this->alias]['type'] === 'up') {
+				$result = $this->moveUp($this->id, 1);
+			} elseif ($data[$this->alias]['type'] === 'down') {
+				$result = $this->moveDown($this->id, 1);
+			} elseif ($data[$this->alias]['type'] === 'move') {
+				$result = $this->saveField('parent_id', $data[$this->alias]['parent_id']);
+			} else {
+				$result = false;
+			}
+
+			if (! $result) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
  * Delete page each association model
  * - `atomic`: If true (default), will attempt to save all records in a single transaction.
  *   Should be set to false if database/table does not support transactions.

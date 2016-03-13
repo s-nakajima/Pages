@@ -72,9 +72,6 @@ class PagesEditController extends PagesAppController {
 			return;
 		}
 		$this->set('room', $room);
-
-		//$page['Page'] = Current::read('Page');
-		//$this->set('page', $page);
 	}
 
 /**
@@ -86,15 +83,12 @@ class PagesEditController extends PagesAppController {
 		//ページでテータ取得
 		$pages = $this->Page->getPages();
 		if (! $pages) {
-			$this->throwBadRequest();
-			return;
+			return $this->throwBadRequest();
 		}
 		$this->set('pages', $pages);
 
 		//Treeリスト取得
-		$pageTreeList = $this->Page->generateTreeList(
-				array('Page.room_id' => Current::read('Room.id')), null, null, Page::$treeParser);
-		$this->set('pageTreeList', $pageTreeList);
+		$this->__setPageTreeList();
 	}
 
 /**
@@ -186,8 +180,7 @@ class PagesEditController extends PagesAppController {
  */
 	public function delete() {
 		if (! $this->request->isDelete()) {
-			$this->throwBadRequest();
-			return;
+			return $this->throwBadRequest();
 		}
 		if ($this->Page->deletePage($this->data)) {
 			$this->redirect('/' . Current::SETTING_MODE_WORD);
@@ -242,6 +235,68 @@ class PagesEditController extends PagesAppController {
 			$this->request->data['Page'] = Current::read('Page');
 			$this->theme = Hash::get($this->request->query, 'theme', $this->theme);
 		}
+	}
+
+/**
+ * move
+ *
+ * @return void
+ */
+	public function move() {
+		if ($this->request->is('post')) {
+			if ($this->Page->saveMove($this->request->data)) {
+				//正常の場合
+				$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array(
+					'class' => 'success',
+					'parentList' => $this->viewVars['parentList'],
+					'treeList' => $this->viewVars['treeList'],
+				));
+				return $this->redirect(NetCommonsUrl::actionUrl(array(
+					'plugin' => $this->params['plugin'],
+					'controller' => $this->params['controller'],
+					'action' => 'index',
+					'key' => Current::read('Room.id'),
+					$page['Page']['id'],
+				)));
+			}
+		}
+
+		return $this->throwBadRequest();
+	}
+
+/**
+ * pageTreeListのセット
+ *
+ * @return void
+ */
+	private function __setPageTreeList() {
+		//Treeリスト取得
+		$pageTreeList = $this->Page->generateTreeList(
+				array('Page.room_id' => Current::read('Room.id')), null, null, Page::$treeParser);
+
+		foreach ($pageTreeList as $pageId => $tree) {
+			$treeList[] = $pageId;
+
+			$page = Hash::get($this->viewVars['pages'], $pageId);
+			$parentId = (int)$page['Page']['parent_id'];
+
+			// * ページ順
+			if (isset($parentList[$parentId])) {
+				$weight = count($parentList[$parentId]) + 1;
+			} else {
+				$weight = 1;
+			}
+
+			$nest = substr_count($tree, Page::$treeParser);
+			$parentList[$parentId][$pageId] = array(
+				'index' => count($treeList) - 1,
+				'weight' => $weight,
+				'nest' => $nest,
+			);
+		}
+
+		$this->set('parentList', $parentList);
+		$this->set('treeList', $treeList);
 	}
 
 }

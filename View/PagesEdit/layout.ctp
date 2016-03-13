@@ -25,7 +25,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 				<?php if ($layouts = $this->PagesEdit->getLayouts()) : ?>
 					<div class="panel-body">
 						<div class="clearfix"
-							ng-controller="PagesController"
+							ng-controller="PagesLayoutController"
 							ng-init="initialize(<?php echo (int)$this->PageLayout->hasContainer(Container::TYPE_HEADER) . ', ' .
 											(int)$this->PageLayout->hasContainer(Container::TYPE_MAJOR) . ', ' .
 											(int)$this->PageLayout->hasContainer(Container::TYPE_MINOR) . ', ' .

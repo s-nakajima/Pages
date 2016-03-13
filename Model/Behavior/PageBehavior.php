@@ -57,12 +57,12 @@ class PageBehavior extends ModelBehavior {
 		}
 		$model->data['Page']['slug'] = $slug;
 
-		$permalink = '';
-		if (strlen($targetPage['Page']['permalink']) !== 0) {
-			$permalink = $targetPage['Page']['permalink'] . '/';
-		}
-		$permalink .= $slug;
-		$model->data['Page']['permalink'] = $permalink;
+		//$permalink = '';
+		//if (strlen($targetPage['Page']['permalink']) !== 0) {
+		//	$permalink = $targetPage['Page']['permalink'] . '/';
+		//}
+		//$permalink .= $slug;
+		$model->data['Page']['permalink'] = $slug;
 		$model->data['Page']['is_published'] = true;
 		$model->data['Page']['is_container_fluid'] = false;
 

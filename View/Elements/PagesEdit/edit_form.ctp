@@ -24,10 +24,8 @@
 		'required' => true,
 	)); ?>
 
-<?php if ($action === 'add' || isset($this->data['Page']['permalink']) && $this->data['Page']['permalink']) : ?>
-	<?php echo $this->NetCommonsForm->input('Page.slug', array(
-			'type' => 'text',
-			'label' => __d('pages', 'Slug'),
-			'required' => true,
-		)); ?>
-<?php endif;
+<?php echo $this->NetCommonsForm->input('Page.slug', array(
+		'type' => 'text',
+		'label' => __d('pages', 'Slug'),
+		'required' => true,
+	));

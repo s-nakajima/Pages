@@ -30,7 +30,6 @@
 				</tr>
 			</thead>
 			<tbody>
-
 				<?php
 					foreach ($pageTreeList as $pageId => $tree) {
 						echo $this->PagesEdit->pageRender($pageId, $tree);

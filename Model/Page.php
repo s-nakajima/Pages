@@ -275,21 +275,24 @@ class Page extends PagesAppModel {
 	}
 
 /**
- * Get page with frame
+ * Frameデータも一緒にページデータ取得
  *
  * @param string $permalink Permalink
- * @param string $language Language.code
  * @return array
  */
-	public function getPageWithFrame($permalink, $language = null) {
-		if (! isset($language)) {
-			$language = Configure::read('Config.language');
+	public function getPageWithFrame($permalink) {
+		if ($permalink === '') {
+			$conditions = array(
+				'Page.lft' => '1'
+			);
+		} else {
+			$conditions = array(
+				'Page.permalink' => $permalink
+			);
 		}
 
 		$query = array(
-			'conditions' => array(
-				'Page.permalink' => $permalink
-			),
+			'conditions' => $conditions,
 			'contain' => array(
 				'Box' => $this->Box->getContainableQueryNotAssociatedPage(),
 				'Container' => array(
@@ -300,12 +303,13 @@ class Page extends PagesAppModel {
 				),
 				'Language' => array(
 					'conditions' => array(
-						'Language.code' => $language
+						'Language.id' => Current::read('Language.id')
 					)
 				)
 			)
 		);
-		return $this->find('first', $query);
+		$result = $this->find('first', $query);
+		return $result;
 	}
 
 /**

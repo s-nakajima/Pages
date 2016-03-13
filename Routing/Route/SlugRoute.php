@@ -32,8 +32,14 @@ class SlugRoute extends CakeRoute {
 		}
 
 		$path = implode('/', $params['pass']);
+		if ($path === '') {
+			$conditions = array('Page.lft' => '1');
+		} else {
+			$conditions = array('Page.permalink' => $path);
+		}
+
 		$count = $Page->find('count', array(
-			'conditions' => array('Page.permalink' => $path),
+			'conditions' => $conditions,
 			'recursive' => -1
 		));
 

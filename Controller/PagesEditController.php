@@ -246,19 +246,14 @@ class PagesEditController extends PagesAppController {
 		if ($this->request->is('post')) {
 			if ($this->Page->saveMove($this->request->data)) {
 				//正常の場合
+				$this->index();
 				$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array(
 					'class' => 'success',
 					'parentList' => $this->viewVars['parentList'],
 					'treeList' => $this->viewVars['treeList'],
 				));
-				return $this->redirect(NetCommonsUrl::actionUrl(array(
-					'plugin' => $this->params['plugin'],
-					'controller' => $this->params['controller'],
-					'action' => 'index',
-					'key' => Current::read('Room.id'),
-					$page['Page']['id'],
-				)));
 			}
+			return;
 		}
 
 		return $this->throwBadRequest();

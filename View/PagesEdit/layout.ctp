@@ -73,7 +73,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 				<?php endif; ?>
 
 				<div class="panel-footer text-center">
-					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), NetCommonsUrl::backToPageUrl()); ?>
+					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'),
+							$this->NetCommonsHtml->url(array('action' => 'index', Current::read('Room.id')))); ?>
 				</div>
 
 			<?php echo $this->NetCommonsForm->end(); ?>

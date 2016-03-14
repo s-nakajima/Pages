@@ -282,6 +282,45 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * ページデータの存在チェック
+ *
+ * @param int $pageId ページID
+ * @return bool
+ */
+	public function getParentNodeName($pageId) {
+		$this->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
+
+		$parentNode = $this->getPath($pageId);
+
+		$pagesLanguages = $this->find('list', array(
+			'recursive' => -1,
+			'fields' => array(
+				$this->LanguagesPage->alias . '.page_id',
+				$this->LanguagesPage->alias . '.name',
+			),
+			'conditions' => array(
+				$this->alias . '.id' => Hash::extract($parentNode, '{n}.Page.id'),
+				$this->alias . '.parent_id NOT' => null,
+			),
+			'joins' => array(
+				array(
+					'table' => $this->LanguagesPage->table,
+					'alias' => $this->LanguagesPage->alias,
+					'conditions' => array(
+						$this->LanguagesPage->alias . '.page_id' . ' = ' . $this->alias . '.id',
+						$this->LanguagesPage->alias . '.language_id' => Current::read('Language.id'),
+					),
+				),
+			),
+			'order' => array($this->alias . ' .lft' => 'asc')
+		));
+
+		return $pagesLanguages;
+	}
+
+/**
  * Frameデータも一緒にページデータ取得
  *
  * @param string $permalink Permalink

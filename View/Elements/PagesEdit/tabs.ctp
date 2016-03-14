@@ -13,23 +13,26 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 ?>
 
 <ul class="nav nav-tabs" role="tablist">
-	<li class="<?php echo (in_array(Hash::get($this->request->params, 'action'), ['edit', 'add'], true) ? 'active' : ''); ?>">
-		<?php
-			if ($this->params['action'] === 'add') {
-				$title = __d('pages', 'Add page');
-				$action = 'add';
-			} else {
-				$title = __d('pages', 'Edit page');
-				$action = 'edit';
-			}
-			if (! $disactive) {
-				echo $this->NetCommonsHtml->link($title,
-						array('action' => $action, 'key' => Current::read('Room.id'), Current::read('Page.id')));
-			} else {
-				echo '<a>' . $title . '</a>';
-			}
-		?>
-	</li>
+	<?php if (Current::read('Page.parent_id') || $this->params['action'] === 'add') : ?>
+		<li class="<?php echo (in_array(Hash::get($this->request->params, 'action'), ['edit', 'add'], true) ? 'active' : ''); ?>">
+			<?php
+				if ($this->params['action'] === 'add') {
+					$title = __d('pages', 'Add page');
+					$action = 'add';
+				} else {
+					$title = __d('pages', 'Edit page');
+					$action = 'edit';
+				}
+				if (! $disactive) {
+					echo $this->NetCommonsHtml->link($title,
+							array('action' => $action, 'key' => Current::read('Room.id'), Current::read('Page.id')));
+				} else {
+					echo '<a>' . $title . '</a>';
+				}
+			?>
+		</li>
+	<?php endif; ?>
+
 	<li class="<?php echo (Hash::get($this->request->params, 'action') === 'layout' ? 'active' : $disactive); ?>">
 		<?php
 			if (! $disactive) {

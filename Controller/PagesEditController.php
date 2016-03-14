@@ -42,7 +42,6 @@ class PagesEditController extends PagesAppController {
 			),
 		),
 		'Pages.PageLayout',
-		'Security',
 		'ThemeSettings.ThemeSettings',
 	);
 
@@ -72,6 +71,9 @@ class PagesEditController extends PagesAppController {
 			return;
 		}
 		$this->set('room', $room);
+
+		//parentPathの名前セット
+		$this->__setParentPageName();
 	}
 
 /**
@@ -85,10 +87,54 @@ class PagesEditController extends PagesAppController {
 		if (! $pages) {
 			return $this->throwBadRequest();
 		}
-		$this->set('pages', $pages);
 
 		//Treeリスト取得
-		$this->__setPageTreeList();
+		$pageTreeList = $this->Page->generateTreeList(
+				array('Page.room_id' => Current::read('Room.id')), null, null, Page::$treeParser);
+
+		foreach ($pageTreeList as $pageId => $tree) {
+			$treeList[] = $pageId;
+
+			$page = Hash::get($pages, $pageId);
+			$parentId = (int)$page['Page']['parent_id'];
+			$page['Page']['parent_id'] = (string)$parentId;
+			$page['Page']['type'] = '';
+
+			// * ページ名
+			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
+					Hash::get($page, 'Page.parent_id') !== Page::PUBLIC_ROOT_PAGE_ID &&
+					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
+
+				$room = Hash::extract(
+					$this->viewVars['room'],
+					'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+				);
+				$page['LanguagesPage']['name'] = Hash::get($room, '0.name');
+			}
+
+			// * ページ順
+			if (isset($parentList[$parentId])) {
+				$weight = count($parentList[$parentId]) + 1;
+			} else {
+				$weight = 1;
+			}
+
+			$nest = substr_count($tree, Page::$treeParser);
+			$parentList[$parentId][$pageId] = array(
+				'index' => count($treeList) - 1,
+				'weight' => $weight,
+				'nest' => $nest,
+			);
+
+			$pages[$pageId] = array(
+				'Page' => $page['Page'],
+				'LanguagesPage' => $page['LanguagesPage'],
+			);
+		}
+
+		$this->set('parentList', $parentList);
+		$this->set('treeList', $treeList);
+		$this->set('pages', $pages);
 	}
 
 /**
@@ -146,12 +192,16 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function edit() {
+		if (! Current::read('Page.parent_id')) {
+			return $this->throwBadRequest();
+		}
+
 		if ($this->request->isPut()) {
 			//登録処理
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
-				$this->redirect(NetCommonsUrl::actionUrl(array(
+				return $this->redirect(NetCommonsUrl::actionUrl(array(
 					'plugin' => $this->params['plugin'],
 					'controller' => $this->params['controller'],
 					'action' => 'index',
@@ -258,38 +308,23 @@ class PagesEditController extends PagesAppController {
 	}
 
 /**
- * pageTreeListのセット
+ * 親のページ名のnavをセット
  *
  * @return void
  */
-	private function __setPageTreeList() {
-		//Treeリスト取得
-		$pageTreeList = $this->Page->generateTreeList(
-				array('Page.room_id' => Current::read('Room.id')), null, null, Page::$treeParser);
-
-		foreach ($pageTreeList as $pageId => $tree) {
-			$treeList[] = $pageId;
-
-			$page = Hash::get($this->viewVars['pages'], $pageId);
-			$parentId = (int)$page['Page']['parent_id'];
-
-			// * ページ順
-			if (isset($parentList[$parentId])) {
-				$weight = count($parentList[$parentId]) + 1;
-			} else {
-				$weight = 1;
-			}
-
-			$nest = substr_count($tree, Page::$treeParser);
-			$parentList[$parentId][$pageId] = array(
-				'index' => count($treeList) - 1,
-				'weight' => $weight,
-				'nest' => $nest,
-			);
+	private function __setParentPageName() {
+		if ($this->params['action'] !== 'index') {
+			$parentPathName = $this->Page->getParentNodeName(Current::read('Page.id'));
+		} else {
+			$parentPathName = array();
 		}
+		$room = Hash::extract(
+			$this->viewVars['room'],
+			'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+		);
+		array_unshift($parentPathName, Hash::get($room, '0.name'));
 
-		$this->set('parentList', $parentList);
-		$this->set('treeList', $treeList);
+		$this->set('parentPathName', implode(' / ', $parentPathName));
 	}
 
 }

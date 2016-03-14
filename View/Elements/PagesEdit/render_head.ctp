@@ -11,15 +11,14 @@
 ?>
 
 <tr ng-init="pageId = treeList[0]">
-	<th>
+	<th class="h2">
 		<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
 			{{pages[pageId]['LanguagesPage']['name']}}
 		</a>
-
 		<?php echo $this->LinkButton->edit('', '',
 				array(
 					'iconSize' => 'btn-xs',
-					'ng-href' => $this->NetCommonsHtml->url(array('action' => 'edit')) .
+					'ng-href' => $this->NetCommonsHtml->url(array('action' => 'layout')) .
 								'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
 				)
 			); ?>

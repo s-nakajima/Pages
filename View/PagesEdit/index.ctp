@@ -41,7 +41,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 		<?php echo $this->NetCommonsForm->unlockField('Page.type'); ?>
 
 		<table class="table table-hover" ng-controller="PagesEditController"
-				ng-init="initialize(<?php echo $this->PagesEdit->getPagesEditJsInit(); ?>)">
+				ng-init="initialize(<?php echo h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList)); ?>)">
 			<thead>
 				<?php echo $this->element('PagesEdit/render_head'); ?>
 			</thead>

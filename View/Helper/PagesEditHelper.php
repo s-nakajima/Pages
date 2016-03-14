@@ -71,43 +71,7 @@ class PagesEditHelper extends AppHelper {
 	public function getPagesEditJsInit() {
 		$pages = array();
 
-		foreach ($this->_View->viewVars['treeList'] as $pageId) {
-			$page = Hash::get($this->_View->viewVars['pages'], $pageId);
-			$parentId = (int)$page['Page']['parent_id'];
-			$page['Page']['parent_id'] = (string)$parentId;
-			$page['Page']['type'] = '';
-
-			// * ページ名
-			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
-					Hash::get($page, 'Page.parent_id') !== Page::PUBLIC_ROOT_PAGE_ID &&
-					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
-
-				$page['LanguagesPage']['name'] = $this->roomName();
-			}
-
-			$pages[$pageId] = array(
-				'Page' => $page['Page'],
-				'LanguagesPage' => $page['LanguagesPage'],
-			);
-		}
-
-		return h(json_encode($pages)) . ', ' .
-				h(json_encode($this->_View->viewVars['treeList'])) . ', ' .
-				h(json_encode($this->_View->viewVars['parentList']));
-	}
-
-/**
- * ルーム名の出力
- *
- * @return string HTML
- */
-	public function roomName() {
-		$room = Hash::extract(
-			$this->_View->viewVars['room'],
-			'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
-		);
-
-		return Hash::get($room, '0.name');
+		return h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList));
 	}
 
 }

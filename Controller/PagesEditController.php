@@ -115,12 +115,11 @@ class PagesEditController extends PagesAppController {
 
 		} else {
 			//表示処理
-			if (Hash::get($this->request->params, 'pass.1')) {
-				$result = $this->Page->existPage(Hash::get($this->request->params, 'pass.1'));
-				if (! $result) {
-					return $this->throwBadRequest();
-				}
+			$result = $this->Page->existPage(Hash::get($this->request->params, 'pass.1'));
+			if (! $result) {
+				return $this->throwBadRequest();
 			}
+
 			$slug = 'page_' . date('YmdHis');
 			$this->request->data = Hash::merge($this->request->data,
 				$this->Page->create(array(
@@ -128,7 +127,8 @@ class PagesEditController extends PagesAppController {
 					'slug' => $slug,
 					'permalink' => $slug,
 					'room_id' => Current::read('Room.id'),
-					'parent_id' => Hash::get($this->request->params, 'pass.1'),
+					'root_id' => Hash::get(Current::read('Page'), 'Page.root_id', Current::read('Page.id')),
+					'parent_id' => Current::read('Page.id'),
 				)),
 				$this->LanguagesPage->create(array(
 					'id' => null,
@@ -246,14 +246,12 @@ class PagesEditController extends PagesAppController {
 		if ($this->request->is('post')) {
 			if ($this->Page->saveMove($this->request->data)) {
 				//正常の場合
-				$this->index();
-				$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array(
-					'class' => 'success',
-					'parentList' => $this->viewVars['parentList'],
-					'treeList' => $this->viewVars['treeList'],
-				));
+				$this->NetCommons->setFlashNotification(
+					__d('net_commons', 'Successfully saved.'),
+					array('class' => 'success')
+				);
+				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
 			}
-			return;
 		}
 
 		return $this->throwBadRequest();

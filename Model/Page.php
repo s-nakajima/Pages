@@ -28,6 +28,13 @@ App::uses('Current', 'NetCommons.Utility');
 class Page extends PagesAppModel {
 
 /**
+ * パブリックスペースのページID
+ *
+ * @var const
+ */
+	const PUBLIC_ROOT_PAGE_ID = '1';
+
+/**
  * TreeParser
  * __constructでセットする
  *
@@ -283,7 +290,7 @@ class Page extends PagesAppModel {
 	public function getPageWithFrame($permalink) {
 		if ($permalink === '') {
 			$conditions = array(
-				'Page.lft' => '1'
+				'Page.id' => Current::read('Room.page_id_top')
 			);
 		} else {
 			$conditions = array(

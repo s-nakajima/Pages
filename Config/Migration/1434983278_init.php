@@ -47,6 +47,7 @@ class Init extends CakeMigration {
 				'pages' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary', 'comment' => 'Datetime display page from.'),
 					'room_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false),
+					'root_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 					'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 					'lft' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 					'rght' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),

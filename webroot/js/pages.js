@@ -64,10 +64,21 @@ NetCommonsApp.controller('PagesEditController',
         var range = [];
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
         var nest = $scope.parentList[parentId][pageId]['nest'];
-        for(var i = 0; i < nest; i++) {
+        for(var i = 1; i < nest; i++) {
           range.push(i);
         }
         return range;
+      };
+
+      /**
+       * インデント
+       */
+      $scope.indented = function(pageId) {
+        var range = [];
+        var parentId = $scope.pages[pageId]['Page']['parent_id'];
+        var nest = $scope.parentList[parentId][pageId]['nest'];
+
+        return (nest !== 0);
       };
 
       /**
@@ -85,6 +96,10 @@ NetCommonsApp.controller('PagesEditController',
        * 移動ボタンのdisabled
        */
       $scope.moveDisabled = function(type, pageId) {
+        if ($scope.$parent.sending) {
+          return true;
+        }
+
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
         if (type === 'up') {
           if ($scope.parentList[parentId][pageId]['weight'] === 1) {
@@ -109,39 +124,16 @@ NetCommonsApp.controller('PagesEditController',
        * 表示順の登録
        */
       $scope.saveWeight = function(type, pageId) {
-        var data = {
-          Page: {
-            id: pageId,
-            parent_id: $scope.pages[pageId]['Page']['parent_id'],
-            type: type
-          },
-          _Token: $scope.pages[pageId]['_Token']
-        }
+        $scope.$parent.sending = true;
 
-        $http.get($scope.baseUrl + '/net_commons/net_commons/csrfToken.json')
-          .success(function(token) {
-              data._Token.key = token.data._Token.key;
+        angular.element('input[name="data[Page][id]"]')[0].value = pageId;
 
-              //POSTリクエスト
-              $http.post(
-                  $scope.baseUrl + '/pages/pages_edit/move.json',
-                  $.param({_method: 'POST', data: data}),
-                  {cache: false,
-                    headers:
-                        {'Content-Type': 'application/x-www-form-urlencoded'}
-                  }
-              ).success(function(data) {
-                $scope.flashMessage(data.name, data.class, data.interval);
-                $scope.$parent.sending = false;
+        var key = 'input[name="data[Page][parent_id]"]';
+        var parentId = $scope.pages[pageId]['Page']['parent_id'];
+        angular.element(key)[0].value = parentId;
 
-                $scope.treeList = data.treeList;
-                $scope.parentList = data.parentList;
-
-              }).error(function(data, status) {
-                $scope.flashMessage(data['name'], 'danger', 0);
-                $scope.$parent.sending = false;
-              });
-            });
+        angular.element('input[name="data[Page][type]"]')[0].value = type;
+        angular.element('form')[0].submit();
       };
 
     }]);

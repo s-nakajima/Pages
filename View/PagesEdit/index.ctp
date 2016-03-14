@@ -15,25 +15,41 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 	<article>
 		<?php echo $this->element('PagesEdit/header'); ?>
 
-		<table class="table table-hover" ng-controller="PagesEditController">
+		<?php echo $this->NetCommonsForm->create('Page',
+				array(
+					'type' => 'post',
+					'url' => $this->NetCommonsHtml->url(array('action' => 'move'))
+				)
+			); ?>
+
+		<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect', array('value' =>
+			$this->NetCommonsHtml->url(array(
+				'action' => 'index',
+				Current::read('Room.id'),
+				Current::read('Page.id'),
+			)
+		))); ?>
+		<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
+		<?php echo $this->NetCommonsForm->unlockField('Page.id'); ?>
+
+		<?php echo $this->NetCommonsForm->hidden('Page.room_id', array('value' => Current::read('Room.id'))); ?>
+
+		<?php echo $this->NetCommonsForm->hidden('Page.parent_id'); ?>
+		<?php echo $this->NetCommonsForm->unlockField('Page.parent_id'); ?>
+
+		<?php echo $this->NetCommonsForm->hidden('Page.type'); ?>
+		<?php echo $this->NetCommonsForm->unlockField('Page.type'); ?>
+
+		<table class="table table-hover" ng-controller="PagesEditController"
+				ng-init="initialize(<?php echo $this->PagesEdit->getPagesEditJsInit(); ?>)">
 			<thead>
-				<tr>
-					<th>
-						<?php echo __d('pages', 'Page name'); ?>
-					</th>
-					<th class="text-right">
-						<?php if ($room['Room']['id'] === Room::PUBLIC_PARENT_ID) : ?>
-							<?php echo $this->LinkButton->add(__d('pages', 'Add page'),
-									array('action' => 'add', 'key' => $page['Page']['room_id']),
-									array('iconSize' => 'btn-xs')
-								); ?>
-						<?php endif; ?>
-					</th>
-				</tr>
+				<?php echo $this->element('PagesEdit/render_head'); ?>
 			</thead>
-			<tbody ng-init="initialize(<?php echo $this->PagesEdit->getPagesEditJsInit(); ?>)">
+			<tbody>
 				<?php echo $this->element('PagesEdit/render_index'); ?>
 			</tbody>
 		</table>
+
+		<?php echo $this->NetCommonsForm->end(); ?>
 	</article>
 </div>

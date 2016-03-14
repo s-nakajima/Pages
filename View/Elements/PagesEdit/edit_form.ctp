@@ -10,6 +10,7 @@
 ?>
 
 <?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('Page.root_id'); ?>
 <?php echo $this->NetCommonsForm->hidden('Page.parent_id'); ?>
 <?php echo $this->NetCommonsForm->hidden('Page.permalink'); ?>
 <?php echo $this->NetCommonsForm->hidden('Page.room_id'); ?>

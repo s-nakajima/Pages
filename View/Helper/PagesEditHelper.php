@@ -78,31 +78,17 @@ class PagesEditHelper extends AppHelper {
 			$page['Page']['type'] = '';
 
 			// * ページ名
-			if (Current::read('Room.id') !== Room::PUBLIC_PARENT_ID &&
+			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
+					Hash::get($page, 'Page.parent_id') !== Page::PUBLIC_ROOT_PAGE_ID &&
 					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
 
 				$page['LanguagesPage']['name'] = $this->roomName();
 			}
 
-			// * Tokenの値セット
-			$data = array(
-				'Page' => array(
-					'id' => $page['Page']['id'],
-					'parent_id' => $page['Page']['parent_id'],
-					'type' => '',
-				),
-			);
-			$tokenFields = Hash::flatten($data);
-			$hiddenFields = $tokenFields;
-			unset($hiddenFields['Page.type']);
-
-			$this->_View->request->data = Hash::merge($this->_View->request->data, $data);
-			$tokens = $this->Token->getToken('PagesEdit', '/pages/pages_edit/move.json', $tokenFields, array_keys($hiddenFields));
-
-			$pages[$pageId] = Hash::merge(array(
+			$pages[$pageId] = array(
 				'Page' => $page['Page'],
 				'LanguagesPage' => $page['LanguagesPage'],
-			), $tokens);
+			);
 		}
 
 		return h(json_encode($pages)) . ', ' .

@@ -10,27 +10,8 @@
  */
 ?>
 
-<tr ng-repeat="pageId in treeList" ng-show="indented(pageId)">
-	<td>
-		<span class="pages-tree" ng-repeat="i in indent(pageId)"> </span>
-
-		<span class="pages-move" ng-show="indented(pageId)">
-			<button type="button" class="btn btn-default btn-xs"
-					ng-click="saveWeight('up', pageId)" ng-disabled="moveDisabled('up', pageId)">
-				<span class="glyphicon glyphicon-arrow-up"> </span>
-			</button>
-			<button type="button" class="btn btn-default btn-xs"
-					ng-click="saveWeight('down', pageId)" ng-disabled="moveDisabled('down', pageId)">
-				<span class="glyphicon glyphicon-arrow-down"> </span>
-			</button>
-		</span>
-
-		<span class="pages-move" ng-show="indented(pageId)">
-			<button type="button" class="btn btn-default btn-xs">
-				<?php echo __d('net_commons', 'Move'); ?>
-			</button>
-		</span>
-
+<tr ng-init="pageId = treeList[0]">
+	<th>
 		<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
 			{{pages[pageId]['LanguagesPage']['name']}}
 		</a>
@@ -42,9 +23,9 @@
 								'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
 				)
 			); ?>
-	</td>
+	</th>
 
-	<td class="text-right">
+	<th class="text-right">
 		<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '',
 				array(
 					'iconSize' => 'btn-xs',
@@ -52,5 +33,5 @@
 								'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
 				)
 			); ?>
-	</td>
+	</th>
 </tr>

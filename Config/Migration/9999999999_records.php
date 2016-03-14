@@ -45,9 +45,23 @@ class Records extends NetCommonsMigration {
 			array(
 				'id' => '1',
 				'room_id' => '1',
+				'root_id' => null,
 				'parent_id' => null,
 				'lft' => '1',
-				'rght' => '2',
+				'rght' => '4',
+				'permalink' => '',
+				'slug' => null,
+				'is_published' => true,
+				'from' => null,
+				'to' => null,
+			),
+			array(
+				'id' => '2',
+				'room_id' => '1',
+				'root_id' => '1',
+				'parent_id' => '1',
+				'lft' => '2',
+				'rght' => '3',
 				'permalink' => 'home',
 				'slug' => 'home',
 				'is_published' => true,
@@ -56,17 +70,33 @@ class Records extends NetCommonsMigration {
 			),
 		),
 		'LanguagesPage' => array(
-			//英語
+			//パブリックスペース自体のページ
+			// * 英語
 			array(
 				'id' => '1',
 				'page_id' => '1',
+				'language_id' => '1',
+				'name' => '',
+			),
+			// * 日本語
+			array(
+				'id' => '2',
+				'page_id' => '1',
+				'language_id' => '2',
+				'name' => '',
+			),
+			//パブリックスペースのホーム
+			//英語
+			array(
+				'id' => '3',
+				'page_id' => '2',
 				'language_id' => '1',
 				'name' => 'Home',
 			),
 			//日本語
 			array(
-				'id' => '2',
-				'page_id' => '1',
+				'id' => '4',
+				'page_id' => '2',
 				'language_id' => '2',
 				'name' => 'ホーム',
 			),

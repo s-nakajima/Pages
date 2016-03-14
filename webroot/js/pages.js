@@ -41,7 +41,7 @@ NetCommonsApp.controller('PagesLayoutController', ['$scope', function($scope) {
  * @param {function($scope, $http)} Controller
  */
 NetCommonsApp.controller('PagesEditController',
-    ['$scope', '$http', function($scope, $http) {
+    ['$scope', 'NetCommonsModal', function($scope, NetCommonsModal) {
 
       /**
        * ページデータ保持用
@@ -63,7 +63,7 @@ NetCommonsApp.controller('PagesEditController',
       $scope.indent = function(pageId) {
         var range = [];
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
-        var nest = $scope.parentList[parentId][pageId]['nest'];
+        var nest = $scope.parentList['_' + parentId]['_' + pageId]['nest'];
         for(var i = 1; i < nest; i++) {
           range.push(i);
         }
@@ -76,7 +76,7 @@ NetCommonsApp.controller('PagesEditController',
       $scope.indented = function(pageId) {
         var range = [];
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
-        var nest = $scope.parentList[parentId][pageId]['nest'];
+        var nest = $scope.parentList['_' + parentId]['_' + pageId]['nest'];
 
         return (nest !== 0);
       };
@@ -101,21 +101,38 @@ NetCommonsApp.controller('PagesEditController',
         }
 
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
+        var parentList = $scope.parentList['_' + parentId];
+
         if (type === 'up') {
-          if ($scope.parentList[parentId][pageId]['weight'] === 1) {
+          if (parentList['_' + pageId]['weight'] == 1) {
             return true;
           } else {
             return false;
           }
         } else if (type === 'down') {
           var maxWeight = 0;
-          angular.forEach($scope.parentList[parentId], function(page) {
+          angular.forEach(parentList, function(page) {
             maxWeight = page['weight'];
           });
-          if ($scope.parentList[parentId][pageId]['weight'] === maxWeight) {
+          if (parentList['_' + pageId]['weight'] == maxWeight) {
             return true;
           } else {
             return false;
+          }
+        } else if (type === 'move') {
+          var rootId = $scope.pages[pageId]['Page']['root_id'];
+          if (rootId !== parentId) {
+            return false;
+          }
+
+          var maxWeight = 0;
+          angular.forEach(parentList, function(page) {
+            maxWeight = page['weight'];
+          });
+          if (maxWeight > 1) {
+            return false;
+          } else {
+            return true;
           }
         }
       };
@@ -136,6 +153,21 @@ NetCommonsApp.controller('PagesEditController',
         angular.element('form')[0].submit();
       };
 
+      /**
+       * ページ移動ダイアログ表示
+       *
+       * @return {void}
+       */
+      $scope.showMoveDialog = function(pageId) {
+        var roomId = $scope.pages[pageId]['Page']['room_id'];
+        NetCommonsModal.show(
+            $scope, 'PagesMoveController',
+            $scope.baseUrl +
+                    '/pages/pages_edit/popup_move/' + roomId + '/' + pageId,
+            {backdrop: 'static', size: 'md'}
+        );
+      };
+
     }]);
 
 
@@ -143,22 +175,18 @@ NetCommonsApp.controller('PagesEditController',
  * PagesMoveController Javascript
  *
  * @param {string} Controller name
- * @param {function($scope)} Controller
+ * @param {function($scope, $modalInstance)} Controller
  */
 NetCommonsApp.controller('PagesMoveController',
-    ['$scope', function($scope) {
+    ['$scope', '$modalInstance', function($scope, $modalInstance) {
 
       /**
-       * Initialize
+       * キャンセル処理
+       *
+       * @return {void}
        */
-      $scope.initialize = function() {
-      };
-
-      /**
-       * 表示順の登録
-       */
-      $scope.saveWeight = function() {
-
+      $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
       };
 
     }]);

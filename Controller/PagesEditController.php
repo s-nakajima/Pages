@@ -82,59 +82,7 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function index() {
-		//ページでテータ取得
-		$pages = $this->Page->getPages();
-		if (! $pages) {
-			return $this->throwBadRequest();
-		}
-
-		//Treeリスト取得
-		$pageTreeList = $this->Page->generateTreeList(
-				array('Page.room_id' => Current::read('Room.id')), null, null, Page::$treeParser);
-
-		foreach ($pageTreeList as $pageId => $tree) {
-			$treeList[] = $pageId;
-
-			$page = Hash::get($pages, $pageId);
-			$parentId = (int)$page['Page']['parent_id'];
-			$page['Page']['parent_id'] = (string)$parentId;
-			$page['Page']['type'] = '';
-
-			// * ページ名
-			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
-					Hash::get($page, 'Page.parent_id') !== Page::PUBLIC_ROOT_PAGE_ID &&
-					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
-
-				$room = Hash::extract(
-					$this->viewVars['room'],
-					'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
-				);
-				$page['LanguagesPage']['name'] = Hash::get($room, '0.name');
-			}
-
-			// * ページ順
-			if (isset($parentList[$parentId])) {
-				$weight = count($parentList[$parentId]) + 1;
-			} else {
-				$weight = 1;
-			}
-
-			$nest = substr_count($tree, Page::$treeParser);
-			$parentList[$parentId][$pageId] = array(
-				'index' => count($treeList) - 1,
-				'weight' => $weight,
-				'nest' => $nest,
-			);
-
-			$pages[$pageId] = array(
-				'Page' => $page['Page'],
-				'LanguagesPage' => $page['LanguagesPage'],
-			);
-		}
-
-		$this->set('parentList', $parentList);
-		$this->set('treeList', $treeList);
-		$this->set('pages', $pages);
+		$this->__prepareIndex(array('Page.room_id' => Current::read('Room.id')));
 	}
 
 /**
@@ -173,7 +121,7 @@ class PagesEditController extends PagesAppController {
 					'slug' => $slug,
 					'permalink' => $slug,
 					'room_id' => Current::read('Room.id'),
-					'root_id' => Hash::get(Current::read('Page'), 'Page.root_id', Current::read('Page.id')),
+					'root_id' => Hash::get(Current::read('Page'), 'root_id', Current::read('Page.id')),
 					'parent_id' => Current::read('Page.id'),
 				)),
 				$this->LanguagesPage->create(array(
@@ -294,6 +242,10 @@ class PagesEditController extends PagesAppController {
  */
 	public function move() {
 		if ($this->request->is('post')) {
+			$result = $this->Page->existPage($this->request->data['Page']['parent_id']);
+			if (! $result) {
+				return $this->throwBadRequest();
+			}
 			if ($this->Page->saveMove($this->request->data)) {
 				//正常の場合
 				$this->NetCommons->setFlashNotification(
@@ -305,6 +257,84 @@ class PagesEditController extends PagesAppController {
 		}
 
 		return $this->throwBadRequest();
+	}
+
+/**
+ * 移動ポップアップ画面表示
+ *
+ * @return void
+ */
+	public function popup_move() {
+		$this->viewClass = 'View';
+		$this->layout = 'NetCommons.modal';
+		$this->__prepareIndex(array(
+			'Page.room_id' => Current::read('Room.id'),
+			'NOT' => array(
+				'AND' => array(
+					'Page.lft >=' => Current::read('Page.lft'),
+					'Page.rght <=' => Current::read('Page.rght')
+				)
+			)
+		));
+	}
+
+/**
+ * ページのTreeリストをセットする
+ *
+ * @return void
+ */
+	private function __prepareIndex($conditions) {
+		//ページでテータ取得
+		$pages = $this->Page->getPages();
+		if (! $pages) {
+			return $this->throwBadRequest();
+		}
+
+		$pageTreeList = $this->Page->generateTreeList($conditions, null, null, Page::$treeParser);
+
+		foreach ($pageTreeList as $pageId => $tree) {
+			$treeList[] = $pageId;
+
+			$page = Hash::get($pages, $pageId);
+			$parentId = (int)$page['Page']['parent_id'];
+			$page['Page']['parent_id'] = (string)$parentId;
+			$page['Page']['type'] = '';
+
+			// * ページ名
+			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
+					Hash::get($page, 'Page.parent_id') !== Page::PUBLIC_ROOT_PAGE_ID &&
+					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
+
+				$room = Hash::extract(
+					$this->viewVars['room'],
+					'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+				);
+				$page['LanguagesPage']['name'] = Hash::get($room, '0.name');
+			}
+
+			// * ページ順
+			if (isset($parentList['_' . $parentId])) {
+				$weight = count($parentList['_' . $parentId]) + 1;
+			} else {
+				$weight = 1;
+			}
+
+			$nest = substr_count($tree, Page::$treeParser);
+			$parentList['_' . $parentId]['_' . $pageId] = array(
+				'index' => count($treeList) - 1,
+				'weight' => $weight,
+				'nest' => $nest,
+			);
+
+			$pages[$pageId] = array(
+				'Page' => $page['Page'],
+				'LanguagesPage' => $page['LanguagesPage'],
+			);
+		}
+
+		$this->set('parentList', $parentList);
+		$this->set('treeList', $treeList);
+		$this->set('pages', $pages);
 	}
 
 /**

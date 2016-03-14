@@ -64,14 +64,30 @@ class PagesEditHelper extends AppHelper {
 	}
 
 /**
- * ページの出力
+ * インデント
  *
  * @return string HTML
  */
-	public function getPagesEditJsInit() {
-		$pages = array();
+	public function indent($pageId) {
+		$parentId = $this->_View->viewVars['pages'][$pageId]['Page']['parent_id'];
+		$nest = $this->_View->viewVars['parentList']['_' . $parentId]['_' . $pageId]['nest'];
+		return str_repeat('<span class="pages-tree"> </span> ', $nest);
+	}
 
-		return h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList));
+/**
+ * 移動先のラジオボタン
+ *
+ * @param string $fieldName フィールド名(Model.field)
+ * @param int $pageId ページID
+ * @return string ラジオボタン
+ */
+	public function radioPageMove($pageId) {
+		if (Current::read('Page.parent_id') === (string)$pageId) {
+			return;
+		}
+		return $this->NetCommonsForm->radio('Page.parent_id', array($pageId => ''), array(
+			'hiddenField' => false,
+		));
 	}
 
 }

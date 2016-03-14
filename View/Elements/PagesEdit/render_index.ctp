@@ -26,7 +26,7 @@
 		</span>
 
 		<span class="pages-move" ng-show="indented(pageId)">
-			<button type="button" class="btn btn-default btn-xs">
+			<button type="button" class="btn btn-default btn-xs" ng-disabled="moveDisabled('move', pageId)" ng-click="showMoveDialog(pageId)">
 				<?php echo __d('net_commons', 'Move'); ?>
 			</button>
 		</span>

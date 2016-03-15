@@ -23,10 +23,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 			); ?>
 
 		<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect', array('value' =>
-			$this->NetCommonsHtml->url(array(
-				'action' => 'index',
-				Current::read('Room.id'),
-				Current::read('Page.id'),
+			$this->NetCommonsHtml->url(
+				array('action' => 'index', Current::read('Room.id'), Current::read('Page.id'),
 			)
 		))); ?>
 		<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
@@ -80,7 +78,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 						</span>
 
 						<span class="pages-move" ng-show="indented(pageId)">
-							<button type="button" class="btn btn-default btn-xs" ng-disabled="moveDisabled('move', pageId)" ng-click="showMoveDialog(pageId)">
+							<button type="button" class="btn btn-default btn-xs"
+									ng-disabled="moveDisabled('move', pageId)" ng-click="showMoveDialog(pageId)">
 								<?php echo __d('net_commons', 'Move'); ?>
 							</button>
 						</span>

@@ -9,12 +9,14 @@
  */
 ?>
 
-<?php echo $this->NetCommonsForm->create('Page',
-		array(
-			'type' => 'post',
-			'url' => $this->NetCommonsHtml->url(array('action' => 'move'))
-		)
-	); ?>
+<?php $this->start('title_for_modal'); ?>
+<?php echo __d('pages', 'Select move page'); ?>
+<?php $this->end(); ?>
+
+<?php echo $this->NetCommonsForm->create('Page', array(
+		'type' => 'post',
+		'url' => $this->NetCommonsHtml->url(array('action' => 'move'))
+	)); ?>
 
 <?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect', array('value' =>
 	$this->NetCommonsHtml->url(array(
@@ -31,12 +33,23 @@
 <table class="table table-hover">
 	<tbody>
 		<?php foreach ($treeList as $pageId) : ?>
-		<tr>
+		<tr ng-class="{active: pageParentId === '<?php echo $pageId; ?>'}">
 			<td>
 				<?php echo $this->PagesEdit->indent($pageId); ?>
-				<?php echo $this->PagesEdit->radioPageMove($pageId); ?>
 
-				<?php echo h(Hash::get($pages, $pageId . '.LanguagesPage.name')); ?>
+				<?php if (Current::read('Page.parent_id') !== (string)$pageId) : ?>
+					<?php echo $this->NetCommonsForm->radio('Page.parent_id',
+							array($pageId => Hash::get($pages, $pageId . '.LanguagesPage.name')),
+							array(
+								'hiddenField' => false,
+								'ng-click' => 'pageParentId = \'' . $pageId . '\'',
+							)
+						); ?>
+				<?php else : ?>
+					<strong>
+						<?php echo h(Hash::get($pages, $pageId . '.LanguagesPage.name')); ?>
+					</strong>
+				<?php endif; ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

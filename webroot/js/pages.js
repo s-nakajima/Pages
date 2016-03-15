@@ -181,6 +181,11 @@ NetCommonsApp.controller('PagesMoveController',
     ['$scope', '$modalInstance', function($scope, $modalInstance) {
 
       /**
+       * 移動先の親ページIDを保持する変数
+       */
+      $scope.pageParentId = '';
+
+      /**
        * キャンセル処理
        *
        * @return {void}

@@ -74,20 +74,4 @@ class PagesEditHelper extends AppHelper {
 		return str_repeat('<span class="pages-tree"> </span> ', $nest);
 	}
 
-/**
- * 移動先のラジオボタン
- *
- * @param string $fieldName フィールド名(Model.field)
- * @param int $pageId ページID
- * @return string ラジオボタン
- */
-	public function radioPageMove($pageId) {
-		if (Current::read('Page.parent_id') === (string)$pageId) {
-			return;
-		}
-		return $this->NetCommonsForm->radio('Page.parent_id', array($pageId => ''), array(
-			'hiddenField' => false,
-		));
-	}
-
 }

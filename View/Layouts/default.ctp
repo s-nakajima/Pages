@@ -36,7 +36,7 @@
 
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
-		<main id="nc-system-main" class="<?php echo $pageContainerCss; ?>">
+		<main id="nc-container" class="<?php echo $pageContainerCss; ?>">
 			<?php echo $pageHeader; ?>
 
 			<div class="row">

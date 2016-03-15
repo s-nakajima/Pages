@@ -50,7 +50,7 @@ class Page extends PagesAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Containable',
-		'Pages.Page',
+		'Pages.PageSave',
 		'Pages.PageAssociations'
 	);
 

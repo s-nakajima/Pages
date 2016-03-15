@@ -93,22 +93,6 @@ class LanguagesPage extends AppModel {
 	}
 
 /**
- * validate page_language
- *
- * @param array $data received post data
- * @return bool True on success, false on error
- */
-	public function validateLanguagesPage($data) {
-		$this->set($data);
-		$this->validates();
-		if ($this->validationErrors) {
-			return false;
-		}
-
-		return true;
-	}
-
-/**
  * Get page data
  *
  * @param int $pageId pages.id

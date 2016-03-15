@@ -24,7 +24,7 @@ App::uses('ModelBehavior', 'Model');
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @package NetCommons\Pages\Model
  */
-class PageBehavior extends ModelBehavior {
+class PageSaveBehavior extends ModelBehavior {
 
 /**
  * beforeValidate is called before a model is validated, you can use this callback to

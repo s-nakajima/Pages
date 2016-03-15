@@ -10,6 +10,7 @@
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('Page', 'Pages.Model');
+App::uses('Folder', 'Utility');
 
 /**
  * LayoutHelper
@@ -23,10 +24,7 @@ class PagesEditHelper extends AppHelper {
  * @var array
  */
 	public $helpers = array(
-		'NetCommons.LinkButton',
 		'NetCommons.NetCommonsHtml',
-		'NetCommons.NetCommonsForm',
-		'NetCommons.Token'
 	);
 
 /**

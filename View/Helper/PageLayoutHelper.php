@@ -10,7 +10,6 @@
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('Container', 'Containers.Model');
-App::uses('Folder', 'Utility');
 
 /**
  * LayoutHelper

@@ -57,11 +57,12 @@ class PageLayoutComponent extends Component {
 		$controller->set('modal', $this->modal);
 
 		//ヘルパーセット
-		if (! isset($controller->helpers['NetCommons.Composer']) ||
-				! in_array('NetCommons.Composer', $controller->helpers, true)) {
+		if (! array_key_exists('NetCommons.Composer', $controller->helpers)) {
 			$controller->helpers[] = 'NetCommons.Composer';
 		}
-		$controller->helpers[] = 'Pages.PageLayout';
+		if (! array_key_exists('Pages.PageLayout', $controller->helpers)) {
+			$controller->helpers[] = 'Pages.PageLayout';
+		}
 	}
 
 }

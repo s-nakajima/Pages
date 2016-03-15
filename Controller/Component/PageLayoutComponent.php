@@ -43,9 +43,7 @@ class PageLayoutComponent extends Component {
 		}
 
 		//pathからページデータ取得
-		if (isset($controller->viewVars['page'])) {
-			$page = $controller->viewVars['page'];
-		} else {
+		if (! isset($controller->viewVars['page'])) {
 			$this->Page = ClassRegistry::init('Pages.Page');
 			$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
 			if (empty($page)) {

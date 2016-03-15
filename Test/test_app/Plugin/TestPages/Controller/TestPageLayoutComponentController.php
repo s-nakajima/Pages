@@ -20,6 +20,15 @@ App::uses('AppController', 'Controller');
 class TestPageLayoutComponentController extends AppController {
 
 /**
+ * 使用モデル
+ *
+ * @var array
+ */
+	public $uses = array(
+		'Pages.Page',
+	);
+
+/**
  * 使用コンポーネント
  *
  * @var array
@@ -35,6 +44,32 @@ class TestPageLayoutComponentController extends AppController {
  */
 	public function index() {
 		$this->autoRender = true;
+
+		$page = $this->Page->getPageWithFrame('');
+		if (empty($page)) {
+			throw new NotFoundException();
+		}
+		$this->set('page', $page);
+	}
+
+/**
+ * index
+ *
+ * @return void
+ */
+	public function index_wo_page() {
+		$this->autoRender = true;
+		$this->view = 'index';
+	}
+
+/**
+ * index
+ *
+ * @return void
+ */
+	public function index_json() {
+		$this->autoRender = true;
+		$this->NetCommons->renderJson();
 	}
 
 }

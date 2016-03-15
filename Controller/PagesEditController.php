@@ -114,22 +114,7 @@ class PagesEditController extends PagesAppController {
 				return $this->throwBadRequest();
 			}
 
-			$slug = 'page_' . date('YmdHis');
-			$this->request->data = Hash::merge($this->request->data,
-				$this->Page->create(array(
-					'id' => null,
-					'slug' => $slug,
-					'permalink' => $slug,
-					'room_id' => Current::read('Room.id'),
-					'root_id' => Hash::get(Current::read('Page'), 'root_id', Current::read('Page.id')),
-					'parent_id' => Current::read('Page.id'),
-				)),
-				$this->LanguagesPage->create(array(
-					'id' => null,
-					'language_id' => Current::read('Language.id'),
-					'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
-				))
-			);
+			$this->request->data = $this->Page->createPage();
 			$this->request->data['Room'] = Current::read('Room');
 		}
 	}
@@ -254,28 +239,19 @@ class PagesEditController extends PagesAppController {
 				);
 				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
 			}
-		}
-
-		return $this->throwBadRequest();
-	}
-
-/**
- * 移動ポップアップ画面表示
- *
- * @return void
- */
-	public function popup_move() {
-		$this->viewClass = 'View';
-		$this->layout = 'NetCommons.modal';
-		$this->__prepareIndex(array(
-			'Page.room_id' => Current::read('Room.id'),
-			'NOT' => array(
-				'AND' => array(
-					'Page.lft >=' => Current::read('Page.lft'),
-					'Page.rght <=' => Current::read('Page.rght')
+		} else {
+			$this->viewClass = 'View';
+			$this->layout = 'NetCommons.modal';
+			$this->__prepareIndex(array(
+				'Page.room_id' => Current::read('Room.id'),
+				'NOT' => array(
+					'AND' => array(
+						'Page.lft >=' => Current::read('Page.lft'),
+						'Page.rght <=' => Current::read('Page.rght')
+					)
 				)
-			)
-		));
+			));
+		}
 	}
 
 /**

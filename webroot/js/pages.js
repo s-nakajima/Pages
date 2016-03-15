@@ -163,7 +163,7 @@ NetCommonsApp.controller('PagesEditController',
         NetCommonsModal.show(
             $scope, 'PagesMoveController',
             $scope.baseUrl +
-                    '/pages/pages_edit/popup_move/' + roomId + '/' + pageId,
+                    '/pages/pages_edit/move/' + roomId + '/' + pageId,
             {backdrop: 'static', size: 'md'}
         );
       };

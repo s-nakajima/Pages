@@ -43,10 +43,67 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 		<table class="table table-hover" ng-controller="PagesEditController"
 				ng-init="initialize(<?php echo h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList)); ?>)">
 			<thead>
-				<?php echo $this->element('PagesEdit/render_head'); ?>
+				<tr ng-init="pageId = treeList[0]">
+					<th class="h2">
+						<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
+							{{pages[pageId]['LanguagesPage']['name']}}
+						</a>
+						<?php echo $this->LinkButton->edit('', '', array(
+								'iconSize' => 'btn-xs',
+								'ng-href' => $this->NetCommonsHtml->url(array('action' => 'layout')) .
+											'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+							)); ?>
+					</th>
+
+					<th class="text-right">
+						<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
+								'iconSize' => 'btn-xs',
+								'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .
+											'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+							)); ?>
+					</th>
+				</tr>
 			</thead>
 			<tbody>
-				<?php echo $this->element('PagesEdit/render_index'); ?>
+				<tr ng-repeat="pageId in treeList" ng-show="indented(pageId)">
+					<td>
+						<span class="pages-tree" ng-repeat="i in indent(pageId)"> </span>
+						<span class="pages-move" ng-show="indented(pageId)">
+							<button type="button" class="btn btn-default btn-xs"
+									ng-click="saveWeight('up', pageId)" ng-disabled="moveDisabled('up', pageId)">
+								<span class="glyphicon glyphicon-arrow-up"> </span>
+							</button>
+							<button type="button" class="btn btn-default btn-xs"
+									ng-click="saveWeight('down', pageId)" ng-disabled="moveDisabled('down', pageId)">
+								<span class="glyphicon glyphicon-arrow-down"> </span>
+							</button>
+						</span>
+
+						<span class="pages-move" ng-show="indented(pageId)">
+							<button type="button" class="btn btn-default btn-xs" ng-disabled="moveDisabled('move', pageId)" ng-click="showMoveDialog(pageId)">
+								<?php echo __d('net_commons', 'Move'); ?>
+							</button>
+						</span>
+
+						<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
+							{{pages[pageId]['LanguagesPage']['name']}}
+						</a>
+
+						<?php echo $this->LinkButton->edit('', '', array(
+								'iconSize' => 'btn-xs',
+								'ng-href' => $this->NetCommonsHtml->url(array('action' => 'edit')) .
+											'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+							)); ?>
+					</td>
+
+					<td class="text-right">
+						<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
+								'iconSize' => 'btn-xs',
+								'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .
+											'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+							)); ?>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 

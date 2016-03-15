@@ -228,6 +228,36 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * ページの作成
+ *
+ * @return array ページデータ
+ */
+	public function createPage() {
+		$this->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
+
+		$slug = 'page_' . date('YmdHis');
+		$result = Hash::merge(
+			$this->create(array(
+				'id' => null,
+				'slug' => $slug,
+				'permalink' => $slug,
+				'room_id' => Current::read('Room.id'),
+				'root_id' => Hash::get(Current::read('Page'), 'root_id', Current::read('Page.id')),
+				'parent_id' => Current::read('Page.id'),
+			)),
+			$this->LanguagesPage->create(array(
+				'id' => null,
+				'language_id' => Current::read('Language.id'),
+				'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
+			))
+		);
+
+		return $result;
+	}
+
+/**
  * ページデータ取得
  *
  * @param int|array $roomIds Room.id

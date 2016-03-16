@@ -42,7 +42,6 @@ class PagesEditController extends PagesAppController {
 			),
 		),
 		'Pages.PageLayout',
-		'ThemeSettings.ThemeSettings',
 	);
 
 /**
@@ -53,6 +52,7 @@ class PagesEditController extends PagesAppController {
 	public $helpers = array(
 		'NetCommons.Composer',
 		'Pages.PagesEdit',
+		'ThemeSettings.ThemeSettings',
 	);
 
 /**
@@ -202,7 +202,8 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function theme() {
-		$this->ThemeSettings->setThemes();
+		$themes = $this->SiteSetting->getThemes();
+		$this->set('themes',$themes);
 
 		if ($this->request->isPost()) {
 			unset($this->request->data['save']);

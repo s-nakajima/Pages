@@ -51,7 +51,8 @@ class Page extends PagesAppModel {
 		'Tree',
 		'Containable',
 		'Pages.PageSave',
-		'Pages.PageAssociations'
+		'Pages.PageAssociations',
+		'ThemeSettings.Theme',
 	);
 
 /**
@@ -179,6 +180,8 @@ class Page extends PagesAppModel {
  * @see Model::save()
  */
 	public function beforeValidate($options = array()) {
+		$themes = $this->getThemes();
+
 		$this->validate = Hash::merge($this->validate, array(
 			'slug' => array(
 				'notBlank' => array(
@@ -196,30 +199,24 @@ class Page extends PagesAppModel {
 				'isUnique' => array(
 					'rule' => array('isUnique'),
 					'message' => sprintf(__d('net_commons', '%s is already in use.'), __d('pages', 'Permalink')),
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
-			'from' => array(
-				'datetime' => array(
-					'rule' => array('datetime'),
-					'message' => 'Please enter a valid date and time.',
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'root_id' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
-			'to' => array(
-				'datetime' => array(
-					'rule' => array('datetime'),
-					'message' => 'Please enter a valid date and time.',
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'is_published' => array(
+				'boolean' => array(
+					'rule' => array('boolean'),
+					'message' => __d('net_commons', 'Invalid request.'),
+				),
+			),
+			'is_container_fluid' => array(
+				'boolean' => array(
+					'rule' => array('boolean'),
+					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
 		));

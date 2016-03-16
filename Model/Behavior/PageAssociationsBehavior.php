@@ -160,35 +160,15 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * Get page ID of top.
+ * BoxesPageやContainersPageを作成するためのコピー元のページIDを取得する
+ * ※NC3では、強制的にパブリックスペースのものとする
  *
- * @return string
- */
-	private function __getTopPageId() {
-		$topPageId = null;
-		$topPage = $this->model->findByLft('1', array('id'));
-		if (! empty($topPage)) {
-			$topPageId = $topPage['Page']['id'];
-		}
-
-		return $topPageId;
-	}
-
-/**
- * Get Reference page ID. Return top page ID if it has no parent.
- *
- * @param Model $model Model using this behavior
- * @param array $page The page data
+ * @param Model $model ビヘイビアの呼び出し前のモデル
+ * @param array $page ページデータ
  * @return string
  */
 	public function getReferencePageId(Model $model, $page) {
-		$this->model = $model;
-
-		if (! empty($page['Page']['parent_id'])) {
-			return $page['Page']['parent_id'];
-		}
-
-		return $this->__getTopPageId();
+		return Page::PUBLIC_ROOT_PAGE_ID;
 	}
 
 /**

@@ -35,6 +35,20 @@ class Page extends PagesAppModel {
 	const PUBLIC_ROOT_PAGE_ID = '1';
 
 /**
+ * プライベートスペースのページID
+ *
+ * @var const
+ */
+	const PRIVATE_ROOT_PAGE_ID = '2';
+
+/**
+ * グループスペースのページID
+ *
+ * @var const
+ */
+	const ROOM_ROOT_PAGE_ID = '3';
+
+/**
  * TreeParser
  * __constructでセットする
  *

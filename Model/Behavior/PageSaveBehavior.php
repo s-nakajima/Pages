@@ -37,16 +37,6 @@ class PageSaveBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function beforeValidate(Model $model, $options = array()) {
-		//ページデータをセット
-		$referencePageId = $model->getReferencePageId($model->data);
-		$fields = array(
-			'room_id',
-			'permalink'
-		);
-		$targetPage = $model->findById($referencePageId, $fields);
-		if (empty($targetPage)) {
-			return false;
-		}
 		if (! $model->data['Page']['room_id']) {
 			$model->data['Page']['room_id'] = Current::read('Room.id');
 		}
@@ -57,11 +47,6 @@ class PageSaveBehavior extends ModelBehavior {
 		}
 		$model->data['Page']['slug'] = $slug;
 
-		//$permalink = '';
-		//if (strlen($targetPage['Page']['permalink']) !== 0) {
-		//	$permalink = $targetPage['Page']['permalink'] . '/';
-		//}
-		//$permalink .= $slug;
 		$model->data['Page']['permalink'] = $slug;
 		$model->data['Page']['is_container_fluid'] = false;
 

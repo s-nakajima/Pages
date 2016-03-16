@@ -60,13 +60,7 @@ class PageFixture extends CakeTestFixture {
 			'is_published' => true,
 			'from' => null,
 			'to' => null,
-			'is_container_fluid' => true,
-			'created_user' => null,
-			'created' => '2014-05-12 05:04:42',
-			'modified_user' => null,
-			'modified' => '2014-05-12 05:04:42'
 		),
-		//page.permalink=test
 		array(
 			'id' => '2',
 			'room_id' => '1',
@@ -74,16 +68,11 @@ class PageFixture extends CakeTestFixture {
 			'parent_id' => '1',
 			'lft' => '2',
 			'rght' => '3',
-			'permalink' => 'test',
-			'slug' => 'test',
+			'permalink' => 'home',
+			'slug' => 'home',
 			'is_published' => true,
 			'from' => null,
 			'to' => null,
-			'is_container_fluid' => true,
-			'created_user' => null,
-			'created' => '2014-05-12 05:04:42',
-			'modified_user' => null,
-			'modified' => '2014-05-12 05:04:42'
 		),
 		//別ルーム(room_id=4)
 		array(

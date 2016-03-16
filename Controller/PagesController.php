@@ -43,16 +43,13 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function index() {
-		$this->components[] = 'Pages.PageLayout';
-
 		if (Current::isSettingMode() && ! Current::permission('page_editable')) {
-			$paths = func_get_args();
+			$paths = $this->params->params['pass'];
 			$path = implode('/', $paths);
-			$this->redirect('/' . $path);
-			return;
+			return $this->redirect('/' . $path);
 		}
 
-		$paths = func_get_args();
+		$paths = $this->params->params['pass'];
 		$path = implode('/', $paths);
 
 		$page = $this->Page->getPageWithFrame($path);

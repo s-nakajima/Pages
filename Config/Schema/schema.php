@@ -79,7 +79,6 @@ class PagesSchema extends CakeSchema {
 		'rght' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'permalink' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'slug' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'is_published' => array('type' => 'boolean', 'null' => true, 'default' => null),
 		'is_container_fluid' => array('type' => 'boolean', 'null' => true, 'default' => '0'),
 		'theme' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),

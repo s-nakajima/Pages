@@ -51,9 +51,6 @@ class Records extends NetCommonsMigration {
 				'rght' => '4',
 				'permalink' => '',
 				'slug' => null,
-				'is_published' => true,
-				'from' => null,
-				'to' => null,
 			),
 			array(
 				'id' => '2',
@@ -64,9 +61,6 @@ class Records extends NetCommonsMigration {
 				'rght' => '3',
 				'permalink' => 'home',
 				'slug' => 'home',
-				'is_published' => true,
-				'from' => null,
-				'to' => null,
 			),
 		),
 		'LanguagesPage' => array(

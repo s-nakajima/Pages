@@ -207,15 +207,15 @@ class Page extends PagesAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
-			'is_published' => array(
+			'is_container_fluid' => array(
 				'boolean' => array(
 					'rule' => array('boolean'),
 					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
-			'is_container_fluid' => array(
-				'boolean' => array(
-					'rule' => array('boolean'),
+			'theme' => array(
+				'inList' => array(
+					'rule' => array('inList', Hash::extract($themes, '{n}.name')),
 					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),

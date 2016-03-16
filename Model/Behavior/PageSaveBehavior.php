@@ -63,7 +63,6 @@ class PageSaveBehavior extends ModelBehavior {
 		//}
 		//$permalink .= $slug;
 		$model->data['Page']['permalink'] = $slug;
-		$model->data['Page']['is_published'] = true;
 		$model->data['Page']['is_container_fluid'] = false;
 
 		return parent::beforeValidate($model, $options);
@@ -77,11 +76,13 @@ class PageSaveBehavior extends ModelBehavior {
  * @return mixed False will stop this event from being passed to other behaviors
  */
 	public function afterValidate(Model $model) {
-		$model->LanguagesPage->create(false);
-		$model->LanguagesPage->set($model->data['LanguagesPage']);
-		if (! $model->LanguagesPage->validates()) {
-			$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);
-			return false;
+		if (isset($model->data['LanguagesPage'])) {
+			$model->LanguagesPage->create(false);
+			$model->LanguagesPage->set($model->data['LanguagesPage']);
+			if (! $model->LanguagesPage->validates()) {
+				$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);
+				return false;
+			}
 		}
 
 		return true;
@@ -98,9 +99,11 @@ class PageSaveBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function afterSave(Model $model, $created, $options = array()) {
-		$model->LanguagesPage->data['LanguagesPage']['page_id'] = $model->data['Page']['id'];
-		if (! $model->LanguagesPage->save(null, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		if (isset($model->data['LanguagesPage'])) {
+			$model->LanguagesPage->data['LanguagesPage']['page_id'] = $model->data['Page']['id'];
+			if (! $model->LanguagesPage->save(null, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
 		}
 
 		if ($created) {

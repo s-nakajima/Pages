@@ -27,7 +27,6 @@ class PageFixture extends CakeTestFixture {
 		'rght' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
 		'permalink' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'slug' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'is_published' => array('type' => 'boolean', 'null' => true, 'default' => null),
 		'is_container_fluid' => array('type' => 'boolean', 'null' => true, 'default' => '0'),
 		'theme' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
@@ -55,7 +54,6 @@ class PageFixture extends CakeTestFixture {
 			'rght' => '4',
 			'permalink' => '',
 			'slug' => null,
-			'is_published' => true,
 			'is_container_fluid' => true,
 		),
 		array(
@@ -67,7 +65,6 @@ class PageFixture extends CakeTestFixture {
 			'rght' => '3',
 			'permalink' => 'home',
 			'slug' => 'home',
-			'is_published' => true,
 			'is_container_fluid' => true,
 		),
 		//別ルーム(room_id=4)
@@ -79,7 +76,6 @@ class PageFixture extends CakeTestFixture {
 			'rght' => '6',
 			'permalink' => 'test2',
 			'slug' => 'test2',
-			'is_published' => true,
 			'is_container_fluid' => true,
 		),
 		//別ルーム(room_id=5、ブロックなし)
@@ -91,7 +87,6 @@ class PageFixture extends CakeTestFixture {
 			'rght' => '8',
 			'permalink' => 'test3',
 			'slug' => 'test3',
-			'is_published' => true,
 			'is_container_fluid' => true,
 		),
 	);

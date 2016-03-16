@@ -39,6 +39,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.id'); ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.page_id'); ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
+								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.is_configured', array('value' => true)); ?>
 
 								<?php
 									if ($containerType === Container::TYPE_HEADER) {

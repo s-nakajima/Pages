@@ -25,6 +25,7 @@
 			echo $this->fetch('css');
 
 			echo $this->element('NetCommons.common_js');
+			echo $this->element('Wysiwyg.mathjax_js');
 			echo $this->fetch('script');
 		?>
 	</head>

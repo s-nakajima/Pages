@@ -17,6 +17,7 @@
  */
 
 App::uses('ModelBehavior', 'Model');
+App::uses('Page', 'Pages.Model');
 
 /**
  * Page Behavior

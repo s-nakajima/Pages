@@ -26,8 +26,8 @@ class PageValidateTest extends NetCommonsValidateTest {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.languages_page',
-		'plugin.pages.page',
+		'plugin.pages.languages_page4test',
+		'plugin.pages.page4test',
 	);
 
 /**

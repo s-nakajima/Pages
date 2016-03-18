@@ -2,14 +2,17 @@
 /**
  * PageFixture
  *
- * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
  */
 
 /**
- * Summary for PageFixture
+ * PageFixture
+ * 
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @package NetCommons\Pages\Test\Fixture
  */
 class PageFixture extends CakeTestFixture {
 

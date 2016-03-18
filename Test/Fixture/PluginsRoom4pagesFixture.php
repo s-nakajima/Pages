@@ -15,7 +15,7 @@ App::uses('PluginsRoomFixture', 'PluginManager.Test/Fixture');
  * Unitテスト用Fixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Rooms\Test\Fixture
+ * @package NetCommons\Pages\Test\Fixture
  */
 class PluginsRoom4pagesFixture extends PluginsRoomFixture {
 

@@ -25,6 +25,10 @@ class PageGetParentNodeNameTest extends NetCommonsGetTest {
  * @var array
  */
 	public $fixtures = array(
+		'plugin.pages.box4test',
+		'plugin.pages.boxes_page4test',
+		'plugin.pages.container4test',
+		'plugin.pages.containers_page4test',
 		'plugin.pages.languages_page4test',
 		'plugin.pages.page4test',
 	);

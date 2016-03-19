@@ -14,7 +14,7 @@ App::uses('FrameFixture', 'Frames.Test/Fixture');
  * FrameFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Blocks\Test\Fixture
+ * @package NetCommons\Pages\Test\Fixture
  */
 class Frame4pagesFixture extends FrameFixture {
 

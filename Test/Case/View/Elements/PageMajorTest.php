@@ -76,8 +76,6 @@ class PagesViewElementsPageMajorTest extends NetCommonsControllerTestCase {
 
 		$pattern = 'test_pages/test_page/index';
 		$this->assertTextContains($pattern, $this->view);
-
-		debug($this->view);
 	}
 
 /**

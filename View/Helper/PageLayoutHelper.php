@@ -188,7 +188,7 @@ class PageLayoutHelper extends AppHelper {
 				}
 		}
 
-		return $result;
+		return trim($result);
 	}
 
 /**

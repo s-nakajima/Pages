@@ -56,9 +56,9 @@ class LanguagesPage4testFixture extends LanguagesPageFixture {
 		array('page_id' => '3', 'language_id' => '2', 'name' => ''),
 		//パブリックスペースのホーム
 		// * 英語
-		array('page_id' => '4', 'language_id' => '1', 'name' => 'Home'),
+		array('page_id' => '4', 'language_id' => '1', 'name' => 'Home en'),
 		// * 日本語
-		array('page_id' => '4', 'language_id' => '2', 'name' => 'ホーム'),
+		array('page_id' => '4', 'language_id' => '2', 'name' => 'Home ja'),
 		//ホーム/test4
 		// * 英語
 		array('page_id' => '7', 'language_id' => '1', 'name' => 'Test page 4'),

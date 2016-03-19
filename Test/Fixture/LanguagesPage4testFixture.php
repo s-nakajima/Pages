@@ -31,7 +31,7 @@ class LanguagesPage4testFixture extends LanguagesPageFixture {
  *
  * @var string
  */
-	public $table = 'languages_page';
+	public $table = 'languages_pages';
 
 /**
  * Records
@@ -59,16 +59,21 @@ class LanguagesPage4testFixture extends LanguagesPageFixture {
 		array('page_id' => '4', 'language_id' => '1', 'name' => 'Home'),
 		// * 日本語
 		array('page_id' => '4', 'language_id' => '2', 'name' => 'ホーム'),
+		//ホーム/test4
+		// * 英語
+		array('page_id' => '7', 'language_id' => '1', 'name' => 'Test page 4'),
+		// * 日本語
+		array('page_id' => '7', 'language_id' => '2', 'name' => 'Test page 4'),
 		//別ルーム(room_id=4)
 		// * 英語
-		array('page_id' => '5', 'language_id' => '1', 'name' => 'Lorem ipsum dolor sit amet'),
+		array('page_id' => '5', 'language_id' => '1', 'name' => 'Test page 2'),
 		// * 日本語
-		array('page_id' => '5', 'language_id' => '2', 'name' => 'Lorem ipsum dolor sit amet',),
+		array('page_id' => '5', 'language_id' => '2', 'name' => 'Test page 2',),
 		//別ルーム(room_id=5、ブロックなし)
 		// * 英語
-		array('page_id' => '6', 'language_id' => '1', 'name' => 'Lorem ipsum dolor sit amet'),
+		array('page_id' => '6', 'language_id' => '1', 'name' => 'Test page 3'),
 		// * 日本語
-		array('page_id' => '6', 'language_id' => '2', 'name' => 'Lorem ipsum dolor sit amet'),
+		array('page_id' => '6', 'language_id' => '2', 'name' => 'Test page 3'),
 	);
 
 }

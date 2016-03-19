@@ -41,32 +41,37 @@ class Page4testFixture extends PageFixture {
 	public $records = array(
 		//パブリックスペースのページ（使われることはない）
 		array(
-			'id' => '1', 'room_id' => '1', 'root_id' => null, 'parent_id' => null, 'lft' => '1', 'rght' => '4',
+			'id' => '1', 'room_id' => '1', 'root_id' => null, 'parent_id' => null, 'lft' => '1', 'rght' => '6',
 			'permalink' => '', 'slug' => null,
 		),
 		//トップページのページ
 		array(
-			'id' => '4', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '3',
+			'id' => '4', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
 			'permalink' => 'home', 'slug' => 'home',
+		),
+		//トップページ/test4
+		array(
+			'id' => '7', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+			'permalink' => 'test4', 'slug' => 'test4',
 		),
 		//プライベートスペースのページ（使われることはない）
 		array(
-			'id' => '2', 'room_id' => '2', 'root_id' => null, 'parent_id' => null, 'lft' => '5', 'rght' => '6',
+			'id' => '2', 'room_id' => '2', 'root_id' => null, 'parent_id' => null, 'lft' => '7', 'rght' => '8',
 			'permalink' => '', 'slug' => null,
 		),
 		//グループスペースのページ（使われることはない）
 		array(
-			'id' => '3', 'room_id' => '3', 'root_id' => null, 'parent_id' => null, 'lft' => '7', 'rght' => '12',
+			'id' => '3', 'room_id' => '3', 'root_id' => null, 'parent_id' => null, 'lft' => '9', 'rght' => '14',
 			'permalink' => '', 'slug' => null,
 		),
 		//別ルーム(room_id=4)
 		array(
-			'id' => '5', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '3', 'lft' => '8', 'rght' => '9',
+			'id' => '5', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '3', 'lft' => '10', 'rght' => '11',
 			'permalink' => 'test2', 'slug' => 'test2',
 		),
 		//別ルーム(room_id=5、ブロックなし)
 		array(
-			'id' => '6', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '10', 'rght' => '11',
+			'id' => '6', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '13',
 			'permalink' => 'test3', 'slug' => 'test3',
 		),
 	);

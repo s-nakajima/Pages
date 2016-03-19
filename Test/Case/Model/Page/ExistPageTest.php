@@ -25,12 +25,15 @@ class PageExistPageTest extends NetCommonsModelTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.box4test',
-		'plugin.pages.boxes_page4test',
-		'plugin.pages.container4test',
-		'plugin.pages.containers_page4test',
-		'plugin.pages.languages_page4test',
-		'plugin.pages.page4test',
+		'plugin.pages.box4pages',
+		'plugin.pages.boxes_page4pages',
+		'plugin.pages.container4pages',
+		'plugin.pages.containers_page4pages',
+		'plugin.pages.frame4pages',
+		'plugin.pages.languages_page4pages',
+		'plugin.pages.page4pages',
+		'plugin.pages.plugin4pages',
+		'plugin.pages.plugins_room4pages',
 	);
 
 /**

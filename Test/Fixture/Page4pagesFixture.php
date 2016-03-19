@@ -17,7 +17,7 @@ App::uses('PageFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class Page4testFixture extends PageFixture {
+class Page4pagesFixture extends PageFixture {
 
 /**
  * Model name

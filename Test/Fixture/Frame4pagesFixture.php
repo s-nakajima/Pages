@@ -26,12 +26,107 @@ class Frame4pagesFixture extends FrameFixture {
 	public $name = 'Frame';
 
 /**
+ * Full Table Name
+ *
+ * @var string
+ */
+	public $table = 'frames';
+
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $_records = array(
+		//ヘッダー
+		array(
+			'id' => '1',
+			'language_id' => '2',
+			'room_id' => '1',
+			'box_id' => '1',
+			'plugin_key' => 'test_plugin',
+			'block_id' => '2',
+			'key' => 'frame_header',
+			'name' => 'Test frame header',
+			'weight' => '1',
+			'is_deleted' => '0',
+		),
+		//レフト
+		array(
+			'id' => '2',
+			'language_id' => '2',
+			'room_id' => '1',
+			'box_id' => '2',
+			'plugin_key' => 'test_plugin',
+			'block_id' => '2',
+			'key' => 'frame_major',
+			'name' => 'Test frame major',
+			'weight' => '1',
+			'is_deleted' => '0',
+		),
+		//ライト
+		array(
+			'id' => '3',
+			'language_id' => '2',
+			'room_id' => '1',
+			'box_id' => '4',
+			'plugin_key' => 'test_plugin',
+			'block_id' => '2',
+			'key' => 'frame_minor',
+			'name' => 'Test frame minor',
+			'weight' => '1',
+			'is_deleted' => '0',
+		),
+		array(
+			'id' => '4',
+			'language_id' => '2',
+			'room_id' => '1',
+			'box_id' => '5',
+			'plugin_key' => 'test_plugin',
+			'block_id' => '2',
+			'key' => 'frame_footer',
+			'name' => 'Test frame footer',
+			'weight' => '1',
+			'is_deleted' => '0',
+		),
+		//メイン
+		array(
+			'id' => '5',
+			'language_id' => '1',
+			'room_id' => '1',
+			'box_id' => '6',
+			'plugin_key' => 'test_plugin',
+			'block_id' => '1',
+			'key' => 'frame_3',
+			'name' => 'Test frame main',
+			'weight' => '1',
+			'is_deleted' => '0',
+		),
+		array(
+			'id' => '6',
+			'language_id' => '2',
+			'room_id' => '1',
+			'box_id' => '6',
+			'plugin_key' => 'test_plugin',
+			'block_id' => '2',
+			'key' => 'frame_3',
+			'name' => 'Test frame main',
+			'weight' => '1',
+			'is_deleted' => '0',
+		),
+	);
+
+/**
  * Initialize the fixture.
  *
  * @return void
  */
 	public function init() {
 		parent::init();
+		$this->records = Hash::remove($this->records, '{n}[id=5]');
+		$this->records = Hash::remove($this->records, '{n}[id=6]');
+		$this->records = Hash::merge($this->records, $this->_records);
+
 		$records = array_keys($this->records);
 		foreach ($records as $i) {
 			$this->records[$i]['plugin_key'] = 'test_pages';

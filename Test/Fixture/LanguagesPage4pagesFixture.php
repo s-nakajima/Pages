@@ -17,7 +17,7 @@ App::uses('LanguagesPageFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class LanguagesPage4testFixture extends LanguagesPageFixture {
+class LanguagesPage4pagesFixture extends LanguagesPageFixture {
 
 /**
  * Model name

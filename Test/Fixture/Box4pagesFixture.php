@@ -1,6 +1,6 @@
 <?php
 /**
- * ContainerFixture
+ * BoxFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @link http://www.netcommons.org NetCommons Project
@@ -8,29 +8,29 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContainerFixture', 'Containers.Test/Fixture');
+App::uses('BoxFixture', 'Boxes.Test/Fixture');
 
 /**
- * ContainerFixture
+ * BoxFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class Container4testFixture extends ContainerFixture {
+class Box4pagesFixture extends BoxFixture {
 
 /**
  * Model name
  *
  * @var string
  */
-	public $name = 'Container';
+	public $name = 'Box';
 
 /**
  * Full Table Name
  *
  * @var string
  */
-	public $table = 'containers';
+	public $table = 'boxes';
 
 /**
  * Initialize the fixture.
@@ -38,11 +38,14 @@ class Container4testFixture extends ContainerFixture {
  * @return void
  */
 	public function init() {
-		require_once App::pluginPath('Containers') . 'Config' . DS . 'Migration' . DS . '9999999999_container_records.php';
-		$this->records = (new ContainerRecords())->records[$this->name];
+		require_once App::pluginPath('Boxes') . 'Config' . DS . 'Migration' . DS . '9999999999_box_records.php';
+		$this->records = (new BoxRecords())->records[$this->name];
 
 		//パブリックスペースのホーム/test4
-		$this->records[] = array('id' => '17', 'type' => '3');
+		$this->records[] = array(
+			'id' => '17', 'container_id' => '17', 'type' => '4', 'space_id' => '2',
+			'room_id' => '1', 'page_id' => '7', 'weight' => '1',
+		);
 		parent::init();
 	}
 

@@ -76,7 +76,7 @@ class PageCreatePageTest extends NetCommonsModelTestCase {
 	}
 
 /**
- * createPage()のテスト
+ * createPage()のテスト(root_idがある)
  *
  * @return void
  */

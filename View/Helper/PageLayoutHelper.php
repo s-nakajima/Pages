@@ -199,8 +199,8 @@ class PageLayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		if (! $result = isset($this->containers[$containerType]) &&
-				$this->containers[$containerType]['ContainersPage']['is_published']) {
+		$result = Hash::get($this->containers, $containerType . '.ContainersPage.is_published', false);
+		if (! $result) {
 			return false;
 		}
 
@@ -210,7 +210,7 @@ class PageLayoutHelper extends AppHelper {
 			$result = count($frames);
 		}
 
-		return $result;
+		return (bool)$result;
 	}
 
 /**

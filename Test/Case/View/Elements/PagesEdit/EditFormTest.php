@@ -1,6 +1,6 @@
 <?php
 /**
- * View/Elements/PagesEdit/headerのテスト
+ * View/Elements/PagesEdit/edit_formのテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 
 /**
- * View/Elements/PagesEdit/headerのテスト
+ * View/Elements/PagesEdit/edit_formのテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\Header
+ * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\EditForm
  */
-class PagesViewElementsPagesEditHeaderTest extends NetCommonsControllerTestCase {
+class PagesViewElementsPagesEditEditFormTest extends NetCommonsControllerTestCase {
 
 /**
  * Fixtures
@@ -50,10 +50,8 @@ class PagesViewElementsPagesEditHeaderTest extends NetCommonsControllerTestCase 
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
-
 		//テストコントローラ生成
-		$this->generateNc('TestPages.TestViewElementsPagesEditHeader');
-
+		$this->generateNc('TestPages.TestViewElementsPagesEditEditForm');
 		//ログイン
 		TestAuthGeneral::login($this);
 	}
@@ -71,24 +69,29 @@ class PagesViewElementsPagesEditHeaderTest extends NetCommonsControllerTestCase 
 	}
 
 /**
- * View/Elements/PagesEdit/headerのテスト
+ * View/Elements/PagesEdit/edit_formのテスト
  *
  * @return void
  */
-	public function testHeader() {
+	public function testEditForm() {
 		//テスト実行
-		$this->_testGetAction('/test_pages/test_view_elements_pages_edit_header/edit/2?frame_id=6',
+		$this->_testGetAction('/test_pages/test_view_elements_pages_edit_edit_form/edit/2?frame_id=6',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
-		//cssのURLチェック
-		$pattern = '/<link.*?' . preg_quote('/control_panel/css/style.css', '/') . '.*?>/';
-		$this->assertRegExp($pattern, $this->contents);
-
 		//チェック
-		$pattern = '/' . preg_quote('View/Elements/PagesEdit/header', '/') . '/';
+		$pattern = '/' . preg_quote('View/Elements/PagesEdit/edit_form', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
 
-		$this->assertTextContains('Room name / Home ja / Test page 4', $this->view);
+		$this->assertInput('input', 'data[Page][id]', '7', $this->view);
+		$this->assertInput('input', 'data[Page][root_id]', '1', $this->view);
+		$this->assertInput('input', 'data[Page][parent_id]', '4', $this->view);
+		$this->assertInput('input', 'data[Page][permalink]', 'test4', $this->view);
+		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
+		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
+		$this->assertInput('input', 'data[LanguagesPage][id]', '10', $this->view);
+		$this->assertInput('input', 'data[LanguagesPage][name]', 'Test page 4', $this->view);
+		$this->assertInput('input', 'data[Page][slug]', 'test4', $this->view);
 	}
 
 }

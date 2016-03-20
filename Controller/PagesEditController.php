@@ -97,7 +97,7 @@ class PagesEditController extends PagesAppController {
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
-				$this->redirect(NetCommonsUrl::actionUrl(array(
+				return $this->redirect(NetCommonsUrl::actionUrl(array(
 					'plugin' => $this->params['plugin'],
 					'controller' => $this->params['controller'],
 					'action' => 'index',
@@ -165,7 +165,9 @@ class PagesEditController extends PagesAppController {
 			return $this->throwBadRequest();
 		}
 		if ($this->Page->deletePage($this->data)) {
-			$this->redirect('/' . Current::SETTING_MODE_WORD);
+			return $this->redirect('/' . Current::SETTING_MODE_WORD);
+		} else {
+			return $this->throwBadRequest();
 		}
 	}
 

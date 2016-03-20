@@ -67,8 +67,7 @@ class PagesEditController extends PagesAppController {
 		$conditions = array('Room.id' => Current::read('Room.id'));
 		$room = $this->Room->find('first', $this->Room->getReadableRoomsConditions($conditions));
 		if (! $room) {
-			$this->setAction('throwBadRequest');
-			return;
+			return $this->setAction('throwBadRequest');
 		}
 		$this->set('room', $room);
 

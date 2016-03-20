@@ -75,10 +75,10 @@ class PagesControllerIndexTest extends NetCommonsControllerTestCase {
  */
 	public function testIndex() {
 		//テスト実行
-		$this->_testGetAction('/', array('method' => 'assertNotEmpty'), null, 'view');
+		$this->_testGetAction('/home', array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
-		$this->assertEquals(2, preg_match_all('/' . preg_quote('test_pages/test_page/index', '/') . '/', $this->view));
+		$this->assertEquals(1, preg_match_all('/' . preg_quote('test_pages/test_page/index', '/') . '/', $this->view));
 	}
 
 /**

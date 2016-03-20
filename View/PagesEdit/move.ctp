@@ -14,7 +14,7 @@
 <?php $this->end(); ?>
 
 <?php echo $this->NetCommonsForm->create('Page', array(
-		'type' => 'post',
+		'type' => 'put',
 		'url' => $this->NetCommonsHtml->url(array('action' => 'move'))
 	)); ?>
 

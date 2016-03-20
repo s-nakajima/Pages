@@ -17,7 +17,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 
 		<?php echo $this->NetCommonsForm->create('Page',
 				array(
-					'type' => 'post',
+					'type' => 'put',
 					'url' => $this->NetCommonsHtml->url(array('action' => 'move'))
 				)
 			); ?>

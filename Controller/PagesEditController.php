@@ -226,11 +226,18 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function move() {
-		if ($this->request->is('post')) {
+		if ($this->request->is('put')) {
+			//移動するページIDのチェック
+			$result = $this->Page->existPage($this->request->data['Page']['id']);
+			if (! $result) {
+				return $this->throwBadRequest();
+			}
+			//移動先の親ページIDのチェック
 			$result = $this->Page->existPage($this->request->data['Page']['parent_id']);
 			if (! $result) {
 				return $this->throwBadRequest();
 			}
+			//ページ移動処理
 			if ($this->Page->saveMove($this->request->data)) {
 				//正常の場合
 				$this->NetCommons->setFlashNotification(

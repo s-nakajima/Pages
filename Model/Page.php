@@ -414,10 +414,6 @@ class Page extends PagesAppModel {
  */
 	public function savePage($data, $options = array()) {
 		$this->loadModels([
-			'Box' => 'Boxes.Box',
-			'BoxesPage' => 'Boxes.BoxesPage',
-			'Container' => 'Containers.Container',
-			'ContainersPage' => 'Containers.ContainersPage',
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
@@ -528,10 +524,6 @@ class Page extends PagesAppModel {
  */
 	public function deletePage($data, $options = array()) {
 		$this->loadModels([
-			'Box' => 'Boxes.Box',
-			'BoxesPage' => 'Boxes.BoxesPage',
-			'Container' => 'Containers.Container',
-			'ContainersPage' => 'Containers.ContainersPage',
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
@@ -551,11 +543,13 @@ class Page extends PagesAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
+			
+
 			//Container関連の削除
-			//$this->deleteContainers($data[$this->alias]['id']);
+			$this->deleteContainers($data[$this->alias]['id']);
 
 			//Box関連の削除
-			//$this->deleteBoxes($data[$this->alias]['id']);
+			$this->deleteBoxes($data[$this->alias]['id']);
 
 			if ($options['atomic']) {
 				$this->commit();

@@ -64,6 +64,7 @@ class PagesEditHelperBeforeRenderTest extends NetCommonsControllerTestCase {
 
 		//cssのURLチェック
 		$pattern = '/<link.*?' . preg_quote('/pages/css/style.css', '/') . '.*?>/';
+		$this->assertRegExp($pattern, $this->contents);
 	}
 
 }

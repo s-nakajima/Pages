@@ -37,7 +37,7 @@ class Frame4pagesFixture extends FrameFixture {
  *
  * @var array
  */
-	public $_records = array(
+	protected $_records = array(
 		//ヘッダー
 		array(
 			'id' => '1',

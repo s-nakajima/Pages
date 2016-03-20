@@ -34,18 +34,6 @@ class PagesEditHelperIndentTest extends NetCommonsHelperTestCase {
 	public $plugin = 'pages';
 
 /**
- * setUp method
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-
-		//テストデータ生成
-		//TODO:必要に応じてセットする
-	}
-
-/**
  * DataProvider
  *
  * ### 戻り値

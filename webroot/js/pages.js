@@ -64,7 +64,7 @@ NetCommonsApp.controller('PagesEditController',
         var range = [];
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
         var nest = $scope.parentList['_' + parentId]['_' + pageId]['nest'];
-        for(var i = 1; i < nest; i++) {
+        for (var i = 1; i < nest; i++) {
           range.push(i);
         }
         return range;
@@ -163,7 +163,7 @@ NetCommonsApp.controller('PagesEditController',
         NetCommonsModal.show(
             $scope, 'PagesMoveController',
             $scope.baseUrl +
-                    '/pages/pages_edit/move/' + roomId + '/' + pageId,
+                '/pages/pages_edit/move/' + roomId + '/' + pageId,
             {backdrop: 'static', size: 'md'}
         );
       };

@@ -326,7 +326,7 @@ class Page extends PagesAppModel {
  * ページデータの存在チェック
  *
  * @param int $pageId ページID
- * @return bool
+ * @return array 親ノード名リスト
  */
 	public function getParentNodeName($pageId) {
 		$this->loadModels([
@@ -543,7 +543,7 @@ class Page extends PagesAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			
+			//後で、Room.page_id_topを更新する処理追加
 
 			//Container関連の削除
 			$this->deleteContainers($data[$this->alias]['id']);

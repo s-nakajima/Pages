@@ -64,6 +64,7 @@ class PagesEditHelper extends AppHelper {
 /**
  * インデント
  *
+ * @param int $pageId ページID
  * @return string HTML
  */
 	public function indent($pageId) {

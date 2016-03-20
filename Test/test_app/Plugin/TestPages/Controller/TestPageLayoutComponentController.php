@@ -41,6 +41,7 @@ class TestPageLayoutComponentController extends AppController {
  * index
  *
  * @return void
+ * @throws NotFoundException
  */
 	public function index() {
 		$this->autoRender = true;

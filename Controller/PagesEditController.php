@@ -204,7 +204,7 @@ class PagesEditController extends PagesAppController {
  */
 	public function theme() {
 		$themes = $this->SiteSetting->getThemes();
-		$this->set('themes',$themes);
+		$this->set('themes', $themes);
 
 		if ($this->request->isPost()) {
 			unset($this->request->data['save']);
@@ -266,6 +266,7 @@ class PagesEditController extends PagesAppController {
 /**
  * ページのTreeリストをセットする
  *
+ * @param array $conditions 条件配列
  * @return void
  */
 	private function __prepareIndex($conditions) {

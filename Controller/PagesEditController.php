@@ -92,7 +92,7 @@ class PagesEditController extends PagesAppController {
 	public function add() {
 		$this->view = 'edit';
 
-		if ($this->request->isPost()) {
+		if ($this->request->is('post')) {
 			//登録処理
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
@@ -128,7 +128,7 @@ class PagesEditController extends PagesAppController {
 			return $this->throwBadRequest();
 		}
 
-		if ($this->request->isPut()) {
+		if ($this->request->is('put')) {
 			//登録処理
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
@@ -161,7 +161,7 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function delete() {
-		if (! $this->request->isDelete()) {
+		if (! $this->request->is('delete')) {
 			return $this->throwBadRequest();
 		}
 		if ($this->Page->deletePage($this->data)) {
@@ -178,7 +178,7 @@ class PagesEditController extends PagesAppController {
  * @throws NotFoundException
  */
 	public function layout() {
-		if ($this->request->isPost()) {
+		if ($this->request->is('put')) {
 			unset($this->request->data['save']);
 
 			if ($this->ContainersPage->saveContainersPage($this->request->data)) {
@@ -188,10 +188,11 @@ class PagesEditController extends PagesAppController {
 				$this->NetCommons->handleValidationError($this->ContainersPage->validationErrors);
 			}
 			$this->redirect('/' . Current::read('Page.permalink'));
+
 		} else {
 			$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
 			if (empty($page)) {
-				throw new NotFoundException();
+				return $this->throwBadRequest();
 			}
 			$this->request->data['ContainersPage'] = Hash::combine($page, 'Container.{n}.type', 'Container.{n}.ContainersPage');
 		}
@@ -206,7 +207,7 @@ class PagesEditController extends PagesAppController {
 		$themes = $this->SiteSetting->getThemes();
 		$this->set('themes', $themes);
 
-		if ($this->request->isPost()) {
+		if ($this->request->is('post')) {
 			unset($this->request->data['save']);
 
 			if ($this->Page->saveTheme($this->request->data)) {

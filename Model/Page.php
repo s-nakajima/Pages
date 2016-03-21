@@ -28,6 +28,27 @@ App::uses('Current', 'NetCommons.Utility');
 class Page extends PagesAppModel {
 
 /**
+ * パブリックスペースのページID
+ *
+ * @var const
+ */
+	const PUBLIC_ROOT_PAGE_ID = '1';
+
+/**
+ * プライベートスペースのページID
+ *
+ * @var const
+ */
+	const PRIVATE_ROOT_PAGE_ID = '2';
+
+/**
+ * グループスペースのページID
+ *
+ * @var const
+ */
+	const ROOM_ROOT_PAGE_ID = '3';
+
+/**
  * TreeParser
  * __constructでセットする
  *
@@ -43,8 +64,9 @@ class Page extends PagesAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Containable',
-		'Pages.Page',
-		'Pages.PageAssociations'
+		'Pages.PageSave',
+		'Pages.PageAssociations',
+		'ThemeSettings.Theme',
 	);
 
 /**
@@ -172,6 +194,8 @@ class Page extends PagesAppModel {
  * @see Model::save()
  */
 	public function beforeValidate($options = array()) {
+		$themes = $this->getThemes();
+
 		$this->validate = Hash::merge($this->validate, array(
 			'slug' => array(
 				'notBlank' => array(
@@ -189,35 +213,59 @@ class Page extends PagesAppModel {
 				'isUnique' => array(
 					'rule' => array('isUnique'),
 					'message' => sprintf(__d('net_commons', '%s is already in use.'), __d('pages', 'Permalink')),
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
 			),
-			'from' => array(
-				'datetime' => array(
-					'rule' => array('datetime'),
-					'message' => 'Please enter a valid date and time.',
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'root_id' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
-			'to' => array(
-				'datetime' => array(
-					'rule' => array('datetime'),
-					'message' => 'Please enter a valid date and time.',
-					//'allowEmpty' => false,
-					//'required' => false,
-					//'last' => false, // Stop validation after this rule
-					//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'is_container_fluid' => array(
+				'boolean' => array(
+					'rule' => array('boolean'),
+					'message' => __d('net_commons', 'Invalid request.'),
+				),
+			),
+			'theme' => array(
+				'inList' => array(
+					'rule' => array('inList', Hash::extract($themes, '{n}.name')),
+					'message' => __d('net_commons', 'Invalid request.'),
 				),
 			),
 		));
 
 		return parent::beforeValidate($options);
+	}
+
+/**
+ * ページの作成
+ *
+ * @return array ページデータ
+ */
+	public function createPage() {
+		$this->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
+
+		$slug = 'page_' . date('YmdHis');
+		$result = Hash::merge(
+			$this->create(array(
+				'id' => null,
+				'slug' => $slug,
+				'permalink' => $slug,
+				'room_id' => Current::read('Room.id'),
+				'root_id' => Hash::get(Current::read('Page'), 'root_id', Current::read('Page.id')),
+				'parent_id' => Current::read('Page.id'),
+			)),
+			$this->LanguagesPage->create(array(
+				'id' => null,
+				'language_id' => Current::read('Language.id'),
+				'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
+			))
+		);
+
+		return $result;
 	}
 
 /**
@@ -275,6 +323,45 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * ページデータの存在チェック
+ *
+ * @param int $pageId ページID
+ * @return array 親ノード名リスト
+ */
+	public function getParentNodeName($pageId) {
+		$this->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
+
+		$parentNode = $this->getPath($pageId);
+
+		$pagesLanguages = $this->find('list', array(
+			'recursive' => -1,
+			'fields' => array(
+				$this->LanguagesPage->alias . '.page_id',
+				$this->LanguagesPage->alias . '.name',
+			),
+			'conditions' => array(
+				$this->alias . '.id' => Hash::extract($parentNode, '{n}.Page.id'),
+				$this->alias . '.parent_id NOT' => null,
+			),
+			'joins' => array(
+				array(
+					'table' => $this->LanguagesPage->table,
+					'alias' => $this->LanguagesPage->alias,
+					'conditions' => array(
+						$this->LanguagesPage->alias . '.page_id' . ' = ' . $this->alias . '.id',
+						$this->LanguagesPage->alias . '.language_id' => Current::read('Language.id'),
+					),
+				),
+			),
+			'order' => array($this->alias . ' .lft' => 'asc')
+		));
+
+		return $pagesLanguages;
+	}
+
+/**
  * Frameデータも一緒にページデータ取得
  *
  * @param string $permalink Permalink
@@ -283,7 +370,7 @@ class Page extends PagesAppModel {
 	public function getPageWithFrame($permalink) {
 		if ($permalink === '') {
 			$conditions = array(
-				'Page.lft' => '1'
+				'Page.id' => Current::read('Room.page_id_top')
 			);
 		} else {
 			$conditions = array(
@@ -327,10 +414,6 @@ class Page extends PagesAppModel {
  */
 	public function savePage($data, $options = array()) {
 		$this->loadModels([
-			'Box' => 'Boxes.Box',
-			'BoxesPage' => 'Boxes.BoxesPage',
-			'Container' => 'Containers.Container',
-			'ContainersPage' => 'Containers.ContainersPage',
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
@@ -393,6 +476,43 @@ class Page extends PagesAppModel {
 	}
 
 /**
+ * 移動
+ *
+ * @param array $data request data
+ * @return bool
+ * @throws InternalErrorException
+ */
+	public function saveMove($data) {
+		//トランザクションBegin
+		$this->begin();
+
+		try {
+			$this->id = $data[$this->alias]['id'];
+
+			if ($data[$this->alias]['type'] === 'up') {
+				$result = $this->moveUp($this->id, 1);
+			} elseif ($data[$this->alias]['type'] === 'down') {
+				$result = $this->moveDown($this->id, 1);
+			} elseif ($data[$this->alias]['type'] === 'move') {
+				$result = $this->saveField('parent_id', $data[$this->alias]['parent_id']);
+			} else {
+				$result = false;
+			}
+
+			if (! $result) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
  * Delete page each association model
  * - `atomic`: If true (default), will attempt to save all records in a single transaction.
  *   Should be set to false if database/table does not support transactions.
@@ -404,10 +524,6 @@ class Page extends PagesAppModel {
  */
 	public function deletePage($data, $options = array()) {
 		$this->loadModels([
-			'Box' => 'Boxes.Box',
-			'BoxesPage' => 'Boxes.BoxesPage',
-			'Container' => 'Containers.Container',
-			'ContainersPage' => 'Containers.ContainersPage',
 			'LanguagesPage' => 'Pages.LanguagesPage',
 		]);
 
@@ -427,11 +543,13 @@ class Page extends PagesAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
+			//後で、Room.page_id_topを更新する処理追加
+
 			//Container関連の削除
-			//$this->deleteContainers($data[$this->alias]['id']);
+			$this->deleteContainers($data[$this->alias]['id']);
 
 			//Box関連の削除
-			//$this->deleteBoxes($data[$this->alias]['id']);
+			$this->deleteBoxes($data[$this->alias]['id']);
 
 			if ($options['atomic']) {
 				$this->commit();

@@ -22,12 +22,13 @@
 				</div>
 
 				<div class="panel-footer text-center">
-					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), NetCommonsUrl::backToPageUrl()); ?>
+					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'),
+							$this->NetCommonsHtml->url(array('action' => 'index', Current::read('Room.id')))); ?>
 				</div>
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
 
-		<?php if ($this->params['action'] === 'edit' && $this->data['Page']['id'] !== $this->data['Room']['page_id_top']) : ?>
+		<?php if ($this->params['action'] === 'edit') : ?>
 			<?php echo $this->element('PagesEdit/delete_form'); ?>
 		<?php endif; ?>
 	</article>

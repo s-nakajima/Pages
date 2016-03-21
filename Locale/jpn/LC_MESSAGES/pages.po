@@ -81,3 +81,7 @@ msgstr "ページ設定"
 #: Pages/View/Elements/dropdown_menu.ctp:13
 msgid "Page Setting off"
 msgstr "ページ設定終了"
+
+#: Pages/View/Elements/dropdown_menu.ctp:13
+msgid "Select move page"
+msgstr "移動先のページ選択"

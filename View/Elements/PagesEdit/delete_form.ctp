@@ -34,6 +34,8 @@
 				</div>
 
 				<?php echo $this->NetCommonsForm->input('Page.id'); ?>
+				<?php echo $this->NetCommonsForm->hidden('Room.id'); ?>
+				<?php echo $this->NetCommonsForm->hidden('Room.page_id_top'); ?>
 
 				<?php echo $this->Button->delete(
 						__d('net_commons', 'Delete'),

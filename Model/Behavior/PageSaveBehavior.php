@@ -24,7 +24,7 @@ App::uses('ModelBehavior', 'Model');
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @package NetCommons\Pages\Model
  */
-class PageBehavior extends ModelBehavior {
+class PageSaveBehavior extends ModelBehavior {
 
 /**
  * beforeValidate is called before a model is validated, you can use this callback to
@@ -37,16 +37,6 @@ class PageBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function beforeValidate(Model $model, $options = array()) {
-		//ページデータをセット
-		$referencePageId = $model->getReferencePageId($model->data);
-		$fields = array(
-			'room_id',
-			'permalink'
-		);
-		$targetPage = $model->findById($referencePageId, $fields);
-		if (empty($targetPage)) {
-			return false;
-		}
 		if (! $model->data['Page']['room_id']) {
 			$model->data['Page']['room_id'] = Current::read('Room.id');
 		}
@@ -57,13 +47,7 @@ class PageBehavior extends ModelBehavior {
 		}
 		$model->data['Page']['slug'] = $slug;
 
-		$permalink = '';
-		if (strlen($targetPage['Page']['permalink']) !== 0) {
-			$permalink = $targetPage['Page']['permalink'] . '/';
-		}
-		$permalink .= $slug;
-		$model->data['Page']['permalink'] = $permalink;
-		$model->data['Page']['is_published'] = true;
+		$model->data['Page']['permalink'] = $slug;
 		$model->data['Page']['is_container_fluid'] = false;
 
 		return parent::beforeValidate($model, $options);
@@ -77,11 +61,13 @@ class PageBehavior extends ModelBehavior {
  * @return mixed False will stop this event from being passed to other behaviors
  */
 	public function afterValidate(Model $model) {
-		$model->LanguagesPage->create(false);
-		$model->LanguagesPage->set($model->data['LanguagesPage']);
-		if (! $model->LanguagesPage->validates()) {
-			$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);
-			return false;
+		if (isset($model->data['LanguagesPage'])) {
+			$model->LanguagesPage->create(false);
+			$model->LanguagesPage->set($model->data['LanguagesPage']);
+			if (! $model->LanguagesPage->validates()) {
+				$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);
+				return false;
+			}
 		}
 
 		return true;
@@ -98,9 +84,11 @@ class PageBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function afterSave(Model $model, $created, $options = array()) {
-		$model->LanguagesPage->data['LanguagesPage']['page_id'] = $model->data['Page']['id'];
-		if (! $model->LanguagesPage->save(null, false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		if (isset($model->data['LanguagesPage'])) {
+			$model->LanguagesPage->data['LanguagesPage']['page_id'] = $model->data['Page']['id'];
+			if (! $model->LanguagesPage->save(null, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
 		}
 
 		if ($created) {

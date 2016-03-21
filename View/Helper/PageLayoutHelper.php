@@ -10,7 +10,6 @@
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('Container', 'Containers.Model');
-App::uses('Folder', 'Utility');
 
 /**
  * LayoutHelper
@@ -71,9 +70,9 @@ class PageLayoutHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 
-		$this->containers = Hash::combine($View->viewVars['page']['Container'], '{n}.type', '{n}');
-		$this->boxes = Hash::combine($View->viewVars['page']['Box'], '{n}.id', '{n}', '{n}.container_id');
-		$this->plugins = Hash::combine(Current::read('PluginsRoom'), '{n}.Plugin.key', '{n}.Plugin');
+		$this->containers = Hash::combine(Hash::get($View->viewVars, 'page.Container', array()), '{n}.type', '{n}');
+		$this->boxes = Hash::combine(Hash::get($View->viewVars, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id');
+		$this->plugins = Hash::combine(Current::read('PluginsRoom', array()), '{n}.Plugin.key', '{n}.Plugin');
 	}
 
 /**
@@ -189,7 +188,7 @@ class PageLayoutHelper extends AppHelper {
 				}
 		}
 
-		return $result;
+		return trim($result);
 	}
 
 /**
@@ -200,8 +199,8 @@ class PageLayoutHelper extends AppHelper {
  * @return bool The layout have container
  */
 	public function hasContainer($containerType) {
-		if (! $result = isset($this->containers[$containerType]) &&
-				$this->containers[$containerType]['ContainersPage']['is_published']) {
+		$result = Hash::get($this->containers, $containerType . '.ContainersPage.is_published', false);
+		if (! $result) {
 			return false;
 		}
 
@@ -211,7 +210,7 @@ class PageLayoutHelper extends AppHelper {
 			$result = count($frames);
 		}
 
-		return $result;
+		return (bool)$result;
 	}
 
 /**

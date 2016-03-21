@@ -42,8 +42,6 @@ class PagesEditController extends PagesAppController {
 			),
 		),
 		'Pages.PageLayout',
-		'Security',
-		'ThemeSettings.ThemeSettings',
 	);
 
 /**
@@ -54,6 +52,7 @@ class PagesEditController extends PagesAppController {
 	public $helpers = array(
 		'NetCommons.Composer',
 		'Pages.PagesEdit',
+		'ThemeSettings.ThemeSettings',
 	);
 
 /**
@@ -68,13 +67,12 @@ class PagesEditController extends PagesAppController {
 		$conditions = array('Room.id' => Current::read('Room.id'));
 		$room = $this->Room->find('first', $this->Room->getReadableRoomsConditions($conditions));
 		if (! $room) {
-			$this->setAction('throwBadRequest');
-			return;
+			return $this->setAction('throwBadRequest');
 		}
 		$this->set('room', $room);
 
-		//$page['Page'] = Current::read('Page');
-		//$this->set('page', $page);
+		//parentPathの名前セット
+		$this->__setParentPageName();
 	}
 
 /**
@@ -83,18 +81,7 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function index() {
-		//ページでテータ取得
-		$pages = $this->Page->getPages();
-		if (! $pages) {
-			$this->throwBadRequest();
-			return;
-		}
-		$this->set('pages', $pages);
-
-		//Treeリスト取得
-		$pageTreeList = $this->Page->generateTreeList(
-				array('Page.room_id' => Current::read('Room.id')), null, null, Page::$treeParser);
-		$this->set('pageTreeList', $pageTreeList);
+		$this->__prepareIndex(array('Page.room_id' => Current::read('Room.id')));
 	}
 
 /**
@@ -110,7 +97,7 @@ class PagesEditController extends PagesAppController {
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
-				$this->redirect(NetCommonsUrl::actionUrl(array(
+				return $this->redirect(NetCommonsUrl::actionUrl(array(
 					'plugin' => $this->params['plugin'],
 					'controller' => $this->params['controller'],
 					'action' => 'index',
@@ -121,27 +108,12 @@ class PagesEditController extends PagesAppController {
 
 		} else {
 			//表示処理
-			if (Hash::get($this->request->params, 'pass.1')) {
-				$result = $this->Page->existPage(Hash::get($this->request->params, 'pass.1'));
-				if (! $result) {
-					return $this->throwBadRequest();
-				}
+			$result = $this->Page->existPage(Hash::get($this->request->params, 'pass.1'));
+			if (! $result) {
+				return $this->throwBadRequest();
 			}
-			$slug = 'page_' . date('YmdHis');
-			$this->request->data = Hash::merge($this->request->data,
-				$this->Page->create(array(
-					'id' => null,
-					'slug' => $slug,
-					'permalink' => $slug,
-					'room_id' => Current::read('Room.id'),
-					'parent_id' => Hash::get($this->request->params, 'pass.1'),
-				)),
-				$this->LanguagesPage->create(array(
-					'id' => null,
-					'language_id' => Current::read('Language.id'),
-					'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
-				))
-			);
+
+			$this->request->data = $this->Page->createPage();
 			$this->request->data['Room'] = Current::read('Room');
 		}
 	}
@@ -152,12 +124,16 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function edit() {
+		if (! Current::read('Page.parent_id')) {
+			return $this->throwBadRequest();
+		}
+
 		if ($this->request->isPut()) {
 			//登録処理
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
-				$this->redirect(NetCommonsUrl::actionUrl(array(
+				return $this->redirect(NetCommonsUrl::actionUrl(array(
 					'plugin' => $this->params['plugin'],
 					'controller' => $this->params['controller'],
 					'action' => 'index',
@@ -186,11 +162,12 @@ class PagesEditController extends PagesAppController {
  */
 	public function delete() {
 		if (! $this->request->isDelete()) {
-			$this->throwBadRequest();
-			return;
+			return $this->throwBadRequest();
 		}
 		if ($this->Page->deletePage($this->data)) {
-			$this->redirect('/' . Current::SETTING_MODE_WORD);
+			return $this->redirect('/' . Current::SETTING_MODE_WORD);
+		} else {
+			return $this->throwBadRequest();
 		}
 	}
 
@@ -226,7 +203,8 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function theme() {
-		$this->ThemeSettings->setThemes();
+		$themes = $this->SiteSetting->getThemes();
+		$this->set('themes', $themes);
 
 		if ($this->request->isPost()) {
 			unset($this->request->data['save']);
@@ -242,6 +220,127 @@ class PagesEditController extends PagesAppController {
 			$this->request->data['Page'] = Current::read('Page');
 			$this->theme = Hash::get($this->request->query, 'theme', $this->theme);
 		}
+	}
+
+/**
+ * move
+ *
+ * @return void
+ */
+	public function move() {
+		if ($this->request->is('put')) {
+			//移動するページIDのチェック
+			$result = $this->Page->existPage($this->request->data['Page']['id']);
+			if (! $result) {
+				return $this->throwBadRequest();
+			}
+			//移動先の親ページIDのチェック
+			$result = $this->Page->existPage($this->request->data['Page']['parent_id']);
+			if (! $result) {
+				return $this->throwBadRequest();
+			}
+			//ページ移動処理
+			if ($this->Page->saveMove($this->request->data)) {
+				//正常の場合
+				$this->NetCommons->setFlashNotification(
+					__d('net_commons', 'Successfully saved.'),
+					array('class' => 'success')
+				);
+				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
+			}
+		} else {
+			$this->viewClass = 'View';
+			$this->layout = 'NetCommons.modal';
+			$this->__prepareIndex(array(
+				'Page.room_id' => Current::read('Room.id'),
+				'NOT' => array(
+					'AND' => array(
+						'Page.lft >=' => Current::read('Page.lft'),
+						'Page.rght <=' => Current::read('Page.rght')
+					)
+				)
+			));
+		}
+	}
+
+/**
+ * ページのTreeリストをセットする
+ *
+ * @param array $conditions 条件配列
+ * @return void
+ */
+	private function __prepareIndex($conditions) {
+		//ページでテータ取得
+		$pages = $this->Page->getPages();
+		if (! $pages) {
+			return $this->throwBadRequest();
+		}
+
+		$pageTreeList = $this->Page->generateTreeList($conditions, null, null, Page::$treeParser);
+
+		foreach ($pageTreeList as $pageId => $tree) {
+			$treeList[] = $pageId;
+
+			$page = Hash::get($pages, $pageId);
+			$parentId = (int)$page['Page']['parent_id'];
+			$page['Page']['parent_id'] = (string)$parentId;
+			$page['Page']['type'] = '';
+
+			// * ページ名
+			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
+					Hash::get($page, 'Page.parent_id') !== Page::PUBLIC_ROOT_PAGE_ID &&
+					Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
+
+				$room = Hash::extract(
+					$this->viewVars['room'],
+					'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+				);
+				$page['LanguagesPage']['name'] = Hash::get($room, '0.name');
+			}
+
+			// * ページ順
+			if (isset($parentList['_' . $parentId])) {
+				$weight = count($parentList['_' . $parentId]) + 1;
+			} else {
+				$weight = 1;
+			}
+
+			$nest = substr_count($tree, Page::$treeParser);
+			$parentList['_' . $parentId]['_' . $pageId] = array(
+				'index' => count($treeList) - 1,
+				'weight' => $weight,
+				'nest' => $nest,
+			);
+
+			$pages[$pageId] = array(
+				'Page' => $page['Page'],
+				'LanguagesPage' => $page['LanguagesPage'],
+			);
+		}
+
+		$this->set('parentList', $parentList);
+		$this->set('treeList', $treeList);
+		$this->set('pages', $pages);
+	}
+
+/**
+ * 親のページ名のnavをセット
+ *
+ * @return void
+ */
+	private function __setParentPageName() {
+		if ($this->params['action'] !== 'index') {
+			$parentPathName = $this->Page->getParentNodeName(Current::read('Page.id'));
+		} else {
+			$parentPathName = array();
+		}
+		$room = Hash::extract(
+			$this->viewVars['room'],
+			'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+		);
+		array_unshift($parentPathName, Hash::get($room, '0.name'));
+
+		$this->set('parentPathName', implode(' / ', $parentPathName));
 	}
 
 }

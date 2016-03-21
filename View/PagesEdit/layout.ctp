@@ -25,7 +25,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 				<?php if ($layouts = $this->PagesEdit->getLayouts()) : ?>
 					<div class="panel-body">
 						<div class="clearfix"
-							ng-controller="PagesController"
+							ng-controller="PagesLayoutController"
 							ng-init="initialize(<?php echo (int)$this->PageLayout->hasContainer(Container::TYPE_HEADER) . ', ' .
 											(int)$this->PageLayout->hasContainer(Container::TYPE_MAJOR) . ', ' .
 											(int)$this->PageLayout->hasContainer(Container::TYPE_MINOR) . ', ' .
@@ -39,6 +39,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.id'); ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.page_id'); ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
+								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.is_configured', array('value' => true)); ?>
 
 								<?php
 									if ($containerType === Container::TYPE_HEADER) {
@@ -73,7 +74,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 				<?php endif; ?>
 
 				<div class="panel-footer text-center">
-					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'), NetCommonsUrl::backToPageUrl()); ?>
+					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'),
+							$this->NetCommonsHtml->url(array('action' => 'index', Current::read('Room.id')))); ?>
 				</div>
 
 			<?php echo $this->NetCommonsForm->end(); ?>

@@ -14,8 +14,11 @@ echo $this->NetCommonsHtml->css('/control_panel/css/style.css');
 
 <h1>
 	<?php echo __d('pages', 'Page Setting'); ?>
-	<small>
-		<?php echo sprintf(__d('pages', '(%s)'), $this->PagesEdit->roomName()); ?>
-	</small>
 </h1>
 <hr>
+<?php if ($this->request->params['action'] !== 'index') : ?>
+	<h3>
+		<?php echo $parentPathName; ?>
+	</h3>
+	<br>
+<?php endif;

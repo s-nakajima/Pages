@@ -10,6 +10,7 @@
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('Page', 'Pages.Model');
+App::uses('Folder', 'Utility');
 
 /**
  * LayoutHelper
@@ -23,10 +24,15 @@ class PagesEditHelper extends AppHelper {
  * @var array
  */
 	public $helpers = array(
-		//'NetCommons.Button',
 		'NetCommons.NetCommonsHtml',
-		//'NetCommons.NetCommonsForm'
 	);
+
+/**
+ * ページ順序配列
+ *
+ * @var array
+ */
+	protected $_pageWeight = array();
 
 /**
  * Before render callback. beforeRender is called before the view file is rendered.
@@ -56,82 +62,15 @@ class PagesEditHelper extends AppHelper {
 	}
 
 /**
- * ページの出力
+ * インデント
  *
- * @param int $pageId ページデータ
- * @param string $tree Treeデータ
+ * @param int $pageId ページID
  * @return string HTML
  */
-	public function pageRender($pageId, $tree) {
-		$page = Hash::get($this->_View->viewVars['pages'], $pageId);
-		$nest = substr_count($tree, Page::$treeParser);
-
-		return $this->_View->element('PagesEdit/render_index', array('page' => $page, 'nest' => $nest));
-	}
-
-/**
- * ルーム名の出力
- *
- * @return string HTML
- */
-	public function roomName() {
-		$room = Hash::extract(
-			$this->_View->viewVars['room'],
-			'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
-		);
-
-		return Hash::get($room, '0.name');
-	}
-
-/**
- * ページ名の出力
- *
- * @param array $page ページデータ配列
- * @param int|null $nest インデント
- * @return string HTML
- */
-	public function pageName($page, $nest = null) {
-		$output = '';
-		if (isset($nest)) {
-			$output .= str_repeat('<span class="pages-tree"> </span> ', $nest);
-		}
-
-		$output .= $this->moveButton($page);
-
-		if (Current::read('Room.id') !== Room::PUBLIC_PARENT_ID && Hash::get($page, 'Page.id') === Current::read('Room.page_id_top')) {
-			$title = h($this->roomName());
-		} else {
-			$title = h($page['LanguagesPage']['name']);
-		}
-		$output .= $this->NetCommonsHtml->link($title,
-				array('key' => $page['Page']['room_id'], $page['Page']['id']),
-				array('escapeTitle' => true));
-
-		return $output;
-	}
-
-/**
- * 状態によるCSSのクラス定義を返す
- *
- * @param array $page ページデータ配列
- * @return string HTML
- */
-	public function activeCss($page) {
-		$output = '';
-		if (Hash::get($page, 'Page.id') === Current::read('Page.id')) {
-			$output .= 'active';
-		}
-		return $output;
-	}
-
-/**
- * 移動ボタンを返す
- *
- * @param array $page ページデータ配列
- * @return string HTML
- */
-	public function moveButton($page) {
-		return $this->_View->element('PagesEdit/page_move');
+	public function indent($pageId) {
+		$parentId = $this->_View->viewVars['pages'][$pageId]['Page']['parent_id'];
+		$nest = $this->_View->viewVars['parentList']['_' . $parentId]['_' . $pageId]['nest'];
+		return str_repeat('<span class="pages-tree"> </span> ', $nest);
 	}
 
 }

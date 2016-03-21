@@ -42,34 +42,48 @@ class Records extends NetCommonsMigration {
  */
 	public $records = array(
 		'Page' => array(
+			//パブリックスペースのページ（使われることはない）
 			array(
-				'id' => '1',
-				'room_id' => '1',
-				'parent_id' => null,
-				'lft' => '1',
-				'rght' => '2',
-				'permalink' => 'home',
-				'slug' => 'home',
-				'is_published' => true,
-				'from' => null,
-				'to' => null,
+				'id' => '1', 'room_id' => '1', 'root_id' => null, 'parent_id' => null, 'lft' => '1', 'rght' => '4',
+				'permalink' => '', 'slug' => null,
+			),
+			//トップページのページ
+			array(
+				'id' => '4', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '3',
+				'permalink' => 'home', 'slug' => 'home',
+			),
+			//プライベートスペースのページ（使われることはない）
+			array(
+				'id' => '2', 'room_id' => '2', 'root_id' => null, 'parent_id' => null, 'lft' => '5', 'rght' => '6',
+				'permalink' => '', 'slug' => null,
+			),
+			//グループスペースのページ（使われることはない）
+			array(
+				'id' => '3', 'room_id' => '3', 'root_id' => null, 'parent_id' => null, 'lft' => '7', 'rght' => '8',
+				'permalink' => '', 'slug' => null,
 			),
 		),
 		'LanguagesPage' => array(
+			//パブリックスペース自体のページ
+			// * 英語
+			array('page_id' => '1', 'language_id' => '1', 'name' => ''),
+			// * 日本語
+			array('page_id' => '1', 'language_id' => '2', 'name' => ''),
+			//プライベートスペース自体のページ
+			// * 英語
+			array('page_id' => '2', 'language_id' => '1', 'name' => ''),
+			// * 日本語
+			array('page_id' => '2', 'language_id' => '2', 'name' => ''),
+			//ルームスペース自体のページ
+			// * 英語
+			array('page_id' => '3', 'language_id' => '1', 'name' => ''),
+			// * 日本語
+			array('page_id' => '3', 'language_id' => '2', 'name' => ''),
+			//パブリックスペースのホーム
 			//英語
-			array(
-				'id' => '1',
-				'page_id' => '1',
-				'language_id' => '1',
-				'name' => 'Home',
-			),
+			array('page_id' => '4', 'language_id' => '1', 'name' => 'Home'),
 			//日本語
-			array(
-				'id' => '2',
-				'page_id' => '1',
-				'language_id' => '2',
-				'name' => 'ホーム',
-			),
+			array('page_id' => '4', 'language_id' => '2', 'name' => 'ホーム'),
 		),
 	);
 

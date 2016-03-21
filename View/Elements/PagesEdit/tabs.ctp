@@ -13,8 +13,9 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 ?>
 
 <ul class="nav nav-tabs" role="tablist">
-	<li class="<?php echo (in_array(Hash::get($this->request->params, 'action'), ['edit', 'add'], true) ? 'active' : ''); ?>">
-		<?php
+	<?php
+		if (Current::read('Page.parent_id') || $this->params['action'] === 'add') {
+			echo '<li class="' . (in_array(Hash::get($this->request->params, 'action'), ['edit', 'add'], true) ? 'active' : '') . '">';
 			if ($this->params['action'] === 'add') {
 				$title = __d('pages', 'Add page');
 				$action = 'add';
@@ -28,8 +29,10 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 			} else {
 				echo '<a>' . $title . '</a>';
 			}
-		?>
-	</li>
+			echo '</li>';
+		}
+	?>
+
 	<li class="<?php echo (Hash::get($this->request->params, 'action') === 'layout' ? 'active' : $disactive); ?>">
 		<?php
 			if (! $disactive) {

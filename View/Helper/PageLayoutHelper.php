@@ -192,19 +192,20 @@ class PageLayoutHelper extends AppHelper {
 	}
 
 /**
- * The layout have container
+ * レイアウトの有無チェック
  *
- * @param string $containerType Container type.
+ * @param string $containerType コンテナータイプ
  *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
+ * @param bool $layoutSetting レイアウト変更画面かどうか
  * @return bool The layout have container
  */
-	public function hasContainer($containerType) {
+	public function hasContainer($containerType, $layoutSetting = false) {
 		$result = Hash::get($this->containers, $containerType . '.ContainersPage.is_published', false);
 		if (! $result) {
 			return false;
 		}
 
-		if (! Current::isSettingMode()) {
+		if (! Current::isSettingMode() && ! $layoutSetting) {
 			$box = $this->getBox($containerType);
 			$frames = Hash::combine($box, '{n}.Frame.{n}.id', '{n}.Frame.{n}');
 			$result = count($frames);

@@ -18,7 +18,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 
 		<div class="panel panel-default">
 
-			<?php echo $this->NetCommonsForm->create('EditLayout', array(
+			<?php echo $this->NetCommonsForm->create('EditLayout', array('type' => 'put',
 					'url' => $this->NetCommonsHtml->url(array('key' => Current::read('Room.id'), Current::read('Page.id')))
 				)); ?>
 
@@ -26,10 +26,10 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 					<div class="panel-body">
 						<div class="clearfix"
 							ng-controller="PagesLayoutController"
-							ng-init="initialize(<?php echo (int)$this->PageLayout->hasContainer(Container::TYPE_HEADER) . ', ' .
-											(int)$this->PageLayout->hasContainer(Container::TYPE_MAJOR) . ', ' .
-											(int)$this->PageLayout->hasContainer(Container::TYPE_MINOR) . ', ' .
-											(int)$this->PageLayout->hasContainer(Container::TYPE_FOOTER); ?>)">
+							ng-init="initialize(<?php echo (int)$this->PageLayout->hasContainer(Container::TYPE_HEADER, true) . ', ' .
+											(int)$this->PageLayout->hasContainer(Container::TYPE_MAJOR, true) . ', ' .
+											(int)$this->PageLayout->hasContainer(Container::TYPE_MINOR, true) . ', ' .
+											(int)$this->PageLayout->hasContainer(Container::TYPE_FOOTER, true); ?>)">
 
 							<?php echo $this->NetCommonsForm->hidden('Page.id', array(
 									'value' => Current::read('Page.id'),

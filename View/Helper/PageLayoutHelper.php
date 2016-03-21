@@ -198,6 +198,7 @@ class PageLayoutHelper extends AppHelper {
  *    e.g.) Container::TYPE_HEADER or TYPE_MAJOR or TYPE_MAIN or TYPE_MINOR or TYPE_FOOTER
  * @param bool $layoutSetting レイアウト変更画面かどうか
  * @return bool The layout have container
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function hasContainer($containerType, $layoutSetting = false) {
 		$result = Hash::get($this->containers, $containerType . '.ContainersPage.is_published', false);

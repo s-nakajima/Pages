@@ -1,6 +1,6 @@
 <?php
 /**
- * PagesEditController::layout()のテスト
+ * PagesEditController::theme()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 
 /**
- * PagesEditController::layout()のテスト
+ * PagesEditController::theme()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\PagesEditController
  */
-class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
+class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 
 /**
  * Fixtures
@@ -75,50 +75,48 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * layout()アクションのGetリクエストテスト
+ * theme()アクションのGetリクエストテスト
  *
  * @return void
  */
-	public function testLayoutGet() {
+	public function testThemeGet() {
 		//テストデータ
 		$roomId = '1';
 		$pageId = '4';
 
 		//テスト実行
-		$this->_testGetAction(array('action' => 'layout', $roomId, $pageId), array('method' => 'assertNotEmpty'), null, 'view');
+		$this->_testGetAction(array('action' => 'theme', $roomId, $pageId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
-		$this->assertTextContains('0_0_0_0.png', $this->view);
-		$this->assertTextContains('0_0_0_1.png', $this->view);
-		$this->assertTextContains('0_0_1_0.png', $this->view);
-		$this->assertTextContains('0_0_1_1.png', $this->view);
-		$this->assertTextContains('0_1_0_0.png', $this->view);
-		$this->assertTextContains('0_1_0_1.png', $this->view);
-		$this->assertTextContains('0_1_1_0.png', $this->view);
-		$this->assertTextContains('0_1_1_1.png', $this->view);
-		$this->assertTextContains('1_0_0_0.png', $this->view);
-		$this->assertTextContains('1_0_0_1.png', $this->view);
-		$this->assertTextContains('1_0_1_0.png', $this->view);
-		$this->assertTextContains('1_0_1_1.png', $this->view);
-		$this->assertTextContains('1_1_0_0.png', $this->view);
-		$this->assertTextContains('1_1_0_1.png', $this->view);
-		$this->assertTextContains('1_1_1_0.png', $this->view);
-		$this->assertTextContains('1_1_1_1.png', $this->view);
+		$this->assertInput('form', null, '/pages/pages_edit/theme/1/4', $this->view);
+		$this->assertInput('input', '_method', 'POST', $this->view);
+		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
+		$this->assertInput('input', 'data[Page][theme]', null, $this->view);
+
+		$this->assertEquals('UnitTestTheme', $this->controller->theme);
 	}
 
 /**
- * layout()アクションのGetリクエストのExceptionErrorテスト
+ * theme()アクションのGetリクエストテスト(themeパラメータ付き)
  *
  * @return void
  */
-	public function testLayoutGetOnExceptionError() {
+	public function testThemeGetWithTheme() {
 		//テストデータ
 		$roomId = '1';
 		$pageId = '4';
-		$this->_mockForReturnFalse('Pages.Page', 'getPageWithFrame');
 
 		//テスト実行
-		$this->_testGetAction(array('action' => 'layout', $roomId, $pageId), null, 'BadRequestException', 'view');
+		$this->_testGetAction('/pages/pages_edit/theme/' . $roomId . '/' . $pageId . '?theme=Default',
+				array('method' => 'assertNotEmpty'), null, 'view');
+
+		//チェック
+		$this->assertInput('form', null, '/pages/pages_edit/theme/1/4', $this->view);
+		$this->assertInput('input', '_method', 'POST', $this->view);
+		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
+		$this->assertInput('input', 'data[Page][theme]', null, $this->view);
+
+		$this->assertEquals('Default', $this->controller->theme);
 	}
 
 /**
@@ -136,20 +134,20 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
  *
  * @return void
  */
-	public function testLayoutPost() {
+	public function testThemePost() {
 		//テストデータ
 		$roomId = '1';
 		$pageId = '4';
 
-		$this->_mockForReturnTrue('Containers.ContainersPage', 'saveContainersPage');
+		$this->_mockForReturnTrue('Pages.Page', 'saveTheme');
 
 		$this->controller->Components->Session
 			->expects($this->once())->method('setFlash')
 			->with(__d('net_commons', 'Successfully saved.'));
 
 		//テスト実行
-		$this->_testPostAction('put', $this->__data(),
-				array('action' => 'layout', $roomId, $pageId), null, 'view');
+		$this->_testPostAction('post', $this->__data(),
+				array('action' => 'theme', $roomId, $pageId), null, 'view');
 
 		//チェック
 		$header = $this->controller->response->header();
@@ -166,9 +164,9 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
 		$roomId = '1';
 		$pageId = '4';
 
-		$this->_mockForReturnCallback('Containers.ContainersPage', 'saveContainersPage', function () {
+		$this->_mockForReturnCallback('Pages.Page', 'saveTheme', function () {
 			$message = sprintf(__d('net_commons', 'Invalid request.'));
-			$this->controller->ContainersPage->invalidate('page_id', $message);
+			$this->controller->Page->invalidate('theme', $message);
 			return false;
 		});
 
@@ -177,8 +175,8 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
 			->with(__d('net_commons', 'Failed on validation errors. Please check the input data.'));
 
 		//テスト実行
-		$this->_testPostAction('put', $this->__data(),
-				array('action' => 'layout', $roomId, $pageId), null, 'view');
+		$this->_testPostAction('post', $this->__data(),
+				array('action' => 'theme', $roomId, $pageId), null, 'view');
 
 		//チェック
 		$header = $this->controller->response->header();

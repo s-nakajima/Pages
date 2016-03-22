@@ -30,10 +30,12 @@ class PageAssociationsBehavior extends ModelBehavior {
 /**
  * Save container data.
  *
- * @param Model $model Model using this behavior
- * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
+ * @return mixed On success Model::$data
+ * @throws InternalErrorException
  */
-	public function saveContainer(Model $model) {
+	public function saveContainer(Model $model, $page) {
 		$model->loadModels([
 			'Container' => 'Containers.Container',
 		]);
@@ -45,15 +47,20 @@ class PageAssociationsBehavior extends ModelBehavior {
 			)
 		);
 
-		return $model->Container->save($data);
+		$result = $model->Container->save($data);
+		if (! $result) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		return $result;
 	}
 
 /**
  * Save box data.
  *
- * @param Model $model Model using this behavior
- * @param array $page The page data
- * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
+ * @return mixed On success Model::$data
+ * @throws InternalErrorException
  */
 	public function saveBox(Model $model, $page) {
 		$model->loadModels([
@@ -71,18 +78,24 @@ class PageAssociationsBehavior extends ModelBehavior {
 			)
 		);
 
-		return $model->Box->save($data);
+		$result = $model->Box->save($data);
+		if (! $result) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		return $result;
 	}
 
 /**
- * Save containersPage for page
+ * ContainersPageの登録処理
  *
- * @param Model $model Model using this behavior
- * @param array $page The page data
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function saveContainersPage(Model $model, $page) {
 		$model->loadModels([
+			'Container' => 'Containers.Container',
 			'ContainersPage' => 'Containers.ContainersPage',
 		]);
 
@@ -111,7 +124,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 
 			$model->ContainersPage->create(false);
 			if (!$model->ContainersPage->save($data)) {
-				return false;
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
 
@@ -119,11 +132,12 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * Save boxesPage for page
+ * BoxesPageの登録処理
  *
- * @param Model $model Model using this behavior
- * @param array $page The page data
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function saveBoxesPage(Model $model, $page) {
 		$model->loadModels([
@@ -155,7 +169,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 
 			$model->BoxesPage->create(false);
 			if (!$model->BoxesPage->save($data)) {
-				return false;
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
 
@@ -175,12 +189,12 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * delete containersPage for page
+ * Containerの削除処理
  *
- * @param Model $model Model using this behavior
- * @param int $pageId pages.id
- * @throws InternalErrorException
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param int $pageId ページID
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function deleteContainers(Model $model, $pageId) {
 		$model->loadModels([
@@ -211,10 +225,10 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * delete boxesPage for page
+ * Boxの削除処理
  *
- * @param Model $model Model using this behavior
- * @param int $pageId pages.id
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param int $pageId ページID
  * @return bool True on success
  * @throws InternalErrorException
  */

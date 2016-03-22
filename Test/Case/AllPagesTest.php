@@ -22,7 +22,7 @@ class AllPagesTest extends NetCommonsTestSuite {
 /**
  * suite
  *
- * @return   void
+ * @return void
  */
 	public static function suite() {
 		$plugin = preg_replace('/^All([\w]+)Test$/', '$1', __CLASS__);

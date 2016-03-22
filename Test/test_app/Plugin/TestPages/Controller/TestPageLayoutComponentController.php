@@ -47,9 +47,6 @@ class TestPageLayoutComponentController extends AppController {
 		$this->autoRender = true;
 
 		$page = $this->Page->getPageWithFrame('');
-		if (empty($page)) {
-			throw new NotFoundException();
-		}
 		$this->set('page', $page);
 	}
 

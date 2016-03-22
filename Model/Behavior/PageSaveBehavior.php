@@ -92,25 +92,14 @@ class PageSaveBehavior extends ModelBehavior {
 		}
 
 		if ($created) {
-			if (! $result = $model->saveContainer($model->data)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
+			$result = $model->saveContainer($model->data);
 			$model->data = Hash::merge($model->data, $result);
 
-			if (! $result = $model->saveBox($model->data)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
+			$result = $model->saveBox($model->data);
 			$model->data = Hash::merge($model->data, $result);
 
-			if (! $result = $model->saveContainersPage($model->data)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-			$model->data = Hash::merge($model->data, $result);
-
-			if (! $result = $model->saveBoxesPage($model->data)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-			$model->data = Hash::merge($model->data, $result);
+			$model->saveContainersPage($model->data);
+			$model->saveBoxesPage($model->data);
 		}
 
 		return parent::afterSave($model, $created, $options);

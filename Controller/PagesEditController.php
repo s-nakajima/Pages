@@ -181,13 +181,14 @@ class PagesEditController extends PagesAppController {
 		if ($this->request->is('put')) {
 			unset($this->request->data['save']);
 
-			if ($this->ContainersPage->saveContainersPage($this->request->data)) {
-				//正常の場合
-				$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
-			} else {
-				$this->NetCommons->handleValidationError($this->ContainersPage->validationErrors);
+			if (! $this->ContainersPage->saveContainersPage($this->request->data)) {
+				return $this->throwBadRequest();
 			}
-			$this->redirect('/' . Current::read('Page.permalink'));
+			//正常の場合
+			$this->NetCommons->setFlashNotification(
+				__d('net_commons', 'Successfully saved.'), array('class' => 'success')
+			);
+			return $this->redirect('/' . Current::read('Page.permalink'));
 
 		} else {
 			$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
@@ -210,12 +211,13 @@ class PagesEditController extends PagesAppController {
 		if ($this->request->is('post')) {
 			unset($this->request->data['save']);
 
-			if ($this->Page->saveTheme($this->request->data)) {
-				//正常の場合
-				$this->NetCommons->setFlashNotification(__d('net_commons', 'Successfully saved.'), array('class' => 'success'));
-			} else {
-				$this->NetCommons->handleValidationError($this->Page->validationErrors);
+			if (! $this->Page->saveTheme($this->request->data)) {
+				return $this->throwBadRequest();
 			}
+			//正常の場合
+			$this->NetCommons->setFlashNotification(
+				__d('net_commons', 'Successfully saved.'), array('class' => 'success')
+			);
 			$this->redirect('/' . Current::read('Page.permalink'));
 		} else {
 			$this->request->data['Page'] = Current::read('Page');
@@ -241,14 +243,15 @@ class PagesEditController extends PagesAppController {
 				return $this->throwBadRequest();
 			}
 			//ページ移動処理
-			if ($this->Page->saveMove($this->request->data)) {
-				//正常の場合
-				$this->NetCommons->setFlashNotification(
-					__d('net_commons', 'Successfully saved.'),
-					array('class' => 'success')
-				);
-				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
+			if (! $this->Page->saveMove($this->request->data)) {
+				return $this->throwBadRequest();
 			}
+			//正常の場合
+			$this->NetCommons->setFlashNotification(
+				__d('net_commons', 'Successfully saved.'), array('class' => 'success')
+			);
+			return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
+
 		} else {
 			$this->viewClass = 'View';
 			$this->layout = 'NetCommons.modal';

@@ -54,6 +54,9 @@ class PageAssociationsBehaviorSaveContainerTest extends NetCommonsModelTestCase 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
 		$this->TestModel = ClassRegistry::init('TestPages.TestPageAssociationsBehaviorModel');
+
+		//事前チェック用
+		$this->Container = ClassRegistry::init('Containers.Container');
 	}
 
 /**
@@ -82,8 +85,7 @@ class PageAssociationsBehaviorSaveContainerTest extends NetCommonsModelTestCase 
 		$containerId = '18';
 
 		//事前チェック
-		$Container = ClassRegistry::init('Containers.Container');
-		$count = $Container->find('count', array(
+		$count = $this->Container->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('id' => $containerId),
 		));
@@ -103,13 +105,28 @@ class PageAssociationsBehaviorSaveContainerTest extends NetCommonsModelTestCase 
 			'id' => $containerId, 'type' => '3'
 		));
 		$this->assertEqual($expected, $result);
-		
+
 		//データチェック
 		$count = $this->TestModel->Container->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('id' => $containerId),
 		));
 		$this->assertEqual(1, $count);
+	}
+
+/**
+ * saveContainer()のExceptionErrorテスト
+ *
+ * @param array $page ページデータ
+ * @dataProvider dataProvider
+ * @return void
+ */
+	public function testSaveContainerOnExceptionError($page) {
+		$this->_mockForReturnFalse('TestModel', 'Containers.Container', 'save');
+
+		//テスト実施
+		$this->setExpectedException('InternalErrorException');
+		$this->TestModel->saveContainer($page);
 	}
 
 }

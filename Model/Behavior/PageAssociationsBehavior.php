@@ -32,7 +32,8 @@ class PageAssociationsBehavior extends ModelBehavior {
  *
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param array $page ページデータ
- * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @return mixed On success Model::$data
+ * @throws InternalErrorException
  */
 	public function saveContainer(Model $model, $page) {
 		$model->loadModels([
@@ -46,7 +47,11 @@ class PageAssociationsBehavior extends ModelBehavior {
 			)
 		);
 
-		return $model->Container->save($data);
+		$result = $model->Container->save($data);
+		if (! $result) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		return $result;
 	}
 
 /**
@@ -54,7 +59,8 @@ class PageAssociationsBehavior extends ModelBehavior {
  *
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param array $page ページデータ
- * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @return mixed On success Model::$data
+ * @throws InternalErrorException
  */
 	public function saveBox(Model $model, $page) {
 		$model->loadModels([
@@ -72,7 +78,11 @@ class PageAssociationsBehavior extends ModelBehavior {
 			)
 		);
 
-		return $model->Box->save($data);
+		$result = $model->Box->save($data);
+		if (! $result) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+		return $result;
 	}
 
 /**
@@ -81,6 +91,7 @@ class PageAssociationsBehavior extends ModelBehavior {
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param array $page ページデータ
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function saveContainersPage(Model $model, $page) {
 		$model->loadModels([
@@ -113,7 +124,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 
 			$model->ContainersPage->create(false);
 			if (!$model->ContainersPage->save($data)) {
-				return false;
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
 
@@ -126,6 +137,7 @@ class PageAssociationsBehavior extends ModelBehavior {
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param array $page ページデータ
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function saveBoxesPage(Model $model, $page) {
 		$model->loadModels([
@@ -157,7 +169,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 
 			$model->BoxesPage->create(false);
 			if (!$model->BoxesPage->save($data)) {
-				return false;
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
 
@@ -181,8 +193,8 @@ class PageAssociationsBehavior extends ModelBehavior {
  *
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param int $pageId ページID
- * @throws InternalErrorException
  * @return bool True on success
+ * @throws InternalErrorException
  */
 	public function deleteContainers(Model $model, $pageId) {
 		$model->loadModels([

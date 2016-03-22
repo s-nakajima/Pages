@@ -54,6 +54,9 @@ class PageAssociationsBehaviorSaveContainersPageTest extends NetCommonsModelTest
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
 		$this->TestModel = ClassRegistry::init('TestPages.TestPageAssociationsBehaviorModel');
+
+		//事前チェック用
+		$this->ContainersPage = ClassRegistry::init('Containers.ContainersPage');
 	}
 
 /**
@@ -83,8 +86,7 @@ class PageAssociationsBehaviorSaveContainersPageTest extends NetCommonsModelTest
  */
 	public function testSaveContainersPage($page) {
 		//事前チェック
-		$ContainersPage = ClassRegistry::init('Containers.ContainersPage');
-		$count = $ContainersPage->find('count', array(
+		$count = $this->ContainersPage->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
 		));
@@ -124,10 +126,8 @@ class PageAssociationsBehaviorSaveContainersPageTest extends NetCommonsModelTest
 		$this->_mockForReturnFalse('TestModel', 'Containers.ContainersPage', 'save');
 
 		//テスト実施
-		$result = $this->TestModel->saveContainersPage($page);
-
-		//戻り値チェック
-		$this->assertFalse($result);
+		$this->setExpectedException('InternalErrorException');
+		$this->TestModel->saveContainersPage($page);
 	}
 
 }

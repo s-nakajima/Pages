@@ -30,10 +30,11 @@ class PageAssociationsBehavior extends ModelBehavior {
 /**
  * Save container data.
  *
- * @param Model $model Model using this behavior
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
-	public function saveContainer(Model $model) {
+	public function saveContainer(Model $model, $page) {
 		$model->loadModels([
 			'Container' => 'Containers.Container',
 		]);
@@ -51,8 +52,8 @@ class PageAssociationsBehavior extends ModelBehavior {
 /**
  * Save box data.
  *
- * @param Model $model Model using this behavior
- * @param array $page The page data
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function saveBox(Model $model, $page) {
@@ -75,10 +76,10 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * Save containersPage for page
+ * ContainersPageの登録処理
  *
- * @param Model $model Model using this behavior
- * @param array $page The page data
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
  * @return bool True on success
  */
 	public function saveContainersPage(Model $model, $page) {
@@ -119,10 +120,10 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * Save boxesPage for page
+ * BoxesPageの登録処理
  *
- * @param Model $model Model using this behavior
- * @param array $page The page data
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
  * @return bool True on success
  */
 	public function saveBoxesPage(Model $model, $page) {
@@ -175,10 +176,10 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * delete containersPage for page
+ * Containerの削除処理
  *
- * @param Model $model Model using this behavior
- * @param int $pageId pages.id
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param int $pageId ページID
  * @throws InternalErrorException
  * @return bool True on success
  */
@@ -211,10 +212,10 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * delete boxesPage for page
+ * Boxの削除処理
  *
- * @param Model $model Model using this behavior
- * @param int $pageId pages.id
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param int $pageId ページID
  * @return bool True on success
  * @throws InternalErrorException
  */

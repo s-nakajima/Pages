@@ -84,6 +84,7 @@ class PageAssociationsBehavior extends ModelBehavior {
  */
 	public function saveContainersPage(Model $model, $page) {
 		$model->loadModels([
+			'Container' => 'Containers.Container',
 			'ContainersPage' => 'Containers.ContainersPage',
 		]);
 

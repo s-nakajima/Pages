@@ -88,6 +88,10 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
 		$this->_testGetAction(array('action' => 'layout', $roomId, $pageId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
+		$this->assertInput('form', null, '/pages/pages_edit/layout/1/4', $this->view);
+		$this->assertInput('input', '_method', 'PUT', $this->view);
+		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
+
 		$this->assertTextContains('0_0_0_0.png', $this->view);
 		$this->assertTextContains('0_0_0_1.png', $this->view);
 		$this->assertTextContains('0_0_1_0.png', $this->view);

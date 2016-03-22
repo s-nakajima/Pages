@@ -25,8 +25,15 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.languages_page',
-		'plugin.pages.page',
+		'plugin.pages.box4pages',
+		'plugin.pages.boxes_page4pages',
+		'plugin.pages.container4pages',
+		'plugin.pages.containers_page4pages',
+		'plugin.pages.frame4pages',
+		'plugin.pages.languages_page4pages',
+		'plugin.pages.page4pages',
+		'plugin.pages.plugin4pages',
+		'plugin.pages.plugins_room4pages',
 	);
 
 /**

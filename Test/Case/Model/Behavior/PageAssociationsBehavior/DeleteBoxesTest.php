@@ -123,7 +123,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
  * @dataProvider dataProvider
  * @return void
  */
-	public function testDeleteContainersOnContainerExceptionError($pageId) {
+	public function testDeleteBoxesOnContainerExceptionError($pageId) {
 		$this->_mockForReturnFalse('TestModel', 'Boxes.Box', 'deleteAll');
 
 		//テスト実施
@@ -138,7 +138,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
  * @dataProvider dataProvider
  * @return void
  */
-	public function testDeleteContainersOnContainersPageExceptionError($pageId) {
+	public function testDeleteBoxesOnContainersPageExceptionError($pageId) {
 		$this->_mockForReturnFalse('TestModel', 'Boxes.BoxesPage', 'deleteAll');
 
 		//テスト実施

@@ -161,32 +161,20 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * edit()アクションのPOSTリクエストのValidationErrorテスト
+ * edit()アクションのPOSTリクエストのExceptionErrorテスト
  *
  * @return void
  */
-	public function testLayoutPostOnValidationError() {
+	public function testLayoutPostOnExceptionError() {
 		//テストデータ
 		$roomId = '1';
 		$pageId = '4';
 
-		$this->_mockForReturnCallback('Containers.ContainersPage', 'saveContainersPage', function () {
-			$message = sprintf(__d('net_commons', 'Invalid request.'));
-			$this->controller->ContainersPage->invalidate('page_id', $message);
-			return false;
-		});
-
-		$this->controller->Components->Session
-			->expects($this->once())->method('setFlash')
-			->with(__d('net_commons', 'Failed on validation errors. Please check the input data.'));
+		$this->_mockForReturnFalse('Containers.ContainersPage', 'saveContainersPage');
 
 		//テスト実行
 		$this->_testPostAction('put', $this->__data(),
-				array('action' => 'layout', $roomId, $pageId), null, 'view');
-
-		//チェック
-		$header = $this->controller->response->header();
-		$this->assertNotEmpty($header['Location']);
+				array('action' => 'layout', $roomId, $pageId), 'BadRequestException', 'view');
 	}
 
 }

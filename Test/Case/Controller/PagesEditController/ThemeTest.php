@@ -155,32 +155,20 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * edit()アクションのPOSTリクエストのValidationErrorテスト
+ * edit()アクションのPOSTリクエストのExceptionErrorテスト
  *
  * @return void
  */
-	public function testLayoutPostOnValidationError() {
+	public function testLayoutPostOnExceptionError() {
 		//テストデータ
 		$roomId = '1';
 		$pageId = '4';
 
-		$this->_mockForReturnCallback('Pages.Page', 'saveTheme', function () {
-			$message = sprintf(__d('net_commons', 'Invalid request.'));
-			$this->controller->Page->invalidate('theme', $message);
-			return false;
-		});
-
-		$this->controller->Components->Session
-			->expects($this->once())->method('setFlash')
-			->with(__d('net_commons', 'Failed on validation errors. Please check the input data.'));
+		$this->_mockForReturnFalse('Pages.Page', 'saveTheme');
 
 		//テスト実行
 		$this->_testPostAction('post', $this->__data(),
-				array('action' => 'theme', $roomId, $pageId), null, 'view');
-
-		//チェック
-		$header = $this->controller->response->header();
-		$this->assertNotEmpty($header['Location']);
+				array('action' => 'theme', $roomId, $pageId), 'BadRequestException', 'view');
 	}
 
 }

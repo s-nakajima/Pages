@@ -460,8 +460,13 @@ class Page extends PagesAppModel {
 		//トランザクションBegin
 		$this->begin();
 
+		if (! $this->exists($data[$this->alias]['id'])) {
+			return false;
+		}
+
 		try {
 			$this->id = $data[$this->alias]['id'];
+
 			if (! $this->saveField('theme', $data[$this->alias]['theme'], array('callbacks' => false))) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
@@ -485,6 +490,10 @@ class Page extends PagesAppModel {
 	public function saveMove($data) {
 		//トランザクションBegin
 		$this->begin();
+
+		if (! $this->exists($data[$this->alias]['id'])) {
+			return false;
+		}
 
 		try {
 			$this->id = $data[$this->alias]['id'];

@@ -1,6 +1,6 @@
 <?php
 /**
- * PageAssociationsBehavior::saveContainersPage()のテスト
+ * PageAssociationsBehavior::saveBox()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 
 /**
- * PageAssociationsBehavior::saveContainersPage()のテスト
+ * PageAssociationsBehavior::saveBox()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageAssociationsBehavior
  */
-class PageAssociationsBehaviorSaveContainersPageTest extends NetCommonsModelTestCase {
+class PageAssociationsBehaviorSaveBoxTest extends NetCommonsModelTestCase {
 
 /**
  * Fixtures
@@ -57,7 +57,7 @@ class PageAssociationsBehaviorSaveContainersPageTest extends NetCommonsModelTest
 	}
 
 /**
- * saveContainersPage()テストのDataProvider
+ * saveBox()テストのDataProvider
  *
  * ### 戻り値
  *  - page ページデータ
@@ -67,67 +67,58 @@ class PageAssociationsBehaviorSaveContainersPageTest extends NetCommonsModelTest
 	public function dataProvider() {
 		$result[0] = array();
 		$result[0]['page'] = array(
-			'Page' => array('id' => '99'),
+			'Page' => array('id' => '99', 'room_id' => '9'),
 			'Container' => array('id' => '88'),
+			'Room' => array('space_id' => '2'),
 		);
 
 		return $result;
 	}
 
 /**
- * saveContainersPage()のテスト
+ * saveBox()のテスト
  *
  * @param array $page ページデータ
  * @dataProvider dataProvider
  * @return void
  */
-	public function testSaveContainersPage($page) {
+	public function testSaveBox($page) {
+		$boxId = '18';
+
 		//事前チェック
-		$ContainersPage = ClassRegistry::init('Containers.ContainersPage');
-		$count = $ContainersPage->find('count', array(
+		$Box = ClassRegistry::init('Boxes.Box');
+		$count = $Box->find('count', array(
 			'recursive' => -1,
-			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
+			'conditions' => array('id' => $boxId),
 		));
 		$this->assertEqual(0, $count);
 
 		//テスト実施
-		$result = $this->TestModel->saveContainersPage($page);
+		$result = $this->TestModel->saveBox($page);
 
 		//戻り値チェック
-		$this->assertTrue($result);
+		$this->assertDatetime($result['Box']['created']);
+		$this->assertDatetime($result['Box']['modified']);
+
+		unset($result['Box']['created']);
+		unset($result['Box']['modified']);
+
+		$expected = Hash::insert(array(), 'Box', array(
+			'id' => $boxId,
+			'type' => '4',
+			'container_id' => Hash::get($page, 'Container.id'),
+			'space_id' => Hash::get($page, 'Room.space_id'),
+			'room_id' => Hash::get($page, 'Page.room_id'),
+			'page_id' => Hash::get($page, 'Page.id'),
+		));
+		$this->assertEqual($expected, $result);
 
 		//データチェック
-		$count = $this->TestModel->ContainersPage->find('count', array(
+		$count = $this->TestModel->Box->find('count', array(
 			'recursive' => -1,
-			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
-		));
-		$this->assertEqual(5, $count);
-
-		$count = $this->TestModel->ContainersPage->find('count', array(
-			'recursive' => -1,
-			'conditions' => array(
-				'page_id' => Hash::get($page, 'Page.id'),
-				'container_id' => Hash::get($page, 'Container.id'),
-			),
+			'conditions' => array('id' => $boxId),
 		));
 		$this->assertEqual(1, $count);
-	}
-
-/**
- * saveContainersPage()のExceptionErrorテスト
- *
- * @param array $page ページデータ
- * @dataProvider dataProvider
- * @return void
- */
-	public function testSaveContainersPageOnExceptionError($page) {
-		$this->_mockForReturnFalse('TestModel', 'Containers.ContainersPage', 'save');
-
-		//テスト実施
-		$result = $this->TestModel->saveContainersPage($page);
-
-		//戻り値チェック
-		$this->assertFalse($result);
 	}
 
 }

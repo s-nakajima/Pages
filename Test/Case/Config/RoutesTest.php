@@ -26,9 +26,9 @@ class RoutesTest extends NetCommonsControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
+		'plugin.pages.boxes_page4routes',
 		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
+		'plugin.pages.containers_page4routes',
 		'plugin.pages.frame4pages',
 		'plugin.pages.languages_page4pages',
 		'plugin.pages.page4routes',
@@ -81,10 +81,10 @@ class RoutesTest extends NetCommonsControllerTestCase {
 				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/test_err/test_error',
-				'expected' => array('plugin' => 'test_err', 'controller' => 'test_error', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/test_err/test_error/index',
-				'expected' => array('plugin' => 'test_err', 'controller' => 'test_error', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/aaaaa/',
 				'expected' => false, 'exception' => 'MissingControllerException'
@@ -103,10 +103,10 @@ class RoutesTest extends NetCommonsControllerTestCase {
 				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/setting/test_err/test_error',
-				'expected' => array('plugin' => 'test_err', 'controller' => 'test_error', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/setting/test_err/test_error/index',
-				'expected' => array('plugin' => 'test_err', 'controller' => 'test_error', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('/setting/aaaaa/',
 				'expected' => false, 'exception' => 'MissingControllerException'

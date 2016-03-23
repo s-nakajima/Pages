@@ -545,7 +545,7 @@ class Page extends PagesAppModel {
 
 		try {
 			//Pageの削除
-			if (! $this->deleteAll(array($this->alias . '.id' => $data[$this->alias]['id']), false)) {
+			if (! $this->delete($data[$this->alias]['id'])) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 			if (! $this->LanguagesPage->deleteAll(array($this->LanguagesPage->alias . '.page_id' => $data[$this->alias]['id']), false)) {

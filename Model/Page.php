@@ -413,10 +413,6 @@ class Page extends PagesAppModel {
  * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function savePage($data, $options = array()) {
-		$this->loadModels([
-			'LanguagesPage' => 'Pages.LanguagesPage',
-		]);
-
 		$options = Hash::merge(array('atomic' => true), $options);
 
 		//トランザクションBegin

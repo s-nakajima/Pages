@@ -61,6 +61,10 @@ class PageSaveBehavior extends ModelBehavior {
  * @return mixed False will stop this event from being passed to other behaviors
  */
 	public function afterValidate(Model $model) {
+		$model->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+		]);
+
 		if (isset($model->data['LanguagesPage'])) {
 			$model->LanguagesPage->create(false);
 			$model->LanguagesPage->set($model->data['LanguagesPage']);
@@ -84,6 +88,11 @@ class PageSaveBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function afterSave(Model $model, $created, $options = array()) {
+		$model->loadModels([
+			'LanguagesPage' => 'Pages.LanguagesPage',
+			'Page' => 'Pages.Page',
+		]);
+
 		if (isset($model->data['LanguagesPage'])) {
 			$model->LanguagesPage->data['LanguagesPage']['page_id'] = $model->data['Page']['id'];
 			if (! $model->LanguagesPage->save(null, false)) {
@@ -92,14 +101,14 @@ class PageSaveBehavior extends ModelBehavior {
 		}
 
 		if ($created) {
-			$result = $model->saveContainer($model->data);
+			$result = $model->Page->saveContainer($model->data);
 			$model->data = Hash::merge($model->data, $result);
 
-			$result = $model->saveBox($model->data);
+			$result = $model->Page->saveBox($model->data);
 			$model->data = Hash::merge($model->data, $result);
 
-			$model->saveContainersPage($model->data);
-			$model->saveBoxesPage($model->data);
+			$model->Page->saveContainersPage($model->data);
+			$model->Page->saveBoxesPage($model->data);
 		}
 
 		return parent::afterSave($model, $created, $options);

@@ -107,7 +107,7 @@ class PagesRoutingRouteSlugRouteParseTest extends NetCommonsCakeTestCase {
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/test4/',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array(['test4']))
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
 			),
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/aaaaa/',
 				'expected' => false
@@ -117,7 +117,7 @@ class PagesRoutingRouteSlugRouteParseTest extends NetCommonsCakeTestCase {
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			array('template' => '/*', 'url' => '/test4/',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array(['test4']))
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
 			),
 			array('template' => '/*', 'url' => '/aaaaa/',
 				'expected' => false
@@ -144,7 +144,7 @@ class PagesRoutingRouteSlugRouteParseTest extends NetCommonsCakeTestCase {
  * @param string $url URL
  * @param bool|array $expected 期待値
  * @dataProvider dataProvider
-  * @return void
+ * @return void
  */
 	public function testParse($template, $url, $expected) {
 		//テスト実施
@@ -159,6 +159,7 @@ class PagesRoutingRouteSlugRouteParseTest extends NetCommonsCakeTestCase {
 			$this->assertEquals($expected['plugin'], $result['plugin']);
 			$this->assertEquals($expected['controller'], $result['controller']);
 			$this->assertEquals($expected['action'], $result['action']);
+			$this->assertEquals($expected['pass'], $result['pass']);
 		} else {
 			$this->assertFalse($result);
 		}

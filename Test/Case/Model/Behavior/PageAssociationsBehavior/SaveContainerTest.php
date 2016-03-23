@@ -89,7 +89,7 @@ class PageAssociationsBehaviorSaveContainerTest extends NetCommonsModelTestCase 
 			'recursive' => -1,
 			'conditions' => array('id' => $containerId),
 		));
-		$this->assertEqual(0, $count);
+		$this->assertEquals(0, $count);
 
 		//テスト実施
 		$result = $this->TestModel->saveContainer($page);
@@ -104,14 +104,14 @@ class PageAssociationsBehaviorSaveContainerTest extends NetCommonsModelTestCase 
 		$expected = Hash::insert(array(), 'Container', array(
 			'id' => $containerId, 'type' => '3'
 		));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		//データチェック
 		$count = $this->TestModel->Container->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('id' => $containerId),
 		));
-		$this->assertEqual(1, $count);
+		$this->assertEquals(1, $count);
 	}
 
 /**

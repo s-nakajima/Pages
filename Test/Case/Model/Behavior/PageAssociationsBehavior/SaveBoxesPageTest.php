@@ -90,7 +90,7 @@ class PageAssociationsBehaviorSaveBoxesPageTest extends NetCommonsModelTestCase 
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
 		));
-		$this->assertEqual(0, $count);
+		$this->assertEquals(0, $count);
 
 		//テスト実施
 		$result = $this->TestModel->saveBoxesPage($page);
@@ -103,7 +103,7 @@ class PageAssociationsBehaviorSaveBoxesPageTest extends NetCommonsModelTestCase 
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
 		));
-		$this->assertEqual(5, $count);
+		$this->assertEquals(5, $count);
 
 		$count = $this->TestModel->BoxesPage->find('count', array(
 			'recursive' => -1,
@@ -112,7 +112,7 @@ class PageAssociationsBehaviorSaveBoxesPageTest extends NetCommonsModelTestCase 
 				'box_id' => Hash::get($page, 'Box.id'),
 			),
 		));
-		$this->assertEqual(1, $count);
+		$this->assertEquals(1, $count);
 	}
 
 /**

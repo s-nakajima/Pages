@@ -81,10 +81,10 @@ class RoutesTest extends NetCommonsControllerTestCase {
 				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/test_err/test_error',
-				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/test_err/test_error/index',
-				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/aaaaa/',
 				'expected' => false, 'exception' => 'MissingControllerException'
@@ -103,10 +103,10 @@ class RoutesTest extends NetCommonsControllerTestCase {
 				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/setting/test_err/test_error',
-				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/setting/test_err/test_error/index',
-				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			array('/setting/aaaaa/',
 				'expected' => false, 'exception' => 'MissingControllerException'

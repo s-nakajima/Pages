@@ -65,8 +65,6 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$model = $this->_modelName;
-		$methodName = $this->_methodName;
 
 		//テストクエリ
 		$this->___query = array(
@@ -76,6 +74,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 			'order' => array('lft' => 'asc'),
 		);
 		//事前チェック
+		$model = $this->_modelName;
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(

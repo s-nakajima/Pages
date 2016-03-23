@@ -37,7 +37,7 @@ class PageSaveBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function beforeValidate(Model $model, $options = array()) {
-		if (! $model->data['Page']['room_id']) {
+		if (! Hash::get($model->data, 'Page.room_id')) {
 			$model->data['Page']['room_id'] = Current::read('Room.id');
 		}
 

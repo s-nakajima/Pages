@@ -73,7 +73,7 @@ class PageAssociationsBehaviorGetReferencePageIdTest extends NetCommonsModelTest
 		$result = $this->TestModel->getReferencePageId($page);
 
 		//チェック
-		$this->assertEqual('1', $result);
+		$this->assertEquals('1', $result);
 	}
 
 }

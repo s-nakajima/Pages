@@ -88,13 +88,13 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEqual(1, $count);
+		$this->assertEquals(1, $count);
 
 		$count = $this->BoxesPage->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEqual(5, $count);
+		$this->assertEquals(5, $count);
 
 		//テスト実施
 		$result = $this->TestModel->deleteBoxes($pageId);
@@ -107,13 +107,13 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEqual(0, $count);
+		$this->assertEquals(0, $count);
 
 		$count = $this->TestModel->BoxesPage->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEqual(0, $count);
+		$this->assertEquals(0, $count);
 	}
 
 /**

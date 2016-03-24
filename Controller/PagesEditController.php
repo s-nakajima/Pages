@@ -208,7 +208,7 @@ class PagesEditController extends PagesAppController {
 		$themes = $this->SiteSetting->getThemes();
 		$this->set('themes', $themes);
 
-		if ($this->request->is('post')) {
+		if ($this->request->is('put')) {
 			unset($this->request->data['save']);
 
 			if (! $this->Page->saveTheme($this->request->data)) {

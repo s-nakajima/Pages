@@ -16,7 +16,7 @@ $url = array(
 );
 ?>
 
-<?php echo $this->NetCommonsForm->create('EditTheme', array(
+<?php echo $this->NetCommonsForm->create('EditTheme', array('type' => 'put',
 		'url' => $this->NetCommonsHtml->url(array('key' => Current::read('Room.id'), Current::read('Page.id'))),
 	)); ?>
 

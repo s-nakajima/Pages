@@ -89,7 +89,7 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$this->assertInput('form', null, '/pages/pages_edit/theme/1/4', $this->view);
-		$this->assertInput('input', '_method', 'POST', $this->view);
+		$this->assertInput('input', '_method', 'PUT', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 		$this->assertInput('input', 'data[Page][theme]', null, $this->view);
 
@@ -112,7 +112,7 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$this->assertInput('form', null, '/pages/pages_edit/theme/1/4', $this->view);
-		$this->assertInput('input', '_method', 'POST', $this->view);
+		$this->assertInput('input', '_method', 'PUT', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 		$this->assertInput('input', 'data[Page][theme]', null, $this->view);
 
@@ -146,7 +146,7 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 			->with(__d('net_commons', 'Successfully saved.'));
 
 		//テスト実行
-		$this->_testPostAction('post', $this->__data(),
+		$this->_testPostAction('put', $this->__data(),
 				array('action' => 'theme', $roomId, $pageId), null, 'view');
 
 		//チェック
@@ -167,7 +167,7 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 		$this->_mockForReturnFalse('Pages.Page', 'saveTheme');
 
 		//テスト実行
-		$this->_testPostAction('post', $this->__data(),
+		$this->_testPostAction('put', $this->__data(),
 				array('action' => 'theme', $roomId, $pageId), 'BadRequestException', 'view');
 	}
 

@@ -80,7 +80,6 @@ class PageSavePageTest extends NetCommonsSaveTest {
 	public function dataProviderSave() {
 		$data['Page'] = Hash::extract((new Page4pagesFixture())->records, '{n}[id=7]')[0];
 
-		//TODO:テストパタンを書く
 		$results = array();
 		// * 編集の登録処理
 		$results[0] = array($data);

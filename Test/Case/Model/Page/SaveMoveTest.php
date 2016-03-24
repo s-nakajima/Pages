@@ -65,7 +65,6 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 	public function setUp() {
 		parent::setUp();
 
-
 		//テストクエリ
 		$this->___query = array(
 			'recursive' => -1,

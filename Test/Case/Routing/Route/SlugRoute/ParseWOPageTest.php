@@ -25,7 +25,9 @@ class PagesRoutingRouteSlugRouteParseWOPageTestTest extends NetCommonsCakeTestCa
  *
  * @var array
  */
-	public $fixtures = array();
+	public $fixtures = array(
+		'plugin.pages.page4drop',
+	);
 
 /**
  * Fixture merge
@@ -42,48 +44,15 @@ class PagesRoutingRouteSlugRouteParseWOPageTestTest extends NetCommonsCakeTestCa
 	public $plugin = 'pages';
 
 /**
- * setUp method
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-	}
-
-/**
- * DataProvider
- *
- * ### 戻り値
- * - template テンプレート
- * - url URL
- * - expected 期待値
- *
- * @return array テストデータ
- */
-	public function dataProvider() {
-		return array(
-			// * 「/*」のケース
-			array('template' => '/*', 'url' => '/', 'expected' => false),
-		);
-	}
-
-/**
  * parse()のテスト
  *
- * @param string $template テンプレート
- * @param string $url URL
- * @param bool|array $expected 期待値
- * @dataProvider dataProvider
  * @return void
  */
-	public function testParse($template, $url) {
-		//テスト実施
-		$route = new SlugRoute($template,
-			array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index')
-		);
+	public function testParse() {
+		$route = new SlugRoute('/*', array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'));
 
 		$route->compile();
-		$result = $route->parse($url);
+		$result = $route->parse('/');
 		$this->assertFalse($result);
 	}
 

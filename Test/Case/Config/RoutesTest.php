@@ -53,6 +53,7 @@ class RoutesTest extends NetCommonsControllerTestCase {
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
+		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestErr');
 	}
 
 /**
@@ -81,10 +82,10 @@ class RoutesTest extends NetCommonsControllerTestCase {
 				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/test_err/test_error',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test_err', 'test_error'))
 			),
 			array('url' => '/test_err/test_error/index',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test_err', 'test_error', 'index'))
 			),
 			array('url' => '/aaaaa/',
 				'expected' => false, 'exception' => 'MissingControllerException'
@@ -103,10 +104,10 @@ class RoutesTest extends NetCommonsControllerTestCase {
 				'expected' => array('plugin' => 'test_pages', 'controller' => 'test_page', 'action' => 'index', 'pass' => array())
 			),
 			array('url' => '/setting/test_err/test_error',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test_err', 'test_error'))
 			),
 			array('url' => '/setting/test_err/test_error/index',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test_err', 'test_error', 'index'))
 			),
 			array('/setting/aaaaa/',
 				'expected' => false, 'exception' => 'MissingControllerException'

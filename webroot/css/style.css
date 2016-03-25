@@ -18,3 +18,9 @@
 	margin: 8px;
 	padding: 2px;
 }
+
+select.boxes-pages-input-size {
+	padding: 3px 10px;
+	height: 26px;
+	line-height: 26px;
+}

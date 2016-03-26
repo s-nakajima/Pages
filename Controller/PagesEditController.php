@@ -191,11 +191,14 @@ class PagesEditController extends PagesAppController {
 			return $this->redirect('/' . Current::read('Page.permalink'));
 
 		} else {
-			$page = $this->Page->getPageWithFrame(Current::read('Page.permalink'));
-			if (empty($page)) {
-				return $this->throwBadRequest();
-			}
-			$this->request->data['ContainersPage'] = Hash::combine($page, 'Container.{n}.type', 'Container.{n}.ContainersPage');
+			$containersPages = $this->ContainersPage->find('all', array(
+				'recursive' => 0,
+				'conditions' => array('ContainersPage.page_id' => Current::read('Page.id'))
+			));
+			$this->request->data['ContainersPage'] = Hash::combine($containersPages, '{n}.Container.type', '{n}.ContainersPage');
+
+			$children = $this->Page->children(Current::read('Page.id'), false, 'id');
+			$this->request->data['ChildPage']['id'] = implode(',', Hash::extract($children, '{n}.Page.id', array()));
 		}
 	}
 

@@ -39,6 +39,7 @@ class PageSaveBehavior extends ModelBehavior {
 	public function beforeValidate(Model $model, $options = array()) {
 		$model->loadModels([
 			'Page' => 'Pages.Page',
+			'Room' => 'Rooms.Room',
 		]);
 		if (! Hash::get($model->data, 'Page.room_id')) {
 			$model->data['Page']['room_id'] = Current::read('Room.id');

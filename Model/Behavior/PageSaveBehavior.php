@@ -60,6 +60,9 @@ class PageSaveBehavior extends ModelBehavior {
 			));
 			$permalink = Hash::get($roomPageTop, 'Page.permalink') . '/' . $permalink;
 		}
+		if (substr($permalink, 0, 1) === '/') {
+			$permalink = substr($permalink, 1);
+		}
 		$model->data['Page']['permalink'] = $permalink;
 
 		return parent::beforeValidate($model, $options);

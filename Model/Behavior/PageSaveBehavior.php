@@ -37,9 +37,13 @@ class PageSaveBehavior extends ModelBehavior {
  * @see Model::save()
  */
 	public function beforeValidate(Model $model, $options = array()) {
+		$model->loadModels([
+			'Page' => 'Pages.Page',
+		]);
 		if (! Hash::get($model->data, 'Page.room_id')) {
 			$model->data['Page']['room_id'] = Current::read('Room.id');
 		}
+		$model->data['Page']['is_container_fluid'] = false;
 
 		$slug = $model->data['Page']['slug'];
 		if (! isset($slug)) {
@@ -47,8 +51,16 @@ class PageSaveBehavior extends ModelBehavior {
 		}
 		$model->data['Page']['slug'] = $slug;
 
-		$model->data['Page']['permalink'] = $slug;
-		$model->data['Page']['is_container_fluid'] = false;
+		$permalink = $slug;
+		if ($model->data['Page']['room_id'] !== Room::PUBLIC_PARENT_ID) {
+			$roomPageTop = $model->Page->find('first', array(
+				'recursive' => -1,
+				'fields' => array('permalink'),
+				'conditions' => array('id' => Current::read('Room.page_id_top'))
+			));
+			$permalink = Hash::get($roomPageTop, 'Page.permalink') . '/' . $permalink;
+		}
+		$model->data['Page']['permalink'] = $permalink;
 
 		return parent::beforeValidate($model, $options);
 	}

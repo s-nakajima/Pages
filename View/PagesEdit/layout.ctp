@@ -34,10 +34,13 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 							<?php echo $this->NetCommonsForm->hidden('Page.id', array(
 									'value' => Current::read('Page.id'),
 								)); ?>
+							<?php echo $this->NetCommonsForm->hidden('ChildPage.id'); ?>
 
 							<?php foreach (array(Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MINOR, Container::TYPE_FOOTER) as $containerType) : ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.id'); ?>
-								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.page_id'); ?>
+								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.page_id', array(
+										'value' => Current::read('Page.id'),
+									)); ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
 								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.is_configured', array('value' => true)); ?>
 

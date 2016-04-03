@@ -207,8 +207,18 @@ class PageAssociationsBehavior extends ModelBehavior {
 			'Container.type' => Container::TYPE_MAIN
 		);
 		$containers = $model->ContainersPage->find('list', array(
-			'recursive' => 0,
+			'recursive' => -1,
 			'fields' => 'Container.id',
+			'joins' => array(
+				array(
+					'table' => $model->Container->table,
+					'alias' => $model->Container->alias,
+					'type' => 'INNER',
+					'conditions' => array(
+						$model->ContainersPage->alias . '.container_id' . ' = ' . $model->Container->alias . ' .id',
+					),
+				),
+			),
 			'conditions' => $conditions
 		));
 		$containerIds = array_values($containers);

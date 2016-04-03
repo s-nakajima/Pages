@@ -23,7 +23,8 @@ class PageLayoutHelper extends AppHelper {
  * @var array
  */
 	public $helpers = array(
-		'Html'
+		'Html',
+		'NetCommons.NetCommonsHtml',
 	);
 
 /**
@@ -73,6 +74,19 @@ class PageLayoutHelper extends AppHelper {
 		$this->containers = Hash::combine(Hash::get($View->viewVars, 'page.Container', array()), '{n}.type', '{n}');
 		$this->boxes = Hash::combine(Hash::get($View->viewVars, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id');
 		$this->plugins = Hash::combine(Current::read('PluginsRoom', array()), '{n}.Plugin.key', '{n}.Plugin');
+	}
+
+/**
+ * Before render callback. beforeRender is called before the view file is rendered.
+ *
+ * Overridden in subclasses.
+ *
+ * @param string $viewFile The view file that is going to be rendered
+ * @return void
+ */
+	public function beforeRender($viewFile) {
+		$this->NetCommonsHtml->css('/pages/css/style.css');
+		parent::beforeRender($viewFile);
 	}
 
 /**

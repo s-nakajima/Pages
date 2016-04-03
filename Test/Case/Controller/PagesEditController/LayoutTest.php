@@ -111,21 +111,6 @@ class PagesEditControllerLayoutTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * layout()アクションのGetリクエストのExceptionErrorテスト
- *
- * @return void
- */
-	public function testLayoutGetOnExceptionError() {
-		//テストデータ
-		$roomId = '1';
-		$pageId = '4';
-		$this->_mockForReturnFalse('Pages.Page', 'getPageWithFrame');
-
-		//テスト実行
-		$this->_testGetAction(array('action' => 'layout', $roomId, $pageId), null, 'BadRequestException', 'view');
-	}
-
-/**
  * POSTリクエストデータ生成
  *
  * @return array リクエストデータ

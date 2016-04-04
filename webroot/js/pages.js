@@ -175,10 +175,10 @@ NetCommonsApp.controller('PagesEditController',
  * PagesMoveController Javascript
  *
  * @param {string} Controller name
- * @param {function($scope, $modalInstance)} Controller
+ * @param {function($scope, $uibModalInstance)} Controller
  */
 NetCommonsApp.controller('PagesMoveController',
-    ['$scope', '$modalInstance', function($scope, $modalInstance) {
+    ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
 
       /**
        * 移動先の親ページIDを保持する変数
@@ -191,7 +191,7 @@ NetCommonsApp.controller('PagesMoveController',
        * @return {void}
        */
       $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
 
     }]);

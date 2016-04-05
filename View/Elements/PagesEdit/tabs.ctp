@@ -54,4 +54,3 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 		?>
 	</li>
 </ul>
-<br>

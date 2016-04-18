@@ -85,7 +85,9 @@ class PageSaveBehavior extends ModelBehavior {
 			$model->LanguagesPage->create(false);
 			$model->LanguagesPage->set($model->data['LanguagesPage']);
 			if (! $model->LanguagesPage->validates()) {
-				$model->validationErrors = Hash::merge($model->validationErrors, $model->LanguagesPage->validationErrors);
+				$model->validationErrors = Hash::merge(
+					$model->validationErrors, $model->LanguagesPage->validationErrors
+				);
 				return false;
 			}
 		}

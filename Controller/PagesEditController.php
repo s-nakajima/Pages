@@ -195,10 +195,13 @@ class PagesEditController extends PagesAppController {
 				'recursive' => 0,
 				'conditions' => array('ContainersPage.page_id' => Current::read('Page.id'))
 			));
-			$this->request->data['ContainersPage'] = Hash::combine($containersPages, '{n}.Container.type', '{n}.ContainersPage');
+			$this->request->data['ContainersPage'] = Hash::combine(
+				$containersPages, '{n}.Container.type', '{n}.ContainersPage'
+			);
 
 			$children = $this->Page->children(Current::read('Page.id'), false, 'id');
-			$this->request->data['ChildPage']['id'] = implode(',', Hash::extract($children, '{n}.Page.id', array()));
+			$extract = Hash::extract($children, '{n}.Page.id', array());
+			$this->request->data['ChildPage']['id'] = implode(',', $extract);
 		}
 	}
 

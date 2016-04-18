@@ -11,9 +11,21 @@
 App::uses('SlugRoute', 'Pages.Routing/Route');
 App::uses('Current', 'NetCommons.Utility');
 
-Router::connect('/' . Current::SETTING_MODE_WORD . '/', array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'), array('routeClass' => 'SlugRoute'));
-Router::connect('/' . Current::SETTING_MODE_WORD . '/*', array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'), array('routeClass' => 'SlugRoute'));
-Router::connect('/*', array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'), array('routeClass' => 'SlugRoute'));
+Router::connect(
+	'/' . Current::SETTING_MODE_WORD . '/',
+	array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'),
+	array('routeClass' => 'SlugRoute')
+);
+Router::connect(
+	'/' . Current::SETTING_MODE_WORD . '/*',
+	array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'),
+	array('routeClass' => 'SlugRoute')
+);
+Router::connect(
+	'/*',
+	array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index'),
+	array('routeClass' => 'SlugRoute')
+);
 
 $params = array();
 if (! Current::isSettingMode()) {
@@ -29,9 +41,21 @@ if ($plugins = CakePlugin::loaded()) {
 	$match = array('plugin' => $pluginPattern);
 	$shortParams = array('routeClass' => 'PluginShortRoute', 'plugin' => $pluginPattern);
 
-	Router::connect('/' . Current::SETTING_MODE_WORD . '/:plugin', $indexParams, $shortParams);
-	Router::connect('/' . Current::SETTING_MODE_WORD . '/:plugin/:controller', $indexParams, $match);
-	Router::connect('/' . Current::SETTING_MODE_WORD . '/:plugin/:controller/:action/*', $params, $match);
+	Router::connect(
+		'/' . Current::SETTING_MODE_WORD . '/:plugin',
+		$indexParams,
+		$shortParams
+	);
+	Router::connect(
+		'/' . Current::SETTING_MODE_WORD . '/:plugin/:controller',
+		$indexParams,
+		$match
+	);
+	Router::connect(
+		'/' . Current::SETTING_MODE_WORD . '/:plugin/:controller/:action/*',
+		$params,
+		$match
+	);
 }
 
 Router::connect('/' . Current::SETTING_MODE_WORD . '/:controller', $indexParams);

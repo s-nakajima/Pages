@@ -18,3 +18,11 @@
 	margin: 8px;
 	padding: 2px;
 }
+
+.page-move-radio .radio-inline {
+	padding-left: 0px;
+}
+
+.form-inline.page-move-radio {
+	display: inline-block;
+}

@@ -43,6 +43,7 @@
 							array(
 								'hiddenField' => false,
 								'ng-click' => 'pageParentId = \'' . $pageId . '\'',
+								'div' => array('class' => 'form-inline page-move-radio'),
 							)
 						); ?>
 				<?php else : ?>
@@ -55,8 +56,6 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
-
-<hr>
 
 <div class="text-center">
 	<button name="cancel" type="button" ng-disabled="sending" ng-click="cancel()" class="btn btn-default btn-workflow">

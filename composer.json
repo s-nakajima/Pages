@@ -22,8 +22,8 @@
         "netcommons/containers":        "dev-master",
         "netcommons/net-commons":       "dev-master",
         "netcommons/rooms":             "dev-master",
-        "netcommons/site_manager":      "dev-master",
-        "netcommons/theme_settings":    "dev-master"
+        "netcommons/site-manager":      "dev-master",
+        "netcommons/theme-settings":    "dev-master"
     },
     "require-dev": {
         "netcommons/frames":            "dev-master",

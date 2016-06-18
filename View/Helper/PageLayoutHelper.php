@@ -252,4 +252,42 @@ class PageLayoutHelper extends AppHelper {
 		return array();
 	}
 
+/**
+ * ブロックのステータスラベルを表示
+ *
+ * @return string HTML
+ */
+	public function getBlockStatus() {
+		$html = '';
+
+		if (Current::isSettingMode() || ! Current::read('Block.id')) {
+			return $html;
+		}
+
+		$block = Current::read('Block', array());
+
+		$now = date('Y-m-d H:i:s');
+		$publicType = Hash::get($block, 'public_type');
+
+		$html .= '<span class="small workflow-label label label-default">';
+
+		if ($publicType === Block::TYPE_PRIVATE) {
+			$html .= __d('blocks', 'Private');
+		} elseif ($publicType === Block::TYPE_PUBLIC) {
+			$html .= __d('blocks', 'Public');
+		} elseif ($publicType === Block::TYPE_LIMITED) {
+			if ($now < Hash::get($block, 'publish_start')) {
+				$html .= __d('blocks', 'Public before');
+			} elseif ($now > Hash::get($block, 'publish_end')) {
+				$html .= __d('blocks', 'Public end');
+			} else {
+				$html .= __d('blocks', 'Limited');
+			}
+		}
+
+		$html .= '</span>';
+
+		return $html;
+	}
+
 }

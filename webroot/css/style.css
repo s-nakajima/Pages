@@ -26,3 +26,8 @@
 .form-inline.page-move-radio {
 	display: inline-block;
 }
+
+.small.block-style-label {
+	font-size: 10px;
+	font-weight: 400;
+}

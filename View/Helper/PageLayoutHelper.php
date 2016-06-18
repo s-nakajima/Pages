@@ -260,21 +260,22 @@ class PageLayoutHelper extends AppHelper {
 	public function getBlockStatus() {
 		$html = '';
 
-		if (Current::isSettingMode() || ! Current::read('Block.id')) {
+		if (! Current::isSettingMode() || ! Current::read('Block.id')) {
 			return $html;
 		}
 
 		$block = Current::read('Block', array());
 
-		$now = date('Y-m-d H:i:s');
 		$publicType = Hash::get($block, 'public_type');
+		if ($publicType === Block::TYPE_PUBLIC) {
+			return $html;
+		}
 
-		$html .= '<span class="small workflow-label label label-default">';
+		$now = date('Y-m-d H:i:s');
+		$html .= '<span class="small block-style-label label label-default">';
 
 		if ($publicType === Block::TYPE_PRIVATE) {
 			$html .= __d('blocks', 'Private');
-		} elseif ($publicType === Block::TYPE_PUBLIC) {
-			$html .= __d('blocks', 'Public');
 		} elseif ($publicType === Block::TYPE_LIMITED) {
 			if ($now < Hash::get($block, 'publish_start')) {
 				$html .= __d('blocks', 'Public before');

@@ -20,27 +20,18 @@ App::uses('PagesEditController', 'Pages.Controller');
 class TestViewElementsPagesEditEditFormController extends PagesEditController {
 
 /**
- * beforeRender
- *
- * @return void
- */
-	public function beforeFilter() {
-		$result = $this->Page->find('first', array(
-			'recursive' => 0,
-			'conditions' => array('Page.id' => '7')
-		));
-		Current::write(null, $result);
-
-		parent::beforeFilter();
-	}
-
-/**
  * edit_form
  *
  * @return void
  */
 	public function edit() {
 		$this->autoRender = true;
+		$result = $this->Page->find('first', array(
+			'recursive' => 0,
+			'conditions' => array('Page.id' => '7')
+		));
+		Current::write(null, $result);
+
 		parent::edit();
 	}
 

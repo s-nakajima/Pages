@@ -30,6 +30,10 @@
 <?php echo $this->NetCommonsForm->unlockField('Page.parent_id'); ?>
 <?php echo $this->NetCommonsForm->hidden('Page.type', array('value' => 'move')); ?>
 
+<?php echo $this->MessageFlash->description(
+		__d('pages', 'Please select the destination of the "%s" page.', Hash::get($pages, Current::read('Page.id') . '.LanguagesPage.name'))
+	); ?>
+
 <table class="table table-hover">
 	<tbody>
 		<?php foreach ($treeList as $pageId) : ?>

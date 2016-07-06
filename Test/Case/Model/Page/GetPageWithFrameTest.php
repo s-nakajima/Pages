@@ -74,7 +74,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName($permalink);
 
 		//チェック
-		$expected = array('Page', 'Box', 'Container', 'Language');
+		$expected = array('Page', 'Box', 'Container', 'Language', 'LanguagesPage');
 		$this->assertEquals($expected, array_keys($result));
 
 		$this->__assertPage($result['Page'], array());
@@ -105,7 +105,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName($permalink);
 
 		//チェック
-		$expected = array('Page', 'Box', 'Container', 'Language');
+		$expected = array('Page', 'Box', 'Container', 'Language', 'LanguagesPage');
 		$this->assertEquals($expected, array_keys($result));
 
 		$this->__assertPage($result['Page']);

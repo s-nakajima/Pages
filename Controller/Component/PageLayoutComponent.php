@@ -53,6 +53,7 @@ class PageLayoutComponent extends Component {
 			$controller->set('page', $page);
 		}
 
+
 		$controller->set('modal', $this->modal);
 
 		//ヘルパーセット

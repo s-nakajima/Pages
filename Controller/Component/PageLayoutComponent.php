@@ -53,8 +53,10 @@ class PageLayoutComponent extends Component {
 			$controller->set('page', $page);
 		}
 
-
 		$controller->set('modal', $this->modal);
+
+		//メタデータのセット
+		$this->setMeta($controller);
 
 		//ヘルパーセット
 		if (! array_key_exists('NetCommons.Composer', $controller->helpers)) {
@@ -63,6 +65,56 @@ class PageLayoutComponent extends Component {
 		if (! array_key_exists('Pages.PageLayout', $controller->helpers)) {
 			$controller->helpers[] = 'Pages.PageLayout';
 		}
+	}
+
+/**
+ * メタデータのviewVarsセット処理
+ *
+ * @param Controller $controller Controller
+ * @return void
+ */
+	public function setMeta(Controller $controller) {
+		//メタデータのセット
+		$meta['title'] = Hash::get(
+			$controller->viewVars['page'],
+			'LanguagesPage.meta_title',
+			LanguagesPage::DEFAULT_META_TITLE
+		);
+		$meta['description'] = Hash::get(
+			$controller->viewVars['page'],
+			'LanguagesPage.meta_description',
+			SiteSettingUtil::read('Meta.description')
+		);
+		$meta['keywords'] = Hash::get(
+			$controller->viewVars['page'],
+			'LanguagesPage.meta_keywords',
+			SiteSettingUtil::read('Meta.keywords')
+		);
+		$meta['robots'] = Hash::get(
+			$controller->viewVars['page'],
+			'LanguagesPage.meta_robots',
+			SiteSettingUtil::read('Meta.robots')
+		);
+		$meta['copyright'] = SiteSettingUtil::read('Meta.copyright');
+		$meta['author'] = SiteSettingUtil::read('Meta.author');
+
+		$result = array();
+		foreach ($meta as $key => $value) {
+			$value = str_replace(
+				'{X-SITE_NAME}', SiteSettingUtil::read('App.site_name'), $value
+			);
+			$value = str_replace(
+				'{X-PAGE_NAME}', Hash::get($controller->viewVars['page'], 'LanguagesPage.name'), $value
+			);
+
+			if ($key === 'title') {
+				$controller->set('pageTitle', $value);
+			} else {
+				$result[] = array('name' => $key, 'content' => $value);
+			}
+		}
+
+		$controller->set('meta', $result);
 	}
 
 }

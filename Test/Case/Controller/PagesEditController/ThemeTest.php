@@ -93,7 +93,7 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 		$this->assertInput('input', 'data[Page][theme]', null, $this->view);
 
-		$this->assertEquals('UnitTestTheme', $this->controller->theme);
+		$this->assertEquals('default', $this->controller->theme);
 	}
 
 /**

@@ -81,8 +81,9 @@ class PagesEditHelper extends AppHelper {
 	public function helpMetaTitle() {
 		$html = '';
 
-		$html .= __d('pages', 'The keywords in the title influences the search order of the search engine. ' .
-								'The keyword in the head is important.') . '<br>';
+		$html .= __d('pages',
+				'The keywords in the title influences the search order of the search engine. ' .
+				'The keyword in the head is important.') . '<br>';
 
 		$content = __d('net_commons', '{X-SITE_NAME} : Site name') . '<br>';
 		$content .= __d('pages', '{X-PAGE_NAME} : Page name');

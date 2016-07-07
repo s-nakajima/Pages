@@ -80,7 +80,7 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1'),
+			'LanguagesPage' => array('id' => '1', 'name' => ''),
 		);
 
 		//テスト実施

@@ -1,6 +1,6 @@
 <?php
 /**
- * 編集・追加画面View
+ * メタ情報の設定 View
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -8,6 +8,8 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 ?>
 
 <div class="control-panel">
@@ -16,10 +18,12 @@
 		<?php echo $this->element('PagesEdit/tabs'); ?>
 
 		<div class="panel panel-default">
-			<?php echo $this->NetCommonsForm->create('Page'); ?>
+			<?php echo $this->NetCommonsForm->create('EditMeta', array('type' => 'put',
+					'url' => $this->NetCommonsHtml->url(array('key' => Current::read('Room.id'), Current::read('Page.id')))
+				)); ?>
 
 				<div class="panel-body">
-					<?php echo $this->element('PagesEdit/edit_form', array('action' => $this->params['action'])); ?>
+					<?php echo $this->element('PagesEdit/meta_form'); ?>
 				</div>
 
 				<div class="panel-footer text-center">
@@ -28,10 +32,6 @@
 				</div>
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
-
-		<?php if ($this->params['action'] === 'edit') : ?>
-			<?php echo $this->element('PagesEdit/delete_form'); ?>
-		<?php endif; ?>
 	</article>
 </div>
 

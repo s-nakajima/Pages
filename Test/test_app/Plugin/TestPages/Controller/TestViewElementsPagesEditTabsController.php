@@ -31,6 +31,8 @@ class TestViewElementsPagesEditTabsController extends AppController {
 		//テストデータ
 		Current::write('Page', array('id' => '', 'parent_id' => '1'));
 		Current::write('Room', array('id' => '1'));
+
+		$this->set('parentPathName', 'Room name / Home ja / Test page 4');
 	}
 
 /**
@@ -47,6 +49,8 @@ class TestViewElementsPagesEditTabsController extends AppController {
 		//テストデータ
 		Current::write('Page', array('id' => '7', 'parent_id' => '4'));
 		Current::write('Room', array('id' => '1'));
+
+		$this->set('parentPathName', 'Room name / Home ja / Test page 4');
 	}
 
 /**
@@ -64,6 +68,8 @@ class TestViewElementsPagesEditTabsController extends AppController {
 		//テストデータ
 		Current::write('Page', array('id' => '1', 'parent_id' => null));
 		Current::write('Room', array('id' => '1'));
+
+		$this->set('parentPathName', 'Room name / Home ja / Test page 4');
 	}
 
 /**
@@ -80,6 +86,8 @@ class TestViewElementsPagesEditTabsController extends AppController {
 		//テストデータ
 		Current::write('Page', array('id' => '7', 'parent_id' => '4'));
 		Current::write('Room', array('id' => '1'));
+
+		$this->set('parentPathName', 'Room name / Home ja / Test page 4');
 	}
 
 /**
@@ -96,6 +104,26 @@ class TestViewElementsPagesEditTabsController extends AppController {
 		//テストデータ
 		Current::write('Page', array('id' => '7', 'parent_id' => '4'));
 		Current::write('Room', array('id' => '1'));
+
+		$this->set('parentPathName', 'Room name / Home ja / Test page 4');
+	}
+
+/**
+ * tabs
+ *
+ * @return void
+ */
+	public function meta() {
+		$this->autoRender = true;
+		$this->view = 'tabs';
+		$this->request->params['plugin'] = 'pages';
+		$this->request->params['controller'] = 'pages_edit';
+
+		//テストデータ
+		Current::write('Page', array('id' => '7', 'parent_id' => '4'));
+		Current::write('Room', array('id' => '1'));
+
+		$this->set('parentPathName', 'Room name / Home ja / Test page 4');
 	}
 
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Element of edit form.
+ * メタデータ編集 Element
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>

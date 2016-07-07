@@ -1,11 +1,12 @@
 <?php
 /**
- * Pages template.
+ * ページ全体 Layout
  *
- * @copyright Copyright 2014, NetCommons Project
- * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @author Noriko Arai <arai@nii.ac.jp>
+ * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
  */
 ?>
 <?php $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework'); ?>

@@ -53,4 +53,20 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 			}
 		?>
 	</li>
+	<li class="<?php echo (Hash::get($this->request->params, 'action') === 'meta' ? 'active' : $disactive); ?>">
+		<?php
+			if (! $disactive) {
+				echo $this->NetCommonsHtml->link(__d('pages', 'Setting of Meta information'),
+						array('action' => 'meta', 'key' => Current::read('Room.id'), Current::read('Page.id')));
+			} else {
+				echo '<a>' . __d('pages', 'Setting of Meta information') . '</a>';
+			}
+		?>
+	</li>
 </ul>
+
+<?php if ($this->request->params['action'] !== 'index') : ?>
+	<h2>
+		<?php echo $parentPathName; ?>
+	</h2>
+<?php endif;

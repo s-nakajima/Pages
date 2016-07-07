@@ -67,6 +67,10 @@ msgstr "レイアウト編集"
 msgid "Theme setting"
 msgstr "テーマ設定"
 
+#: Pages/View/Elements/dropdown_menu.ctp:24
+msgid "Setting of Meta information"
+msgstr "Meta情報の設定"
+
 #: Pages/View/Elements/Pages/delete_form.ctp:28;38
 msgid "Page"
 msgstr "ページ"
@@ -92,3 +96,36 @@ msgstr "移動先のページ選択"
 
 msgid "Please select the destination of the \"%s\" page."
 msgstr "「%s」ページの移動先を選択してください。"
+
+#
+#: メタ情報の設定
+#
+
+#: Pages/View/Elements/dropdown_menu.ctp:13
+msgid "Title tag (&lt;title&gt;&lt;/title&gt;)"
+msgstr "タイトルタグ (&lt;title&gt;&lt;/title&gt;)"
+
+msgid "Title tag"
+msgstr "タイトルタグ"
+
+msgid "The keywords in the title influences the search order of the search engine. The keyword in the head is important."
+msgstr "タイトル内にあるキーワードは検索エンジンの検索順位に大きく影響します。先頭に記述されたものほど重要なキーワードとなります。"
+
+msgid "The item can use an embedded keyword."
+msgstr "この項目には、埋め込みキーワードが使えます。"
+
+msgid "{X-PAGE_NAME} : Page name"
+msgstr "{X-PAGE_NAME} : ページ名"
+
+msgid "META description"
+msgstr "ページの説明 (META description)"
+
+msgid "Set page description for the robot type search engine."
+msgstr "このページがロボット型検索エンジンに登録された時に表示される説明文を設定することができます。"
+
+msgid "META keywords"
+msgstr "キーワード (META keywords)"
+
+msgid "Yon can set search keywords for the robot type search engine.Multi-keywords can be delimited by comma. Please note that it might be judged spam when describing more than the necessity.<br />(exp: NetCommons,School,Research)"
+msgstr "このページをロボット型検索エンジンに登録するための検索キーワードを設定することができます。キーワードはカンマで区切って記述してください。必要以上に記載すると、スパムと判断される場合もあるので注意してください。<br />(例: NetCommons,学校,研究)"
+

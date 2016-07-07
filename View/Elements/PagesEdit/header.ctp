@@ -16,9 +16,3 @@ echo $this->NetCommonsHtml->css('/control_panel/css/style.css');
 	<?php echo __d('pages', 'Page Setting'); ?>
 </h1>
 <hr>
-<?php if ($this->request->params['action'] !== 'index') : ?>
-	<h3>
-		<?php echo $parentPathName; ?>
-	</h3>
-	<br>
-<?php endif;

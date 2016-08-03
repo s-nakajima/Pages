@@ -41,7 +41,7 @@ NetCommonsApp.controller('PagesLayoutController', ['$scope', function($scope) {
  * @param {function($scope, $http)} Controller
  */
 NetCommonsApp.controller('PagesEditController',
-    ['$scope', 'NetCommonsModal', function($scope, NetCommonsModal) {
+    ['$scope', 'NetCommonsModal', 'NC3_URL', function($scope, NetCommonsModal, NC3_URL) {
 
       /**
        * ページデータ保持用
@@ -162,8 +162,7 @@ NetCommonsApp.controller('PagesEditController',
         var roomId = $scope.pages[pageId]['Page']['room_id'];
         NetCommonsModal.show(
             $scope, 'PagesMoveController',
-            $scope.baseUrl +
-                '/pages/pages_edit/move/' + roomId + '/' + pageId,
+            NC3_URL + '/pages/pages_edit/move/' + roomId + '/' + pageId,
             {backdrop: 'static', size: 'md'}
         );
       };

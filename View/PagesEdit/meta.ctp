@@ -19,7 +19,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 
 		<div class="panel panel-default">
 			<?php echo $this->NetCommonsForm->create('EditMeta', array('type' => 'put',
-					'url' => $this->NetCommonsHtml->url(array('key' => Current::read('Room.id'), Current::read('Page.id')))
+					'url' => NetCommonsUrl::actionUrlAsArray(array('key' => Current::read('Room.id'), Current::read('Page.id')))
 				)); ?>
 
 				<div class="panel-body">
@@ -28,7 +28,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 
 				<div class="panel-footer text-center">
 					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'),
-							$this->NetCommonsHtml->url(array('action' => 'index', Current::read('Room.id')))); ?>
+							NetCommonsUrl::actionUrlAsArray(array('action' => 'index', Current::read('Room.id')))); ?>
 				</div>
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>

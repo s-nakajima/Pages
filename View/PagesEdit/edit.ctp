@@ -24,7 +24,7 @@
 
 				<div class="panel-footer text-center">
 					<?php echo $this->Button->cancelAndSave(__d('net_commons', 'Cancel'), __d('net_commons', 'OK'),
-							$this->NetCommonsHtml->url(array('action' => 'index', Current::read('Room.id')))); ?>
+							NetCommonsUrl::actionUrlAsArray(array('action' => 'index', Current::read('Room.id')))); ?>
 				</div>
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>

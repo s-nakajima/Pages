@@ -21,7 +21,7 @@
 				)
 			)); ?>
 		<uib-accordion close-others="false">
-			<uib-accordion-group is-open="dangerZone" class="panel-danger">
+			<div uib-accordion-group is-open="dangerZone" class="panel-danger">
 				<uib-accordion-heading class="clearfix">
 					<span style="cursor: pointer">
 						<?php echo __d('net_commons', 'Danger Zone'); ?>
@@ -33,7 +33,7 @@
 					<?php echo sprintf(__d('net_commons', 'Delete all data associated with the %s.'), __d('pages', 'Page')); ?>
 				</div>
 
-				<?php echo $this->NetCommonsForm->input('Page.id'); ?>
+				<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
 				<?php echo $this->NetCommonsForm->hidden('Room.id'); ?>
 				<?php echo $this->NetCommonsForm->hidden('Room.page_id_top'); ?>
 
@@ -43,7 +43,7 @@
 						array('addClass' => 'pull-right')
 					); ?>
 
-			</uib-accordion-group>
+			</div>
 		</uib-accordion>
 	<?php echo $this->NetCommonsForm->end(); ?>
 </div>

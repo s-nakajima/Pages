@@ -16,7 +16,7 @@
 					array(
 						'action' => 'delete',
 						'key' => Current::read('Room.id'),
-						Current::read('Page.id')
+						'key2' => Current::read('Page.id')
 					)
 				)
 			)); ?>

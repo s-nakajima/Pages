@@ -75,14 +75,14 @@ class PagesViewElementsPagesEditDeleteFormTest extends NetCommonsControllerTestC
  */
 	public function testDeleteForm() {
 		//テスト実行
-		$this->_testGetAction('/test_pages/test_view_elements_pages_edit_delete_form/edit/2?frame_id=6',
+		$this->_testGetAction('/test_pages/test_view_elements_pages_edit_delete_form/edit/2',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
 		$pattern = '/' . preg_quote('View/Elements/PagesEdit/delete_form', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
 
-		$this->assertInput('form', null, '/delete/2/1/7?frame_id=6', $this->view);
+		$this->assertInput('form', null, '/delete/1/7', $this->view);
 		$this->assertInput('input', '_method', 'DELETE', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '7', $this->view);
 	}

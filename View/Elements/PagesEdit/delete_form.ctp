@@ -12,11 +12,11 @@
 
 <div class="nc-danger-zone" ng-init="dangerZone=false;">
 	<?php echo $this->NetCommonsForm->create('Page', array('type' => 'delete',
-				'url' => $this->NetCommonsHtml->url(
+				'url' => NetCommonsUrl::actionUrlAsArray(
 					array(
 						'action' => 'delete',
 						'key' => Current::read('Room.id'),
-						Current::read('Page.id')
+						'key2' => Current::read('Page.id')
 					)
 				)
 			)); ?>

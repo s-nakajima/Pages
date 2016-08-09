@@ -22,12 +22,12 @@
     },
     "require": {
         "cakedc/migrations":            "~2.2",
-        "netcommons/boxes":             "dev-master",
-        "netcommons/containers":        "dev-master",
-        "netcommons/net-commons":       "dev-master",
-        "netcommons/rooms":             "dev-master",
-        "netcommons/site-manager":      "dev-master",
-        "netcommons/theme-settings":    "dev-master"
+        "netcommons/boxes":             "@dev",
+        "netcommons/containers":        "@dev",
+        "netcommons/net-commons":       "@dev",
+        "netcommons/rooms":             "@dev",
+        "netcommons/site-manager":      "@dev",
+        "netcommons/theme-settings":    "@dev"
     },
     "require-dev": {
         "netcommons/frames":            "dev-master",

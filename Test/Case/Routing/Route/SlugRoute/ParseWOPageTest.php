@@ -11,6 +11,7 @@
 
 App::uses('NetCommonsCakeTestCase', 'NetCommons.TestSuite');
 App::uses('SlugRoute', 'Pages.Routing/Route');
+App::uses('PageFixture', 'Pages.Test/Fixture');
 
 /**
  * SlugRoute::parse()のテスト
@@ -54,6 +55,10 @@ class PagesRoutingRouteSlugRouteParseWOPageTestTest extends NetCommonsCakeTestCa
 		$route->compile();
 		$result = $route->parse('/');
 		$this->assertFalse($result);
+
+		$fixture = new PageFixture();
+		$db = ConnectionManager::getDataSource($fixture->useDbConfig);
+		$fixture->create($db);
 	}
 
 }

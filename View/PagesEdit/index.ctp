@@ -40,7 +40,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 		<?php echo $this->NetCommonsForm->unlockField('Page.type'); ?>
 
 		<div class="table-responsive">
-			<table class="table table-hover" ng-controller="PagesEditController"
+			<table class="table table-hover" ng-controller="PagesEditController" ng-cloak
 					ng-init="initialize(<?php echo h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList)); ?>)">
 				<thead>
 					<tr ng-init="pageId = treeList[0]">

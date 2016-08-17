@@ -34,7 +34,7 @@
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
 
-		<?php if ($this->params['action'] === 'edit') : ?>
+		<?php if ($hasDelete) : ?>
 			<?php echo $this->element('PagesEdit/delete_form'); ?>
 		<?php endif; ?>
 	</article>

@@ -26,7 +26,7 @@
 		'required' => true,
 	)); ?>
 
-<?php echo $this->NetCommonsForm->input('Page.slug', array(
+<?php echo $this->NetCommonsForm->input('Page.permalink', array(
 		'type' => 'text',
 		'label' => __d('pages', 'Slug'),
 		'required' => true,

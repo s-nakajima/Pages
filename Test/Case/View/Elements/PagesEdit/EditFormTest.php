@@ -91,7 +91,7 @@ class PagesViewElementsPagesEditEditFormTest extends NetCommonsControllerTestCas
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][id]', '10', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][name]', 'Test page 4', $this->view);
-		$this->assertInput('input', 'data[Page][slug]', 'test4', $this->view);
+		$this->assertInput('input', 'data[Page][permalink]', 'test4', $this->view);
 	}
 
 }

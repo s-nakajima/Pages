@@ -82,9 +82,9 @@ class PageValidateTest extends NetCommonsValidateTest {
 				'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'))),
 			// * permalink
 			array('data' => $data, 'field' => 'permalink', 'value' => '',
-				'message' => __d('net_commons', 'Invalid request.')),
+				'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'))),
 			array('data' => $data, 'field' => 'permalink', 'value' => 'home',
-				'message' => sprintf(__d('net_commons', '%s is already in use.'), __d('pages', 'Permalink'))),
+				'message' => sprintf(__d('net_commons', '%s is already in use.'), __d('pages', 'Slug'))),
 			// * root_id
 			array('data' => $data, 'field' => 'root_id', 'value' => 'a',
 				'message' => __d('net_commons', 'Invalid request.')),

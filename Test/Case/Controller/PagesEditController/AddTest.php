@@ -94,14 +94,13 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][id]', null, $this->view);
 		$this->assertInput('input', 'data[Page][root_id]', '1', $this->view);
 		$this->assertInput('input', 'data[Page][parent_id]', $pageId, $this->view);
-		$this->assertInput('input', 'data[Page][permalink]', null, $this->view);
 		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
 		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][id]', null, $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][name]', null, $this->view);
-		$this->assertInput('input', 'data[Page][slug]', null, $this->view);
+		$this->assertInput('input', 'data[Page][permalink]', null, $this->view);
 		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 
 		$this->assertEquals(array('Page', 'LanguagesPage', 'Room', '_NetCommonsUrl'), array_keys($this->controller->request->data));
@@ -170,7 +169,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 			$this->controller->LanguagesPage->invalidate('name', $message);
 
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
-			$this->controller->Page->invalidate('slug', $message);
+			$this->controller->Page->invalidate('permalink', $message);
 			return false;
 		});
 

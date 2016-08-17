@@ -88,7 +88,7 @@ class PagesEditControllerBeforeFilterTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$this->__assertBeforeFilter($roomId);
-		$this->assertEquals('Room name', $this->vars['parentPathName']);
+		$this->assertArrayNotHasKey('parentPathName', $this->vars);
 	}
 
 /**

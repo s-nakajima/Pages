@@ -107,6 +107,7 @@ class PagesEditController extends PagesAppController {
  */
 	public function add() {
 		$this->view = 'edit';
+		$this->set('hasDelete', false);
 
 		if ($this->request->is('post')) {
 			//登録処理
@@ -135,6 +136,10 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function edit() {
+		$hasDelete = Current::read('Page.parent_id') &&
+				$this->viewVars['room']['Room']['page_id_top'] !== Current::read('Page.id');
+		$this->set('hasDelete', $hasDelete);
+
 		if (! Current::read('Page.parent_id')) {
 			return $this->throwBadRequest();
 		}
@@ -394,16 +399,19 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	private function __setParentPageName() {
-		if ($this->params['action'] !== 'index') {
-			$parentPathName = $this->Page->getParentNodeName(Current::read('Page.id'));
-		} else {
-			$parentPathName = array();
+		if ($this->params['action'] === 'index') {
+			return;
 		}
-		$room = Hash::extract(
-			$this->viewVars['room'],
-			'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
-		);
-		array_unshift($parentPathName, Hash::get($room, '0.name'));
+
+		$parentPathName = $this->Page->getParentNodeName(Current::read('Page.id'));
+
+		if ($this->viewVars['room']['Room']['page_id_top'] !== Current::read('Page.id')) {
+			$room = Hash::extract(
+				$this->viewVars['room'],
+				'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
+			);
+			array_unshift($parentPathName, Hash::get($room, '0.name'));
+		}
 
 		$this->set('parentPathName', implode(' / ', $parentPathName));
 	}

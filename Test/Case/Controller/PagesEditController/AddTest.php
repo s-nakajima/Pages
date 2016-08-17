@@ -102,8 +102,9 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][name]', null, $this->view);
 		$this->assertInput('input', 'data[Page][slug]', null, $this->view);
+		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 
-		$this->assertEquals(array('Page', 'LanguagesPage', 'Room'), array_keys($this->controller->request->data));
+		$this->assertEquals(array('Page', 'LanguagesPage', 'Room', '_NetCommonsUrl'), array_keys($this->controller->request->data));
 		$this->assertEquals($pageId, Hash::get($this->controller->request->data, 'Page.parent_id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Page.room_id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Room.id'));
@@ -124,6 +125,18 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 	}
 
 /**
+ * POSTリクエストデータ生成
+ *
+ * @return array リクエストデータ
+ */
+	private function __data() {
+		$data = array(
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+		);
+		return $data;
+	}
+
+/**
  * add()アクションのPOSTテスト
  *
  * @return void
@@ -136,7 +149,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		));
 
 		//テスト実行
-		$this->_testPostAction('post', array(), array('action' => 'add', $roomId, $pageId), null);
+		$this->_testPostAction('post', $this->__data(), array('action' => 'add', $roomId, $pageId), null);
 
 		//チェック
 		$header = $this->controller->response->header();

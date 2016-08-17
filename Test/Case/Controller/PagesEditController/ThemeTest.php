@@ -125,7 +125,9 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
  * @return array リクエストデータ
  */
 	private function __data() {
-		$data = array();
+		$data = array(
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+		);
 		return $data;
 	}
 
@@ -151,7 +153,7 @@ class PagesEditControllerThemeTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$header = $this->controller->response->header();
-		$this->assertNotEmpty($header['Location']);
+		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
 	}
 
 /**

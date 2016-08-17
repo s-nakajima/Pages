@@ -36,6 +36,7 @@
 				<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
 				<?php echo $this->NetCommonsForm->hidden('Room.id'); ?>
 				<?php echo $this->NetCommonsForm->hidden('Room.page_id_top'); ?>
+				<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
 
 				<?php echo $this->Button->delete(
 						__d('net_commons', 'Delete'),

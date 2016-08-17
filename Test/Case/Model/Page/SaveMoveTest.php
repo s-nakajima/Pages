@@ -98,9 +98,13 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
+		$roomId = '1';
 
 		//テスト実施
-		$data = array('Page' => array('id' => $pageId, 'type' => 'up'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'up'),
+			'Room' => array('id' => $roomId)
+		);
 		$result = $this->$model->$methodName($data);
 		$this->assertTrue($result);
 
@@ -129,10 +133,14 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
+		$roomId = '1';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
-		$data = array('Page' => array('id' => $pageId, 'type' => 'up'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'up'),
+			'Room' => array('id' => $roomId)
+		);
 		$this->$model->$methodName($data);
 	}
 
@@ -145,9 +153,13 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
+		$roomId = '1';
 
 		//テスト実施
-		$data = array('Page' => array('id' => $pageId, 'type' => 'down'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'down'),
+			'Room' => array('id' => $roomId)
+		);
 		$result = $this->$model->$methodName($data);
 		$this->assertTrue($result);
 
@@ -176,10 +188,14 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
+		$roomId = '1';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
-		$data = array('Page' => array('id' => $pageId, 'type' => 'down'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'down'),
+			'Room' => array('id' => $roomId)
+		);
 		$this->$model->$methodName($data);
 	}
 
@@ -192,9 +208,13 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
+		$roomId = '1';
 
 		//テスト実施
-		$data = array('Page' => array('id' => $pageId, 'type' => 'move', 'parent_id' => '4'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'move', 'parent_id' => '4'),
+			'Room' => array('id' => $roomId)
+		);
 		$result = $this->$model->$methodName($data);
 		$this->assertTrue($result);
 
@@ -223,9 +243,13 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
+		$roomId = '1';
 
 		//テスト実施
-		$data = array('Page' => array('id' => $pageId, 'type' => 'move', 'parent_id' => '8'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'move', 'parent_id' => '8'),
+			'Room' => array('id' => $roomId)
+		);
 		$result = $this->$model->$methodName($data);
 		$this->assertTrue($result);
 
@@ -254,10 +278,14 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
+		$roomId = '1';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
-		$data = array('Page' => array('id' => $pageId, 'type' => 'move', 'parent_id' => '7'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'move', 'parent_id' => '7'),
+			'Room' => array('id' => $roomId)
+		);
 		$this->$model->$methodName($data);
 	}
 
@@ -270,10 +298,14 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
+		$roomId = '1';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
-		$data = array('Page' => array('id' => $pageId, 'type' => 'error'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'error'),
+			'Room' => array('id' => $roomId)
+		);
 		$this->$model->$methodName($data);
 	}
 
@@ -286,9 +318,13 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '999';
+		$roomId = '1';
 
 		//テスト実施
-		$data = array('Page' => array('id' => $pageId, 'type' => 'error'));
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'error'),
+			'Room' => array('id' => $roomId)
+		);
 		$result = $this->$model->$methodName($data);
 		$this->assertFalse($result);
 	}

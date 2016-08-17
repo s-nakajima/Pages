@@ -553,29 +553,43 @@ class Page extends PagesAppModel {
 			}
 
 			//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
-			if ($data['Room']['id'] === self::PUBLIC_ROOT_PAGE_ID) {
-				$first = $this->find('first', array(
-					'recursive' => -1,
-					'fields' => array('id'),
-					'conditions' => array(
-						'parent_id !=' => '',
-					),
-					'order' => array('lft' => 'asc'),
-					'limit' => 1
-				));
-
-				if ($first['Page']['id'] === $data[$this->alias]['id']) {
-					$this->Room->id = $data['Room']['id'];
-					if (! $this->saveField('page_id_top', $first['Page']['id'], array('callbacks' => false))) {
-						throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-					}
-				}
-			}
+			$this->__updatePageIdTopMove($data);
 
 			$this->commit();
 
 		} catch (Exception $ex) {
 			$this->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
+ * page_id_topの更新処理
+ *
+ * @param array $data request data
+ * @return bool
+ * @throws InternalErrorException
+ */
+	private function __updatePageIdTopMove($data) {
+		//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
+		if ($data['Room']['id'] === self::PUBLIC_ROOT_PAGE_ID) {
+			$first = $this->find('first', array(
+				'recursive' => -1,
+				'fields' => array('id'),
+				'conditions' => array(
+					'parent_id !=' => '',
+				),
+				'order' => array('lft' => 'asc'),
+				'limit' => 1
+			));
+
+			if ($first['Page']['id'] === $data[$this->alias]['id']) {
+				$this->Room->id = $data['Room']['id'];
+				if (! $this->saveField('page_id_top', $first['Page']['id'], array('callbacks' => false))) {
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+				}
+			}
 		}
 
 		return true;

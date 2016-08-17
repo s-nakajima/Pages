@@ -573,22 +573,19 @@ class Page extends PagesAppModel {
  */
 	private function __updatePageIdTopMove($data) {
 		//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
-		if ($data['Room']['id'] === self::PUBLIC_ROOT_PAGE_ID) {
-			$first = $this->find('first', array(
-				'recursive' => -1,
-				'fields' => array('id'),
-				'conditions' => array(
-					'parent_id !=' => '',
-				),
-				'order' => array('lft' => 'asc'),
-				'limit' => 1
-			));
+		$first = $this->find('first', array(
+			'recursive' => -1,
+			'fields' => array('id'),
+			'conditions' => array(
+				'parent_id !=' => '',
+			),
+			'order' => array('lft' => 'asc'),
+		));
 
-			if ($first['Page']['id'] === $data[$this->alias]['id']) {
-				$this->Room->id = $data['Room']['id'];
-				if (! $this->saveField('page_id_top', $first['Page']['id'], array('callbacks' => false))) {
-					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-				}
+		if ($first['Page']['id'] === $data[$this->alias]['id']) {
+			$this->Room->id = Room::PUBLIC_PARENT_ID;
+			if (! $this->Room->saveField('page_id_top', $first['Page']['id'], array('callbacks' => false))) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		}
 

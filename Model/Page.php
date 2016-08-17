@@ -308,16 +308,29 @@ class Page extends PagesAppModel {
  * ページデータの存在チェック
  *
  * @param int $pageId ページID
+ * @param int $roomId ルームID
+ * @param int $parentRoomId 親ルームID
  * @return bool
  */
-	public function existPage($pageId) {
-		$result = $this->find('count', array(
-			'recursive' => -1,
-			'conditions' => array(
-				'Page.id' => $pageId,
-				'Page.room_id' => Current::read('Room.id')
-			),
-		));
+	public function existPage($pageId, $roomId = null, $parentRoomId = null) {
+		if ($roomId && $roomId !== $parentRoomId) {
+			$result = $this->find('count', array(
+				'recursive' => 0,
+				'conditions' => array(
+					'Page.id' => $pageId,
+					'Page.room_id' => $roomId,
+					'Room.parent_id' => $parentRoomId,
+				),
+			));
+		} else {
+			$result = $this->find('count', array(
+				'recursive' => -1,
+				'conditions' => array(
+					'Page.id' => $pageId,
+					'Page.room_id' => Current::read('Room.id')
+				),
+			));
+		}
 
 		return (bool)$result;
 	}

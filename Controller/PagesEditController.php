@@ -111,11 +111,13 @@ class PagesEditController extends PagesAppController {
 
 		if ($this->request->is('post')) {
 			//登録処理
+			$this->request->data['Page']['slug'] = Hash::get($this->request->data, 'Page.permalink');
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
 				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
 			}
+			$this->NetCommons->handleValidationError($this->Page->validationErrors);
 
 		} else {
 			//表示処理
@@ -146,11 +148,13 @@ class PagesEditController extends PagesAppController {
 
 		if ($this->request->is('put')) {
 			//登録処理
+			$this->request->data['Page']['slug'] = Hash::get($this->request->data, 'Page.permalink');
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
 				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
 			}
+			$this->NetCommons->handleValidationError($this->Page->validationErrors);
 
 		} else {
 			$result = $this->Page->existPage(Current::read('Page.id'));
@@ -161,6 +165,7 @@ class PagesEditController extends PagesAppController {
 			$this->request->data = Hash::merge($this->request->data,
 				$this->LanguagesPage->getLanguagesPage(Current::read('Page.id'), Current::read('Language.id'))
 			);
+			$this->request->data['Page']['permalink'] = $this->request->data['Page']['slug'];
 			$this->request->data['Room'] = Current::read('Room');
 			$this->request->data['_NetCommonsUrl']['redirect'] = $this->__getRedirectUrl();
 		}

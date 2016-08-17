@@ -94,7 +94,9 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function index() {
-		$this->__prepareIndex(array('Page.room_id' => Current::read('Room.id')));
+		$rooms = $this->Room->children(Current::read('Room.id'), false, 'Room.id', 'Room.rght');
+		$roomIds = Hash::merge(array(Current::read('Room.id')), Hash::extract($rooms, '{n}.Room.id'));
+		$this->__prepareIndex($roomIds, []);
 	}
 
 /**
@@ -300,12 +302,19 @@ class PagesEditController extends PagesAppController {
 	public function move() {
 		if ($this->request->is('put')) {
 			//移動するページIDのチェック
-			$result = $this->Page->existPage($this->request->data['Page']['id']);
+			$result = $this->Page->existPage(
+				$this->request->data['Page']['id'],
+				$this->request->data['Page']['room_id'],
+				$this->request->data['Room']['id']
+			);
 			if (! $result) {
 				return $this->throwBadRequest();
 			}
 			//移動先の親ページIDのチェック
-			$result = $this->Page->existPage($this->request->data['Page']['parent_id']);
+			$result = $this->Page->existPage(
+				$this->request->data['Page']['parent_id'],
+				$this->request->data['Room']['id']
+			);
 			if (! $result) {
 				return $this->throwBadRequest();
 			}
@@ -322,8 +331,7 @@ class PagesEditController extends PagesAppController {
 		} else {
 			$this->viewClass = 'View';
 			$this->layout = 'NetCommons.modal';
-			$this->__prepareIndex(array(
-				'Page.room_id' => Current::read('Room.id'),
+			$this->__prepareIndex(Current::read('Room.id'), array(
 				'NOT' => array(
 					'AND' => array(
 						'Page.lft >=' => Current::read('Page.lft'),
@@ -337,18 +345,21 @@ class PagesEditController extends PagesAppController {
 /**
  * ページのTreeリストをセットする
  *
+ * @param array $roomIds ルームIDリスト
  * @param array $conditions 条件配列
  * @return void
  */
-	private function __prepareIndex($conditions) {
+	private function __prepareIndex($roomIds, $conditions) {
 		//ページでテータ取得
-		$pages = $this->Page->getPages();
+		$pages = $this->Page->getPages($roomIds);
 		if (! $pages) {
 			return $this->throwBadRequest();
 		}
+		$conditions['Page.room_id'] = $roomIds;
 
 		$pageTreeList = $this->Page->generateTreeList($conditions, null, null, Page::$treeParser);
-
+		$parentList = array();
+		$treeList = array();
 		foreach ($pageTreeList as $pageId => $tree) {
 			$treeList[] = $pageId;
 

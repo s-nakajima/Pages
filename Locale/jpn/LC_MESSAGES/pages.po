@@ -94,6 +94,10 @@ msgstr "ページ設定終了"
 msgid "Select move page"
 msgstr "移動先のページ選択"
 
+#: Pages/View/Elements/dropdown_menu.ctp:13
+msgid "Page not found."
+msgstr "移動できるページがありません"
+
 msgid "Please select the destination of the \"%s\" page."
 msgstr "「%s」ページの移動先を選択してください。"
 

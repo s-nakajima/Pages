@@ -94,6 +94,7 @@ class PagesEditControllerMoveTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', '_method', 'PUT', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
 		$this->assertInput('input', 'data[Page][type]', 'move', $this->view);
 		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 		$this->assertTextContains('type="radio" name="data[Page][parent_id]"', $this->view);
@@ -107,7 +108,10 @@ class PagesEditControllerMoveTest extends NetCommonsControllerTestCase {
 	private function __data() {
 		$data = array(
 			'Page' => array(
-				'id' => '4', 'parent_id' => '1'
+				'id' => '4', 'parent_id' => '1', 'room_id' => '1'
+			),
+			'Room' => array(
+				'id' => '1'
 			),
 			'_NetCommonsUrl' => array(
 				'redirect' => '/pages/pages_edit/index/1/4'

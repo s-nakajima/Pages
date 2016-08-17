@@ -31,7 +31,10 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 		<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
 		<?php echo $this->NetCommonsForm->unlockField('Page.id'); ?>
 
-		<?php echo $this->NetCommonsForm->hidden('Page.room_id', array('value' => Current::read('Room.id'))); ?>
+		<?php echo $this->NetCommonsForm->hidden('Page.room_id'); ?>
+		<?php echo $this->NetCommonsForm->unlockField('Page.room_id'); ?>
+
+		<?php echo $this->NetCommonsForm->hidden('Room.id', array('value' => Current::read('Room.id'))); ?>
 
 		<?php echo $this->NetCommonsForm->hidden('Page.parent_id'); ?>
 		<?php echo $this->NetCommonsForm->unlockField('Page.parent_id'); ?>

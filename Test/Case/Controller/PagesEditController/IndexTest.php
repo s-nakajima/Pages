@@ -78,6 +78,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
  * index()アクションのGetリクエストテスト
  *
  * @return void
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 	public function testIndexGet() {
 		$roomId = '1';
@@ -94,6 +95,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 		$this->assertInput('input', 'data[Page][id]', null, $this->view);
 		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
 		$this->assertInput('input', 'data[Page][parent_id]', null, $this->view);
 		$this->assertInput('input', 'data[Page][type]', null, $this->view);
 
@@ -108,16 +110,21 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			'_4' => array(
 				'_7' => array('index' => 2, 'weight' => 1, 'nest' => 2)
+			),
+			'_3' => array(
+				'_5' => array('index' => 4, 'weight' => 1, 'nest' => 0),
+				'_6' => array('index' => 5, 'weight' => 2, 'nest' => 0),
 			)
 		);
+		debug($this->controller->viewVars['parentList']);
 		$this->assertEquals($expected, $this->controller->viewVars['parentList']);
 
 		// * viewVars['treeList']のチェック
-		$expected = array(1, 4, 7, 8);
+		$expected = array(1, 4, 7, 8, 5, 6);
 		$this->assertEquals($expected, $this->controller->viewVars['treeList']);
 
 		// * viewVars['pages']のチェック
-		$this->assertCount(4, $this->controller->viewVars['pages']);
+		$this->assertCount(6, $this->controller->viewVars['pages']);
 
 		$actual = $this->controller->viewVars['pages'];
 		$actual = Hash::remove($actual, '{n}.{s}.created_user');
@@ -160,6 +167,24 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 				),
 				'LanguagesPage' => array(
 					'id' => '12', 'page_id' => '8', 'language_id' => '2', 'name' => 'Test page 5',
+				)
+			),
+			5 => array(
+				'Page' => array(
+					'id' => '5', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '13',
+					'permalink' => 'test2', 'slug' => 'test2', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
+				),
+				'LanguagesPage' => array(
+					'id' => '14', 'page_id' => '5', 'language_id' => '2', 'name' => 'Test page 2',
+				)
+			),
+			6 => array(
+				'Page' => array(
+					'id' => '6', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '14', 'rght' => '15',
+					'permalink' => 'test3', 'slug' => 'test3', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
+				),
+				'LanguagesPage' => array(
+					'id' => '16', 'page_id' => '6', 'language_id' => '2', 'name' => 'Test page 3',
 				)
 			)
 		);

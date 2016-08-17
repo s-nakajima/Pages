@@ -150,6 +150,10 @@ NetCommonsApp.controller('PagesEditController',
         angular.element(key)[0].value = parentId;
 
         angular.element('input[name="data[Page][type]"]')[0].value = type;
+
+        var roomId = $scope.pages[pageId]['Page']['room_id'];
+        angular.element('input[name="data[Page][room_id]"]')[0].value = roomId;
+
         angular.element('form')[0].submit();
       };
 

@@ -552,10 +552,41 @@ class Page extends PagesAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
+			//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
+			$this->__updatePageIdTopMove($data);
+
 			$this->commit();
 
 		} catch (Exception $ex) {
 			$this->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
+ * page_id_topの更新処理
+ *
+ * @param array $data request data
+ * @return bool
+ * @throws InternalErrorException
+ */
+	private function __updatePageIdTopMove($data) {
+		//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
+		$first = $this->find('first', array(
+			'recursive' => -1,
+			'fields' => array('id'),
+			'conditions' => array(
+				'parent_id !=' => '',
+			),
+			'order' => array('lft' => 'asc'),
+		));
+
+		if ($first['Page']['id'] === $data[$this->alias]['id']) {
+			$this->Room->id = Room::PUBLIC_PARENT_ID;
+			if (! $this->Room->saveField('page_id_top', $first['Page']['id'], array('callbacks' => false))) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
 		}
 
 		return true;

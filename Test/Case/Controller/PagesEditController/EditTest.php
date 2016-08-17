@@ -114,11 +114,12 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][name]', 'Home ja', $this->view);
 		$this->assertInput('input', 'data[Page][slug]', 'home', $this->view);
+		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 
 		$this->controller->request->data = Hash::remove($this->controller->request->data, 'TrackableCreator');
 		$this->controller->request->data = Hash::remove($this->controller->request->data, 'TrackableUpdater');
 
-		$expected = array('LanguagesPage', 'Page', 'Language', 'Room');
+		$expected = array('LanguagesPage', 'Page', 'Language', 'Room', '_NetCommonsUrl');
 		$this->assertEquals($expected, array_keys($this->controller->request->data));
 		$this->assertEquals($pageId, Hash::get($this->controller->request->data, 'Page.id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Page.room_id'));
@@ -160,7 +161,9 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
  * @return array リクエストデータ
  */
 	private function __data() {
-		$data = array();
+		$data = array(
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+		);
 		return $data;
 	}
 
@@ -183,8 +186,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$header = $this->controller->response->header();
-		$pattern = '/pages/pages_edit/index/' . $roomId . '/' . $pageId;
-		$this->assertTextContains($pattern, $header['Location']);
+		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
 	}
 
 /**

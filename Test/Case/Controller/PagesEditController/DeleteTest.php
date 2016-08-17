@@ -94,7 +94,9 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  * @return array リクエストデータ
  */
 	private function __data() {
-		$data = array();
+		$data = array(
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+		);
 		return $data;
 	}
 

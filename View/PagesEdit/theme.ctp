@@ -23,7 +23,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 			</div>
 			<div class="panel-footer text-center">
 				<?php echo $this->Button->cancel(__d('net_commons', 'List'),
-						$this->NetCommonsHtml->url(array('action' => 'index', Current::read('Room.id')))); ?>
+					Hash::get($this->request->data, '_NetCommonsUrl.redirect')
+				); ?>
 			</div>
 		</div>
 	</article>

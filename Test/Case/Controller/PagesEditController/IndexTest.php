@@ -139,7 +139,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 					'permalink' => '', 'slug' => null, 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
-					'id' => '2', 'page_id' => '1', 'language_id' => '2', 'name' => 'Room name',
+					'name' => 'Room name',
 				)
 			),
 			4 => array(
@@ -148,7 +148,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 					'permalink' => 'home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
-					'id' => '8', 'page_id' => '4', 'language_id' => '2', 'name' => 'Home ja',
+					'name' => 'Home ja',
 				)
 			),
 			7 => array(
@@ -157,7 +157,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 					'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
-					'id' => '10', 'page_id' => '7', 'language_id' => '2', 'name' => 'Test page 4',
+					'name' => 'Test page 4',
 				)
 			),
 			8 => array(
@@ -166,7 +166,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 					'permalink' => 'test5', 'slug' => 'test5', 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
-					'id' => '12', 'page_id' => '8', 'language_id' => '2', 'name' => 'Test page 5',
+					'name' => 'Test page 5',
 				)
 			),
 			5 => array(
@@ -175,7 +175,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 					'permalink' => 'test2', 'slug' => 'test2', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(
-					'id' => '14', 'page_id' => '5', 'language_id' => '2', 'name' => 'Test page 2',
+					'name' => 'Test page 2',
 				)
 			),
 			6 => array(
@@ -184,7 +184,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 					'permalink' => 'test3', 'slug' => 'test3', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(
-					'id' => '16', 'page_id' => '6', 'language_id' => '2', 'name' => 'Test page 3',
+					'name' => 'Test page 3',
 				)
 			)
 		);

@@ -21,6 +21,7 @@ $url = array(
 		'url' => NetCommonsUrl::actionUrlAsArray(array('key' => Current::read('Room.id'), Current::read('Page.id'))),
 	)); ?>
 
+	<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
 	<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
 	<?php echo $this->NetCommonsForm->hidden('Page.theme', array('value' => $theme['key'])); ?>
 

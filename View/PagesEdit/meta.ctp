@@ -22,6 +22,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 					'url' => NetCommonsUrl::actionUrlAsArray(array('key' => Current::read('Room.id'), Current::read('Page.id')))
 				)); ?>
 
+				<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
+
 				<div class="panel-body">
 					<?php echo $this->element('PagesEdit/meta_form'); ?>
 				</div>

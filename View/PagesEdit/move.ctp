@@ -19,13 +19,7 @@
 		'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'move'))
 	)); ?>
 
-	<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect', array('value' =>
-		NetCommonsUrl::actionUrl(array(
-			'action' => 'index',
-			Current::read('Room.id'),
-			Current::read('Page.id'),
-		)
-	))); ?>
+	<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
 	<?php echo $this->NetCommonsForm->hidden('Page.id', array('value' => Current::read('Page.id'))); ?>
 	<?php echo $this->NetCommonsForm->hidden('Page.room_id', array('value' => Current::read('Room.id'))); ?>
 	<?php echo $this->NetCommonsForm->hidden('Room.id', array('value' => Current::read('Room.id'))); ?>

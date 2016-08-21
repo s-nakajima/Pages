@@ -23,6 +23,8 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 					'url' => NetCommonsUrl::actionUrlAsArray(array('key' => Current::read('Room.id'), Current::read('Page.id')))
 				)); ?>
 
+				<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
+
 				<?php if ($layouts = $this->PagesEdit->getLayouts()) : ?>
 					<div class="panel-body">
 						<div class="clearfix"
@@ -84,7 +86,6 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 						Hash::get($this->request->data, '_NetCommonsUrl.redirect')
 					); ?>
 				</div>
-
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
 	</article>

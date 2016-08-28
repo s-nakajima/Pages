@@ -171,6 +171,7 @@ class PageLayoutHelper extends AppHelper {
 				$element = $this->_View->element('Frames.frame', array(
 					'frame' => Current::read('Frame'),
 					'view' => $this->_View->fetch('content'),
+					'centerContent' => true,
 					'displayBackTo' => Hash::get($this->_View->viewVars, 'displayBackTo', false)
 				));
 			}

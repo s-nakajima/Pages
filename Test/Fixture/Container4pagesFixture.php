@@ -38,7 +38,7 @@ class Container4pagesFixture extends ContainerFixture {
  * @return void
  */
 	public function init() {
-		require_once App::pluginPath('Containers') . 'Config' . DS . 'Migration' . DS . '9999999999_container_records.php';
+		require_once App::pluginPath('Containers') . 'Config' . DS . 'Migration' . DS . '1472409223_container_records.php';
 		$this->records = (new ContainerRecords())->records[$this->name];
 
 		//パブリックスペースのホーム/test4

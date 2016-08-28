@@ -82,8 +82,7 @@ class PageLayoutComponentBeforeRenderTest extends NetCommonsControllerTestCase {
 		$this->assertArrayNotHasKey('NetCommons.Composer', $this->controller->helpers);
 		$this->assertTrue(in_array('NetCommons.Composer', $this->controller->helpers, true));
 
-		$this->assertArrayNotHasKey('Pages.PageLayout', $this->controller->helpers);
-		$this->assertTrue(in_array('Pages.PageLayout', $this->controller->helpers, true));
+		$this->assertArrayHasKey('Pages.PageLayout', $this->controller->helpers);
 	}
 
 /**
@@ -105,8 +104,7 @@ class PageLayoutComponentBeforeRenderTest extends NetCommonsControllerTestCase {
 		$this->assertArrayNotHasKey('NetCommons.Composer', $this->controller->helpers);
 		$this->assertTrue(in_array('NetCommons.Composer', $this->controller->helpers, true));
 
-		$this->assertArrayNotHasKey('Pages.PageLayout', $this->controller->helpers);
-		$this->assertTrue(in_array('Pages.PageLayout', $this->controller->helpers, true));
+		$this->assertArrayHasKey('Pages.PageLayout', $this->controller->helpers);
 	}
 
 /**
@@ -135,7 +133,6 @@ class PageLayoutComponentBeforeRenderTest extends NetCommonsControllerTestCase {
 		$this->assertFalse(in_array('NetCommons.Composer', $this->controller->helpers, true));
 
 		$this->assertArrayHasKey('Pages.PageLayout', $this->controller->helpers);
-		$this->assertFalse(in_array('Pages.PageLayout', $this->controller->helpers, true));
 	}
 
 /**

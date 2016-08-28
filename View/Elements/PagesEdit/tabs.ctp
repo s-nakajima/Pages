@@ -67,6 +67,6 @@ $disactive = (Hash::get($this->request->params, 'action') === 'add' ? 'disabled'
 
 <?php if ($this->request->params['action'] !== 'index') : ?>
 	<h2>
-		<?php echo $parentPathName; ?>
+		<?php echo h($parentPathName); ?>
 	</h2>
 <?php endif;

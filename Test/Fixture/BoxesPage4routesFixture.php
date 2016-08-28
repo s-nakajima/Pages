@@ -38,7 +38,7 @@ class BoxesPage4routesFixture extends BoxesPageFixture {
  * @return void
  */
 	public function init() {
-		require_once App::pluginPath('Boxes') . 'Config' . DS . 'Migration' . DS . '9999999999_box_records.php';
+		require_once App::pluginPath('Boxes') . 'Config' . DS . 'Migration' . DS . '1472409223_box_records.php';
 		$this->records = (new BoxRecords())->records[$this->name];
 
 		//パブリックスペースのホーム/test4

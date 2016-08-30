@@ -203,6 +203,18 @@ class Page extends PagesAppModel {
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug')),
 					'required' => true
 				),
+				//'regex' => array(
+				//	'rule' => array(
+				//		'custom',
+				//		'/(?!(%| |#|<|>|\+|\\\\|\"|\'|&|\?|\.$|=|\.\/|\/\.|~|:|;|,|\$|@|^\.|\||\]|\[|\!|\(|\)|\*))/'
+				//	),
+				//	'message' => sprintf(
+				//		__d('pages', 'Use of %s is prohibited. Please enter a different entry.'),
+				//		__d('pages', 'Slug')
+				//	),
+				//	'allowEmpty' => false,
+				//	'required' => true,
+				//),
 			),
 			'permalink' => array(
 				'notBlank' => array(
@@ -214,6 +226,18 @@ class Page extends PagesAppModel {
 					'rule' => array('isUnique'),
 					'message' => sprintf(__d('net_commons', '%s is already in use.'), __d('pages', 'Slug')),
 				),
+				//'regex' => array(
+				//	'rule' => array(
+				//		'custom',
+				//		'/(?!(%| |#|<|>|\+|\\\\|\"|\'|&|\?|\.$|=|\.\/|\/\.|~|:|;|,|\$|@|^\.|\||\]|\[|\!|\(|\)|\*))/'
+				//	),
+				//	'message' => sprintf(
+				//		__d('pages', 'Use of %s is prohibited. Please enter a different entry.'),
+				//		__d('pages', 'Slug')
+				//	),
+				//	'allowEmpty' => false,
+				//	'required' => true,
+				//),
 			),
 			'root_id' => array(
 				'numeric' => array(

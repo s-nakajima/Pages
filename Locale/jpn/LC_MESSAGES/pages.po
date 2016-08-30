@@ -86,6 +86,10 @@ msgstr "ページ設定"
 msgid "Page Setting off"
 msgstr "ページ設定終了"
 
+#: Edumap/Model/EdumapSocialMedium.php:74
+msgid "Use of %s is prohibited. Please enter a different entry."
+msgstr "%sに使用不可の文字列が入力されました。別の内容を入力してください。"
+
 #
 #: ページの移動
 #

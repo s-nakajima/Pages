@@ -39,6 +39,7 @@ class Page4dropFixture extends PageFixture {
  * @return void
  */
 	public function init() {
+		parent::init();
 		$db = ConnectionManager::getDataSource($this->useDbConfig);
 		$this->drop($db);
 	}

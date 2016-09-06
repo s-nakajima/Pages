@@ -17,26 +17,6 @@
 class LanguagesPageFixture extends CakeTestFixture {
 
 /**
- * Fields
- *
- * @var array
- */
-	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'page_id' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'language_id' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'name' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
-	);
-
-/**
  * Records
  *
  * @var array
@@ -111,5 +91,16 @@ class LanguagesPageFixture extends CakeTestFixture {
 			'name' => 'Lorem ipsum dolor sit amet',
 		),
 	);
+
+/**
+ * Initialize the fixture.
+ *
+ * @return void
+ */
+	public function init() {
+		require_once App::pluginPath('Pages') . 'Config' . DS . 'Schema' . DS . 'schema.php';
+		$this->fields = (new PagesSchema())->tables['languages_pages'];
+		parent::init();
+	}
 
 }

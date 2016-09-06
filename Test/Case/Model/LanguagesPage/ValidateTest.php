@@ -76,6 +76,9 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
 			// * language_id
 			array('data' => $data, 'field' => 'language_id', 'value' => 'a',
 				'message' => __d('net_commons', 'Invalid request.')),
+			// * meta_title
+			array('data' => $data, 'field' => 'meta_title', 'value' => '',
+				'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Title tag'))),
 		);
 	}
 

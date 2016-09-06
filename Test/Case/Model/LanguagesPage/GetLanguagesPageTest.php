@@ -81,6 +81,7 @@ class LanguagesPageGetLanguagesPageTest extends NetCommonsGetTest {
 		$expected = array(
 			'LanguagesPage' => array(
 				'id' => '10', 'page_id' => '7', 'language_id' => '2', 'name' => 'Test page 4',
+				'meta_title' => null, 'meta_description' => null, 'meta_keywords' => null, 'meta_robots' => null,
 			),
 			'Page' => array(
 				'id' => '7', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',

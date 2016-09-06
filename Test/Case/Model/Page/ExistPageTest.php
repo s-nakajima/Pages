@@ -97,4 +97,44 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$this->assertFalse($result);
 	}
 
+/**
+ * existPage()のテスト(サブルームの存在するページ)
+ *
+ * @return void
+ */
+	public function testExistPageTrueBySubRoom() {
+		$model = $this->_modelName;
+		$methodName = $this->_methodName;
+
+		//データ生成
+		Current::write('Room.id', '1');
+		$pageId = '5';
+
+		//テスト実施
+		$result = $this->$model->$methodName($pageId, '4', '1');
+
+		//チェック
+		$this->assertTrue($result);
+	}
+
+/**
+ * existPage()のテスト(サブルームの存在しないページ)
+ *
+ * @return void
+ */
+	public function testExistPageFalseBySubRoom() {
+		$model = $this->_modelName;
+		$methodName = $this->_methodName;
+
+		//データ生成
+		Current::write('Room.id', '1');
+		$pageId = '666';
+
+		//テスト実施
+		$result = $this->$model->$methodName($pageId, '4', '1');
+
+		//チェック
+		$this->assertFalse($result);
+	}
+
 }

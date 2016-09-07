@@ -125,6 +125,27 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 	}
 
 /**
+ * saveMove()のExceptionErrorテスト
+ *
+ * @return void
+ */
+	public function testSaveMoveUpOnExceptionError() {
+		$model = $this->_modelName;
+		$methodName = $this->_methodName;
+		$pageId = '8';
+		$roomId = '1';
+		$this->_mockForReturnFalse($model, 'Rooms.Room', 'saveField');
+
+		//テスト実施
+		$data = array(
+			'Page' => array('id' => $pageId, 'type' => 'up'),
+			'Room' => array('id' => $roomId)
+		);
+		$this->setExpectedException('InternalErrorException');
+		$this->$model->$methodName($data);
+	}
+
+/**
  * saveMove()の最上部のUpテスト
  *
  * @return void

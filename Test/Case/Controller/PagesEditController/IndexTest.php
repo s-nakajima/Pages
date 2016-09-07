@@ -113,18 +113,21 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			'_3' => array(
 				'_5' => array('index' => 4, 'weight' => 1, 'nest' => 0),
-				'_6' => array('index' => 5, 'weight' => 2, 'nest' => 0),
-			)
+				'_6' => array('index' => 6, 'weight' => 2, 'nest' => 0),
+			),
+			'_5' => array(
+				'_9' => array('index' => 5, 'weight' => 1, 'nest' => 1)
+			),
 		);
 		debug($this->controller->viewVars['parentList']);
 		$this->assertEquals($expected, $this->controller->viewVars['parentList']);
 
 		// * viewVars['treeList']のチェック
-		$expected = array(1, 4, 7, 8, 5, 6);
+		$expected = array(1, 4, 7, 8, 5, 9, 6);
 		$this->assertEquals($expected, $this->controller->viewVars['treeList']);
 
 		// * viewVars['pages']のチェック
-		$this->assertCount(6, $this->controller->viewVars['pages']);
+		$this->assertCount(7, $this->controller->viewVars['pages']);
 
 		$actual = $this->controller->viewVars['pages'];
 		$actual = Hash::remove($actual, '{n}.{s}.created_user');
@@ -171,16 +174,25 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			5 => array(
 				'Page' => array(
-					'id' => '5', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '13',
+					'id' => '5', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '15',
 					'permalink' => 'test2', 'slug' => 'test2', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(
 					'name' => 'Test page 2',
 				)
 			),
+			9 => array(
+				'Page' => array(
+					'id' => '9', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '5', 'lft' => '13', 'rght' => '14',
+					'permalink' => 'test2/home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
+				),
+				'LanguagesPage' => array(
+					'name' => 'Test page 2 - home',
+				)
+			),
 			6 => array(
 				'Page' => array(
-					'id' => '6', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '14', 'rght' => '15',
+					'id' => '6', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '16', 'rght' => '17',
 					'permalink' => 'test3', 'slug' => 'test3', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(

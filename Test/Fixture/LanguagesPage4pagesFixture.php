@@ -74,6 +74,10 @@ class LanguagesPage4pagesFixture extends LanguagesPageFixture {
 		array('page_id' => '5', 'language_id' => '1', 'name' => 'Test page 2'),
 		// * 日本語
 		array('page_id' => '5', 'language_id' => '2', 'name' => 'Test page 2'),
+		// * 英語
+		array('page_id' => '9', 'language_id' => '1', 'name' => 'Test page 2 - home'),
+		// * 日本語
+		array('page_id' => '9', 'language_id' => '2', 'name' => 'Test page 2 - home'),
 		//別ルーム(room_id=5、ブロックなし)
 		// * 英語
 		array('page_id' => '6', 'language_id' => '1', 'name' => 'Test page 3'),

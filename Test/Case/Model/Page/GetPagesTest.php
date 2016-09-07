@@ -73,13 +73,15 @@ class PageGetPagesTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName($roomIds);
 
 		//チェック
-		$this->assertCount(1, $result);
+		$this->assertCount(2, $result);
 
 		$this->__assertGetPages($result,
 			array('id' => '5', 'permalink' => 'test2'),
 			array('id' => '4', 'parent_id' => '1'),
 			array('id' => '3', 'room_id' => '3', 'parent_id' => '1'),
-			array()
+			array(
+				array('id' => '9', 'room_id' => '4', 'parent_id' => '5', 'permalink' => 'test2/home'),
+			)
 		);
 	}
 
@@ -99,13 +101,15 @@ class PageGetPagesTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName();
 
 		//チェック
-		$this->assertCount(1, $result);
+		$this->assertCount(2, $result);
 
 		$this->__assertGetPages($result,
 			array('id' => '5', 'permalink' => 'test2'),
 			array('id' => '4', 'parent_id' => '1'),
 			array('id' => '3', 'room_id' => '3', 'parent_id' => '1'),
-			array()
+			array(
+				array('id' => '9', 'room_id' => '4', 'parent_id' => '5', 'permalink' => 'test2/home'),
+			)
 		);
 	}
 
@@ -125,7 +129,7 @@ class PageGetPagesTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName($roomIds);
 
 		//チェック
-		$this->assertCount(5, $result);
+		$this->assertCount(6, $result);
 
 		$this->__assertGetPages($result,
 			array('id' => '1', 'permalink' => ''),
@@ -160,7 +164,9 @@ class PageGetPagesTest extends NetCommonsGetTest {
 			array('id' => '5', 'permalink' => 'test2'),
 			array('id' => '4', 'parent_id' => '1'),
 			array('id' => '3', 'room_id' => '3', 'parent_id' => '1'),
-			array()
+			array(
+				array('id' => '9', 'room_id' => '4', 'parent_id' => '5', 'permalink' => 'test2/home'),
+			)
 		);
 	}
 

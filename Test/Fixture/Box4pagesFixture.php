@@ -44,7 +44,7 @@ class Box4pagesFixture extends BoxFixture {
 		//パブリックスペースのホーム/test4
 		$this->records[] = array(
 			'id' => '17', 'container_id' => '17', 'type' => '4', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '7', 'weight' => '1',
+			'room_id' => '2', 'page_id' => '7', 'weight' => '1',
 		);
 		parent::init();
 	}

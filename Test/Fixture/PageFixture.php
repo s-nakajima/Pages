@@ -24,7 +24,7 @@ class PageFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'root_id' => null,
 			'parent_id' => null,
 			'lft' => '1',
@@ -35,7 +35,7 @@ class PageFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'root_id' => '1',
 			'parent_id' => '1',
 			'lft' => '2',
@@ -47,7 +47,7 @@ class PageFixture extends CakeTestFixture {
 		//別ルーム(room_id=4)
 		array(
 			'id' => '3',
-			'room_id' => '4',
+			'room_id' => '5',
 			'parent_id' => null,
 			'lft' => '5',
 			'rght' => '6',
@@ -58,7 +58,7 @@ class PageFixture extends CakeTestFixture {
 		//別ルーム(room_id=5、ブロックなし)
 		array(
 			'id' => '4',
-			'room_id' => '5',
+			'room_id' => '6',
 			'parent_id' => null,
 			'lft' => '7',
 			'rght' => '8',

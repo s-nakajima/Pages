@@ -41,42 +41,42 @@ class Page4routesFixture extends PageFixture {
 	public $records = array(
 		// * パブリックスペースのページ（使われることはない）
 		array(
-			'id' => '1', 'room_id' => '1', 'root_id' => null, 'parent_id' => null, 'lft' => '1', 'rght' => '8',
+			'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => null, 'lft' => '1', 'rght' => '8',
 			'permalink' => '', 'slug' => null,
 		),
 		// * パブリックスペースのホーム
 		array(
-			'id' => '4', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
+			'id' => '4', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
 			'permalink' => 'home', 'slug' => 'home',
 		),
 		// * ホーム/test4
 		array(
-			'id' => '7', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+			'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
 			'permalink' => 'test4', 'slug' => 'test4',
 		),
 		// * test_err
 		array(
-			'id' => '8', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+			'id' => '8', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 			'permalink' => 'test_err', 'slug' => 'test_err',
 		),
 		// * test_err/test_error
 		array(
-			'id' => '9', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+			'id' => '9', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 			'permalink' => 'test_err/test_error', 'slug' => 'test_err/test_error',
 		),
 		// * test_err/test_error/index
 		array(
-			'id' => '10', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+			'id' => '10', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 			'permalink' => 'test_err/test_error/index', 'slug' => 'test_err/test_error/index',
 		),
 		// * test_error
 		array(
-			'id' => '11', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+			'id' => '11', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 			'permalink' => 'test_error', 'slug' => 'test_error',
 		),
 		// * test_error/index
 		array(
-			'id' => '12', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+			'id' => '12', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 			'permalink' => 'test_error/index', 'slug' => 'test_error/index',
 		),
 	);

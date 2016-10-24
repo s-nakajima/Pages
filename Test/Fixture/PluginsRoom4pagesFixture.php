@@ -41,7 +41,7 @@ class PluginsRoom4pagesFixture extends PluginsRoomFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'room_id' => '1',
+			'room_id' => '2',
 			'plugin_key' => 'test_pages'
 		),
 	);

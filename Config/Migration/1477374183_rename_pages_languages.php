@@ -117,15 +117,15 @@ class RenamePagesLanguages extends CakeMigration {
 			$db->commit();
 			$return = true;
 
+			$sql = 'DROP TABLE IF EXISTS ' . $tableNameOrg;
+			$PagesLanguage->query($sql);
+
 		} catch (Exception $ex) {
 			CakeLog::error($ex);
 			$db->rollback();
 			$return = false;
 		}
 
-		$sql = 'DROP TABLE IF EXISTS ' . $tableNameOrg;
-		$PagesLanguage->query($sql);
-
-		return true;
+		return $return;
 	}
 }

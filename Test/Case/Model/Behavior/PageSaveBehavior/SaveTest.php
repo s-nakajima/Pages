@@ -27,7 +27,7 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
  */
 	public $fixtures = array(
 		'plugin.pages.test_page_save_behavior_save_model',
-		'plugin.pages.languages_page',
+		'plugin.pages.pages_language',
 	);
 
 /**
@@ -59,10 +59,10 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorSaveModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1'),
+			'PagesLanguage' => array('id' => '1'),
 		);
 		$data = Hash::remove($data, 'Page.id');
-		$this->_mockForReturnTrue('TestModel', 'Pages.LanguagesPage', array('save', 'validates'));
+		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', array('save', 'validates'));
 
 		$this->TestModel->Page = $this->getMockForModel('Pages.Page', array(
 			'saveContainer', 'saveBox', 'saveContainersPage', 'saveBoxesPage'
@@ -89,7 +89,7 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
 		$this->assertDatetime(Hash::get($result, 'Page.created'));
 		$this->assertDatetime(Hash::get($result, 'Page.modified'));
 		$this->assertEquals('2', Hash::get($result, 'Page.id'));
-		$this->assertEquals('2', Hash::get($this->TestModel->LanguagesPage->data, 'LanguagesPage.page_id'));
+		$this->assertEquals('2', Hash::get($this->TestModel->PagesLanguage->data, 'PagesLanguage.page_id'));
 	}
 
 /**
@@ -101,9 +101,9 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorSaveModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1'),
+			'PagesLanguage' => array('id' => '1'),
 		);
-		$this->_mockForReturnTrue('TestModel', 'Pages.LanguagesPage', array('save', 'validates'));
+		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', array('save', 'validates'));
 
 		//事前チェック
 		$this->assertNull(Hash::get($data, 'Page.modified'));
@@ -113,7 +113,7 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
 		$result = $this->TestModel->save();
 
 		//チェック
-		$this->assertEquals('1', Hash::get($this->TestModel->LanguagesPage->data, 'LanguagesPage.page_id'));
+		$this->assertEquals('1', Hash::get($this->TestModel->PagesLanguage->data, 'PagesLanguage.page_id'));
 		$this->assertDatetime(Hash::get($result, 'Page.modified'));
 	}
 
@@ -126,13 +126,13 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorSaveModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1'),
+			'PagesLanguage' => array('id' => '1'),
 		);
-		$this->TestModel->LanguagesPage = $this->getMockForModel('Pages.LanguagesPage', array(
+		$this->TestModel->PagesLanguage = $this->getMockForModel('Pages.PagesLanguage', array(
 			'save', 'validates'
 		));
-		$this->_mockForReturnTrue('TestModel', 'Pages.LanguagesPage', 'validates');
-		$this->_mockForReturnFalse('TestModel', 'Pages.LanguagesPage', 'save');
+		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', 'validates');
+		$this->_mockForReturnFalse('TestModel', 'Pages.PagesLanguage', 'save');
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');

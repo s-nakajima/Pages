@@ -156,7 +156,7 @@ class Page extends PagesAppModel {
 		),
 		'Language' => array(
 			'className' => 'M17n.Language',
-			'joinTable' => 'languages_pages',
+			'joinTable' => 'pages_languages',
 			'foreignKey' => 'page_id',
 			'associationForeignKey' => 'language_id',
 			'unique' => 'keepExisting',
@@ -318,7 +318,7 @@ class Page extends PagesAppModel {
  */
 	public function createPage() {
 		$this->loadModels([
-			'LanguagesPage' => 'Pages.LanguagesPage',
+			'PagesLanguage' => 'Pages.PagesLanguage',
 		]);
 
 		$slug = 'page_' . date('YmdHis');
@@ -331,7 +331,7 @@ class Page extends PagesAppModel {
 				'root_id' => Hash::get(Current::read('Page'), 'root_id', Current::read('Page.id')),
 				'parent_id' => Current::read('Page.id'),
 			)),
-			$this->LanguagesPage->create(array(
+			$this->PagesLanguage->create(array(
 				'id' => null,
 				'language_id' => Current::read('Language.id'),
 				'name' => sprintf(__d('pages', 'New page %s'), date('YmdHis')),
@@ -349,7 +349,7 @@ class Page extends PagesAppModel {
  */
 	public function getPages($roomIds = null) {
 		$this->loadModels([
-			'LanguagesPage' => 'Pages.LanguagesPage',
+			'PagesLanguage' => 'Pages.PagesLanguage',
 		]);
 
 		if (! isset($roomIds)) {
@@ -363,17 +363,17 @@ class Page extends PagesAppModel {
 			),
 		));
 
-		$pagesLanguages = $this->LanguagesPage->find('all', array(
+		$pagesLanguages = $this->PagesLanguage->find('all', array(
 			'recursive' => -1,
 			'conditions' => array(
-				'LanguagesPage.page_id' => Hash::extract($pages, '{n}.Page.id'),
-				'LanguagesPage.language_id' => Current::read('Language.id'),
+				'PagesLanguage.page_id' => Hash::extract($pages, '{n}.Page.id'),
+				'PagesLanguage.language_id' => Current::read('Language.id'),
 			),
 		));
 
 		return Hash::merge(
 			Hash::combine($pages, '{n}.Page.id', '{n}'),
-			Hash::combine($pagesLanguages, '{n}.LanguagesPage.page_id', '{n}')
+			Hash::combine($pagesLanguages, '{n}.PagesLanguage.page_id', '{n}')
 		);
 	}
 
@@ -432,7 +432,7 @@ class Page extends PagesAppModel {
  */
 	public function getParentNodeName($pageId) {
 		$this->loadModels([
-			'LanguagesPage' => 'Pages.LanguagesPage',
+			'PagesLanguage' => 'Pages.PagesLanguage',
 		]);
 
 		$parentNode = $this->getPath($pageId);
@@ -440,8 +440,8 @@ class Page extends PagesAppModel {
 		$pagesLanguages = $this->find('list', array(
 			'recursive' => -1,
 			'fields' => array(
-				$this->LanguagesPage->alias . '.page_id',
-				$this->LanguagesPage->alias . '.name',
+				$this->PagesLanguage->alias . '.page_id',
+				$this->PagesLanguage->alias . '.name',
 			),
 			'conditions' => array(
 				$this->alias . '.id' => Hash::extract($parentNode, '{n}.Page.id'),
@@ -449,11 +449,11 @@ class Page extends PagesAppModel {
 			),
 			'joins' => array(
 				array(
-					'table' => $this->LanguagesPage->table,
-					'alias' => $this->LanguagesPage->alias,
+					'table' => $this->PagesLanguage->table,
+					'alias' => $this->PagesLanguage->alias,
 					'conditions' => array(
-						$this->LanguagesPage->alias . '.page_id' . ' = ' . $this->alias . '.id',
-						$this->LanguagesPage->alias . '.language_id' => Current::read('Language.id'),
+						$this->PagesLanguage->alias . '.page_id' . ' = ' . $this->alias . '.id',
+						$this->PagesLanguage->alias . '.language_id' => Current::read('Language.id'),
 					),
 				),
 			),
@@ -471,7 +471,7 @@ class Page extends PagesAppModel {
  */
 	public function getPageWithFrame($permalink) {
 		$this->loadModels([
-			'LanguagesPage' => 'Pages.LanguagesPage',
+			'PagesLanguage' => 'Pages.PagesLanguage',
 		]);
 
 		if ($permalink === '') {
@@ -503,11 +503,11 @@ class Page extends PagesAppModel {
 		);
 		$page = $this->find('first', $query);
 
-		$pagesLanguages = $this->LanguagesPage->find('first', array(
+		$pagesLanguages = $this->PagesLanguage->find('first', array(
 			'recursive' => -1,
 			'conditions' => array(
-				'LanguagesPage.page_id' => Hash::extract($page, 'Page.id'),
-				'LanguagesPage.language_id' => Current::read('Language.id'),
+				'PagesLanguage.page_id' => Hash::extract($page, 'Page.id'),
+				'PagesLanguage.language_id' => Current::read('Language.id'),
 			),
 		));
 
@@ -677,7 +677,7 @@ class Page extends PagesAppModel {
  */
 	public function deletePage($data, $options = array()) {
 		$this->loadModels([
-			'LanguagesPage' => 'Pages.LanguagesPage',
+			'PagesLanguage' => 'Pages.PagesLanguage',
 		]);
 
 		$options = Hash::merge(array('atomic' => true), $options);
@@ -693,8 +693,8 @@ class Page extends PagesAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			$conditions = array($this->LanguagesPage->alias . '.page_id' => $data[$this->alias]['id']);
-			if (! $this->LanguagesPage->deleteAll($conditions, false)) {
+			$conditions = array($this->PagesLanguage->alias . '.page_id' => $data[$this->alias]['id']);
+			if (! $this->PagesLanguage->deleteAll($conditions, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 

@@ -25,7 +25,7 @@ class PagesControllerIndexTest extends NetCommonsControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.frame4pages',
 		'plugin.pages.plugin4pages',

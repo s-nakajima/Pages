@@ -1,6 +1,6 @@
 <?php
 /**
- * LanguagesPage::saveLanguagesPage()のテスト
+ * PagesLanguage::savePagesLanguage()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -10,15 +10,15 @@
  */
 
 App::uses('NetCommonsSaveTest', 'NetCommons.TestSuite');
-App::uses('LanguagesPageFixture', 'Pages.Test/Fixture');
+App::uses('PagesLanguageFixture', 'Pages.Test/Fixture');
 
 /**
- * LanguagesPage::saveLanguagesPage()のテスト
+ * PagesLanguage::savePagesLanguage()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Pages\Test\Case\Model\LanguagesPage
+ * @package NetCommons\Pages\Test\Case\Model\PagesLanguage
  */
-class LanguagesPageSaveLanguagesPageTest extends NetCommonsSaveTest {
+class PagesLanguageSavePagesLanguageTest extends NetCommonsSaveTest {
 
 /**
  * Fixtures
@@ -26,7 +26,7 @@ class LanguagesPageSaveLanguagesPageTest extends NetCommonsSaveTest {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.languages_page',
+		'plugin.pages.pages_language',
 		'plugin.pages.page',
 	);
 
@@ -42,14 +42,14 @@ class LanguagesPageSaveLanguagesPageTest extends NetCommonsSaveTest {
  *
  * @var string
  */
-	protected $_modelName = 'LanguagesPage';
+	protected $_modelName = 'PagesLanguage';
 
 /**
  * Method name
  *
  * @var string
  */
-	protected $_methodName = 'saveLanguagesPage';
+	protected $_methodName = 'savePagesLanguage';
 
 /**
  * Save用DataProvider
@@ -60,20 +60,20 @@ class LanguagesPageSaveLanguagesPageTest extends NetCommonsSaveTest {
  * @return array テストデータ
  */
 	public function dataProviderSave() {
-		$data['LanguagesPage'] = (new LanguagesPageFixture())->records[0];
-		$data['LanguagesPage']['meta_title'] = 'TEST TITLE - {X-SITE_NAME}';
-		$data['LanguagesPage']['meta_description'] = 'TEST DESCRIPTION';
-		$data['LanguagesPage']['meta_keywords'] = 'TEST KEYWORD';
-		$data['LanguagesPage']['meta_robots'] = null;
+		$data['PagesLanguage'] = (new PagesLanguageFixture())->records[0];
+		$data['PagesLanguage']['meta_title'] = 'TEST TITLE - {X-SITE_NAME}';
+		$data['PagesLanguage']['meta_description'] = 'TEST DESCRIPTION';
+		$data['PagesLanguage']['meta_keywords'] = 'TEST KEYWORD';
+		$data['PagesLanguage']['meta_robots'] = null;
 
 		$results = array();
 		// * 編集の登録処理
 		$results[0] = array($data);
 		// * 新規の登録処理
 		$results[1] = array($data);
-		$results[1] = Hash::insert($results[1], '0.LanguagesPage.id', null);
-		$results[1] = Hash::remove($results[1], '0.LanguagesPage.created_user');
-		$results[1] = Hash::remove($results[1], '0.LanguagesPage.created');
+		$results[1] = Hash::insert($results[1], '0.PagesLanguage.id', null);
+		$results[1] = Hash::remove($results[1], '0.PagesLanguage.created_user');
+		$results[1] = Hash::remove($results[1], '0.PagesLanguage.created');
 
 		return $results;
 	}
@@ -92,7 +92,7 @@ class LanguagesPageSaveLanguagesPageTest extends NetCommonsSaveTest {
 		$data = $this->dataProviderSave()[0][0];
 
 		return array(
-			array($data, 'Pages.LanguagesPage', 'save'),
+			array($data, 'Pages.PagesLanguage', 'save'),
 		);
 	}
 
@@ -110,7 +110,7 @@ class LanguagesPageSaveLanguagesPageTest extends NetCommonsSaveTest {
 		$data = $this->dataProviderSave()[0][0];
 
 		return array(
-			array($data, 'Pages.LanguagesPage'),
+			array($data, 'Pages.PagesLanguage'),
 		);
 	}
 

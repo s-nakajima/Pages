@@ -30,7 +30,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -74,7 +74,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName($permalink);
 
 		//チェック
-		$expected = array('Page', 'Box', 'Container', 'Language', 'LanguagesPage');
+		$expected = array('Page', 'Box', 'Container', 'Language', 'PagesLanguage');
 		$this->assertEquals($expected, array_keys($result));
 
 		$this->__assertPage($result['Page'], array());
@@ -105,7 +105,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$result = $this->$model->$methodName($permalink);
 
 		//チェック
-		$expected = array('Page', 'Box', 'Container', 'Language', 'LanguagesPage');
+		$expected = array('Page', 'Box', 'Container', 'Language', 'PagesLanguage');
 		$this->assertEquals($expected, array_keys($result));
 
 		$this->__assertPage($result['Page']);

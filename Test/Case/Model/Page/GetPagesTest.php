@@ -30,7 +30,7 @@ class PageGetPagesTest extends NetCommonsGetTest {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -184,7 +184,7 @@ class PageGetPagesTest extends NetCommonsGetTest {
 		$pageId = $expectedPage['id'];
 
 		$expected = array(
-			'Page', 'Room', 'ParentPage', 'ChildPage', 'Box', 'Container', 'Language', 'LanguagesPage'
+			'Page', 'Room', 'ParentPage', 'ChildPage', 'Box', 'Container', 'Language', 'PagesLanguage'
 		);
 		$this->assertEquals($expected, array_keys($result[$pageId]));
 
@@ -199,7 +199,7 @@ class PageGetPagesTest extends NetCommonsGetTest {
 		$this->assertEquals($expectedParentPage['id'], Hash::get($result[$pageId], 'ParentPage.id'));
 		$this->assertEquals($expectedParentPage['room_id'], Hash::get($result[$pageId], 'ParentPage.room_id'));
 
-		$this->assertEquals($expectedPage['id'], Hash::get($result[$pageId], 'LanguagesPage.page_id'));
+		$this->assertEquals($expectedPage['id'], Hash::get($result[$pageId], 'PagesLanguage.page_id'));
 
 		$this->assertCount(count($expectedChildPage), Hash::get($result[$pageId], 'ChildPage'));
 		if (count($expectedChildPage) > 0) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * LanguagesPage Fixture
+ * PagesLanguage Fixture
  *
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @link http://www.netcommons.org NetCommons Project
@@ -9,12 +9,12 @@
  */
 
 /**
- * LanguagesPage Fixture
+ * PagesLanguage Fixture
  *
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @package NetCommons\Pages\Test\Fixture
  */
-class LanguagesPageFixture extends CakeTestFixture {
+class PagesLanguageFixture extends CakeTestFixture {
 
 /**
  * Records
@@ -99,7 +99,7 @@ class LanguagesPageFixture extends CakeTestFixture {
  */
 	public function init() {
 		require_once App::pluginPath('Pages') . 'Config' . DS . 'Schema' . DS . 'schema.php';
-		$this->fields = (new PagesSchema())->tables['languages_pages'];
+		$this->fields = (new PagesSchema())->tables['pages_languages'];
 		parent::init();
 	}
 

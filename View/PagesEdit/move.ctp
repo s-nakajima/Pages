@@ -27,7 +27,7 @@
 	<?php echo $this->NetCommonsForm->hidden('Page.type', array('value' => 'move')); ?>
 
 	<?php echo $this->MessageFlash->description(
-			__d('pages', 'Please select the destination of the "%s" page.', Hash::get($pages, Current::read('Page.id') . '.LanguagesPage.name'))
+			__d('pages', 'Please select the destination of the "%s" page.', Hash::get($pages, Current::read('Page.id') . '.PagesLanguage.name'))
 		); ?>
 
 	<?php if ($treeList) : ?>
@@ -40,7 +40,7 @@
 
 						<?php if (Current::read('Page.parent_id') !== (string)$pageId) : ?>
 							<?php echo $this->NetCommonsForm->radio('Page.parent_id',
-									array($pageId => Hash::get($pages, $pageId . '.LanguagesPage.name')),
+									array($pageId => Hash::get($pages, $pageId . '.PagesLanguage.name')),
 									array(
 										'hiddenField' => false,
 										'ng-click' => 'pageParentId = \'' . $pageId . '\'',
@@ -49,7 +49,7 @@
 								); ?>
 						<?php else : ?>
 							<strong>
-								<?php echo h(Hash::get($pages, $pageId . '.LanguagesPage.name')); ?>
+								<?php echo h(Hash::get($pages, $pageId . '.PagesLanguage.name')); ?>
 							</strong>
 						<?php endif; ?>
 					</td>

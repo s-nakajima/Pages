@@ -30,7 +30,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -97,13 +97,13 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][room_id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][id]', null, $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][name]', null, $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][id]', null, $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][language_id]', '2', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][name]', null, $this->view);
 		$this->assertInput('input', 'data[Page][permalink]', null, $this->view);
 		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 
-		$this->assertEquals(array('Page', 'LanguagesPage', 'Room', '_NetCommonsUrl'), array_keys($this->controller->request->data));
+		$this->assertEquals(array('Page', 'PagesLanguage', 'Room', '_NetCommonsUrl'), array_keys($this->controller->request->data));
 		$this->assertEquals($pageId, Hash::get($this->controller->request->data, 'Page.parent_id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Page.room_id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Room.id'));
@@ -166,7 +166,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		$pageId = '4';
 		$this->_mockForReturnCallback('Pages.Page', 'savePage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));
-			$this->controller->LanguagesPage->invalidate('name', $message);
+			$this->controller->PagesLanguage->invalidate('name', $message);
 
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
 			$this->controller->Page->invalidate('permalink', $message);

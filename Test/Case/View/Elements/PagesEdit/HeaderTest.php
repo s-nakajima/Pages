@@ -29,7 +29,7 @@ class PagesViewElementsPagesEditHeaderTest extends NetCommonsControllerTestCase 
 		'plugin.pages.boxes_page4pages',
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 	);
 

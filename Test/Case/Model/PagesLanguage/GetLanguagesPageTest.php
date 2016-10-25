@@ -1,6 +1,6 @@
 <?php
 /**
- * LanguagesPage::getLanguagesPage()のテスト
+ * PagesLanguage::getPagesLanguage()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('NetCommonsGetTest', 'NetCommons.TestSuite');
 
 /**
- * LanguagesPage::getLanguagesPage()のテスト
+ * PagesLanguage::getPagesLanguage()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Pages\Test\Case\Model\LanguagesPage
+ * @package NetCommons\Pages\Test\Case\Model\PagesLanguage
  */
-class LanguagesPageGetLanguagesPageTest extends NetCommonsGetTest {
+class PagesLanguageGetPagesLanguageTest extends NetCommonsGetTest {
 
 /**
  * Fixtures
@@ -30,7 +30,7 @@ class LanguagesPageGetLanguagesPageTest extends NetCommonsGetTest {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -48,21 +48,21 @@ class LanguagesPageGetLanguagesPageTest extends NetCommonsGetTest {
  *
  * @var string
  */
-	protected $_modelName = 'LanguagesPage';
+	protected $_modelName = 'PagesLanguage';
 
 /**
  * Method name
  *
  * @var string
  */
-	protected $_methodName = 'getLanguagesPage';
+	protected $_methodName = 'getPagesLanguage';
 
 /**
- * getLanguagesPage()のテスト
+ * getPagesLanguage()のテスト
  *
  * @return void
  */
-	public function testGetLanguagesPage() {
+	public function testGetPagesLanguage() {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 
@@ -79,7 +79,7 @@ class LanguagesPageGetLanguagesPageTest extends NetCommonsGetTest {
 
 		//チェック
 		$expected = array(
-			'LanguagesPage' => array(
+			'PagesLanguage' => array(
 				'id' => '10', 'page_id' => '7', 'language_id' => '2', 'name' => 'Test page 4',
 				'meta_title' => null, 'meta_description' => null, 'meta_keywords' => null, 'meta_robots' => null,
 			),

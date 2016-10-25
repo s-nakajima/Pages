@@ -17,10 +17,10 @@
 <?php echo $this->NetCommonsForm->hidden('Page.room_id'); ?>
 <?php echo $this->NetCommonsForm->hidden('Room.id'); ?>
 <?php echo $this->NetCommonsForm->hidden('Room.space_id'); ?>
-<?php echo $this->NetCommonsForm->hidden('LanguagesPage.id'); ?>
-<?php echo $this->NetCommonsForm->hidden('LanguagesPage.language_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('PagesLanguage.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('PagesLanguage.language_id'); ?>
 
-<?php echo $this->NetCommonsForm->input('LanguagesPage.name', array(
+<?php echo $this->NetCommonsForm->input('PagesLanguage.name', array(
 		'type' => 'text',
 		'label' => __d('pages', 'Page name'),
 		'required' => true,

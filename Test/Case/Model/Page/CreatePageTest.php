@@ -30,7 +30,7 @@ class PageCreatePageTest extends NetCommonsModelTestCase {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -75,7 +75,7 @@ class PageCreatePageTest extends NetCommonsModelTestCase {
 		$result = $this->$model->$methodName();
 
 		//チェック
-		$this->assertEquals(array('Page', 'LanguagesPage'), array_keys($result));
+		$this->assertEquals(array('Page', 'PagesLanguage'), array_keys($result));
 		$this->assertEquals('1', Hash::get($result, 'Page.root_id'));
 		$this->assertEquals('1', Hash::get($result, 'Page.parent_id'));
 		$this->assertRegExp('/page_20[0-9]{2}[0-9]{10}/', Hash::get($result, 'Page.permalink'));
@@ -100,7 +100,7 @@ class PageCreatePageTest extends NetCommonsModelTestCase {
 		$result = $this->$model->$methodName();
 
 		//チェック
-		$this->assertEquals(array('Page', 'LanguagesPage'), array_keys($result));
+		$this->assertEquals(array('Page', 'PagesLanguage'), array_keys($result));
 		$this->assertEquals('1', Hash::get($result, 'Page.root_id'));
 		$this->assertEquals('4', Hash::get($result, 'Page.parent_id'));
 		$this->assertRegExp('/page_20[0-9]{2}[0-9]{10}/', Hash::get($result, 'Page.permalink'));

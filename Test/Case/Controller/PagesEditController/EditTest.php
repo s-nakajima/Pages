@@ -30,7 +30,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -109,16 +109,16 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][room_id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][id]', '8', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][name]', 'Home ja', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][id]', '8', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][language_id]', '2', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][name]', 'Home ja', $this->view);
 		$this->assertInput('input', 'data[Page][permalink]', 'home', $this->view);
 		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 
 		$this->controller->request->data = Hash::remove($this->controller->request->data, 'TrackableCreator');
 		$this->controller->request->data = Hash::remove($this->controller->request->data, 'TrackableUpdater');
 
-		$expected = array('LanguagesPage', 'Page', 'Language', 'Room', '_NetCommonsUrl');
+		$expected = array('PagesLanguage', 'Page', 'Language', 'Room', '_NetCommonsUrl');
 		$this->assertEquals($expected, array_keys($this->controller->request->data));
 		$this->assertEquals($pageId, Hash::get($this->controller->request->data, 'Page.id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Page.room_id'));
@@ -196,7 +196,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 	public function testEditPostValidationError() {
 		$this->_mockForReturnCallback('Pages.Page', 'savePage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));
-			$this->controller->LanguagesPage->invalidate('name', $message);
+			$this->controller->PagesLanguage->invalidate('name', $message);
 
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
 			$this->controller->Page->invalidate('permalink', $message);

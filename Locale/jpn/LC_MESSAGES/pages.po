@@ -27,7 +27,7 @@ msgstr "セッティングモードOFF"
 msgid "New page %s"
 msgstr "新しいページ %s"
 
-#: Pages/Model/LanguagesPage.php:66 Pages/View/Elements/Pages/edit_form.ctp:34
+#: Pages/Model/PagesLanguage.php:66 Pages/View/Elements/Pages/edit_form.ctp:34
 msgid "Page name"
 msgstr "ページ名"
 

@@ -30,7 +30,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
 		'plugin.pages.container4pages',
 		'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -93,11 +93,11 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 
 		$this->assertInput('input', 'data[Page][id]', $pageId, $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][id]', '8', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][meta_title]', '{X-PAGE_NAME} - {X-SITE_NAME}', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][meta_description]', null, $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][meta_keywords]', null, $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][id]', '8', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][language_id]', '2', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][meta_title]', '{X-PAGE_NAME} - {X-SITE_NAME}', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][meta_description]', null, $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][meta_keywords]', null, $this->view);
 	}
 
 /**
@@ -122,7 +122,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
 		$roomId = '2';
 		$pageId = '4';
 
-		$this->_mockForReturnTrue('Pages.LanguagesPage', 'saveLanguagesPage');
+		$this->_mockForReturnTrue('Pages.PagesLanguage', 'savePagesLanguage');
 
 		$this->controller->Components->Session
 			->expects($this->once())->method('setFlash')
@@ -159,9 +159,9 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
 	public function testOnValidationError() {
 		$roomId = '2';
 		$pageId = '4';
-		$this->_mockForReturnCallback('Pages.LanguagesPage', 'saveLanguagesPage', function () {
+		$this->_mockForReturnCallback('Pages.PagesLanguage', 'savePagesLanguage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Title tag'));
-			$this->controller->LanguagesPage->invalidate('meta_title', $message);
+			$this->controller->PagesLanguage->invalidate('meta_title', $message);
 			return false;
 		});
 

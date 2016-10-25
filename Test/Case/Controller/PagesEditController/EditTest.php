@@ -83,7 +83,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
  */
 	public function testEditGet() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行
@@ -106,8 +106,8 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][id]', $pageId, $this->view);
 		$this->assertInput('input', 'data[Page][root_id]', '1', $this->view);
 		$this->assertInput('input', 'data[Page][parent_id]', '1', $this->view);
-		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
-		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
+		$this->assertInput('input', 'data[Page][room_id]', '2', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][id]', '8', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
@@ -133,7 +133,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditGetSpacePage() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '1';
 
 		//テスト実行
@@ -146,7 +146,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testEditGetOnExceptionError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnFalse('Pages.Page', 'existPage');
 
@@ -161,7 +161,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
  */
 	private function __data() {
 		$data = array(
-			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/2/20')
 		);
 		return $data;
 	}
@@ -173,7 +173,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
  */
 	public function testEditPost() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturn('Pages.Page', 'savePage', array(
 			'Page' => array('id' => $pageId)
@@ -185,7 +185,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$header = $this->controller->response->header();
-		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
+		$this->assertTextContains('/pages/pages_edit/index/2/20', $header['Location']);
 	}
 
 /**
@@ -204,7 +204,7 @@ class PagesEditControllerEditTest extends NetCommonsControllerTestCase {
 		});
 
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行

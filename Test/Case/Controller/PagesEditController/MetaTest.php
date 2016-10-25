@@ -81,14 +81,14 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  */
 	public function testMetaGet() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行
 		$this->_testGetAction(array('action' => 'meta', $roomId, $pageId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
-		$this->assertInput('form', null, '/pages/pages_edit/meta/1/4', $this->view);
+		$this->assertInput('form', null, '/pages/pages_edit/meta/2/4', $this->view);
 		$this->assertInput('input', '_method', 'PUT', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 
@@ -107,7 +107,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  */
 	private function __data() {
 		$data = array(
-			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/2/20')
 		);
 		return $data;
 	}
@@ -119,7 +119,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  */
 	public function testPost() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		$this->_mockForReturnTrue('Pages.LanguagesPage', 'saveLanguagesPage');
@@ -134,7 +134,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$header = $this->controller->response->header();
-		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
+		$this->assertTextContains('/pages/pages_edit/index/2/20', $header['Location']);
 	}
 
 /**
@@ -143,7 +143,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testOnExceptionError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnFalse('Pages.Page', 'existPage');
 
@@ -157,7 +157,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testOnValidationError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnCallback('Pages.LanguagesPage', 'saveLanguagesPage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Title tag'));

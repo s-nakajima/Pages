@@ -81,7 +81,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 	public function testIndexGet() {
-		$roomId = '1';
+		$roomId = '2';
 		$this->_testGetAction(array('action' => 'index', $roomId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//scriptのURLチェック
@@ -94,8 +94,8 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', '_method', 'PUT', $this->view);
 		$this->assertInput('input', 'data[_NetCommonsUrl][redirect]', null, $this->view);
 		$this->assertInput('input', 'data[Page][id]', null, $this->view);
-		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
-		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
+		$this->assertInput('input', 'data[Page][room_id]', '2', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Page][parent_id]', null, $this->view);
 		$this->assertInput('input', 'data[Page][type]', null, $this->view);
 
@@ -138,7 +138,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 		$expected = array(
 			1 => array(
 				'Page' => array(
-					'id' => '1', 'room_id' => '1', 'root_id' => null, 'parent_id' => '0', 'lft' => '1', 'rght' => '8',
+					'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => '0', 'lft' => '1', 'rght' => '8',
 					'permalink' => '', 'slug' => null, 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
@@ -147,7 +147,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			4 => array(
 				'Page' => array(
-					'id' => '4', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
+					'id' => '4', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
 					'permalink' => 'home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
@@ -156,7 +156,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			7 => array(
 				'Page' => array(
-					'id' => '7', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+					'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
 					'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
@@ -165,7 +165,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			8 => array(
 				'Page' => array(
-					'id' => '8', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+					'id' => '8', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 					'permalink' => 'test5', 'slug' => 'test5', 'is_container_fluid' => false, 'theme' => null, 'type' => ''
 				),
 				'LanguagesPage' => array(
@@ -174,7 +174,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			5 => array(
 				'Page' => array(
-					'id' => '5', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '15',
+					'id' => '5', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '15',
 					'permalink' => 'test2', 'slug' => 'test2', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(
@@ -183,7 +183,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			9 => array(
 				'Page' => array(
-					'id' => '9', 'room_id' => '4', 'root_id' => '3', 'parent_id' => '5', 'lft' => '13', 'rght' => '14',
+					'id' => '9', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '5', 'lft' => '13', 'rght' => '14',
 					'permalink' => 'test2/home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(
@@ -192,7 +192,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 			),
 			6 => array(
 				'Page' => array(
-					'id' => '6', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '16', 'rght' => '17',
+					'id' => '6', 'room_id' => '6', 'root_id' => '3', 'parent_id' => '3', 'lft' => '16', 'rght' => '17',
 					'permalink' => 'test3', 'slug' => 'test3', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 				),
 				'LanguagesPage' => array(
@@ -211,7 +211,7 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 	public function testIndexGetOnExceptionError() {
 		$this->_mockForReturnFalse('Pages.Page', 'getPages');
 
-		$roomId = '1';
+		$roomId = '2';
 		$this->_testGetAction(array('action' => 'index', $roomId), null, 'BadRequestException', 'view');
 	}
 

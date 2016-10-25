@@ -67,7 +67,7 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '1';
 
 		//テスト実施
@@ -87,7 +87,7 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '999';
 
 		//テスト実施
@@ -107,11 +107,11 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '5';
 
 		//テスト実施
-		$result = $this->$model->$methodName($pageId, '4', '1');
+		$result = $this->$model->$methodName($pageId, '5', '2');
 
 		//チェック
 		$this->assertTrue($result);
@@ -127,11 +127,11 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '666';
 
 		//テスト実施
-		$result = $this->$model->$methodName($pageId, '4', '1');
+		$result = $this->$model->$methodName($pageId, '5', '2');
 
 		//チェック
 		$this->assertFalse($result);

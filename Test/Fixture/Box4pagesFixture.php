@@ -40,7 +40,10 @@ class Box4pagesFixture extends BoxFixture {
 	public function init() {
 		require_once App::pluginPath('Boxes') . 'Config' . DS . 'Migration' . DS . '1472409223_box_records.php';
 		$this->records = (new BoxRecords())->records[$this->name];
-
+		foreach ($this->records as $i => $record) {
+			$record['room_id'] = (string)($record['room_id'] + 1);
+			$this->records[$i] = $record;
+		}
 		//パブリックスペースのホーム/test4
 		$this->records[] = array(
 			'id' => '17', 'container_id' => '17', 'type' => '4', 'space_id' => '2',

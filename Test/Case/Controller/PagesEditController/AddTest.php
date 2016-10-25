@@ -82,7 +82,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddGet() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行
@@ -94,8 +94,8 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
 		$this->assertInput('input', 'data[Page][id]', null, $this->view);
 		$this->assertInput('input', 'data[Page][root_id]', '1', $this->view);
 		$this->assertInput('input', 'data[Page][parent_id]', $pageId, $this->view);
-		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
-		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
+		$this->assertInput('input', 'data[Page][room_id]', '2', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][id]', null, $this->view);
 		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
@@ -115,7 +115,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddGetOnExceptionError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnFalse('Pages.Page', 'existPage');
 
@@ -141,7 +141,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddPost() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturn('Pages.Page', 'savePage', array(
 			'Page' => array('id' => '20')
@@ -162,7 +162,7 @@ class PagesEditControllerAddTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testAddPostOnValidationError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnCallback('Pages.Page', 'savePage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));

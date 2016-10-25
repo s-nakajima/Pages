@@ -83,7 +83,7 @@ class PagesEditControllerBeforeFilterTest extends NetCommonsControllerTestCase {
  */
 	public function testBeforeFilterIndex() {
 		//テスト実行
-		$roomId = '1';
+		$roomId = '2';
 		$this->_testGetAction(array('action' => 'index', $roomId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
@@ -98,7 +98,7 @@ class PagesEditControllerBeforeFilterTest extends NetCommonsControllerTestCase {
  */
 	public function testBeforeFilterEdit() {
 		//テスト実行
-		$roomId = '1';
+		$roomId = '2';
 		$this->_testGetAction(array('action' => 'edit', $roomId, '4'), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック

@@ -84,7 +84,7 @@ class LanguagesPageGetLanguagesPageTest extends NetCommonsGetTest {
 				'meta_title' => null, 'meta_description' => null, 'meta_keywords' => null, 'meta_robots' => null,
 			),
 			'Page' => array(
-				'id' => '7', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+				'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
 				'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null,
 			),
 			'Language' => array(

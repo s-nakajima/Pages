@@ -82,7 +82,7 @@ class PagesViewElementsPagesEditDeleteFormTest extends NetCommonsControllerTestC
 		$pattern = '/' . preg_quote('View/Elements/PagesEdit/delete_form', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
 
-		$this->assertInput('form', null, '/delete/1/7', $this->view);
+		$this->assertInput('form', null, '/delete/2/7', $this->view);
 		$this->assertInput('input', '_method', 'DELETE', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '7', $this->view);
 	}

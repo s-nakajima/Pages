@@ -126,7 +126,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$result = Hash::remove($result, 'modified');
 
 		$expected = array(
-			'id' => '7', 'room_id' => '1', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+			'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
 			'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null,
 		);
 		$this->assertEquals($expected, $result);
@@ -172,7 +172,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$expected = array(
 			// * Box
 			'id' => '2', 'container_id' => '2', 'type' => '1', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '1', 'weight' => '1',
+			'room_id' => '2', 'page_id' => '1', 'weight' => '1',
 			// * BoxesPage
 			'BoxesPage' => array(
 				'id' => '22', 'page_id' => '7', 'box_id' => '2', 'is_published' => true,
@@ -181,7 +181,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 			'Frame' => array(0 => array(
 				'id' => '2',
 				'language_id' => '2',
-				'room_id' => '1',
+				'room_id' => '2',
 				'box_id' => '2',
 				'plugin_key' => 'test_pages',
 				'block_id' => '2',
@@ -211,7 +211,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$expected = array(
 			// * Box
 			'id' => '5', 'container_id' => '5', 'type' => '1', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '1', 'weight' => '1',
+			'room_id' => '2', 'page_id' => '1', 'weight' => '1',
 			// * BoxesPage
 			'BoxesPage' => array(
 				'id' => '25', 'page_id' => '7', 'box_id' => '5', 'is_published' => true,
@@ -220,7 +220,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 			'Frame' => array(0 => array(
 				'id' => '4',
 				'language_id' => '2',
-				'room_id' => '1',
+				'room_id' => '2',
 				'box_id' => '5',
 				'plugin_key' => 'test_pages',
 				'block_id' => '2',
@@ -245,7 +245,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$expected = array(
 			// * Box
 			'id' => '17', 'container_id' => '17', 'type' => '4', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '7', 'weight' => '1',
+			'room_id' => '2', 'page_id' => '7', 'weight' => '1',
 			// * BoxesPage
 			'BoxesPage' => array(
 				'id' => '23', 'page_id' => '7', 'box_id' => '17', 'is_published' => true,
@@ -271,7 +271,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$expected = array(
 			// * Box
 			'id' => '1', 'container_id' => '1', 'type' => '1', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '1', 'weight' => '1',
+			'room_id' => '2', 'page_id' => '1', 'weight' => '1',
 			// * BoxesPage
 			'BoxesPage' => array(
 				'id' => '21', 'page_id' => '7', 'box_id' => '1', 'is_published' => true,
@@ -280,7 +280,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 			'Frame' => array(0 => array(
 				'id' => '1',
 				'language_id' => '2',
-				'room_id' => '1',
+				'room_id' => '2',
 				'box_id' => '1',
 				'plugin_key' => 'test_pages',
 				'block_id' => '2',
@@ -310,7 +310,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 		$expected = array(
 			// * Box
 			'id' => '4', 'container_id' => '4', 'type' => '1', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '1', 'weight' => '1',
+			'room_id' => '2', 'page_id' => '1', 'weight' => '1',
 			// * BoxesPage
 			'BoxesPage' => array(
 				'id' => '24', 'page_id' => '7', 'box_id' => '4', 'is_published' => true,
@@ -319,7 +319,7 @@ class PageGetPageWithFrameTest extends NetCommonsGetTest {
 			'Frame' => array(0 => array(
 				'id' => '3',
 				'language_id' => '2',
-				'room_id' => '1',
+				'room_id' => '2',
 				'box_id' => '4',
 				'plugin_key' => 'test_pages',
 				'block_id' => '2',

@@ -81,7 +81,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	public function testDeleteGet() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行
@@ -95,7 +95,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	private function __data() {
 		$data = array(
-			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/2/20')
 		);
 		return $data;
 	}
@@ -107,7 +107,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	public function testDeletePost() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnTrue('Pages.Page', 'deletePage');
 
@@ -127,7 +127,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	public function testDeletePostOnExceptionError() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnFalse('Pages.Page', 'deletePage');
 

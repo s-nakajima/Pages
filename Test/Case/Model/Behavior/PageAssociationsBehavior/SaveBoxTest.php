@@ -70,7 +70,7 @@ class PageAssociationsBehaviorSaveBoxTest extends NetCommonsModelTestCase {
 	public function dataProvider() {
 		$result[0] = array();
 		$result[0]['page'] = array(
-			'Page' => array('id' => '99', 'room_id' => '9'),
+			'Page' => array('id' => '99', 'room_id' => '10'),
 			'Container' => array('id' => '88'),
 			'Room' => array('space_id' => '2'),
 		);

@@ -107,7 +107,7 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 			'LanguagesPage' => array('id' => '1'),
 		);
 		$data = Hash::remove($data, 'Page.room_id');
-		Current::write('Room.id', '2');
+		Current::write('Room.id', '3');
 		$this->_mockForReturnTrue('TestModel', 'Pages.LanguagesPage', 'validates');
 
 		//テスト実施
@@ -116,7 +116,7 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 
 		//チェック
 		$this->assertTrue($result);
-		$this->assertEquals('2', $this->TestModel->data['Page']['room_id']);
+		$this->assertEquals('3', $this->TestModel->data['Page']['room_id']);
 	}
 
 }

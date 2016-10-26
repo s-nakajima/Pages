@@ -119,7 +119,6 @@ class PagesEditControllerIndexTest extends NetCommonsControllerTestCase {
 				'_9' => array('index' => 5, 'weight' => 1, 'nest' => 1)
 			),
 		);
-		debug($this->controller->viewVars['parentList']);
 		$this->assertEquals($expected, $this->controller->viewVars['parentList']);
 
 		// * viewVars['treeList']のチェック

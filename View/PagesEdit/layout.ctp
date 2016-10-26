@@ -40,12 +40,12 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 							<?php echo $this->NetCommonsForm->hidden('ChildPage.id'); ?>
 
 							<?php foreach (array(Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MINOR, Container::TYPE_FOOTER) as $containerType) : ?>
-								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.id'); ?>
-								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.page_id', array(
+								<?php echo $this->NetCommonsForm->hidden('PageContainer.' . $containerType . '.id'); ?>
+								<?php echo $this->NetCommonsForm->hidden('PageContainer.' . $containerType . '.page_id', array(
 										'value' => Current::read('Page.id'),
 									)); ?>
-								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.container_id'); ?>
-								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.is_configured', array('value' => true)); ?>
+								<?php echo $this->NetCommonsForm->hidden('PageContainer.' . $containerType . '.container_id'); ?>
+								<?php echo $this->NetCommonsForm->hidden('PageContainer.' . $containerType . '.is_configured', array('value' => true)); ?>
 
 								<?php
 									if ($containerType === Container::TYPE_HEADER) {
@@ -58,10 +58,10 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 										$ngValue = 'footer';
 									}
 								?>
-								<?php echo $this->NetCommonsForm->hidden('ContainersPage.' . $containerType . '.is_published', array(
+								<?php echo $this->NetCommonsForm->hidden('PageContainer.' . $containerType . '.is_published', array(
 										'ng-value' => $ngValue,
 									)); ?>
-								<?php $this->NetCommonsForm->unlockField('ContainersPage.' . $containerType . '.is_published'); ?>
+								<?php $this->NetCommonsForm->unlockField('PageContainer.' . $containerType . '.is_published'); ?>
 							<?php endforeach; ?>
 
 							<?php foreach ($layouts as $layout) : ?>

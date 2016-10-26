@@ -120,14 +120,16 @@ class PageSaveBehavior extends ModelBehavior {
 		}
 
 		if ($created) {
-			$result = $model->Page->saveContainer($model->data);
-			$model->data = Hash::merge($model->data, $result);
+//			$result = $model->Page->saveContainer($model->data);
+//			$model->data = Hash::merge($model->data, $result);
 
 			$result = $model->Page->saveBox($model->data);
 			$model->data = Hash::merge($model->data, $result);
 
-			$model->Page->saveContainersPage($model->data);
-			$model->Page->saveBoxesPage($model->data);
+			$result = $model->Page->savePageContainers($model->data);
+			$model->data = Hash::merge($model->data, $result);
+
+			$model->Page->saveBoxesPageContainers($model->data);
 		}
 
 		return parent::afterSave($model, $created, $options);

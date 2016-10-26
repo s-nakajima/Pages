@@ -48,12 +48,12 @@ class PageLayoutHelper extends AppHelper {
  */
 	public $containers;
 
-/**
- * Boxes data
- *
- * @var array
- */
-	public $boxes;
+///**
+// * Boxes data
+// *
+// * @var array
+// */
+//	public $boxes;
 
 /**
  * Plugins data
@@ -72,11 +72,12 @@ class PageLayoutHelper extends AppHelper {
 		parent::__construct($View, $settings);
 
 		$this->containers = Hash::combine(
-			Hash::get($settings, 'page.Container', array()), '{n}.type', '{n}'
+			Hash::get($settings, 'page.PageContainer', array()), '{n}.container_type', '{n}'
 		);
-		$this->boxes = Hash::combine(
-			Hash::get($settings, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id'
-		);
+
+//		$this->boxes = Hash::combine(
+//			Hash::get($settings, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id'
+//		);
 		$this->plugins = Hash::combine(Current::read(
 			'PluginsRoom', array()), '{n}.Plugin.key', '{n}.Plugin'
 		);
@@ -244,7 +245,7 @@ class PageLayoutHelper extends AppHelper {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function hasContainer($containerType, $layoutSetting = false) {
-		$result = Hash::get($this->containers, $containerType . '.ContainersPage.is_published', false);
+		$result = Hash::get($this->containers, $containerType . '.is_published', false);
 		if (! $result) {
 			return false;
 		}
@@ -266,13 +267,7 @@ class PageLayoutHelper extends AppHelper {
  * @return array Box data
  */
 	public function getBox($containerType) {
-		if (Hash::get($this->containers, $containerType . '.id') &&
-				Hash::get($this->boxes, Hash::get($this->containers, $containerType . '.id'))) {
-
-			return Hash::get($this->boxes, Hash::get($this->containers, $containerType . '.id'));
-		}
-
-		return array();
+		return Hash::get($this->containers, $containerType . '.Box', array());
 	}
 
 }

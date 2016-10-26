@@ -23,7 +23,7 @@ class PagesEditController extends PagesAppController {
 /**
  * 使用するModels
  *
- * - [Containers.Page](../../Containers/classes/ContainersPage.html)
+ * - [Containers.Page](../../Pages/classes/PageContainer.html)
  * - [Pages.PagesLanguage](../../Pages/classes/PagesLanguage.html)
  * - [Pages.Page](../../Pages/classes/Page.html)
  * - [Rooms.Room](../../Rooms/classes/Room.html)
@@ -31,7 +31,7 @@ class PagesEditController extends PagesAppController {
  * @var array
  */
 	public $uses = array(
-		'Containers.ContainersPage',
+		'Pages.PageContainer',
 		'Pages.PagesLanguage',
 		'Pages.Page',
 		'Rooms.Room',
@@ -200,7 +200,7 @@ class PagesEditController extends PagesAppController {
 		if ($this->request->is('put')) {
 			unset($this->request->data['save']);
 
-			if (! $this->ContainersPage->saveContainersPage($this->request->data)) {
+			if (! $this->PageContainer->savePageContainer($this->request->data)) {
 				return $this->throwBadRequest();
 			}
 			//正常の場合
@@ -210,12 +210,12 @@ class PagesEditController extends PagesAppController {
 			return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
 
 		} else {
-			$containersPages = $this->ContainersPage->find('all', array(
+			$containersPages = $this->PageContainer->find('all', array(
 				'recursive' => 0,
-				'conditions' => array('ContainersPage.page_id' => Current::read('Page.id'))
+				'conditions' => array('PageContainer.page_id' => Current::read('Page.id'))
 			));
-			$this->request->data['ContainersPage'] = Hash::combine(
-				$containersPages, '{n}.Container.type', '{n}.ContainersPage'
+			$this->request->data['PageContainer'] = Hash::combine(
+				$containersPages, '{n}.PageContainer.container_type', '{n}.PageContainer'
 			);
 
 			$children = $this->Page->children(Current::read('Page.id'), false, 'id');

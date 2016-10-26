@@ -63,7 +63,7 @@ class Page extends PagesAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Containable',
+//		'Containable',
 		'Pages.PageSave',
 		'Pages.PageAssociations',
 		'ThemeSettings.Theme',
@@ -118,7 +118,20 @@ class Page extends PagesAppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'PageContainer' => array(
+			'className' => 'Pages.PageContainer',
+			'foreignKey' => 'page_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 	);
 
 /**
@@ -127,33 +140,33 @@ class Page extends PagesAppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'Box' => array(
-			'className' => 'Boxes.Box',
-			'joinTable' => 'boxes_pages',
-			'foreignKey' => 'page_id',
-			'associationForeignKey' => 'box_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		),
-		'Container' => array(
-			'className' => 'Containers.Container',
-			'joinTable' => 'containers_pages',
-			'foreignKey' => 'page_id',
-			'associationForeignKey' => 'container_id',
-			'unique' => 'keepExisting',
-			//'conditions' => array('ContainersPage.is_published' => true),
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		),
+		//'Box' => array(
+		//	'className' => 'Boxes.Box',
+		//	'joinTable' => 'boxes_pages',
+		//	'foreignKey' => 'page_id',
+		//	'associationForeignKey' => 'box_id',
+		//	'unique' => 'keepExisting',
+		//	'conditions' => '',
+		//	'fields' => '',
+		//	'order' => '',
+		//	'limit' => '',
+		//	'offset' => '',
+		//	'finderQuery' => '',
+		//),
+		//'Container' => array(
+		//	'className' => 'Containers.Container',
+		//	'joinTable' => 'containers_pages',
+		//	'foreignKey' => 'page_id',
+		//	'associationForeignKey' => 'container_id',
+		//	'unique' => 'keepExisting',
+		//	//'conditions' => array('ContainersPage.is_published' => true),
+		//	'conditions' => '',
+		//	'fields' => '',
+		//	'order' => '',
+		//	'limit' => '',
+		//	'offset' => '',
+		//	'finderQuery' => '',
+		//),
 		'Language' => array(
 			'className' => 'M17n.Language',
 			'joinTable' => 'pages_languages',
@@ -471,7 +484,9 @@ class Page extends PagesAppModel {
  */
 	public function getPageWithFrame($permalink) {
 		$this->loadModels([
+			'Box' => 'Boxes.Box',
 			'PagesLanguage' => 'Pages.PagesLanguage',
+			'PageContainer' => 'Pages.PageContainer',
 		]);
 
 		if ($permalink === '') {
@@ -485,33 +500,32 @@ class Page extends PagesAppModel {
 		}
 
 		$query = array(
+			'recursive' => 0,
 			'conditions' => $conditions,
-			'contain' => array(
-				'Box' => $this->Box->getContainableQueryNotAssociatedPage(),
-				'Container' => array(
-					//'conditions' => array(
-					//	// It must check settingmode
-					//	'ContainersPage.is_published' => true
-					//)
-				),
-				'Language' => array(
-					'conditions' => array(
-						'Language.id' => Current::read('Language.id')
-					)
-				)
-			)
 		);
 		$page = $this->find('first', $query);
 
 		$pagesLanguages = $this->PagesLanguage->find('first', array(
 			'recursive' => -1,
 			'conditions' => array(
-				'PagesLanguage.page_id' => Hash::extract($page, 'Page.id'),
+				'PagesLanguage.page_id' => Hash::get($page, 'Page.id'),
 				'PagesLanguage.language_id' => Current::read('Language.id'),
 			),
 		));
-
 		$result = Hash::merge($page, $pagesLanguages);
+
+		$pageContainers = $this->PageContainer->find('all', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'PageContainer.page_id' => Hash::get($page, 'Page.id'),
+			),
+			'order' => array('container_type' => 'asc'),
+		));
+		$result['PageContainer'] = Hash::extract($pageContainers, '{n}.PageContainer');
+		foreach ($result['PageContainer'] as $i => $pageContainer) {
+			$pageContainer['Box'] = $this->Box->getBoxWithFrame($pageContainer['id']);
+			$result['PageContainer'][$i] = $pageContainer;
+		}
 
 		return $result;
 	}

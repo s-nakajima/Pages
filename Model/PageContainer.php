@@ -64,5 +64,58 @@ class PageContainer extends PagesAppModel {
 
 		return parent::beforeValidate($options);
 	}
+/**
+ * Save page each association model
+ *
+ * @param array $data request data
+ * @throws InternalErrorException
+ * @return mixed On success Model::$data if its not empty or true, false on failure
+ */
+	public function savePageContainer($data) {
+		//トランザクションBegin
+		$this->begin();
+
+		if (! $this->validateMany($data['PageContainer'])) {
+			return false;
+		}
+		try {
+			if (! $this->saveMany($data['PageContainer'], ['validate' => false])) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			if (Hash::get($data, 'ChildPage.id')) {
+				$childPageId = explode(',', Hash::get($data, 'ChildPage.id', ''));
+
+				$containerPages = Hash::get($data, 'PageContainer');
+				$containerTypes = array(
+					Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MINOR, Container::TYPE_FOOTER
+				);
+				foreach ($containerTypes as $containerType) {
+					$updated = array(
+						'PageContainer.is_published' => Hash::get(
+							$containerPages, $containerType . '.PageContainer.is_published', true
+						),
+					);
+					$conditions = array(
+						'PageContainer.is_configured' => false,
+						'PageContainer.page_id' => $childPageId,
+						'PageContainer.container_type' => $containerType,
+					);
+
+					$result = $this->updateAll($updated, $conditions);
+					if (! $result) {
+						throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+					}
+				}
+			}
+
+			$this->commit();
+
+		} catch (Exception $ex) {
+			$this->rollback($ex);
+		}
+
+		return true;
+	}
 
 }

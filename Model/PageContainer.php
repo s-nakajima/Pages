@@ -20,6 +20,15 @@ App::uses('PagesAppModel', 'Pages.Model');
 class PageContainer extends PagesAppModel {
 
 /**
+ * constant value
+ */
+	const TYPE_HEADER = '1';
+	const TYPE_MAJOR = '2';
+	const TYPE_MAIN = '3';
+	const TYPE_MINOR = '4';
+	const TYPE_FOOTER = '5';
+
+/**
  * Validation rules
  *
  * @var array

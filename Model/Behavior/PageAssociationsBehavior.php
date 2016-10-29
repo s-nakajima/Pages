@@ -29,33 +29,6 @@ App::uses('Container', 'Containers.Model');
 class PageAssociationsBehavior extends ModelBehavior {
 
 /**
- * Save container data.
- *
- * @param Model $model ビヘイビア呼び出し前のモデル
- * @param array $page ページデータ
- * @return mixed On success Model::$data
- * @throws InternalErrorException
- */
-//	public function saveContainer(Model $model, $page) {
-//		$model->loadModels([
-//			'Container' => 'Containers.Container',
-//		]);
-//
-//		$model->Container->create(false);
-//		$data = array(
-//			'Container' => array(
-//				'type' => Container::TYPE_MAIN
-//			)
-//		);
-//
-//		$result = $model->Container->save($data);
-//		if (! $result) {
-//			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-//		}
-//		return $result;
-//	}
-
-/**
  * Save box data.
  *
  * @param Model $model ビヘイビア呼び出し前のモデル
@@ -222,36 +195,10 @@ class PageAssociationsBehavior extends ModelBehavior {
  */
 	public function deleteContainers(Model $model, $pageId) {
 		$model->loadModels([
-			'Container' => 'Containers.Container',
-			'ContainersPage' => 'Containers.ContainersPage',
+			'PageContainer' => 'Pages.PageContainer',
 		]);
 
-		$conditions = array(
-			'ContainersPage.page_id' => $pageId,
-			'Container.type' => Container::TYPE_MAIN
-		);
-		$containers = $model->ContainersPage->find('list', array(
-			'recursive' => -1,
-			'fields' => 'Container.id',
-			'joins' => array(
-				array(
-					'table' => $model->Container->table,
-					'alias' => $model->Container->alias,
-					'type' => 'INNER',
-					'conditions' => array(
-						$model->ContainersPage->alias . '.container_id' . ' = ' . $model->Container->alias . ' .id',
-					),
-				),
-			),
-			'conditions' => $conditions
-		));
-		$containerIds = array_values($containers);
-
-		if (! $model->Container->deleteAll(array('Container.id' => $containerIds), false)) {
-			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-		}
-
-		if (! $model->ContainersPage->deleteAll(array('ContainersPage.page_id' => $pageId), false)) {
+		if (! $model->PageContainer->deleteAll(array('PageContainer.page_id' => $pageId), false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
@@ -269,14 +216,15 @@ class PageAssociationsBehavior extends ModelBehavior {
 	public function deleteBoxes(Model $model, $pageId) {
 		$model->loadModels([
 			'Box' => 'Boxes.Box',
-			'BoxesPage' => 'Boxes.BoxesPage',
+			'BoxesPageContainer' => 'Boxes.BoxesPageContainer',
 		]);
 
 		if (! $model->Box->deleteAll(array('Box.page_id' => $pageId), false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
-		if (! $model->BoxesPage->deleteAll(array('BoxesPage.page_id' => $pageId), false)) {
+		$conditions = array('BoxesPageContainer.page_id' => $pageId);
+		if (! $model->BoxesPageContainer->deleteAll($conditions, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 

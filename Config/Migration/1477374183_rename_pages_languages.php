@@ -92,6 +92,7 @@ class RenamePagesLanguages extends CakeMigration {
  *
  * @param string $direction Direction of migration process (up or down)
  * @return bool Should process continue
+ * @throws InternalErrorException
  */
 	public function after($direction) {
 		$db = ConnectionManager::getDataSource('master');

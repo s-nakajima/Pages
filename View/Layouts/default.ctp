@@ -37,7 +37,7 @@
 
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
-		<main id="nc-container" class="<?php echo $pageContainerCss; ?>">
+		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange()">
 			<?php echo $pageHeader; ?>
 
 			<div class="row">

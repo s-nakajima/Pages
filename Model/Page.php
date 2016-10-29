@@ -63,7 +63,6 @@ class Page extends PagesAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-//		'Containable',
 		'Pages.PageSave',
 		'Pages.PageAssociations',
 		'ThemeSettings.Theme',

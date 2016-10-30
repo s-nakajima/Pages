@@ -115,7 +115,7 @@ class PagesEditControllerLayoutTest extends PagesControllerTestCase {
 		$roomId = '2';
 		$pageId = '4';
 
-		$this->_mockForReturnTrue('Containers.ContainersPage', 'saveContainersPage');
+		$this->_mockForReturnTrue('Pages.PageContainer', 'savePageContainer');
 
 		$this->controller->Components->Session
 			->expects($this->once())->method('setFlash')
@@ -140,7 +140,7 @@ class PagesEditControllerLayoutTest extends PagesControllerTestCase {
 		$roomId = '2';
 		$pageId = '4';
 
-		$this->_mockForReturnFalse('Containers.ContainersPage', 'saveContainersPage');
+		$this->_mockForReturnFalse('Pages.PageContainer', 'savePageContainer');
 
 		//テスト実行
 		$this->_testPostAction('put', $this->__data(),

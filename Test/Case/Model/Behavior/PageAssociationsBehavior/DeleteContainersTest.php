@@ -39,8 +39,7 @@ class PageAssociationsBehaviorDeleteContainersTest extends PagesModelTestCase {
 		$this->TestModel = ClassRegistry::init('TestPages.TestPageAssociationsBehaviorModel');
 
 		//事前チェック用
-		$this->Container = ClassRegistry::init('Containers.Container');
-		$this->ContainersPage = ClassRegistry::init('Containers.ContainersPage');
+		$this->PageContainer = ClassRegistry::init('Pages.PageContainer');
 	}
 
 /**
@@ -66,26 +65,12 @@ class PageAssociationsBehaviorDeleteContainersTest extends PagesModelTestCase {
  * @return void
  */
 	public function testDeleteContainers($pageId) {
-		$containerId = '17';
-
 		//事前チェック
-		$count = $this->Container->find('count', array(
-			'recursive' => -1,
-			'conditions' => array('id' => $containerId),
-		));
-		$this->assertEquals(1, $count);
-
-		$count = $this->ContainersPage->find('count', array(
+		$count = $this->PageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
 		$this->assertEquals(5, $count);
-
-		$count = $this->ContainersPage->find('count', array(
-			'recursive' => -1,
-			'conditions' => array('page_id' => $pageId, 'container_id' => $containerId),
-		));
-		$this->assertEquals(1, $count);
 
 		//テスト実施
 		$result = $this->TestModel->deleteContainers($pageId);
@@ -94,13 +79,7 @@ class PageAssociationsBehaviorDeleteContainersTest extends PagesModelTestCase {
 		$this->assertTrue($result);
 
 		//データチェック
-		$count = $this->TestModel->Container->find('count', array(
-			'recursive' => -1,
-			'conditions' => array('id' => $containerId),
-		));
-		$this->assertEquals(0, $count);
-
-		$count = $this->TestModel->ContainersPage->find('count', array(
+		$count = $this->TestModel->PageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
@@ -115,7 +94,7 @@ class PageAssociationsBehaviorDeleteContainersTest extends PagesModelTestCase {
  * @return void
  */
 	public function testDeleteContainersOnContainerExceptionError($pageId) {
-		$this->_mockForReturnFalse('TestModel', 'Containers.Container', 'deleteAll');
+		$this->_mockForReturnFalse('TestModel', 'Pages.PageContainer', 'deleteAll');
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
@@ -130,7 +109,7 @@ class PageAssociationsBehaviorDeleteContainersTest extends PagesModelTestCase {
  * @return void
  */
 	public function testDeleteContainersOnContainersPageExceptionError($pageId) {
-		$this->_mockForReturnFalse('TestModel', 'Containers.ContainersPage', 'deleteAll');
+		$this->_mockForReturnFalse('TestModel', 'Pages.PageContainer', 'deleteAll');
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');

@@ -75,9 +75,6 @@ class PagesViewElementsPageHeaderTest extends PagesControllerTestCase {
 		$pattern = '/' . preg_quote('View/Elements/page_header', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
 
-		$pattern = '<header id="container-header">';
-		$this->assertTextNotContains($pattern, $this->view);
-
 		$pattern = 'test_pages/test_page/index';
 		$this->assertTextNotContains($pattern, $this->view);
 	}

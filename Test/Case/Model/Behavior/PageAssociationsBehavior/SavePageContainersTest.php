@@ -1,6 +1,6 @@
 <?php
 /**
- * PageAssociationsBehavior::saveBox()のテスト
+ * PageAssociationsBehavior::savePageContainers()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('PagesModelTestCase', 'Pages.TestSuite');
 
 /**
- * PageAssociationsBehavior::saveBox()のテスト
+ * PageAssociationsBehavior::savePageContainers()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageAssociationsBehavior
  */
-class PageAssociationsBehaviorSaveBoxTest extends PagesModelTestCase {
+class PageAssociationsBehaviorSavePageContainersTest extends PagesModelTestCase {
 
 /**
  * Plugin name
@@ -39,11 +39,11 @@ class PageAssociationsBehaviorSaveBoxTest extends PagesModelTestCase {
 		$this->TestModel = ClassRegistry::init('TestPages.TestPageAssociationsBehaviorModel');
 
 		//事前チェック用
-		$this->Box = ClassRegistry::init('Boxes.Box');
+		$this->PageContainer = ClassRegistry::init('Pages.PageContainer');
 	}
 
 /**
- * saveBox()テストのDataProvider
+ * savePageContainers()テストのDataProvider
  *
  * ### 戻り値
  *  - page ページデータ
@@ -53,64 +53,63 @@ class PageAssociationsBehaviorSaveBoxTest extends PagesModelTestCase {
 	public function dataProvider() {
 		$result[0] = array();
 		$result[0]['page'] = array(
-			'Page' => array('id' => '99', 'room_id' => '10'),
-			'Room' => array('space_id' => '2'),
+			'Page' => array('id' => '99'),
 		);
 
 		return $result;
 	}
 
 /**
- * saveBox()のテスト
+ * savePageContainers()のテスト
  *
  * @param array $page ページデータ
  * @dataProvider dataProvider
  * @return void
  */
-	public function testSaveBox($page) {
+	public function testSavePageContainers($page) {
 		//事前チェック
-		$count = $this->Box->find('count', array(
+		$count = $this->PageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
 		));
 		$this->assertEquals(0, $count);
 
 		//テスト実施
-		$result = $this->TestModel->saveBox($page);
+		$result = $this->TestModel->savePageContainers($page);
 		$result = Hash::remove($result, '{s}.{n}.{s}.created');
 		$result = Hash::remove($result, '{s}.{n}.{s}.modified');
 
 		//戻り値チェック
 		$expected = array(
-			'Box' => array(
+			'PageContainer' => array(
 				1 => array(
-					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
-						'container_type' => '1', 'id' => '64',
+					'PageContainer' => array(
+						'page_id' => '99', 'container_type' => '1',
+						'is_published' => true, 'is_configured' => false, 'id' => '46',
 					),
 				),
 				2 => array(
-					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
-						'container_type' => '2', 'id' => '65',
+					'PageContainer' => array(
+						'page_id' => '99', 'container_type' => '2',
+						'is_published' => true, 'is_configured' => false, 'id' => '47',
 					),
 				),
 				3 => array(
-					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
-						'container_type' => '3', 'id' => '66',
+					'PageContainer' => array(
+						'page_id' => '99', 'container_type' => '3',
+						'is_published' => true, 'is_configured' => false, 'id' => '48',
 					),
 				),
 				4 => array(
-					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
-						'container_type' => '4', 'id' => '67',
+					'PageContainer' => array(
+						'page_id' => '99', 'container_type' => '4',
+						'is_published' => true, 'is_configured' => false, 'id' => '49',
 					),
 				),
 				5 => array(
-					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
-						'container_type' => '5', 'id' => '68',
+					'PageContainer' => array(
+						'page_id' => '99', 'container_type' => '5',
+						'is_published' => true, 'is_configured' => false, 'id' => '50',
 					),
 				),
 			),
@@ -118,7 +117,7 @@ class PageAssociationsBehaviorSaveBoxTest extends PagesModelTestCase {
 		$this->assertEquals($expected, $result);
 
 		//データチェック
-		$count = $this->TestModel->Box->find('count', array(
+		$count = $this->TestModel->PageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($page, 'Page.id')),
 		));
@@ -126,18 +125,18 @@ class PageAssociationsBehaviorSaveBoxTest extends PagesModelTestCase {
 	}
 
 /**
- * saveBox()のExceptionErrorテスト
+ * saveContainersPage()のExceptionErrorテスト
  *
  * @param array $page ページデータ
  * @dataProvider dataProvider
  * @return void
  */
-	public function testSaveBoxOnExceptionError($page) {
-		$this->_mockForReturnFalse('TestModel', 'Boxes.Box', 'save');
+	public function testSavePageContainersOnExceptionError($page) {
+		$this->_mockForReturnFalse('TestModel', 'Pages.PageContainer', 'save');
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
-		$this->TestModel->saveBox($page);
+		$this->TestModel->savePageContainers($page);
 	}
 
 }

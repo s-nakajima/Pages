@@ -383,7 +383,7 @@ class PageLayoutHelper extends AppHelper {
 			return $html;
 		}
 
-		$html .= $this->NetCommonsForm->create(null, array(
+		$html .= $this->NetCommonsForm->create(false, array(
 			'id' => 'BoxForm' . $box['Box']['id'],
 			'url' => NetCommonsUrl::actionUrlAsArray(array(
 				'plugin' => 'boxes',

@@ -40,7 +40,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends PagesModelTestCase {
 
 		//事前チェック用
 		$this->Box = ClassRegistry::init('Boxes.Box');
-		$this->BoxesPage = ClassRegistry::init('Boxes.BoxesPage');
+		$this->BoxesPageContainer = ClassRegistry::init('Boxes.BoxesPageContainer');
 	}
 
 /**
@@ -71,13 +71,13 @@ class PageAssociationsBehaviorDeleteBoxesTest extends PagesModelTestCase {
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEquals(1, $count);
+		$this->assertEquals(5, $count);
 
-		$count = $this->BoxesPage->find('count', array(
+		$count = $this->BoxesPageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEquals(5, $count);
+		$this->assertEquals(17, $count);
 
 		//テスト実施
 		$result = $this->TestModel->deleteBoxes($pageId);
@@ -92,7 +92,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends PagesModelTestCase {
 		));
 		$this->assertEquals(0, $count);
 
-		$count = $this->TestModel->BoxesPage->find('count', array(
+		$count = $this->TestModel->BoxesPageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
@@ -122,7 +122,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends PagesModelTestCase {
  * @return void
  */
 	public function testDeleteBoxesOnContainersPageExceptionError($pageId) {
-		$this->_mockForReturnFalse('TestModel', 'Boxes.BoxesPage', 'deleteAll');
+		$this->_mockForReturnFalse('TestModel', 'Boxes.BoxesPageContainer', 'deleteAll');
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');

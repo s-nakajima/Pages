@@ -75,9 +75,6 @@ class PagesViewElementsPageFooterTest extends PagesControllerTestCase {
 		$pattern = 'View/Elements/page_footer';
 		$this->assertTextContains($pattern, $this->view);
 
-		$pattern = '<footer id="container-footer" role="contentinfo">';
-		$this->assertTextNotContains($pattern, $this->view);
-
 		$pattern = 'test_pages/test_page/index';
 		$this->assertTextNotContains($pattern, $this->view);
 	}

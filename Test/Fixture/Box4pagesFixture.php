@@ -52,13 +52,4 @@ class Box4pagesFixture extends BoxFixture {
 		'6' => array('6'),
 	);
 
-/**
- * Initialize the fixture.
- *
- * @return void
- */
-	public function init() {
-		parent::init();
-	}
-
 }

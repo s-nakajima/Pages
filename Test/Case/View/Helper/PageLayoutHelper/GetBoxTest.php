@@ -47,14 +47,11 @@ class PageLayoutHelperGetBoxTest extends PagesHelperTestCase {
 		$requestData = array();
 		$params = array();
 
-		$viewVars['page'] = $this->Page->getPageWithFrame('test4');
+		$viewVars['page'] = $this->Page->getPageWithFrame('home');
 		$this->loadHelper('Pages.PageLayout', $viewVars, $requestData, $params);
 
 		$this->PageLayout->containers = Hash::combine(
-			Hash::get($this->PageLayout->_View->viewVars, 'page.Container', array()), '{n}.type', '{n}'
-		);
-		$this->PageLayout->boxes = Hash::combine(
-			Hash::get($this->PageLayout->_View->viewVars, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id'
+			Hash::get($this->PageLayout->_View->viewVars, 'page.PageContainer', array()), '{n}.container_type', '{n}'
 		);
 		$this->PageLayout->plugins = Hash::combine(Current::read('PluginsRoom', array()), '{n}.Plugin.key', '{n}.Plugin');
 	}
@@ -72,7 +69,7 @@ class PageLayoutHelperGetBoxTest extends PagesHelperTestCase {
 		$result = $this->PageLayout->getBox($containerType);
 
 		//チェック
-		$this->assertArrayHasKey('Frame', $result['17']);
+		$this->assertArrayHasKey('Frame', $result[0]);
 	}
 
 /**
@@ -86,23 +83,6 @@ class PageLayoutHelperGetBoxTest extends PagesHelperTestCase {
 
 		//テスト実施
 		$this->PageLayout->containers = array();
-		$result = $this->PageLayout->getBox($containerType);
-
-		//チェック
-		$this->assertEquals(array(), $result);
-	}
-
-/**
- * getBox()のテスト(Boxなし)
- *
- * @return void
- */
-	public function testGetBoxWOBox() {
-		//データ生成
-		$containerType = Container::TYPE_MAIN;
-
-		//テスト実施
-		$this->PageLayout->boxes = array();
 		$result = $this->PageLayout->getBox($containerType);
 
 		//チェック

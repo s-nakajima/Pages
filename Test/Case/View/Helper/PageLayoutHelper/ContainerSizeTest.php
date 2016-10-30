@@ -51,10 +51,7 @@ class PageLayoutHelperContainerSizeTest extends PagesHelperTestCase {
 		$this->loadHelper('Pages.PageLayout', $viewVars, $requestData, $params);
 
 		$this->PageLayout->containers = Hash::combine(
-			Hash::get($this->PageLayout->_View->viewVars, 'page.Container', array()), '{n}.type', '{n}'
-		);
-		$this->PageLayout->boxes = Hash::combine(
-			Hash::get($this->PageLayout->_View->viewVars, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id'
+			Hash::get($this->PageLayout->_View->viewVars, 'page.PageContainer', array()), '{n}.container_type', '{n}'
 		);
 		$this->PageLayout->plugins = Hash::combine(Current::read('PluginsRoom', array()), '{n}.Plugin.key', '{n}.Plugin');
 	}

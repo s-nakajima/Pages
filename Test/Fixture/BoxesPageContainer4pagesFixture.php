@@ -8,7 +8,9 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('BoxFixture', 'Boxes.Test/Fixture');
+App::uses('BoxesPageContainerFixture', 'Boxes.Test/Fixture');
+App::uses('Box4pagesFixture', 'Pages.Test/Fixture');
+App::uses('PageContainer4pagesFixture', 'Pages.Test/Fixture');
 
 /**
  * BoxFixture
@@ -16,21 +18,21 @@ App::uses('BoxFixture', 'Boxes.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class Box4pagesFixture extends BoxFixture {
+class BoxesPageContainer4pagesFixture extends BoxesPageContainerFixture {
 
 /**
  * Model name
  *
  * @var string
  */
-	public $name = 'Box';
+	public $name = 'BoxesPageContainer';
 
 /**
  * Full Table Name
  *
  * @var string
  */
-	public $table = 'boxes';
+	public $table = 'boxes_page_containers';
 
 /**
  * ルームID
@@ -58,6 +60,14 @@ class Box4pagesFixture extends BoxFixture {
  * @return void
  */
 	public function init() {
+		$fixture = new Box4pagesFixture();
+		$fixture->setRecords();
+		$this->_boxes = $fixture->records;
+
+		$fixture = new PageContainer4pagesFixture();
+		$fixture->setRecords();
+		$this->_pageContainers = $fixture->records;
+
 		parent::init();
 	}
 

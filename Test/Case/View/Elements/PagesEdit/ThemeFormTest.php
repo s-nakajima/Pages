@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * View/Elements/PagesEdit/theme_formのテスト
@@ -17,7 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\ThemeForm
  */
-class PagesViewElementsPagesEditThemeFormTest extends NetCommonsControllerTestCase {
+class PagesViewElementsPagesEditThemeFormTest extends PagesControllerTestCase {
 
 /**
  * Fixtures

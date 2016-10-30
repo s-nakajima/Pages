@@ -55,7 +55,7 @@ class Room4pagesFixture extends RoomFixture {
 			'page_layout_permitted' => true,
 			'theme' => null,
 		),
-		//パブリックスペース、別ルーム(room_id=4)
+		//パブリックスペース、別ルーム(room_id=5)
 		array(
 			'id' => '5',
 			'space_id' => '2',
@@ -71,7 +71,7 @@ class Room4pagesFixture extends RoomFixture {
 			'page_layout_permitted' => true,
 			'theme' => null,
 		),
-		//パブリックスペース、別ルーム(room_id=5、ブロックなし)
+		//パブリックスペース、別ルーム(room_id=6、ブロックなし)
 		array(
 			'id' => '6',
 			'space_id' => '2',

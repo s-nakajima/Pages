@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsHelperTestCase', 'NetCommons.TestSuite');
+App::uses('PagesHelperTestCase', 'Pages.TestSuite');
 App::uses('Container', 'Containers.Model');
 
 /**
@@ -18,24 +18,7 @@ App::uses('Container', 'Containers.Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Helper\PageLayoutHelper
  */
-class PageLayoutHelperGetBoxTest extends NetCommonsHelperTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.pages_language4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PageLayoutHelperGetBoxTest extends PagesHelperTestCase {
 
 /**
  * Plugin name

@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 App::uses('Page4pagesFixture', 'Pages.Test/Fixture');
 
 /**
@@ -18,17 +18,7 @@ App::uses('Page4pagesFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Page
  */
-class PageSaveTest extends NetCommonsModelTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.pages_language4pages',
-		'plugin.pages.page4pages',
-	);
+class PageSaveTest extends PagesModelTestCase {
 
 /**
  * Plugin name

@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 
 /**
  * PageAssociationsBehavior::getReferencePageId()のテスト
@@ -17,7 +17,7 @@ App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageAssociationsBehavior
  */
-class PageAssociationsBehaviorGetReferencePageIdTest extends NetCommonsModelTestCase {
+class PageAssociationsBehaviorGetReferencePageIdTest extends PagesModelTestCase {
 
 /**
  * Fixtures

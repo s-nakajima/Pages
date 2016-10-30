@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 App::uses('TestPageSaveBehaviorValidatesModelFixture', 'Pages.Test/Fixture');
 
 /**
@@ -18,7 +18,7 @@ App::uses('TestPageSaveBehaviorValidatesModelFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageSaveBehavior
  */
-class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
+class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
 
 /**
  * Fixtures

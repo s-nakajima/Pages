@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 App::uses('TestPageSaveBehaviorSaveModelFixture', 'Pages.Test/Fixture');
 
 /**
@@ -18,7 +18,7 @@ App::uses('TestPageSaveBehaviorSaveModelFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageSaveBehavior
  */
-class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
+class PageSaveBehaviorSaveTest extends PagesModelTestCase {
 
 /**
  * Fixtures
@@ -27,7 +27,7 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
  */
 	public $fixtures = array(
 		'plugin.pages.test_page_save_behavior_save_model',
-		'plugin.pages.pages_language',
+		//'plugin.pages.pages_language',
 	);
 
 /**
@@ -65,16 +65,16 @@ class PageSaveBehaviorSaveTest extends NetCommonsModelTestCase {
 		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', array('save', 'validates'));
 
 		$this->TestModel->Page = $this->getMockForModel('Pages.Page', array(
-			'saveContainer', 'saveBox', 'saveContainersPage', 'saveBoxesPage'
+			'savePageContainers', 'saveBox', 'saveBoxesPageContainers'
 		));
-		$this->_mockForReturn('TestModel', 'Pages.Page', array('saveContainer'), array(
-			'Container' => 'success1'
+		$this->_mockForReturn('TestModel', 'Pages.Page', array('savePageContainers'), array(
+			'PageContainer' => 'success1'
 		));
 		$this->_mockForReturn('TestModel', 'Pages.Page', array('saveBox'), array(
 			'Box' => 'success2'
 		));
 		$this->_mockForReturnTrue('TestModel', 'Pages.Page', array(
-			'saveContainersPage', 'saveBoxesPage'
+			'saveBoxesPageContainers'
 		));
 
 		//事前チェック

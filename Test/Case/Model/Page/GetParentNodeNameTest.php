@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsGetTest', 'NetCommons.TestSuite');
+App::uses('PagesGetTestCase', 'Pages.TestSuite');
 
 /**
  * Page::getParentNodeName()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsGetTest', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Page
  */
-class PageGetParentNodeNameTest extends NetCommonsGetTest {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.pages_language4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PageGetParentNodeNameTest extends PagesGetTestCase {
 
 /**
  * Plugin name

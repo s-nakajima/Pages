@@ -27,9 +27,9 @@ class PageSavePageTest extends NetCommonsSaveTest {
  */
 	public $fixtures = array(
 		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
+		//'plugin.pages.boxes_page4pages',
+		//'plugin.pages.container4pages',
+		//'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
 		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',

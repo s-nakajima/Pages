@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * View/Elements/PagesEdit/edit_formのテスト
@@ -17,21 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\EditForm
  */
-class PagesViewElementsPagesEditEditFormTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.pages_language4pages',
-		'plugin.pages.page4pages',
-	);
+class PagesViewElementsPagesEditEditFormTest extends PagesControllerTestCase {
 
 /**
  * Plugin name

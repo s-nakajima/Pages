@@ -22,19 +22,14 @@ class PageContainerFixture extends CakeTestFixture {
  *
  * @var array
  */
-	public $records = array(
-		array(
-			'id' => 1,
-			'page_id' => '1',
-			'container_type' => 1,
-			'is_published' => 1,
-			'is_configured' => 1,
-			'created_user' => 1,
-			'created' => '2016-10-25 05:36:32',
-			'modified_user' => 1,
-			'modified' => '2016-10-25 05:36:32'
-		),
-	);
+	public $records = array();
+
+/**
+ * ページID
+ *
+ * @var array
+ */
+	protected $_maxPageId = 4;
 
 /**
  * Initialize the fixture.
@@ -44,7 +39,30 @@ class PageContainerFixture extends CakeTestFixture {
 	public function init() {
 		require_once App::pluginPath('Pages') . 'Config' . DS . 'Schema' . DS . 'schema.php';
 		$this->fields = (new PagesSchema())->tables['page_containers'];
+
+		$this->setRecords();
 		parent::init();
+	}
+
+/**
+ * recordsのセット
+ *
+ * @return void
+ */
+	public function setRecords() {
+		$id = 0;
+		for ($pageId = 1; $pageId <= $this->_maxPageId; $pageId++) {
+			for ($containerType = 1; $containerType <= 5; $containerType++) {
+				$id++;
+				$this->records[] = array(
+					'id' => (string)$id,
+					'page_id' => (string)$pageId,
+					'container_type' => (string)$containerType,
+					'is_published' => '1',
+					'is_configured' => '0'
+				);
+			}
+		}
 	}
 
 }

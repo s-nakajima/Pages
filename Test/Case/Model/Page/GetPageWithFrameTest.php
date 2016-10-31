@@ -284,14 +284,14 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 					),
 					'Frame' => array(
 						0 => array(
-							'id' => '3',
+							'id' => '4',
 							'language_id' => '2',
 							'room_id' => '2',
 							'box_id' => '4',
 							'plugin_key' => 'test_pages',
 							'block_id' => '2',
-							'key' => 'frame_minor',
-							'name' => 'Test frame minor',
+							'key' => 'frame_footer',
+							'name' => 'Test frame footer',
 							'header_type' => 'default',
 							'weight' => '1',
 							'is_deleted' => false,
@@ -511,7 +511,22 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 					'RoomsLanguage' => array(
 						'id' => null, 'name' => null,
 					),
-					//'Frame' => array(),
+					'Frame' => array(
+						0 => array(
+							'id' => '3',
+							'language_id' => '2',
+							'room_id' => '2',
+							'box_id' => '3',
+							'plugin_key' => 'test_pages',
+							'block_id' => '2',
+							'key' => 'frame_minor',
+							'name' => 'Test frame minor',
+							'header_type' => 'default',
+							'weight' => '1',
+							'is_deleted' => false,
+							'default_action' => '',
+						),
+					),
 				),
 			),
 		);

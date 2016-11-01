@@ -84,12 +84,21 @@ class PageLayoutHelper extends AppHelper {
  * @return string
  */
 	public function __call($method, $params) {
+		$boxMethods = array(
+			'getBox', 'boxTitle', 'displayBoxSetting', 'hasBox',
+			'hasBoxSetting', 'renderAddPlugin', 'renderFrames'
+		);
+
 		if ($method === 'getBlockStatus') {
 			$helper = $this->_View->loadHelper('Blocks.Blocks');
-		} elseif ($method === 'getBlockStatus') {
-			$helper = $this->_View->loadHelper('Blocks.Blocks');
+			return call_user_func_array(array($helper, $method), $params);
+		} elseif (in_array($method, $boxMethods, true)) {
+			$helper = $this->_View->loadHelper(
+				'Boxes.Boxes', array('containers' => $this->containers)
+			);
+			return call_user_func_array(array($helper, $method), $params);
 		}
-		return call_user_func_array(array($helper, $method), $params);
+
 	}
 
 /**
@@ -271,194 +280,6 @@ class PageLayoutHelper extends AppHelper {
 		}
 
 		return (bool)$result;
-	}
-
-/**
- * Get the box data for container
- *
- * @param string $containerType コンテナータイプ
- *		Container::TYPE_HEADER or Container::TYPE_MAJOR or Container::TYPE_MAIN or
- *		Container::TYPE_MINOR or Container::TYPE_FOOTER
- * @return array Box data
- */
-	public function getBox($containerType) {
-		return Hash::get($this->containers, $containerType . '.Box', array());
-	}
-
-/**
- * プラグイン追加のHTMLを出力
- *
- * @param string $containerType コンテナータイプ
- *		Container::TYPE_HEADER or Container::TYPE_MAJOR or Container::TYPE_MAIN or
- *		Container::TYPE_MINOR or Container::TYPE_FOOTER
- * @param array $box Boxデータ
- * @return string
- */
-	public function renderAddPlugin($containerType, $box) {
-		if (Current::isSettingMode()) {
-			return $this->_View->element('Frames.add_plugin', array(
-					'boxId' => $box['Box']['id'],
-					'roomId' => $box['Box']['room_id'],
-					'containerType' => $containerType,
-				));
-		} else {
-			return '';
-		}
-	}
-
-/**
- * ボックス内のFrameのHTMLを出力
- *
- * @param string $containerType コンテナータイプ
- *		Container::TYPE_HEADER or Container::TYPE_MAJOR or Container::TYPE_MAIN or
- *		Container::TYPE_MINOR or Container::TYPE_FOOTER
- * @param array $box Boxデータ
- * @return string
- */
-	public function renderFrames($containerType, $box) {
-		$html = '';
-		if (! empty($box['Frame'])) {
-			$html .= '<div id="box-' . $box['Box']['id'] . '">';
-			$html .= $this->_View->element('Frames.render_frames', array(
-					'frames' => $box['Frame'], 'containerType' => $containerType,
-				));
-			$html .= '</div>';
-		}
-		return $html;
-	}
-
-/**
- * ボックスエリアのタイトル表示
- *
- * @param string $containerType コンテナータイプ
- *		Container::TYPE_HEADER or Container::TYPE_MAJOR or Container::TYPE_MAIN or
- *		Container::TYPE_MINOR or Container::TYPE_FOOTER
- * @param array $box Boxデータ
- * @return string
- */
-	public function boxTitle($containerType, $box) {
-		$html = '';
-
-		if ($containerType === Container::TYPE_MAJOR) {
-			$containerTitle = __d('boxes', '(left column)');
-		} elseif ($containerType === Container::TYPE_MINOR) {
-			$containerTitle = __d('boxes', '(right column)');
-		} else {
-			$containerTitle = '';
-		}
-
-		$html .= $this->_displaySetting($containerType, $box);
-
-		if ($box['Box']['type'] === Box::TYPE_WITH_SITE) {
-			$html .= __d('boxes', 'Common area of the whole site%s', $containerTitle);
-		} elseif ($box['Box']['type'] === Box::TYPE_WITH_SPACE) {
-			$html .= __d(
-				'boxes',
-				'Common area of the whole %s space%s',
-				h($box['RoomsLanguage']['name']),
-				$containerTitle
-			);
-		} elseif ($box['Box']['type'] === Box::TYPE_WITH_ROOM) {
-			$html .= __d('boxes', 'Common area of the whole room%s', $containerTitle);
-		} else {
-			$html .= __d('boxes', 'Area of this page only%s', $containerTitle);
-		}
-
-		return $html;
-	}
-
-/**
- * 表示・非表示の変更HTMLを出力する
- *
- * @param string $containerType コンテナータイプ
- *		Container::TYPE_HEADER or Container::TYPE_MAJOR or Container::TYPE_MAIN or
- *		Container::TYPE_MINOR or Container::TYPE_FOOTER
- * @param array $box Boxデータ
- * @return string
- */
-	protected function _displaySetting($containerType, $box) {
-		$html = '';
-
-		if (! $this->_hasSetting($containerType, $box)) {
-			return $html;
-		}
-
-		$html .= $this->NetCommonsForm->create(false, array(
-			'id' => 'BoxForm' . $box['Box']['id'],
-			'url' => NetCommonsUrl::actionUrlAsArray(array(
-				'plugin' => 'boxes',
-				'controller' => 'boxes',
-				'action' => 'display',
-				$box['Box']['id']
-			)),
-			'type' => 'put',
-			'class' => array('pull-left box-display'),
-		));
-
-		$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.id', array(
-			'value' => $box['BoxesPageContainer']['id'],
-		));
-		$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.box_id', array(
-			'value' => $box['BoxesPageContainer']['box_id'],
-		));
-		$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.page_container_id', array(
-			'value' => $box['BoxesPageContainer']['page_container_id'],
-		));
-		$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.page_id', array(
-			'value' => $box['BoxesPageContainer']['page_id'],
-		));
-		$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.container_type', array(
-			'value' => $box['BoxesPageContainer']['container_type'],
-		));
-		$html .= $this->NetCommonsForm->hidden('Page.id', array(
-			'value' => Current::read('Page.id'),
-		));
-
-		if ($box['BoxesPageContainer']['is_published']) {
-			$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.is_published', array('value' => '0'));
-			$buttonIcon = 'glyphicon-eye-open';
-			$active = ' active';
-			$label = __d('boxes', 'Display');
-		} else {
-			$html .= $this->NetCommonsForm->hidden('BoxesPageContainer.is_published', array('value' => '1'));
-			$buttonIcon = 'glyphicon-minus';
-			$active = '';
-			$label = __d('boxes', 'Non display');
-		}
-		$html .= $this->Button->save(
-			'<span class="glyphicon ' . $buttonIcon . '" aria-hidden="true"> </span>',
-			array(
-				'class' => 'btn btn-xs btn-default' . $active,
-			)
-		);
-
-		$html .= $this->NetCommonsForm->end();
-		return $html;
-	}
-
-/**
- * 表示・非表示の変更HTMLを出力する
- *
- * @param string $containerType コンテナータイプ
- *		Container::TYPE_HEADER or Container::TYPE_MAJOR or Container::TYPE_MAIN or
- *		Container::TYPE_MINOR or Container::TYPE_FOOTER
- * @param array $box Boxデータ
- * @return string
- */
-	protected function _hasSetting($containerType, $box) {
-		if ($containerType === Container::TYPE_MAJOR || $containerType === Container::TYPE_MINOR) {
-			if (Current::permission('page_editable', $box['Box']['room_id'])) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			if (Current::permission('page_editable')) {
-				return true;
-			} else {
-				return false;
-			}
-		}
 	}
 
 }

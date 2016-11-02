@@ -41,17 +41,26 @@ class PageAssociationsBehavior extends ModelBehavior {
 			'Box' => 'Boxes.Box',
 		]);
 
-		$containerTypes = array(
-			Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MAIN,
-			Container::TYPE_MINOR, Container::TYPE_FOOTER,
-		);
+		if (! $page['Page']['id']) {
+			$containerTypes = array(
+				Container::TYPE_HEADER, Container::TYPE_MAJOR,
+				Container::TYPE_MINOR, Container::TYPE_FOOTER,
+			);
+			$type = Box::TYPE_WITH_ROOM;
+		} else {
+			$containerTypes = array(
+				Container::TYPE_HEADER, Container::TYPE_MAJOR, Container::TYPE_MAIN,
+				Container::TYPE_MINOR, Container::TYPE_FOOTER,
+			);
+			$type = Box::TYPE_WITH_PAGE;
+		}
 
 		$boxes['Box'] = array();
 		foreach ($containerTypes as $containerType) {
 			$model->Box->create(false);
 			$data = array(
 				'Box' => array(
-					'type' => Box::TYPE_WITH_PAGE,
+					'type' => $type,
 					'space_id' => $page['Room']['space_id'],
 					'room_id' => $page['Page']['room_id'],
 					'page_id' => $page['Page']['id'],
@@ -125,14 +134,23 @@ class PageAssociationsBehavior extends ModelBehavior {
 			'BoxesPageContainer' => 'Boxes.BoxesPageContainer',
 		]);
 
-		$query = array(
-			'recursive' => 0,
-			'conditions' => array(
-				'BoxesPageContainer.page_id' => $model->getReferencePageId($model, $page),
-				'BoxesPageContainer.container_type !=' => Container::TYPE_MAIN
-			)
+		$parentBoxesPages = array();
+		$parentBoxesPages = array_merge(
+			$parentBoxesPages,
+			$this->__getDafaultBoxesPageContainers($model, $page, Box::TYPE_WITH_SITE)
 		);
-		$parentBoxesPages = $model->BoxesPageContainer->find('all', $query);
+		$parentBoxesPages = array_merge(
+			$parentBoxesPages,
+			$this->__getDafaultBoxesPageContainers($model, $page, Box::TYPE_WITH_SPACE)
+		);
+		$parentBoxesPages = array_merge(
+			$parentBoxesPages,
+			$this->__getDafaultBoxesPageContainers($model, $page, Box::TYPE_WITH_ROOM)
+		);
+		$parentBoxesPages = array_merge(
+			$parentBoxesPages,
+			$this->__getDafaultBoxesPageContainers($model, $page, Box::TYPE_WITH_PAGE)
+		);
 		$parentBoxesPages[] = array(
 			'BoxesPageContainer' => array(
 				'container_type' => Container::TYPE_MAIN,
@@ -168,6 +186,63 @@ class PageAssociationsBehavior extends ModelBehavior {
 		}
 
 		return true;
+	}
+
+/**
+ * PageBoxesの登録処理
+ *
+ * @param Model $model ビヘイビア呼び出し前のモデル
+ * @param array $page ページデータ
+ * @return bool True on success
+ * @throws InternalErrorException
+ */
+	private function __getDafaultBoxesPageContainers(Model $model, $page, $boxType) {
+		$model->loadModels([
+			'Box' => 'Boxes.Box',
+			'BoxesPageContainer' => 'Boxes.BoxesPageContainer',
+		]);
+
+		$conditions = array(
+			'BoxesPageContainer.page_id' => $this->getReferencePageId($model, $page),
+			'BoxesPageContainer.container_type !=' => Container::TYPE_MAIN,
+			'Box.type' => $boxType
+		);
+		if (in_array($boxType, [Box::TYPE_WITH_ROOM, Box::TYPE_WITH_PAGE], true)) {
+			$conditions['Box.room_id'] = $page['Room']['id'];
+		}
+		$parentBoxesPages = $model->BoxesPageContainer->find('all', array(
+			'recursive' => 0,
+			'conditions' => $conditions
+		));
+
+		if (! $parentBoxesPages) {
+			$conditions = array(
+				'type' => $boxType,
+				'container_type !=' => Container::TYPE_MAIN,
+			);
+			if (in_array($boxType, [Box::TYPE_WITH_SPACE, Box::TYPE_WITH_ROOM, Box::TYPE_WITH_PAGE], true)) {
+				$conditions['space_id'] = $page['Room']['space_id'];
+			}
+			if (in_array($boxType, [Box::TYPE_WITH_ROOM, Box::TYPE_WITH_PAGE], true)) {
+				$conditions['room_id'] = $page['Room']['id'];
+			}
+			if (in_array($boxType, [Box::TYPE_WITH_PAGE], true)) {
+				$conditions['page_id'] = $page['Page']['id'];
+			}
+			$parentBoxesPages = $model->Box->find('all', array(
+				'recursive' => -1,
+				'conditions' => $conditions
+			));
+			foreach ($parentBoxesPages as $i => $box) {
+				$parentBoxesPages[$i]['BoxesPageContainer'] = array(
+					'container_type' => $box['Box']['container_type'],
+					'is_published' => false,
+					'weight' => $boxType,
+				);
+			}
+		}
+
+		return $parentBoxesPages;
 	}
 
 /**

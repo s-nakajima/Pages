@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsHelperTestCase', 'NetCommons.TestSuite');
+App::uses('PagesHelperTestCase', 'Pages.TestSuite');
 
 /**
  * PagesEditHelper::indent()のテスト
@@ -17,7 +17,7 @@ App::uses('NetCommonsHelperTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Helper\PagesEditHelper
  */
-class PagesEditHelperIndentTest extends NetCommonsHelperTestCase {
+class PagesEditHelperIndentTest extends PagesHelperTestCase {
 
 /**
  * Fixtures

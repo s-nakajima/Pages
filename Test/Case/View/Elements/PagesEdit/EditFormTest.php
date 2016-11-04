@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * View/Elements/PagesEdit/edit_formのテスト
@@ -17,21 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\EditForm
  */
-class PagesViewElementsPagesEditEditFormTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-	);
+class PagesViewElementsPagesEditEditFormTest extends PagesControllerTestCase {
 
 /**
  * Plugin name
@@ -86,11 +72,11 @@ class PagesViewElementsPagesEditEditFormTest extends NetCommonsControllerTestCas
 		$this->assertInput('input', 'data[Page][root_id]', '1', $this->view);
 		$this->assertInput('input', 'data[Page][parent_id]', '4', $this->view);
 		$this->assertInput('input', 'data[Page][permalink]', 'test4', $this->view);
-		$this->assertInput('input', 'data[Page][room_id]', '1', $this->view);
-		$this->assertInput('input', 'data[Room][id]', '1', $this->view);
+		$this->assertInput('input', 'data[Page][room_id]', '2', $this->view);
+		$this->assertInput('input', 'data[Room][id]', '2', $this->view);
 		$this->assertInput('input', 'data[Room][space_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][id]', '10', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][name]', 'Test page 4', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][id]', '10', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][name]', 'Test page 4', $this->view);
 		$this->assertInput('input', 'data[Page][permalink]', 'test4', $this->view);
 	}
 

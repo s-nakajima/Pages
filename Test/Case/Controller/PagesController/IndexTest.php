@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * PagesController::index()のテスト
@@ -17,20 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\PagesController
  */
-class PagesControllerIndexTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PagesControllerIndexTest extends PagesControllerTestCase {
 
 /**
  * Plugin name

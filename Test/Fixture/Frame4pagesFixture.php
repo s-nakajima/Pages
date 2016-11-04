@@ -42,7 +42,7 @@ class Frame4pagesFixture extends FrameFixture {
 		array(
 			'id' => '1',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'box_id' => '1',
 			'plugin_key' => 'test_plugin',
 			'block_id' => '2',
@@ -55,7 +55,7 @@ class Frame4pagesFixture extends FrameFixture {
 		array(
 			'id' => '2',
 			'language_id' => '2',
-			'room_id' => '1',
+			'room_id' => '2',
 			'box_id' => '2',
 			'plugin_key' => 'test_plugin',
 			'block_id' => '2',
@@ -68,8 +68,8 @@ class Frame4pagesFixture extends FrameFixture {
 		array(
 			'id' => '3',
 			'language_id' => '2',
-			'room_id' => '1',
-			'box_id' => '4',
+			'room_id' => '2',
+			'box_id' => '3',
 			'plugin_key' => 'test_plugin',
 			'block_id' => '2',
 			'key' => 'frame_minor',
@@ -77,11 +77,12 @@ class Frame4pagesFixture extends FrameFixture {
 			'weight' => '1',
 			'is_deleted' => '0',
 		),
+		//フッター
 		array(
 			'id' => '4',
 			'language_id' => '2',
-			'room_id' => '1',
-			'box_id' => '5',
+			'room_id' => '2',
+			'box_id' => '4',
 			'plugin_key' => 'test_plugin',
 			'block_id' => '2',
 			'key' => 'frame_footer',
@@ -93,8 +94,8 @@ class Frame4pagesFixture extends FrameFixture {
 		array(
 			'id' => '5',
 			'language_id' => '1',
-			'room_id' => '1',
-			'box_id' => '6',
+			'room_id' => '2',
+			'box_id' => '28',
 			'plugin_key' => 'test_plugin',
 			'block_id' => '1',
 			'key' => 'frame_3',
@@ -105,8 +106,8 @@ class Frame4pagesFixture extends FrameFixture {
 		array(
 			'id' => '6',
 			'language_id' => '2',
-			'room_id' => '1',
-			'box_id' => '6',
+			'room_id' => '2',
+			'box_id' => '28',
 			'plugin_key' => 'test_plugin',
 			'block_id' => '2',
 			'key' => 'frame_3',

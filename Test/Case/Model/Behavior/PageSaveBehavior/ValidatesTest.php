@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 App::uses('TestPageSaveBehaviorValidatesModelFixture', 'Pages.Test/Fixture');
 
 /**
@@ -18,7 +18,7 @@ App::uses('TestPageSaveBehaviorValidatesModelFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageSaveBehavior
  */
-class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
+class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
 
 /**
  * Fixtures
@@ -27,7 +27,7 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
  */
 	public $fixtures = array(
 		'plugin.pages.test_page_save_behavior_validates_model',
-		'plugin.pages.languages_page',
+		'plugin.pages.pages_language',
 	);
 
 /**
@@ -59,9 +59,9 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1'),
+			'PagesLanguage' => array('id' => '1'),
 		);
-		$this->_mockForReturnTrue('TestModel', 'Pages.LanguagesPage', 'validates');
+		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', 'validates');
 
 		//テスト実施
 		$this->TestModel->set($data);
@@ -80,7 +80,7 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1', 'name' => ''),
+			'PagesLanguage' => array('id' => '1', 'name' => ''),
 		);
 
 		//テスト実施
@@ -104,11 +104,11 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 		//テストデータ
 		$data = array(
 			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
-			'LanguagesPage' => array('id' => '1'),
+			'PagesLanguage' => array('id' => '1'),
 		);
 		$data = Hash::remove($data, 'Page.room_id');
-		Current::write('Room.id', '2');
-		$this->_mockForReturnTrue('TestModel', 'Pages.LanguagesPage', 'validates');
+		Current::write('Room.id', '3');
+		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', 'validates');
 
 		//テスト実施
 		$this->TestModel->set($data);
@@ -116,7 +116,7 @@ class PageSaveBehaviorValidatesTest extends NetCommonsModelTestCase {
 
 		//チェック
 		$this->assertTrue($result);
-		$this->assertEquals('2', $this->TestModel->data['Page']['room_id']);
+		$this->assertEquals('3', $this->TestModel->data['Page']['room_id']);
 	}
 
 }

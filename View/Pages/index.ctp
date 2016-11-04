@@ -9,11 +9,8 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-$page['Container'] = Hash::combine($page['Container'], '{n}.type', '{n}');
-$page['Container'] = array(Container::TYPE_MAIN => $page['Container'][Container::TYPE_MAIN]);
-$page['Box'] = Hash::combine($page['Box'], '{n}.id', '{n}', '{n}.container_id');
-
+$pageContainer = Hash::combine($page['PageContainer'], '{n}.container_type', '{n}');
 echo $this->element('Boxes.render_boxes', array(
-		'boxes' => Hash::get($page['Box'], Hash::get($page, 'Container.' . Container::TYPE_MAIN . '.id')),
+		'boxes' => $pageContainer[Container::TYPE_MAIN]['Box'],
 		'containerType' => Container::TYPE_MAIN
 	));

@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * View/Elements/PagesEdit/delete_formのテスト
@@ -17,21 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\DeleteForm
  */
-class PagesViewElementsPagesEditDeleteFormTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-	);
+class PagesViewElementsPagesEditDeleteFormTest extends PagesControllerTestCase {
 
 /**
  * Plugin name
@@ -82,7 +68,7 @@ class PagesViewElementsPagesEditDeleteFormTest extends NetCommonsControllerTestC
 		$pattern = '/' . preg_quote('View/Elements/PagesEdit/delete_form', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
 
-		$this->assertInput('form', null, '/delete/1/7', $this->view);
+		$this->assertInput('form', null, '/delete/2/7', $this->view);
 		$this->assertInput('input', '_method', 'DELETE', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '7', $this->view);
 	}

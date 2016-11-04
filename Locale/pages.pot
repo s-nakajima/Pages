@@ -25,7 +25,7 @@ msgstr ""
 msgid "New page %s"
 msgstr ""
 
-#: Pages/Model/LanguagesPage.php:66
+#: Pages/Model/PagesLanguage.php:66
 #: Pages/View/Elements/Pages/edit_form.ctp:34
 msgid "Page name"
 msgstr ""

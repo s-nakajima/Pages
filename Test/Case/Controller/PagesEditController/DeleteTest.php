@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * PagesEditController::delete()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\PagesEditController
  */
-class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PagesEditControllerDeleteTest extends PagesControllerTestCase {
 
 /**
  * Plugin name
@@ -81,7 +64,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	public function testDeleteGet() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行
@@ -95,7 +78,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	private function __data() {
 		$data = array(
-			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/2/20')
 		);
 		return $data;
 	}
@@ -107,7 +90,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	public function testDeletePost() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnTrue('Pages.Page', 'deletePage');
 
@@ -127,7 +110,7 @@ class PagesEditControllerDeleteTest extends NetCommonsControllerTestCase {
  */
 	public function testDeletePostOnExceptionError() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnFalse('Pages.Page', 'deletePage');
 

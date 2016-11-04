@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsCakeTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 App::uses('SlugRoute', 'Pages.Routing/Route');
 
 /**
@@ -18,24 +18,7 @@ App::uses('SlugRoute', 'Pages.Routing/Route');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Routing\Route\SlugRoute
  */
-class PagesRoutingRouteSlugRouteParseTest extends NetCommonsCakeTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 
 /**
  * Plugin name

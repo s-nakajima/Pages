@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * View/Elements/page_footerのテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Elements\PageFooter
  */
-class PagesViewElementsPageFooterTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PagesViewElementsPageFooterTest extends PagesControllerTestCase {
 
 /**
  * Plugin name
@@ -91,9 +74,6 @@ class PagesViewElementsPageFooterTest extends NetCommonsControllerTestCase {
 		//チェック
 		$pattern = 'View/Elements/page_footer';
 		$this->assertTextContains($pattern, $this->view);
-
-		$pattern = '<footer id="container-footer" role="contentinfo">';
-		$this->assertTextNotContains($pattern, $this->view);
 
 		$pattern = 'test_pages/test_page/index';
 		$this->assertTextNotContains($pattern, $this->view);

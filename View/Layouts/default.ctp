@@ -32,12 +32,12 @@
 		?>
 	</head>
 
-	<body class="<?php echo $modal ? 'modal-open' : ''; ?>" ng-controller="NetCommons.base">
+	<body class="<?php echo !empty($modal) ? 'modal-open' : ''; ?>" ng-controller="NetCommons.base">
 		<?php echo $this->Session->flash(); ?>
 
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
-		<main id="nc-container" class="<?php echo $pageContainerCss; ?>">
+		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange()">
 			<?php echo $pageHeader; ?>
 
 			<div class="row">
@@ -53,7 +53,7 @@
 
 		<?php echo $this->element('NetCommons.common_footer'); ?>
 
-		<?php if ($modal) : ?>
+		<?php if (!empty($modal)) : ?>
 			<div class="modal-backdrop fade in"></div>
 		<?php endif; ?>
 	</body>

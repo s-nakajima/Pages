@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsHelperTestCase', 'NetCommons.TestSuite');
+App::uses('PagesHelperTestCase', 'Pages.TestSuite');
 App::uses('Container', 'Containers.Model');
 
 /**
@@ -18,24 +18,7 @@ App::uses('Container', 'Containers.Model');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Helper\PageLayoutHelper
  */
-class PageLayoutHelperGetBoxTest extends NetCommonsHelperTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PageLayoutHelperGetBoxTest extends PagesHelperTestCase {
 
 /**
  * Plugin name
@@ -64,14 +47,11 @@ class PageLayoutHelperGetBoxTest extends NetCommonsHelperTestCase {
 		$requestData = array();
 		$params = array();
 
-		$viewVars['page'] = $this->Page->getPageWithFrame('test4');
+		$viewVars['page'] = $this->Page->getPageWithFrame('home');
 		$this->loadHelper('Pages.PageLayout', $viewVars, $requestData, $params);
 
 		$this->PageLayout->containers = Hash::combine(
-			Hash::get($this->PageLayout->_View->viewVars, 'page.Container', array()), '{n}.type', '{n}'
-		);
-		$this->PageLayout->boxes = Hash::combine(
-			Hash::get($this->PageLayout->_View->viewVars, 'page.Box', array()), '{n}.id', '{n}', '{n}.container_id'
+			Hash::get($this->PageLayout->_View->viewVars, 'page.PageContainer', array()), '{n}.container_type', '{n}'
 		);
 		$this->PageLayout->plugins = Hash::combine(Current::read('PluginsRoom', array()), '{n}.Plugin.key', '{n}.Plugin');
 	}
@@ -89,7 +69,7 @@ class PageLayoutHelperGetBoxTest extends NetCommonsHelperTestCase {
 		$result = $this->PageLayout->getBox($containerType);
 
 		//チェック
-		$this->assertArrayHasKey('Frame', $result['17']);
+		$this->assertArrayHasKey('Frame', $result[0]);
 	}
 
 /**
@@ -103,23 +83,6 @@ class PageLayoutHelperGetBoxTest extends NetCommonsHelperTestCase {
 
 		//テスト実施
 		$this->PageLayout->containers = array();
-		$result = $this->PageLayout->getBox($containerType);
-
-		//チェック
-		$this->assertEquals(array(), $result);
-	}
-
-/**
- * getBox()のテスト(Boxなし)
- *
- * @return void
- */
-	public function testGetBoxWOBox() {
-		//データ生成
-		$containerType = Container::TYPE_MAIN;
-
-		//テスト実施
-		$this->PageLayout->boxes = array();
 		$result = $this->PageLayout->getBox($containerType);
 
 		//チェック

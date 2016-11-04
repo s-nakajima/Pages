@@ -1,6 +1,6 @@
 <?php
 /**
- * ContainerFixture
+ * ContainersPageFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @link http://www.netcommons.org NetCommons Project
@@ -8,29 +8,36 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContainerFixture', 'Containers.Test/Fixture');
+App::uses('PageContainerFixture', 'Containers.Test/Fixture');
 
 /**
- * ContainerFixture
+ * ContainersPageFixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class Container4pagesFixture extends ContainerFixture {
+class PageContainer4routesFixture extends PageContainerFixture {
 
 /**
  * Model name
  *
  * @var string
  */
-	public $name = 'Container';
+	public $name = 'PageContainer';
 
 /**
  * Full Table Name
  *
  * @var string
  */
-	public $table = 'containers';
+	public $table = 'page_containers';
+
+/**
+ * ページID
+ *
+ * @var array
+ */
+	protected $_maxPageId = 12;
 
 /**
  * Initialize the fixture.
@@ -38,11 +45,6 @@ class Container4pagesFixture extends ContainerFixture {
  * @return void
  */
 	public function init() {
-		require_once App::pluginPath('Containers') . 'Config' . DS . 'Migration' . DS . '1472409223_container_records.php';
-		$this->records = (new ContainerRecords())->records[$this->name];
-
-		//パブリックスペースのホーム/test4
-		$this->records[] = array('id' => '17', 'type' => '3');
 		parent::init();
 	}
 

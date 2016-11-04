@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * PagesEditController::beforeFilter()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\PagesEditController
  */
-class PagesEditControllerBeforeFilterTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PagesEditControllerBeforeFilterTest extends PagesControllerTestCase {
 
 /**
  * Plugin name
@@ -83,7 +66,7 @@ class PagesEditControllerBeforeFilterTest extends NetCommonsControllerTestCase {
  */
 	public function testBeforeFilterIndex() {
 		//テスト実行
-		$roomId = '1';
+		$roomId = '2';
 		$this->_testGetAction(array('action' => 'index', $roomId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
@@ -98,7 +81,7 @@ class PagesEditControllerBeforeFilterTest extends NetCommonsControllerTestCase {
  */
 	public function testBeforeFilterEdit() {
 		//テスト実行
-		$roomId = '1';
+		$roomId = '2';
 		$this->_testGetAction(array('action' => 'edit', $roomId, '4'), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック

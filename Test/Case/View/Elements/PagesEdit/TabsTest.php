@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * View/Elements/PagesEdit/tabsのテスト
@@ -17,7 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\View\Elements\PagesEdit\Tabs
  */
-class PagesViewElementsPagesEditTabsTest extends NetCommonsControllerTestCase {
+class PagesViewElementsPagesEditTabsTest extends PagesControllerTestCase {
 
 /**
  * Fixtures

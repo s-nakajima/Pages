@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('LanguagesPageFixture', 'Pages.Test/Fixture');
+App::uses('PagesLanguageFixture', 'Pages.Test/Fixture');
 
 /**
  * Unitテスト用Fixture
@@ -17,21 +17,21 @@ App::uses('LanguagesPageFixture', 'Pages.Test/Fixture');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class LanguagesPage4pagesFixture extends LanguagesPageFixture {
+class PagesLanguage4pagesFixture extends PagesLanguageFixture {
 
 /**
  * Model name
  *
  * @var string
  */
-	public $name = 'LanguagesPage';
+	public $name = 'PagesLanguage';
 
 /**
  * Full Table Name
  *
  * @var string
  */
-	public $table = 'languages_pages';
+	public $table = 'pages_languages';
 
 /**
  * Records

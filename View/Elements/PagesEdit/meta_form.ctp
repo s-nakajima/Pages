@@ -10,23 +10,23 @@
 ?>
 
 <?php echo $this->NetCommonsForm->hidden('Page.id'); ?>
-<?php echo $this->NetCommonsForm->hidden('LanguagesPage.id'); ?>
-<?php echo $this->NetCommonsForm->hidden('LanguagesPage.language_id'); ?>
+<?php echo $this->NetCommonsForm->hidden('PagesLanguage.id'); ?>
+<?php echo $this->NetCommonsForm->hidden('PagesLanguage.language_id'); ?>
 
-<?php echo $this->NetCommonsForm->input('LanguagesPage.meta_title', array(
+<?php echo $this->NetCommonsForm->input('PagesLanguage.meta_title', array(
 		'type' => 'text',
 		'label' => __d('pages', 'Title tag (&lt;title&gt;&lt;/title&gt;)'),
 		'required' => true,
 		'help' => $this->PagesEdit->helpMetaTitle(),
 	)); ?>
 
-<?php echo $this->NetCommonsForm->input('LanguagesPage.meta_description', array(
+<?php echo $this->NetCommonsForm->input('PagesLanguage.meta_description', array(
 		'type' => 'text',
 		'label' => __d('pages', 'META description'),
 		'help' => __d('pages', 'Set page description for the robot type search engine.'),
 	)); ?>
 
-<?php echo $this->NetCommonsForm->input('LanguagesPage.meta_keywords', array(
+<?php echo $this->NetCommonsForm->input('PagesLanguage.meta_keywords', array(
 		'type' => 'text',
 		'label' => __d('pages', 'META keywords'),
 		'help' => __d('pages', 'Yon can set search keywords for the robot type search engine.Multi-keywords can be delimited by comma. ' .

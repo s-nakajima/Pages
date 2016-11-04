@@ -9,14 +9,13 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
-<?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_FOOTER)): ?>
-	<footer id="container-footer" role="contentinfo">
-		<?php
-			echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->PageLayout->getBox(Container::TYPE_FOOTER),
-				'containerType' => Container::TYPE_FOOTER
-			));
-		?>
-	</footer>
-<?php endif;
+
+<footer id="container-footer" role="contentinfo">
+	<?php
+		echo $this->element('Boxes.render_boxes', array(
+			'boxes' => $this->PageLayout->getBox(Container::TYPE_FOOTER),
+			'containerType' => Container::TYPE_FOOTER
+		));
+	?>
+</footer>
 

@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 
 /**
  * PageAssociationsBehavior::deleteBoxes()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Behavior\PageAssociationsBehavior
  */
-class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PageAssociationsBehaviorDeleteBoxesTest extends PagesModelTestCase {
 
 /**
  * Plugin name
@@ -57,7 +40,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
 
 		//事前チェック用
 		$this->Box = ClassRegistry::init('Boxes.Box');
-		$this->BoxesPage = ClassRegistry::init('Boxes.BoxesPage');
+		$this->BoxesPageContainer = ClassRegistry::init('Boxes.BoxesPageContainer');
 	}
 
 /**
@@ -88,13 +71,13 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEquals(1, $count);
+		$this->assertEquals(5, $count);
 
-		$count = $this->BoxesPage->find('count', array(
+		$count = $this->BoxesPageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
-		$this->assertEquals(5, $count);
+		$this->assertEquals(17, $count);
 
 		//テスト実施
 		$result = $this->TestModel->deleteBoxes($pageId);
@@ -109,7 +92,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
 		));
 		$this->assertEquals(0, $count);
 
-		$count = $this->TestModel->BoxesPage->find('count', array(
+		$count = $this->TestModel->BoxesPageContainer->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => $pageId),
 		));
@@ -139,7 +122,7 @@ class PageAssociationsBehaviorDeleteBoxesTest extends NetCommonsModelTestCase {
  * @return void
  */
 	public function testDeleteBoxesOnContainersPageExceptionError($pageId) {
-		$this->_mockForReturnFalse('TestModel', 'Boxes.BoxesPage', 'deleteAll');
+		$this->_mockForReturnFalse('TestModel', 'Boxes.BoxesPageContainer', 'deleteAll');
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');

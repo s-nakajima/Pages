@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * PagesEditController::meta()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\PagesEditController
  */
-class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PagesEditControllerMetaTest extends PagesControllerTestCase {
 
 /**
  * Plugin name
@@ -81,23 +64,23 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  */
 	public function testMetaGet() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
 		//テスト実行
 		$this->_testGetAction(array('action' => 'meta', $roomId, $pageId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
-		$this->assertInput('form', null, '/pages/pages_edit/meta/1/4', $this->view);
+		$this->assertInput('form', null, '/pages/pages_edit/meta/2/4', $this->view);
 		$this->assertInput('input', '_method', 'PUT', $this->view);
 		$this->assertInput('input', 'data[Page][id]', '4', $this->view);
 
 		$this->assertInput('input', 'data[Page][id]', $pageId, $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][id]', '8', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][language_id]', '2', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][meta_title]', '{X-PAGE_NAME} - {X-SITE_NAME}', $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][meta_description]', null, $this->view);
-		$this->assertInput('input', 'data[LanguagesPage][meta_keywords]', null, $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][id]', '8', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][language_id]', '2', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][meta_title]', '{X-PAGE_NAME} - {X-SITE_NAME}', $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][meta_description]', null, $this->view);
+		$this->assertInput('input', 'data[PagesLanguage][meta_keywords]', null, $this->view);
 	}
 
 /**
@@ -107,7 +90,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  */
 	private function __data() {
 		$data = array(
-			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/2/20')
 		);
 		return $data;
 	}
@@ -119,10 +102,10 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  */
 	public function testPost() {
 		//テストデータ
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 
-		$this->_mockForReturnTrue('Pages.LanguagesPage', 'saveLanguagesPage');
+		$this->_mockForReturnTrue('Pages.PagesLanguage', 'savePagesLanguage');
 
 		$this->controller->Components->Session
 			->expects($this->once())->method('setFlash')
@@ -134,7 +117,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
 
 		//チェック
 		$header = $this->controller->response->header();
-		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
+		$this->assertTextContains('/pages/pages_edit/index/2/20', $header['Location']);
 	}
 
 /**
@@ -143,7 +126,7 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testOnExceptionError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
 		$this->_mockForReturnFalse('Pages.Page', 'existPage');
 
@@ -157,11 +140,11 @@ class PagesEditControllerMetaTest extends NetCommonsControllerTestCase {
  * @return void
  */
 	public function testOnValidationError() {
-		$roomId = '1';
+		$roomId = '2';
 		$pageId = '4';
-		$this->_mockForReturnCallback('Pages.LanguagesPage', 'saveLanguagesPage', function () {
+		$this->_mockForReturnCallback('Pages.PagesLanguage', 'savePagesLanguage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Title tag'));
-			$this->controller->LanguagesPage->invalidate('meta_title', $message);
+			$this->controller->PagesLanguage->invalidate('meta_title', $message);
 			return false;
 		});
 

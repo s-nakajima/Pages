@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
+App::uses('PagesControllerTestCase', 'Pages.TestSuite');
 
 /**
  * PageLayoutComponent::beforeRender()のテスト
@@ -17,7 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\Component\PageLayoutComponent
  */
-class PageLayoutComponentBeforeRenderTest extends NetCommonsControllerTestCase {
+class PageLayoutComponentBeforeRenderTest extends PagesControllerTestCase {
 
 /**
  * Fixtures

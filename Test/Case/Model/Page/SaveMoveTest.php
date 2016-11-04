@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 
 /**
  * Page::saveMove()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Page
  */
-class PageSaveMoveTest extends NetCommonsModelTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PageSaveMoveTest extends PagesModelTestCase {
 
 /**
  * Plugin name
@@ -98,7 +81,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$data = array(
@@ -133,7 +116,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
-		$roomId = '1';
+		$roomId = '2';
 		$this->_mockForReturnFalse($model, 'Rooms.Room', 'saveField');
 
 		//テスト実施
@@ -154,7 +137,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
@@ -174,7 +157,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$data = array(
@@ -209,7 +192,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
@@ -229,7 +212,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '8';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$data = array(
@@ -264,7 +247,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$data = array(
@@ -299,7 +282,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
@@ -319,7 +302,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '4';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$this->setExpectedException('InternalErrorException');
@@ -339,7 +322,7 @@ class PageSaveMoveTest extends NetCommonsModelTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		$pageId = '999';
-		$roomId = '1';
+		$roomId = '2';
 
 		//テスト実施
 		$data = array(

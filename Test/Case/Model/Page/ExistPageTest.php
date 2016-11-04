@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('PagesModelTestCase', 'Pages.TestSuite');
 
 /**
  * Page::existPage()のテスト
@@ -17,24 +17,7 @@ App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Model\Page
  */
-class PageExistPageTest extends NetCommonsModelTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
-		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
-		'plugin.pages.page4pages',
-		'plugin.pages.plugin4pages',
-		'plugin.pages.plugins_room4pages',
-	);
+class PageExistPageTest extends PagesModelTestCase {
 
 /**
  * Plugin name
@@ -67,7 +50,7 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '1';
 
 		//テスト実施
@@ -87,7 +70,7 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '999';
 
 		//テスト実施
@@ -107,11 +90,11 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '5';
 
 		//テスト実施
-		$result = $this->$model->$methodName($pageId, '4', '1');
+		$result = $this->$model->$methodName($pageId, '5', '2');
 
 		//チェック
 		$this->assertTrue($result);
@@ -127,11 +110,11 @@ class PageExistPageTest extends NetCommonsModelTestCase {
 		$methodName = $this->_methodName;
 
 		//データ生成
-		Current::write('Room.id', '1');
+		Current::write('Room.id', '2');
 		$pageId = '666';
 
 		//テスト実施
-		$result = $this->$model->$methodName($pageId, '4', '1');
+		$result = $this->$model->$methodName($pageId, '5', '2');
 
 		//チェック
 		$this->assertFalse($result);

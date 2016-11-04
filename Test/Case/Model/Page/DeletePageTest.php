@@ -27,11 +27,11 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
  */
 	public $fixtures = array(
 		'plugin.pages.box4pages',
-		'plugin.pages.boxes_page4pages',
-		'plugin.pages.container4pages',
-		'plugin.pages.containers_page4pages',
+		//'plugin.pages.boxes_page4pages',
+		//'plugin.pages.container4pages',
+		//'plugin.pages.containers_page4pages',
 		'plugin.pages.frame4pages',
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 		'plugin.pages.plugin4pages',
 		'plugin.pages.plugins_room4pages',
@@ -93,7 +93,7 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 		$this->assertEquals($expected, $result);
 
 		//事前チェック用
-		$this->LanguagesPage = ClassRegistry::init('Pages.LanguagesPage');
+		$this->PagesLanguage = ClassRegistry::init('Pages.PagesLanguage');
 	}
 
 /**
@@ -133,7 +133,7 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 
 		//事前チェック
 		// * Pageの事前チェックはsetUpで行っている
-		$count = $this->LanguagesPage->find('count', array(
+		$count = $this->PagesLanguage->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($data, 'Page.id'))
 		));
@@ -165,7 +165,7 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 
 		//事前チェック
 		// * Pageの事前チェックはsetUpで行っている
-		$count = $this->LanguagesPage->find('count', array(
+		$count = $this->PagesLanguage->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($data, 'Page.id'))
 		));
@@ -203,8 +203,8 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 		);
 		$this->assertEquals($expected, $result);
 
-		//LanguagesPageのチェック
-		$count = $this->LanguagesPage->find('count', array(
+		//PagesLanguageのチェック
+		$count = $this->PagesLanguage->find('count', array(
 			'recursive' => -1,
 			'conditions' => array('page_id' => Hash::get($data, 'Page.id'))
 		));
@@ -226,7 +226,7 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 
 		return array(
 			array($data, 'Pages.Page', 'delete'),
-			array($data, 'Pages.LanguagesPage', 'deleteAll'),
+			array($data, 'Pages.PagesLanguage', 'deleteAll'),
 		);
 	}
 

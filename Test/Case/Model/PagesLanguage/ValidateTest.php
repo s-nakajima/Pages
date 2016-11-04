@@ -1,6 +1,6 @@
 <?php
 /**
- * LanguagesPage::validate()のテスト
+ * PagesLanguage::validate()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -10,15 +10,15 @@
  */
 
 App::uses('NetCommonsValidateTest', 'NetCommons.TestSuite');
-App::uses('LanguagesPageFixture', 'Pages.Test/Fixture');
+App::uses('PagesLanguageFixture', 'Pages.Test/Fixture');
 
 /**
- * LanguagesPage::validate()のテスト
+ * PagesLanguage::validate()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Pages\Test\Case\Model\LanguagesPage
+ * @package NetCommons\Pages\Test\Case\Model\PagesLanguage
  */
-class LanguagesPageValidateTest extends NetCommonsValidateTest {
+class PagesLanguageValidateTest extends NetCommonsValidateTest {
 
 /**
  * Fixtures
@@ -26,7 +26,7 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.languages_page4pages',
+		'plugin.pages.pages_language4pages',
 		'plugin.pages.page4pages',
 	);
 
@@ -42,7 +42,7 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
  *
  * @var string
  */
-	protected $_modelName = 'LanguagesPage';
+	protected $_modelName = 'PagesLanguage';
 
 /**
  * Method name
@@ -64,7 +64,7 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
  * @return array テストデータ
  */
 	public function dataProviderValidationError() {
-		$data['LanguagesPage'] = (new LanguagesPageFixture())->records[0];
+		$data['PagesLanguage'] = (new PagesLanguageFixture())->records[0];
 
 		return array(
 			// * name
@@ -83,7 +83,7 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
 	}
 
 /**
- * LanguagesPage.meta_titleがデフォルト値と同じ場合、空値になるテスト用DataProvider
+ * PagesLanguage.meta_titleがデフォルト値と同じ場合、空値になるテスト用DataProvider
  *
  * ### 戻り値
  *  - metaTitle 入力メタタイトル
@@ -99,7 +99,7 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
 	}
 
 /**
- * LanguagesPage.meta_titleがデフォルト値と同じ場合、空値になるテスト
+ * PagesLanguage.meta_titleがデフォルト値と同じ場合、空値になるテスト
  *
  * @param string $metaTitle 入力メタタイトル
  * @param string $expected 期待値のメタタイトル
@@ -109,15 +109,15 @@ class LanguagesPageValidateTest extends NetCommonsValidateTest {
 	public function testMetaTitle($metaTitle, $expected) {
 		$model = $this->_modelName;
 
-		$data['LanguagesPage'] = (new LanguagesPageFixture())->records[0];
-		$data['LanguagesPage']['meta_title'] = $metaTitle;
+		$data['PagesLanguage'] = (new PagesLanguageFixture())->records[0];
+		$data['PagesLanguage']['meta_title'] = $metaTitle;
 
 		//validate処理実行
 		$this->$model->set($data);
 		$result = $this->$model->validates();
 		$this->assertTrue($result);
 
-		$this->assertEquals($this->$model->data['LanguagesPage']['meta_title'], $expected);
+		$this->assertEquals($this->$model->data['PagesLanguage']['meta_title'], $expected);
 	}
 
 }

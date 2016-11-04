@@ -33,20 +33,23 @@ class Box4pagesFixture extends BoxFixture {
 	public $table = 'boxes';
 
 /**
- * Initialize the fixture.
+ * ルームID
  *
- * @return void
+ * @var array
  */
-	public function init() {
-		require_once App::pluginPath('Boxes') . 'Config' . DS . 'Migration' . DS . '1472409223_box_records.php';
-		$this->records = (new BoxRecords())->records[$this->name];
+	protected $_roomId = array(
+		'2' => array('2', '5', '6'),
+	);
 
-		//パブリックスペースのホーム/test4
-		$this->records[] = array(
-			'id' => '17', 'container_id' => '17', 'type' => '4', 'space_id' => '2',
-			'room_id' => '1', 'page_id' => '7', 'weight' => '1',
-		);
-		parent::init();
-	}
+/**
+ * ページID
+ *
+ * @var array
+ */
+	protected $_pageId = array(
+		'2' => array('1', '4', '7', '8'),
+		'5' => array('5', '9'),
+		'6' => array('6'),
+	);
 
 }

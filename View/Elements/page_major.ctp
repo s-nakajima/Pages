@@ -9,12 +9,13 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
-<?php if (! empty($this->PageLayout) && $this->PageLayout->hasContainer(Container::TYPE_MAJOR)): ?>
-	<div id="container-major" class="<?php echo $this->PageLayout->containerSize(Container::TYPE_MAJOR); ?>">
-		<?php echo $this->element('Boxes.render_boxes', array(
-				'boxes' => $this->PageLayout->getBox(Container::TYPE_MAJOR),
-				'containerType' => Container::TYPE_MAJOR
-			)); ?>
-	</div>
-<?php endif;
+
+<div id="container-major" class="<?php echo $this->PageLayout->containerSize(Container::TYPE_MAJOR); ?>">
+	<?php
+		echo $this->element('Boxes.render_boxes', array(
+			'boxes' => $this->PageLayout->getBox(Container::TYPE_MAJOR),
+			'containerType' => Container::TYPE_MAJOR
+		));
+	?>
+</div>
 

@@ -25,7 +25,7 @@ class PageGetTopPageIdTest extends NetCommonsGetTest {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.languages_page',
+		'plugin.pages.pages_language',
 		'plugin.pages.page',
 	);
 

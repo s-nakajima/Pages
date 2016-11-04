@@ -49,7 +49,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 					<tr ng-init="pageId = treeList[0]">
 						<th class="h2">
 							<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
-								{{pages[pageId]['LanguagesPage']['name']}}
+								{{pages[pageId]['PagesLanguage']['name']}}
 							</a>
 							<?php echo $this->LinkButton->edit('', '', array(
 									'iconSize' => 'btn-xs',
@@ -90,7 +90,7 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 							</span>
 
 							<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
-								{{pages[pageId]['LanguagesPage']['name']}}
+								{{pages[pageId]['PagesLanguage']['name']}}
 							</a>
 
 							<?php echo $this->LinkButton->edit('', '', array(

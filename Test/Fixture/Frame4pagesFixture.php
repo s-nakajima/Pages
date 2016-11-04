@@ -77,6 +77,7 @@ class Frame4pagesFixture extends FrameFixture {
 			'weight' => '1',
 			'is_deleted' => '0',
 		),
+		//フッター
 		array(
 			'id' => '4',
 			'language_id' => '2',

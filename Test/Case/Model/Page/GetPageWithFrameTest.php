@@ -62,30 +62,30 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$this->__assertPage($result['Page'], array());
 		$this->__assertPageContainers($result['PageContainer']);
 	}
-
-/**
- * getPageWithFrame()のテスト
- *
- * @return void
- */
-	public function testGetPageWithFrameByRoot() {
-		$model = $this->_modelName;
-		$methodName = $this->_methodName;
-		Current::write('Room.page_id_top', '7');
-
-		//データ生成
-		$permalink = '';
-
-		//テスト実施
-		$result = $this->$model->$methodName($permalink);
-
-		//チェック
-		$expected = array('Page', 'Room', 'ParentPage', 'PagesLanguage', 'PageContainer');
-		$this->assertEquals($expected, array_keys($result));
-
-		$this->__assertPage($result['Page']);
-		$this->__assertPageContainers($result['PageContainer']);
-	}
+//
+///**
+// * getPageWithFrame()のテスト
+// *
+// * @return void
+// */
+//	public function testGetPageWithFrameByRoot() {
+//		$model = $this->_modelName;
+//		$methodName = $this->_methodName;
+//		Current::write('Room.page_id_top', '7');
+//
+//		//データ生成
+//		$permalink = '';
+//
+//		//テスト実施
+//		$result = $this->$model->$methodName($permalink);
+//
+//		//チェック
+//		$expected = array('Page', 'Room', 'ParentPage', 'PagesLanguage', 'PageContainer');
+//		$this->assertEquals($expected, array_keys($result));
+//
+//		$this->__assertPage($result['Page']);
+//		$this->__assertPageContainers($result['PageContainer']);
+//	}
 
 /**
  * Pageのチェック

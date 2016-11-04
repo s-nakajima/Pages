@@ -98,7 +98,6 @@ class PageLayoutHelper extends AppHelper {
 			);
 			return call_user_func_array(array($helper, $method), $params);
 		}
-
 	}
 
 /**

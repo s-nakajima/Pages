@@ -193,6 +193,7 @@ class PageAssociationsBehavior extends ModelBehavior {
  *
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param array $page ページデータ
+ * @param int $boxType ボックスタイプ
  * @return bool True on success
  * @throws InternalErrorException
  */

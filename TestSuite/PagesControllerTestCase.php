@@ -17,6 +17,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Case\Controller\PagesEditController
  * @codeCoverageIgnore
+ * @SuppressWarnings(PHPMD.NumberOfChildren)
  */
 class PagesControllerTestCase extends NetCommonsControllerTestCase {
 
@@ -29,6 +30,7 @@ class PagesControllerTestCase extends NetCommonsControllerTestCase {
 		'plugin.pages.box4pages',
 		'plugin.pages.boxes_page_container4pages',
 		'plugin.pages.frame4pages',
+		'plugin.pages.room_role_permission4pages',
 		'plugin.pages.pages_language4pages',
 		'plugin.pages.page_container4pages',
 		'plugin.pages.page4pages',

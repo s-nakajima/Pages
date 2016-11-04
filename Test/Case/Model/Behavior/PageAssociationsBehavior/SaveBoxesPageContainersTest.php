@@ -60,7 +60,7 @@ class PageAssociationsBehaviorSaveBoxesPageContainersTest extends NetCommonsMode
 	public function dataProvider() {
 		$result[0] = array();
 		$result[0]['page'] = array(
-			'Page' => array('id' => '99', 'room_id' => '10','parent_id' => '2'),
+			'Page' => array('id' => '99', 'room_id' => '10', 'parent_id' => '2'),
 			'Room' => array('id' => '10', 'space_id' => '1'),
 			'Box' => array(
 				1 => array(

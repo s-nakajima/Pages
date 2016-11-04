@@ -91,80 +91,80 @@ class PagesEditControllerAddTest extends PagesControllerTestCase {
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Page.room_id'));
 		$this->assertEquals($roomId, Hash::get($this->controller->request->data, 'Room.id'));
 	}
-//
-///**
-// * add()アクションのGETのExceptionErrorテスト
-// *
-// * @return void
-// */
-//	public function testAddGetOnExceptionError() {
-//		$roomId = '2';
-//		$pageId = '4';
-//		$this->_mockForReturnFalse('Pages.Page', 'existPage');
-//
-//		//テスト実行
-//		$this->_testGetAction(array('action' => 'add', $roomId, $pageId), null, 'BadRequestException', 'view');
-//	}
-//
-///**
-// * POSTリクエストデータ生成
-// *
-// * @return array リクエストデータ
-// */
-//	private function __data() {
-//		$data = array(
-//			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
-//		);
-//		return $data;
-//	}
-//
-///**
-// * add()アクションのPOSTテスト
-// *
-// * @return void
-// */
-//	public function testAddPost() {
-//		$roomId = '2';
-//		$pageId = '4';
-//		$this->_mockForReturn('Pages.Page', 'savePage', array(
-//			'Page' => array('id' => '20')
-//		));
-//
-//		//テスト実行
-//		$this->_testPostAction('post', $this->__data(), array('action' => 'add', $roomId, $pageId), null);
-//
-//		//チェック
-//		$header = $this->controller->response->header();
-//		$this->assertNotEmpty($header['Location']);
-//		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
-//	}
-//
-///**
-// * add()アクションのPOSTのValidationErrorテスト
-// *
-// * @return void
-// */
-//	public function testAddPostOnValidationError() {
-//		$roomId = '2';
-//		$pageId = '4';
-//		$this->_mockForReturnCallback('Pages.Page', 'savePage', function () {
-//			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));
-//			$this->controller->PagesLanguage->invalidate('name', $message);
-//
-//			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
-//			$this->controller->Page->invalidate('permalink', $message);
-//			return false;
-//		});
-//
-//		//テスト実行
-//		$this->_testPostAction('post', array(), array('action' => 'add', $roomId, $pageId), null);
-//
-//		//チェック
-//		$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));
-//		$this->assertTextContains($message, $this->view);
-//
-//		$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
-//		$this->assertTextContains($message, $this->view);
-//	}
+
+/**
+ * add()アクションのGETのExceptionErrorテスト
+ *
+ * @return void
+ */
+	public function testAddGetOnExceptionError() {
+		$roomId = '2';
+		$pageId = '4';
+		$this->_mockForReturnFalse('Pages.Page', 'existPage');
+
+		//テスト実行
+		$this->_testGetAction(array('action' => 'add', $roomId, $pageId), null, 'BadRequestException', 'view');
+	}
+
+/**
+ * POSTリクエストデータ生成
+ *
+ * @return array リクエストデータ
+ */
+	private function __data() {
+		$data = array(
+			'_NetCommonsUrl' => array('redirect' => '/pages/pages_edit/index/1/20')
+		);
+		return $data;
+	}
+
+/**
+ * add()アクションのPOSTテスト
+ *
+ * @return void
+ */
+	public function testAddPost() {
+		$roomId = '2';
+		$pageId = '4';
+		$this->_mockForReturn('Pages.Page', 'savePage', array(
+			'Page' => array('id' => '20')
+		));
+
+		//テスト実行
+		$this->_testPostAction('post', $this->__data(), array('action' => 'add', $roomId, $pageId), null);
+
+		//チェック
+		$header = $this->controller->response->header();
+		$this->assertNotEmpty($header['Location']);
+		$this->assertTextContains('/pages/pages_edit/index/1/20', $header['Location']);
+	}
+
+/**
+ * add()アクションのPOSTのValidationErrorテスト
+ *
+ * @return void
+ */
+	public function testAddPostOnValidationError() {
+		$roomId = '2';
+		$pageId = '4';
+		$this->_mockForReturnCallback('Pages.Page', 'savePage', function () {
+			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));
+			$this->controller->PagesLanguage->invalidate('name', $message);
+
+			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
+			$this->controller->Page->invalidate('permalink', $message);
+			return false;
+		});
+
+		//テスト実行
+		$this->_testPostAction('post', array(), array('action' => 'add', $roomId, $pageId), null);
+
+		//チェック
+		$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Page name'));
+		$this->assertTextContains($message, $this->view);
+
+		$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
+		$this->assertTextContains($message, $this->view);
+	}
 
 }

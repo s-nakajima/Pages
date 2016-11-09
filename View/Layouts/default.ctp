@@ -9,7 +9,6 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
-<?php $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework'); ?>
 <!DOCTYPE html>
 <html lang="<?php echo Configure::read('Config.language') ?>" ng-app="NetCommonsApp">
 	<head>

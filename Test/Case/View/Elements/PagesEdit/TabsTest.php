@@ -97,22 +97,22 @@ class PagesViewElementsPagesEditTabsTest extends PagesControllerTestCase {
 		$this->view = str_replace("\t", '', $this->view);
 
 		$pattern = '<li class="active">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '">' . __d('pages', 'Edit page') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '.*?">' . __d('pages', 'Edit page') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '">' . __d('pages', 'Edit layout') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '.*?">' . __d('pages', 'Edit layout') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '">' . __d('pages', 'Theme setting') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '.*?">' . __d('pages', 'Theme setting') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '.*?">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
@@ -139,17 +139,17 @@ class PagesViewElementsPagesEditTabsTest extends PagesControllerTestCase {
 		$this->assertTextNotContains(__d('pages', 'Edit page'), $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/1', '/') . '">' . __d('pages', 'Edit layout') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/1', '/') . '.*?">' . __d('pages', 'Edit layout') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/1', '/') . '">' . __d('pages', 'Theme setting') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/1', '/') . '.*?">' . __d('pages', 'Theme setting') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/1', '/') . '">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/1', '/') . '.*?">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
@@ -174,22 +174,22 @@ class PagesViewElementsPagesEditTabsTest extends PagesControllerTestCase {
 		$this->view = str_replace("\t", '', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '">' . __d('pages', 'Edit page') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '.*?">' . __d('pages', 'Edit page') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="active">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '">' . __d('pages', 'Edit layout') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '.*?">' . __d('pages', 'Edit layout') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '">' . __d('pages', 'Theme setting') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '.*?">' . __d('pages', 'Theme setting') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '.*?">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
@@ -214,22 +214,22 @@ class PagesViewElementsPagesEditTabsTest extends PagesControllerTestCase {
 		$this->view = str_replace("\t", '', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '">' . __d('pages', 'Edit page') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '.*?">' . __d('pages', 'Edit page') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '">' . __d('pages', 'Edit layout') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '.*?">' . __d('pages', 'Edit layout') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="active">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '">' . __d('pages', 'Theme setting') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '.*?">' . __d('pages', 'Theme setting') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '.*?">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
@@ -254,22 +254,22 @@ class PagesViewElementsPagesEditTabsTest extends PagesControllerTestCase {
 		$this->view = str_replace("\t", '', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '">' . __d('pages', 'Edit page') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/edit/1/7', '/') . '.*?">' . __d('pages', 'Edit page') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '">' . __d('pages', 'Edit layout') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/layout/1/7', '/') . '.*?">' . __d('pages', 'Edit layout') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '">' . __d('pages', 'Theme setting') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/theme/1/7', '/') . '.*?">' . __d('pages', 'Theme setting') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 
 		$pattern = '<li class="active">' .
-						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
+						'<a href=".*?' . preg_quote('/pages/pages_edit/meta/1/7', '/') . '.*?">' . __d('pages', 'Setting of Meta information') . '<\/a>' .
 					'<\/li>';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 

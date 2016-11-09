@@ -66,7 +66,7 @@ class PagesViewElementsPagesEditThemeFormTest extends PagesControllerTestCase {
 		$this->assertInput('input', 'data[Page][id]', '7', $this->view);
 		$this->assertInput('input', 'data[Page][theme]', 'Default', $this->view);
 
-		$pattern = '<a class=".*?" href=".*?' . preg_quote('/pages/pages_edit/theme/1/7?theme=Default', '/') . '">';
+		$pattern = '<a class=".*?" href=".*?' . preg_quote('/pages/pages_edit/theme/1/7?theme=Default', '/') . '.*?">';
 		$this->assertRegExp('/' . $pattern . '/', $this->view);
 	}
 

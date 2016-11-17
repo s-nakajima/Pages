@@ -61,7 +61,7 @@ class PagesViewElementsPagesEditDeleteFormTest extends PagesControllerTestCase {
  */
 	public function testDeleteForm() {
 		//テスト実行
-		$this->_testGetAction('/test_pages/test_view_elements_pages_edit_delete_form/edit/2',
+		$this->_testGetAction('/test_pages/test_view_elements_pages_edit_delete_form/edit/2?frame_id=6',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック

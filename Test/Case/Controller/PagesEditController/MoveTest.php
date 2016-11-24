@@ -94,7 +94,7 @@ class PagesEditControllerMoveTest extends PagesControllerTestCase {
 				'id' => '4', 'parent_id' => '1', 'room_id' => '2'
 			),
 			'Room' => array(
-				'id' => '1'
+				'id' => '2'
 			),
 			'_NetCommonsUrl' => array(
 				'redirect' => '/pages/pages_edit/index/2/4'
@@ -108,7 +108,7 @@ class PagesEditControllerMoveTest extends PagesControllerTestCase {
  *
  * @return void
  */
-	public function testDeletePost() {
+	public function testPost() {
 		//テストデータ
 		$roomId = '2';
 		$pageId = '4';

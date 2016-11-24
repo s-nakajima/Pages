@@ -154,7 +154,8 @@ NetCommonsApp.controller('PagesEditController',
         var roomId = $scope.pages[pageId]['Page']['room_id'];
         angular.element('input[name="data[Page][room_id]"]')[0].value = roomId;
 
-        angular.element('form')[0].submit();
+        var formElement = angular.element('#PageMoveForm');
+        formElement[0].submit();
       };
 
       /**

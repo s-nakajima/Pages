@@ -74,11 +74,11 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 							<span class="pages-move" ng-show="indented(pageId)">
 								<button type="button" class="btn btn-default btn-xs"
 										ng-click="saveWeight('up', pageId)" ng-disabled="moveDisabled('up', pageId)">
-									<span class="glyphicon glyphicon-arrow-up"> </span>
+									<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> </span>
 								</button>
 								<button type="button" class="btn btn-default btn-xs"
 										ng-click="saveWeight('down', pageId)" ng-disabled="moveDisabled('down', pageId)">
-									<span class="glyphicon glyphicon-arrow-down"> </span>
+									<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> </span>
 								</button>
 							</span>
 

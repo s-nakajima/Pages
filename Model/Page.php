@@ -413,7 +413,7 @@ class Page extends PagesAppModel {
 				'recursive' => -1,
 				'conditions' => array(
 					'Page.id' => $pageId,
-					'Page.room_id' => Current::read('Room.id')
+					'Page.room_id' => $roomId
 				),
 			));
 		}
@@ -562,8 +562,6 @@ class Page extends PagesAppModel {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			$this->recover('parent');
-
 			if ($options['atomic']) {
 				$this->commit();
 			}
@@ -640,8 +638,6 @@ class Page extends PagesAppModel {
 			if (! $result) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-
-			$this->recover('parent');
 
 			//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
 			$this->__updatePageIdTopMove($data);

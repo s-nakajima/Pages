@@ -60,9 +60,10 @@
 
 		<div class="text-center">
 			<button name="cancel" type="button" ng-disabled="sending" ng-click="cancel()" class="btn btn-default btn-workflow">
-				<span class="glyphicon glyphicon-remove"></span> <?php echo __d('net_commons', 'Cancel'); ?>
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				<?php echo __d('net_commons', 'Cancel'); ?>
 			</button>
-			<button type="submit" ng-disabled="sending" class="btn btn-primary btn-workflow" name="save">
+			<button type="submit" ng-disabled="(sending || ! pageParentId)" class="btn btn-primary btn-workflow" name="save">
 				<?php echo __d('net_commons', 'OK'); ?>
 			</button>
 		</div>

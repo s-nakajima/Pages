@@ -27,7 +27,7 @@ class TestPageLayoutComponentRequestActionController extends AppController {
 	public function index() {
 		$this->autoRender = true;
 
-		$view = $this->requestAction('/test_pages/test_page_layout_component/index', array('return'));
+		$view = $this->requestAction('/test_pages/test_page_layout_component/index?frame_id=6', array('return'));
 		$this->set('view', $view);
 	}
 

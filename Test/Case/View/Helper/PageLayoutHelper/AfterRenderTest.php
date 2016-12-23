@@ -48,7 +48,7 @@ class PageLayoutHelperAfterRenderTest extends PagesControllerTestCase {
 		$this->generateNc('TestPages.TestPageLayoutHelperAfterRender');
 
 		//テスト実行
-		$this->_testGetAction('/test_pages/test_page_layout_helper_after_render/index',
+		$this->_testGetAction('/test_pages/test_page_layout_helper_after_render/index?frame_id=6',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
@@ -72,7 +72,7 @@ class PageLayoutHelperAfterRenderTest extends PagesControllerTestCase {
 		$this->generateNc('TestPages.TestPageLayoutHelperAfterRender');
 
 		//テスト実行
-		$this->_testGetAction('/test_pages/test_page_layout_helper_after_render/index_as_page',
+		$this->_testGetAction('/test_pages/test_page_layout_helper_after_render/index_as_page?frame_id=6',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック
@@ -96,7 +96,7 @@ class PageLayoutHelperAfterRenderTest extends PagesControllerTestCase {
 		$this->generateNc('TestPages.TestPageLayoutHelperAfterRender');
 
 		//テスト実行
-		$this->_testGetAction('/test_pages/test_page_layout_helper_after_render/index_is_container_fluid',
+		$this->_testGetAction('/test_pages/test_page_layout_helper_after_render/index_is_container_fluid?frame_id=6',
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//チェック

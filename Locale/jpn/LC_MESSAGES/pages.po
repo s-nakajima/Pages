@@ -56,6 +56,10 @@ msgid "Edit page"
 msgstr "ページ編集"
 
 #: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
+msgid "Add m17n page"
+msgstr "他言語ページ作成"
+
+#: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
 msgid "Add new page"
 msgstr "ページ追加"
 

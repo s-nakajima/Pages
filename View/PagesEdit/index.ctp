@@ -101,6 +101,10 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 						</td>
 
 						<td class="text-right">
+							<?php echo $this->LinkButton->add(__d('pages', 'Add m17n page'), '', array(
+									'iconSize' => 'btn-xs',
+									'ng-click' => 'showAddM17nDialog(pageId)',
+								)); ?>
 							<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
 									'iconSize' => 'btn-xs',
 									'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .

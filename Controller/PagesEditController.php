@@ -49,7 +49,7 @@ class PagesEditController extends PagesAppController {
 	public $components = array(
 		'NetCommons.Permission' => array(
 			'allow' => array(
-				'index,add,edit,delete,layout' => 'page_editable',
+				'index,add,edit,delete,layout,add_m17n' => 'page_editable',
 			),
 		),
 		'Pages.PageLayout',
@@ -127,6 +127,39 @@ class PagesEditController extends PagesAppController {
 			}
 
 			$this->request->data = $this->Page->createPage();
+			$this->request->data['Room'] = Current::read('Room');
+			$this->request->data['_NetCommonsUrl']['redirect'] = $this->__getRedirectUrl();
+		}
+	}
+
+/**
+ * 他言語ページ作成
+ *
+ * @return void
+ */
+	public function add_m17n() {
+		$this->viewClass = 'View';
+		$this->layout = 'NetCommons.modal';
+
+		if ($this->request->is('post')) {
+//			//登録処理
+//			$this->request->data['Page']['slug'] = Hash::get($this->request->data, 'Page.permalink');
+//			$page = $this->Page->savePage($this->request->data);
+//			if ($page) {
+//				//正常の場合
+//				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
+//			}
+//			$this->NetCommons->handleValidationError($this->Page->validationErrors);
+
+		} else {
+			$result = $this->Page->existPage(Current::read('Page.id'));
+			if (! $result) {
+				return $this->throwBadRequest();
+			}
+			//表示処理
+			$this->request->data = Hash::merge($this->request->data,
+				$this->PagesLanguage->getPagesLanguage(Current::read('Page.id'), Current::read('Language.id'))
+			);
 			$this->request->data['Room'] = Current::read('Room');
 			$this->request->data['_NetCommonsUrl']['redirect'] = $this->__getRedirectUrl();
 		}

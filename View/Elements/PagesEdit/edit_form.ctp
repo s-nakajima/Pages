@@ -26,8 +26,22 @@
 		'required' => true,
 	)); ?>
 
-<?php echo $this->NetCommonsForm->input('Page.permalink', array(
-		'type' => 'text',
-		'label' => __d('pages', 'Slug'),
-		'required' => true,
-	));
+<div class="form-group">
+	<?php echo $this->NetCommonsForm->label('Page.permalink', __d('pages', 'Slug')); ?>
+
+	<div class="input-group">
+		<div class="input-group-addon">
+			<?php echo h($parentPermalink); ?>
+		</div>
+
+		<?php echo $this->NetCommonsForm->input('Page.permalink', array(
+				'type' => 'text',
+				'label' => false,
+				'required' => true,
+				'div' => false,
+				'error' => false,
+			)); ?>
+	</div>
+
+	<?php echo $this->NetCommonsForm->error('Page.permalink'); ?>
+</div>

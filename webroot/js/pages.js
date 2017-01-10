@@ -88,7 +88,7 @@ NetCommonsApp.controller('PagesEditController',
         if ($scope.pages[pageId]['Page']['lft'] === '1') {
           return '';
         } else {
-          return $scope.pages[pageId]['Page']['permalink'];
+          return $scope.pages[pageId]['Page']['full_permalink'];
         }
       };
 

@@ -58,7 +58,9 @@ class PageValidateTest extends NetCommonsValidateTest {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Page->Behaviors->unload('Pages.PageSave');
+
+		//純粋にバリデーションのテストを行いたいため、ビヘイビアをunloadする
+		$this->Page->Behaviors->unload('Pages.SavePage');
 	}
 
 /**

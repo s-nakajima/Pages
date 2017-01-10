@@ -53,7 +53,7 @@ msgstr ""
 #: Pages/Model/PagesLanguage.php:75
 #: Pages/Test/Case/Controller/PagesEditController/AddTest.php:151;163
 #: Pages/Test/Case/Controller/PagesEditController/EditTest.php:181;198
-#: Pages/Test/Case/Model/Behavior/PageSaveBehavior/ValidatesTest.php:93
+#: Pages/Test/Case/Model/Behavior/SavePageBehavior/ValidatesTest.php:93
 #: Pages/Test/Case/Model/PagesLanguage/ValidateTest.php:72
 #: Pages/View/Elements/PagesEdit/edit_form.ctp:25
 msgid "Page name"

@@ -65,7 +65,7 @@ class PageSavePageTest extends NetCommonsSaveTest {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Page->Behaviors->unload('Pages.PageSave');
+		$this->Page->Behaviors->unload('Pages.SavePage');
 		$this->Page->Behaviors->unload('Pages.PageAssociations');
 	}
 

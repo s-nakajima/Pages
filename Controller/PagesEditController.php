@@ -414,16 +414,26 @@ class PagesEditController extends PagesAppController {
 		}
 
 		$parentPathName = $this->Page->getParentNodeName(Current::read('Page.id'));
-
-		if ($this->viewVars['room']['Room']['page_id_top'] !== Current::read('Page.id')) {
+		if (! Current::read('Space.permalink')) {
 			$room = Hash::extract(
 				$this->viewVars['room'],
 				'RoomsLanguage.{n}[language_id=' . Current::read('Language.id') . ']'
 			);
 			array_unshift($parentPathName, Hash::get($room, '0.name'));
 		}
-
 		$this->set('parentPathName', implode(' / ', $parentPathName));
+
+		$created = $this->params['action'] === 'add';
+		$parentPermalink = $this->Page->getParentPermalink(Current::read('Page.id'), $created);
+		if (Current::read('Space.permalink')) {
+			array_unshift($parentPermalink, '/' . Current::read('Space.permalink'));
+		}
+
+		if (Current::read('Page.parent_id') === Current::read('Page.root_id') && ! $created) {
+			array_pop($parentPermalink);
+		}
+
+		$this->set('parentPermalink', implode('/', $parentPermalink) . '/');
 	}
 
 /**

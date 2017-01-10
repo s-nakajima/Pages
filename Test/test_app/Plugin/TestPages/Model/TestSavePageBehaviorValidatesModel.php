@@ -1,6 +1,6 @@
 <?php
 /**
- * PageSaveBehavior::validates()テスト用Model
+ * SavePageBehavior::validates()テスト用Model
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('AppModel', 'Model');
 
 /**
- * PageSaveBehavior::validates()テスト用Model
+ * SavePageBehavior::validates()テスト用Model
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\test_app\Plugin\TestPages\Model
  */
-class TestPageSaveBehaviorValidatesModel extends AppModel {
+class TestSavePageBehaviorValidatesModel extends AppModel {
 
 /**
  * Custom database table name, or null/false if no table association is desired.
@@ -40,7 +40,7 @@ class TestPageSaveBehaviorValidatesModel extends AppModel {
  * @var array
  */
 	public $actsAs = array(
-		'Pages.PageSave'
+		'Pages.SavePage'
 	);
 
 }

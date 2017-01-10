@@ -1,6 +1,6 @@
 <?php
 /**
- * PageSaveBehavior::save()テスト用Fixture
+ * SavePageBehavior::save()テスト用Fixture
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -12,12 +12,12 @@
 App::uses('PageFixture', 'Pages.Test/Fixture');
 
 /**
- * PageSaveBehavior::save()テスト用Fixture
+ * SavePageBehavior::save()テスト用Fixture
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @package NetCommons\Pages\Test\Fixture
  */
-class TestPageSaveBehaviorSaveModelFixture extends PageFixture {
+class TestSavePageBehaviorSaveModelFixture extends PageFixture {
 
 /**
  * Model name

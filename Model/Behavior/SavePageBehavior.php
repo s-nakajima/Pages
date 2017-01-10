@@ -25,7 +25,7 @@ App::uses('Space', 'Rooms.Model');
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @package NetCommons\Pages\Model
  */
-class PageSaveBehavior extends ModelBehavior {
+class SavePageBehavior extends ModelBehavior {
 
 /**
  * beforeValidate is called before a model is validated, you can use this callback to
@@ -131,6 +131,112 @@ class PageSaveBehavior extends ModelBehavior {
 		}
 
 		return parent::afterSave($model, $created, $options);
+	}
+
+/**
+ * テーマ
+ *
+ * @param Model $model Model using this behavior
+ * @param array $data request data
+ * @throws InternalErrorException
+ * @return mixed True on success, false on failure
+ */
+	public function saveTheme(Model $model, $data) {
+		//トランザクションBegin
+		$model->begin();
+
+		if (! $model->exists($data[$model->alias]['id'])) {
+			return false;
+		}
+
+		try {
+			$model->id = $data[$model->alias]['id'];
+
+			if (! $model->saveField('theme', $data[$model->alias]['theme'], array('callbacks' => false))) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$model->commit();
+
+		} catch (Exception $ex) {
+			$model->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
+ * 移動
+ *
+ * @param Model $model Model using this behavior
+ * @param array $data request data
+ * @return bool
+ * @throws InternalErrorException
+ */
+	public function saveMove(Model $model, $data) {
+		//トランザクションBegin
+		$model->begin();
+
+		if (! $model->exists($data[$model->alias]['id'])) {
+			return false;
+		}
+
+		try {
+			$model->id = $data[$model->alias]['id'];
+
+			if ($data[$model->alias]['type'] === 'up') {
+				$result = $model->moveUp($model->id, 1);
+			} elseif ($data[$model->alias]['type'] === 'down') {
+				$result = $model->moveDown($model->id, 1);
+			} elseif ($data[$model->alias]['type'] === 'move') {
+				$result = $model->saveField('parent_id', $data[$model->alias]['parent_id']);
+			} else {
+				$result = false;
+			}
+
+			if (! $result) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
+			$this->__updatePageIdTopMove($model, $data);
+
+			$model->commit();
+
+		} catch (Exception $ex) {
+			$model->rollback($ex);
+		}
+
+		return true;
+	}
+
+/**
+ * page_id_topの更新処理
+ *
+ * @param Model $model Model using this behavior
+ * @param array $data request data
+ * @return bool
+ * @throws InternalErrorException
+ */
+	private function __updatePageIdTopMove(Model $model, $data) {
+		//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
+		$first = $model->find('first', array(
+			'recursive' => -1,
+			'fields' => array('id'),
+			'conditions' => array(
+				'parent_id !=' => '',
+			),
+			'order' => array('lft' => 'asc'),
+		));
+
+		if ($first['Page']['id'] === $data[$model->alias]['id']) {
+			$model->Room->id = Space::getRoomIdRoot(Space::PUBLIC_SPACE_ID);
+			if (! $model->Room->saveField('page_id_top', $first['Page']['id'], ['callbacks' => false])) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+		}
+
+		return true;
 	}
 
 }

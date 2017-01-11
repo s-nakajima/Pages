@@ -59,6 +59,18 @@ class PagesLanguage extends PagesAppModel {
 	);
 
 /**
+ * use behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		//多言語
+		'M17n.M17n' => array(
+			'keyField' => 'page_id'
+		),
+	);
+
+/**
  * Called during validation operations, before validation. Please note that custom
  * validation rules can be defined in $validate.
  *
@@ -124,12 +136,53 @@ class PagesLanguage extends PagesAppModel {
 			'PagesLanguage.language_id' => $languageId,
 		);
 
-		$PagesLanguage = $this->find('first', array(
+		$pagesLanguage = $this->find('first', array(
 			'recursive' => 0,
 			'conditions' => $conditions,
 		));
 
-		return $PagesLanguage;
+		return $pagesLanguage;
+	}
+
+/**
+ * ページデータ取得条件配列
+ *
+ * @param array $addConditions 追加条件
+ * @param bool $reset リセットフラグ
+ * @return array
+ */
+	public function getConditions($addConditions = array(), $reset = true) {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'Room' => array(
+					'className' => 'Rooms.Room',
+					'foreignKey' => false,
+					'conditions' => array(
+						'Page.room_id = Room.id',
+					),
+					'fields' => '',
+					'order' => ''
+				),
+				'Space' => array(
+					'className' => 'Rooms.Space',
+					'foreignKey' => false,
+					'conditions' => array(
+						'Room.space_id = Space.id',
+					),
+					'fields' => '',
+					'order' => ''
+				),
+			)
+		), $reset);
+
+		$conditions = Hash::merge(array(
+			'OR' => array(
+				'PagesLanguage.language_id' => Current::read('Language.id'),
+				'Space.is_m17n' => false
+			)
+		), $addConditions);
+
+		return $conditions;
 	}
 
 /**
@@ -160,5 +213,33 @@ class PagesLanguage extends PagesAppModel {
 		}
 
 		return true;
+	}
+
+/**
+ * 言語ページでデータ登録処理
+ *
+ * @param array $data リクエストデータ
+ * @return bool
+ */
+	public function saveM17nPage($data) {
+		$conditions = array(
+			'PagesLanguage.page_id' => $data['Page']['id'],
+			'PagesLanguage.language_id' => Current::read('Language.id'),
+		);
+		$pagesLanguage = $this->find('first', array(
+			'recursive' => -1,
+			'conditions' => $conditions,
+		));
+		$data['PagesLanguage']['name'] = $pagesLanguage['PagesLanguage']['name'];
+
+		$langId = Current::read('Language.id');
+
+		Current::write('Language.id', $data['PagesLanguage']['language_id']);
+
+		$result = $this->savePagesLanguage($data['PagesLanguage']);
+
+		Current::write('Language.id', $langId);
+
+		return $result;
 	}
 }

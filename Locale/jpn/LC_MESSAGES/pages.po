@@ -15,23 +15,31 @@ msgstr ""
 "Language: ja\n"
 "X-Generator: Poedit 1.8.1\n"
 
-#: NetCommons/View/Elements/common_header.ctp:64
+#: Frames/View/Elements/add_plugin.ctp:16
+msgid "Add plugin"
+msgstr "プラグイン追加"
+
+#: NetCommons/View/Elements/common_header.ctp:72
+msgid "Page Setting off"
+msgstr "ページ設定終了"
+
+#: NetCommons/View/Elements/common_header.ctp:76
+msgid "Page Setting on"
+msgstr "ページ設定"
+
+#: NetCommons/View/Elements/common_header.ctp:84
 msgid "Setting mode on"
 msgstr "セッティングモードON"
 
-#: NetCommons/View/Elements/common_header.ctp:66
+#: NetCommons/View/Elements/common_header.ctp:86
 msgid "Setting mode off"
 msgstr "セッティングモードOFF"
 
-#: Pages/Controller/PagesController.php:125
-msgid "New page %s"
-msgstr "新しいページ %s"
-
-#: Pages/Model/PagesLanguage.php:66 Pages/View/Elements/Pages/edit_form.ctp:34
-msgid "Page name"
-msgstr "ページ名"
-
-#: Pages/Model/Page.php:165 Pages/View/Elements/Pages/edit_form.ctp:51
+#: Pages/Model/Page.php:216;223;232;237;243
+#: Pages/Test/Case/Controller/PagesEditController/AddTest.php:154;166
+#: Pages/Test/Case/Controller/PagesEditController/EditTest.php:184;201
+#: Pages/Test/Case/Model/Page/ValidateTest.php:83;88;193;195;199
+#: Pages/View/Elements/PagesEdit/edit_form.ctp:31
 msgid "Slug"
 msgstr "固定リンク"
 
@@ -39,105 +47,113 @@ msgstr "固定リンク"
 msgid "Permalink"
 msgstr "パーマリンク"
 
-#: Pages/View/Elements/add_plugin.ctp:16
-msgid "Add plugin"
-msgstr "プラグイン追加"
-
-#: Pages/View/Elements/dropdown_menu.ctp:13
-msgid "Page Setting"
-msgstr "ページ設定"
-
-#: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
-msgid "Add page"
-msgstr "ページ追加"
-
-#: Pages/View/Elements/dropdown_menu.ctp:20 Pages/View/Pages/edit.ctp:21
-msgid "Edit page"
-msgstr "ページ編集"
-
-#: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
-msgid "Add m17n page"
-msgstr "他言語ページ作成"
-
-#: Pages/View/Elements/dropdown_menu.ctp:17 Pages/View/Pages/edit.ctp:19
-msgid "Add new page"
-msgstr "ページ追加"
-
-#: Pages/View/Elements/dropdown_menu.ctp:24
-msgid "Edit layout"
-msgstr "レイアウト編集"
-
-#: Pages/View/Elements/dropdown_menu.ctp:24
-msgid "Theme setting"
-msgstr "テーマ設定"
-
-#: Pages/View/Elements/dropdown_menu.ctp:24
-msgid "Setting of Meta information"
-msgstr "Meta情報の設定"
-
-#: Pages/View/Elements/Pages/delete_form.ctp:28;38
-msgid "Page"
-msgstr "ページ"
-
-msgid "Save all pages"
-msgstr "全てのページに反映(未実装)"
-
-#: Pages/View/Elements/dropdown_menu.ctp:13
-msgid "Page Setting on"
-msgstr "ページ設定"
-
-#: Pages/View/Elements/dropdown_menu.ctp:13
-msgid "Page Setting off"
-msgstr "ページ設定終了"
-
-#: Edumap/Model/EdumapSocialMedium.php:74
+#: Pages/Model/Page.php:222;242
+#: Pages/Test/Case/Model/Page/ValidateTest.php:82;198
 msgid "Use of %s is prohibited. Please enter a different entry."
 msgstr "%sに使用不可の文字列が入力されました。別の内容を入力してください。"
 
-#
-#: ページの移動
-#
+#: Pages/Model/Page.php:350
+msgid "New page %s"
+msgstr "新しいページ %s"
 
-#: Pages/View/Elements/dropdown_menu.ctp:13
-msgid "Select move page"
-msgstr "移動先のページ選択"
+#: Pages/Model/PagesLanguage.php:75
+#: Pages/Test/Case/Controller/PagesEditController/AddTest.php:151;163
+#: Pages/Test/Case/Controller/PagesEditController/EditTest.php:181;198
+#: Pages/Test/Case/Model/Behavior/SavePageBehavior/ValidatesTest.php:93
+#: Pages/Test/Case/Model/PagesLanguage/ValidateTest.php:72
+#: Pages/View/Elements/PagesEdit/edit_form.ctp:25
+msgid "Page name"
+msgstr "ページ名"
 
-#: Pages/View/Elements/dropdown_menu.ctp:13
-msgid "Page not found."
-msgstr "移動できるページがありません"
-
-msgid "Please select the destination of the \"%s\" page."
-msgstr "「%s」ページの移動先を選択してください。"
-
-#
-#: メタ情報の設定
-#
-
-#: Pages/View/Elements/dropdown_menu.ctp:13
-msgid "Title tag (&lt;title&gt;&lt;/title&gt;)"
-msgstr "タイトルタグ (&lt;title&gt;&lt;/title&gt;)"
-
+#: Pages/Model/PagesLanguage.php:94
+#: Pages/Test/Case/Controller/PagesEditController/MetaTest.php:146;156
+#: Pages/Test/Case/Model/PagesLanguage/ValidateTest.php:81
 msgid "Title tag"
 msgstr "タイトルタグ"
 
-msgid "The keywords in the title influences the search order of the search engine. The keyword in the head is important."
-msgstr "タイトル内にあるキーワードは検索エンジンの検索順位に大きく影響します。先頭に記述されたものほど重要なキーワードとなります。"
+#: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:67
+#: Pages/View/Elements/PagesEdit/tabs.ctp:20
+msgid "Add page"
+msgstr "ページ追加"
 
-msgid "The item can use an embedded keyword."
-msgstr "この項目には、埋め込みキーワードが使えます。"
+#: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:70;105;142;182;222;262
+#: Pages/View/Elements/PagesEdit/tabs.ctp:39;42
+msgid "Edit layout"
+msgstr "レイアウト編集"
 
-msgid "{X-PAGE_NAME} : Page name"
-msgstr "{X-PAGE_NAME} : ページ名"
+#: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:73;110;147;187;227;267
+#: Pages/View/Elements/PagesEdit/tabs.ctp:49;52
+msgid "Theme setting"
+msgstr "テーマ設定"
 
+#: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:76;115;152;192;232;272
+#: Pages/View/Elements/PagesEdit/tabs.ctp:59;62
+msgid "Setting of Meta information"
+msgstr "Meta情報の設定"
+
+#: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:100;139;177;217;257
+#: Pages/View/Elements/PagesEdit/tabs.ctp:23
+msgid "Edit page"
+msgstr "ページ編集"
+
+#: Pages/View/Elements/PagesEdit/delete_form.ctp:33;43
+msgid "Page"
+msgstr "ページ"
+
+#: Pages/View/Elements/PagesEdit/header.ctp:16
+msgid "Page Setting"
+msgstr "ページ設定"
+
+#: Pages/View/Elements/PagesEdit/meta_form.ctp:18
+msgid "Title tag (&lt;title&gt;&lt;/title&gt;)"
+msgstr "タイトルタグ (&lt;title&gt;&lt;/title&gt;)"
+
+#: Pages/View/Elements/PagesEdit/meta_form.ctp:25
 msgid "META description"
 msgstr "ページの説明 (META description)"
 
+#: Pages/View/Elements/PagesEdit/meta_form.ctp:26
 msgid "Set page description for the robot type search engine."
 msgstr "このページがロボット型検索エンジンに登録された時に表示される説明文を設定することができます。"
 
+#: Pages/View/Elements/PagesEdit/meta_form.ctp:31
 msgid "META keywords"
 msgstr "キーワード (META keywords)"
 
+#: Pages/View/Elements/PagesEdit/meta_form.ctp:32
 msgid "Yon can set search keywords for the robot type search engine.Multi-keywords can be delimited by comma. Please note that it might be judged spam when describing more than the necessity.<br />(exp: NetCommons,School,Research)"
 msgstr "このページをロボット型検索エンジンに登録するための検索キーワードを設定することができます。キーワードはカンマで区切って記述してください。必要以上に記載すると、スパムと判断される場合もあるので注意してください。<br />(例: NetCommons,学校,研究)"
 
+#: Pages/View/Helper/PagesEditHelper.php:84
+msgid "The keywords in the title influences the search order of the search engine. The keyword in the head is important."
+msgstr "タイトル内にあるキーワードは検索エンジンの検索順位に大きく影響します。先頭に記述されたものほど重要なキーワードとなります。"
+
+#: Pages/View/Helper/PagesEditHelper.php:89
+msgid "{X-PAGE_NAME} : Page name"
+msgstr "{X-PAGE_NAME} : ページ名"
+
+#: Pages/View/Helper/PagesEditHelper.php:94
+msgid "The item can use an embedded keyword."
+msgstr "この項目には、埋め込みキーワードが使えます。"
+
+#: Pages/View/PagesEdit/index.ctp:62;104
+msgid "Add new page"
+msgstr "ページ追加"
+
+#: Pages/View/PagesEdit/move.ctp:14
+msgid "Select move page"
+msgstr "移動先のページ選択"
+
+#: Pages/View/PagesEdit/move.ctp:30
+msgid "Please select the destination of the \"%s\" page."
+msgstr "「%s」ページの移動先を選択してください。"
+
+#: Pages/View/PagesEdit/move.ctp:72
+msgid "Page not found."
+msgstr "移動できるページがありません"
+
+msgid "Add m17n page"
+msgstr "他言語ページ作成"
+
+msgid "Select language"
+msgstr "言語選択"

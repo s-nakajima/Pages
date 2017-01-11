@@ -14,7 +14,7 @@
 <?php echo __d('pages', 'Add m17n page'); ?>
 <?php $this->end(); ?>
 
-<?php echo $this->NetCommonsForm->create('Page', array(
+<?php echo $this->NetCommonsForm->create('PagesLanguage', array(
 		'type' => 'post',
 		'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'add_m17n'))
 	)); ?>
@@ -23,6 +23,13 @@
 	<?php echo $this->NetCommonsForm->hidden('Page.id', array('value' => Current::read('Page.id'))); ?>
 	<?php echo $this->NetCommonsForm->hidden('Page.room_id', array('value' => Current::read('Room.id'))); ?>
 	<?php echo $this->NetCommonsForm->hidden('Room.id', array('value' => Current::read('Room.id'))); ?>
+
+	<?php echo $this->NetCommonsForm->hidden('PagesLanguage.page_id'); ?>
+	<?php echo $this->NetCommonsForm->input('PagesLanguage.language_id', array(
+			'type' => 'select',
+			'label' => __d('pages', 'Select language'),
+			'options' => $disusedLangs,
+		)); ?>
 
 	<div class="text-center">
 		<button name="cancel" type="button" ng-disabled="sending" ng-click="cancel()" class="btn btn-default btn-workflow">

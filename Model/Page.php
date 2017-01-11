@@ -63,7 +63,7 @@ class Page extends PagesAppModel {
  * @var array
  */
 	public $actsAs = array(
-		'Tree',
+		'Pages.PagesTree',
 		'Pages.SavePage',
 		'Pages.GetPage',
 		'Pages.PageAssociations',

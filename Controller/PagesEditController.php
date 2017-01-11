@@ -23,7 +23,8 @@ class PagesEditController extends PagesAppController {
 /**
  * 使用するModels
  *
- * - [Containers.Page](../../Pages/classes/PageContainer.html)
+ * - [M17n.Language](../../M17n/classes/Language.html)
+ * - [Pages.PageContainer](../../Pages/classes/PageContainer.html)
  * - [Pages.PagesLanguage](../../Pages/classes/PagesLanguage.html)
  * - [Pages.Page](../../Pages/classes/Page.html)
  * - [Rooms.Room](../../Rooms/classes/Room.html)
@@ -31,6 +32,7 @@ class PagesEditController extends PagesAppController {
  * @var array
  */
 	public $uses = array(
+		'M17n.Language',
 		'Pages.PageContainer',
 		'Pages.PagesLanguage',
 		'Pages.Page',
@@ -141,15 +143,25 @@ class PagesEditController extends PagesAppController {
 		$this->viewClass = 'View';
 		$this->layout = 'NetCommons.modal';
 
+		$activeLangs = $this->Language->getLanguages();
+		list(, $enableLangs) = $this->Language->getLanguagesWithName();
+
 		if ($this->request->is('post')) {
-//			//登録処理
-//			$this->request->data['Page']['slug'] = Hash::get($this->request->data, 'Page.permalink');
-//			$page = $this->Page->savePage($this->request->data);
-//			if ($page) {
-//				//正常の場合
-//				return $this->redirect(Hash::get($this->request->data, '_NetCommonsUrl.redirect'));
-//			}
-//			$this->NetCommons->handleValidationError($this->Page->validationErrors);
+			//登録処理
+			$result = $this->PagesLanguage->saveM17nPage($this->request->data);
+			if ($result) {
+				//正常の場合、追加したページの言語に遷移する。
+				$language = $this->Language->getLanguage('list', array(
+					'conditions' => array('id', $this->request->data['PagesLanguage']['language_id']),
+				));
+				if ($language) {
+					Configure::write('Config.language', $language['Language']['code']);
+					$this->Session->write('Config.language', $language['Language']['code']);
+				}
+				$redirectUrl = '/page/page_edit/edit/' . Current::read('Room.id') . '/' . Current::read('Page.id');
+				return $this->redirect($redirectUrl);
+			}
+			$this->NetCommons->handleValidationError($this->PagesLanguage->validationErrors);
 
 		} else {
 			$result = $this->Page->existPage(Current::read('Page.id'));
@@ -160,9 +172,25 @@ class PagesEditController extends PagesAppController {
 			$this->request->data = Hash::merge($this->request->data,
 				$this->PagesLanguage->getPagesLanguage(Current::read('Page.id'), Current::read('Language.id'))
 			);
+
 			$this->request->data['Room'] = Current::read('Room');
 			$this->request->data['_NetCommonsUrl']['redirect'] = $this->__getRedirectUrl();
 		}
+
+		$usedLangs = $this->PagesLanguage->find('list', array(
+			'recursive' => -1,
+			'fields' => array('id', 'language_id'),
+			'conditions' => array('page_id' => Current::read('Page.id')),
+		));
+
+		$disusedLang = array();
+		foreach ($activeLangs as $language) {
+			$langId = (string)$language['Language']['id'];
+			if (! in_array($langId, $usedLangs, true)) {
+				$disusedLang[$langId] = Hash::get($enableLangs, $language['Language']['code']);
+			}
+		}
+		$this->set('disusedLangs', $disusedLang);
 	}
 
 /**
@@ -385,6 +413,8 @@ class PagesEditController extends PagesAppController {
 			return $this->throwBadRequest();
 		}
 		$conditions['Page.room_id'] = $roomIds;
+
+		$activeLangs = $this->Language->getLanguages();
 
 		$pageTreeList = $this->Page->generateTreeList($conditions, null, null, Page::$treeParser);
 		$parentList = array();

@@ -43,18 +43,17 @@ class GetPageBehavior extends ModelBehavior {
 			$roomIds = Current::read('Room.id');
 		}
 
+		$pagesLanguages = $model->PagesLanguage->find('all', array(
+			'recursive' => 0,
+			'conditions' => $model->PagesLanguage->getConditions(array(
+				'Page.room_id' => $roomIds,
+			)),
+		));
+
 		$pages = $model->find('all', array(
 			'recursive' => 1,
 			'conditions' => array(
-				'Page.room_id' => $roomIds,
-			),
-		));
-
-		$pagesLanguages = $model->PagesLanguage->find('all', array(
-			'recursive' => -1,
-			'conditions' => array(
-				'PagesLanguage.page_id' => Hash::extract($pages, '{n}.Page.id'),
-				'PagesLanguage.language_id' => Current::read('Language.id'),
+				'Page.id' => Hash::extract($pagesLanguages, '{n}.Page.id'),
 			),
 		));
 

@@ -59,17 +59,6 @@ class PageSavePageTest extends NetCommonsSaveTest {
 	protected $_methodName = 'savePage';
 
 /**
- * setUp method
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		$this->Page->Behaviors->unload('Pages.SavePage');
-		$this->Page->Behaviors->unload('Pages.PageAssociations');
-	}
-
-/**
  * Save用DataProvider
  *
  * ### 戻り値
@@ -79,6 +68,8 @@ class PageSavePageTest extends NetCommonsSaveTest {
  */
 	public function dataProviderSave() {
 		$data['Page'] = Hash::extract((new Page4pagesFixture())->records, '{n}[id=7]')[0];
+		$data['Room']['id'] = '2';
+		$data['Room']['space_id'] = '2';
 
 		$results = array();
 		// * 編集の登録処理

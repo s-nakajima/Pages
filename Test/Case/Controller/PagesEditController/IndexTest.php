@@ -122,7 +122,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => '0', 'lft' => '1', 'rght' => '8',
 					'permalink' => '', 'slug' => null, 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => '',
+					'full_permalink' => '', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Room name',
@@ -132,7 +132,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '4', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
 					'permalink' => 'home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'home',
+					'full_permalink' => 'home', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Home ja',
@@ -142,7 +142,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
 					'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'test4',
+					'full_permalink' => 'test4', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 4',
@@ -152,7 +152,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '8', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
 					'permalink' => 'test5', 'slug' => 'test5', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'test5',
+					'full_permalink' => 'test5', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 5',
@@ -162,7 +162,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '5', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '15',
 					'permalink' => 'test2', 'slug' => 'test2', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'test2',
+					'full_permalink' => 'test2', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 2',
@@ -172,7 +172,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '9', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '5', 'lft' => '13', 'rght' => '14',
 					'permalink' => 'test2/home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'test2/home',
+					'full_permalink' => 'test2/home', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 2 - home',
@@ -182,7 +182,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'Page' => array(
 					'id' => '6', 'room_id' => '6', 'root_id' => '3', 'parent_id' => '3', 'lft' => '16', 'rght' => '17',
 					'permalink' => 'test3', 'slug' => 'test3', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'test3',
+					'full_permalink' => 'test3', 'is_m17n' => true,
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 3',

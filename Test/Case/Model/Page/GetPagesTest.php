@@ -167,7 +167,8 @@ class PageGetPagesTest extends PagesGetTestCase {
 		$pageId = $expectedPage['id'];
 
 		$expected = array(
-			'Page', 'Room', 'ParentPage', 'Space', 'ChildPage', 'PageContainer', 'PagesLanguage'
+			'Page', 'Room', 'ParentPage', 'Space', 'ChildPage', 'PageContainer', 'PagesLanguage',
+			'Language', 'TrackableCreator', 'TrackableUpdater'
 		);
 		$this->assertEquals($expected, array_keys($result[$pageId]));
 

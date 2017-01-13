@@ -134,6 +134,53 @@ class SavePageBehavior extends ModelBehavior {
 	}
 
 /**
+ * Save page each association model
+ *
+ * #### Options
+ *
+ * - `atomic`: If true (default), will attempt to save all records in a single transaction.
+ *   Should be set to false if database/table does not support transactions.
+ *
+ * @param Model $model Model using this behavior
+ * @param array $data request data
+ * @param array $options Options to use when saving record data, See $options above.
+ * @throws InternalErrorException
+ * @return mixed On success Model::$data if its not empty or true, false on failure
+ */
+	public function savePage(Model $model, $data, $options = array()) {
+		$options = Hash::merge(array('atomic' => true), $options);
+
+		//トランザクションBegin
+		if ($options['atomic']) {
+			$model->begin();
+		}
+
+		//バリデーション
+		$model->set($data);
+		if (! $model->validates()) {
+			return false;
+		}
+
+		try {
+			if (! $page = $model->save(null, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			if ($options['atomic']) {
+				$model->commit();
+			}
+
+		} catch (Exception $ex) {
+			if ($options['atomic']) {
+				$model->rollback($ex);
+			}
+			throw $ex;
+		}
+
+		return $page;
+	}
+
+/**
  * テーマ
  *
  * @param Model $model Model using this behavior

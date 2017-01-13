@@ -64,6 +64,29 @@ class GetPageBehavior extends ModelBehavior {
 	}
 
 /**
+ * ページデータ取得
+ *
+ * @param Model $model Model using this behavior
+ * @param int|array $pageIds ページID
+ * @return array
+ */
+	public function getPageIdsWithM17n(Model $model, $pageIds) {
+		$model->loadModels([
+			'PagesLanguage' => 'Pages.PagesLanguage',
+		]);
+
+		$pagesLanguages = $model->PagesLanguage->find('list', array(
+			'recursive' => -1,
+			'fields' => array('id', 'language_id', 'page_id'),
+			'conditions' => array(
+				'page_id' => $pageIds,
+			),
+		));
+
+		return $pagesLanguages;
+	}
+
+/**
  * Frameデータも一緒にページデータ取得
  *
  * @param Model $model Model using this behavior

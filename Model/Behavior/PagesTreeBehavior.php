@@ -30,8 +30,10 @@ class PagesTreeBehavior extends TreeBehavior {
  * @param int $recursive The number of levels deep to fetch associated records
  * @return array An associative array of records, where the id is the key, and the display field is the value
  * @link http://book.cakephp.org/2.0/en/core-libraries/behaviors/tree.html#TreeBehavior::generateTreeList
+ * @codingStandardsIgnoreStart
  */
 	public function generateTreeList(Model $Model, $conditions = null, $keyPath = null, $valuePath = null, $spacer = '_', $recursive = null) {
+		// @codingStandardsIgnoreEnd
 		$Model->loadModels([
 			'PagesLanguage' => 'Pages.PagesLanguage',
 		]);
@@ -39,26 +41,45 @@ class PagesTreeBehavior extends TreeBehavior {
 		$recursive = 0;
 
 		if (isset($Model->belongsTo['Room'])) {
+			$pageLangConditions = $Model->PagesLanguage->getConditions(
+				array('PagesLanguage.page_id = Page.id'), true
+			);
 			$Model->bindModel(array(
 				'belongsTo' => array(
+					'Space' => array(
+						'className' => 'Rooms.Space',
+						'foreignKey' => false,
+						'conditions' => array(
+							'Room.space_id = Space.id',
+						),
+						'fields' => '',
+						'order' => ''
+					),
 					'PagesLanguage' => array(
 						'className' => 'Pages.PagesLanguage',
 						'foreignKey' => false,
 						'conditions' => array(
 							'PagesLanguage.page_id = Page.id',
-							'PagesLanguage.language_id' => Current::read('Language.id'),
 						),
 						'fields' => '',
 						'order' => ''
 					),
 				)
 			), false);
+
+			if ($conditions) {
+				$conditions = Hash::merge($pageLangConditions, $conditions);
+			} else {
+				$conditions = $pageLangConditions;
+			}
 		}
 
-		$results = parent::generateTreeList($Model, $conditions, $keyPath, $valuePath, $spacer, $recursive);
+		$results = parent::generateTreeList(
+			$Model, $conditions, $keyPath, $valuePath, $spacer, $recursive
+		);
 
 		if (isset($Model->belongsTo['Room'])) {
-			$Model->unbindModel(array('belongsTo' => array('PagesLanguage')));
+			$Model->unbindModel(array('belongsTo' => array('Space', 'PagesLanguage')));
 		}
 
 		return $results;

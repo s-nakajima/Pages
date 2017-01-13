@@ -34,7 +34,11 @@
 			<?php echo $this->NetCommonsForm->end(); ?>
 		</div>
 
-		<?php if ($hasDelete) : ?>
+		<?php if ($hasDeleteThisPage) : ?>
+			<?php echo $this->element('PagesEdit/delete_m17n_form'); ?>
+		<?php endif; ?>
+
+		<?php if ($hasDeletePage) : ?>
 			<?php echo $this->element('PagesEdit/delete_form'); ?>
 		<?php endif; ?>
 	</article>

@@ -52,6 +52,16 @@ class PagesLanguageSavePagesLanguageTest extends NetCommonsSaveTest {
 	protected $_methodName = 'savePagesLanguage';
 
 /**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+		$this->PagesLanguage->Behaviors->unload('M17n.M17n');
+	}
+
+/**
  * Save用DataProvider
  *
  * ### 戻り値
@@ -60,7 +70,7 @@ class PagesLanguageSavePagesLanguageTest extends NetCommonsSaveTest {
  * @return array テストデータ
  */
 	public function dataProviderSave() {
-		$data['PagesLanguage'] = (new PagesLanguageFixture())->records[0];
+		$data['PagesLanguage'] = (new PagesLanguageFixture())->records[1];
 		$data['PagesLanguage']['meta_title'] = 'TEST TITLE - {X-SITE_NAME}';
 		$data['PagesLanguage']['meta_description'] = 'TEST DESCRIPTION';
 		$data['PagesLanguage']['meta_keywords'] = 'TEST KEYWORD';

@@ -443,6 +443,12 @@ class PagesEditController extends PagesAppController {
 		$activeLangs = $this->Language->getLanguages();
 		$activeLangIds = Hash::extract($activeLangs, '{n}.Language.id');
 
+		if (Current::read('Space.is_m17n') && count($activeLangIds) > 1) {
+			$this->set('isSpaceM17n', true);
+		} else {
+			$this->set('isSpaceM17n', false);
+		}
+
 		$pageTreeList = $this->Page->generateTreeList($conditions, null, null, Page::$treeParser);
 		$pageIdsM17n = $this->Page->getPageIdsWithM17n(array_keys($pageTreeList));
 
@@ -456,7 +462,7 @@ class PagesEditController extends PagesAppController {
 			$page['Page']['parent_id'] = (string)$parentId;
 			$page['Page']['type'] = '';
 
-			if ($page['Space']['is_m17n']) {
+			if ($this->viewVars['isSpaceM17n']) {
 				$page['Page']['is_m17n'] =
 						!(bool)array_diff($activeLangIds, Hash::get($pageIdsM17n, $pageId, []));
 			} else {

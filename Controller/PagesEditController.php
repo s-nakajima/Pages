@@ -443,11 +443,8 @@ class PagesEditController extends PagesAppController {
 		$activeLangs = $this->Language->getLanguages();
 		$activeLangIds = Hash::extract($activeLangs, '{n}.Language.id');
 
-		if (Current::read('Space.is_m17n') && count($activeLangIds) > 1) {
-			$this->set('isSpaceM17n', true);
-		} else {
-			$this->set('isSpaceM17n', false);
-		}
+		$isSpaceM17n = Current::read('Space.is_m17n') && count($activeLangIds) > 1;
+		$this->set('isSpaceM17n', $isSpaceM17n);
 
 		$pageTreeList = $this->Page->generateTreeList($conditions, null, null, Page::$treeParser);
 		$pageIdsM17n = $this->Page->getPageIdsWithM17n(array_keys($pageTreeList));

@@ -38,6 +38,7 @@ class PageLayoutComponent extends Component {
  * @param Controller $controller Controller
  * @return void
  * @throws NotFoundException
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 	public function beforeRender(Controller $controller) {
 		// Ajax用
@@ -169,7 +170,8 @@ class PageLayoutComponent extends Component {
 				'frames', 'Display of the %s page', Hash::get($enableLangs, $langCode)
 			);
 
-			if (in_array((string)$langId, $framePublicLangs, true) || in_array('0', $framePublicLangs, true)) {
+			if (in_array((string)$langId, $framePublicLangs, true) ||
+					in_array('0', $framePublicLangs, true)) {
 				$publicLangs[$langId] = $langId;
 			}
 		}

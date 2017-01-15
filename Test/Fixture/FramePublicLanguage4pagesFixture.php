@@ -76,6 +76,7 @@ class FramePublicLanguage4pagesFixture extends FramePublicLanguageFixture {
  * @return void
  */
 	public function init() {
+		$this->records = Hash::merge($this->records, $this->_records);
 		parent::init();
 	}
 

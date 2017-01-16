@@ -57,7 +57,7 @@ class PageSaveTest extends PagesModelTestCase {
 		$data['Page']['permalink'] = 'test2_upd';
 
 		//テスト実施
-		$this->$model->Behaviors->unload('Pages.PageSave');
+		$this->$model->Behaviors->unload('Pages.SavePage');
 		$this->$model->Behaviors->unload('Pages.PageAssociations');
 
 		return $data;

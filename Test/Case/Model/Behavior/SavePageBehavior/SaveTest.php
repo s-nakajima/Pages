@@ -1,6 +1,6 @@
 <?php
 /**
- * PageSaveBehavior::save()のテスト
+ * SavePageBehavior::save()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -10,15 +10,15 @@
  */
 
 App::uses('PagesModelTestCase', 'Pages.TestSuite');
-App::uses('TestPageSaveBehaviorSaveModelFixture', 'Pages.Test/Fixture');
+App::uses('TestSavePageBehaviorSaveModelFixture', 'Pages.Test/Fixture');
 
 /**
- * PageSaveBehavior::save()のテスト
+ * SavePageBehavior::save()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Pages\Test\Case\Model\Behavior\PageSaveBehavior
+ * @package NetCommons\Pages\Test\Case\Model\Behavior\SavePageBehavior
  */
-class PageSaveBehaviorSaveTest extends PagesModelTestCase {
+class SavePageBehaviorSaveTest extends PagesModelTestCase {
 
 /**
  * Fixtures
@@ -26,7 +26,7 @@ class PageSaveBehaviorSaveTest extends PagesModelTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.test_page_save_behavior_save_model',
+		'plugin.pages.test_save_page_behavior_save_model',
 		//'plugin.pages.pages_language',
 	);
 
@@ -47,7 +47,7 @@ class PageSaveBehaviorSaveTest extends PagesModelTestCase {
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
-		$this->TestModel = ClassRegistry::init('TestPages.TestPageSaveBehaviorSaveModel');
+		$this->TestModel = ClassRegistry::init('TestPages.TestSavePageBehaviorSaveModel');
 	}
 
 /**
@@ -58,7 +58,7 @@ class PageSaveBehaviorSaveTest extends PagesModelTestCase {
 	public function testSaveInsert() {
 		//テストデータ
 		$data = array(
-			'Page' => (new TestPageSaveBehaviorSaveModelFixture())->records[0],
+			'Page' => (new TestSavePageBehaviorSaveModelFixture())->records[0],
 			'PagesLanguage' => array('id' => '1'),
 		);
 		$data = Hash::remove($data, 'Page.id');
@@ -100,7 +100,7 @@ class PageSaveBehaviorSaveTest extends PagesModelTestCase {
 	public function testSaveUpdate() {
 		//テストデータ
 		$data = array(
-			'Page' => (new TestPageSaveBehaviorSaveModelFixture())->records[0],
+			'Page' => (new TestSavePageBehaviorSaveModelFixture())->records[0],
 			'PagesLanguage' => array('id' => '1'),
 		);
 		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', array('save', 'validates'));
@@ -125,7 +125,7 @@ class PageSaveBehaviorSaveTest extends PagesModelTestCase {
 	public function testSaveOnExceptionError() {
 		//テストデータ
 		$data = array(
-			'Page' => (new TestPageSaveBehaviorSaveModelFixture())->records[0],
+			'Page' => (new TestSavePageBehaviorSaveModelFixture())->records[0],
 			'PagesLanguage' => array('id' => '1'),
 		);
 		$this->TestModel->PagesLanguage = $this->getMockForModel('Pages.PagesLanguage', array(

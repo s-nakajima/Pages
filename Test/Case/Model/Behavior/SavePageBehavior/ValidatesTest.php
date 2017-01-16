@@ -1,6 +1,6 @@
 <?php
 /**
- * PageSaveBehavior::validates()のテスト
+ * SavePageBehavior::validates()のテスト
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
@@ -10,15 +10,15 @@
  */
 
 App::uses('PagesModelTestCase', 'Pages.TestSuite');
-App::uses('TestPageSaveBehaviorValidatesModelFixture', 'Pages.Test/Fixture');
+App::uses('TestSavePageBehaviorValidatesModelFixture', 'Pages.Test/Fixture');
 
 /**
- * PageSaveBehavior::validates()のテスト
+ * SavePageBehavior::validates()のテスト
  *
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
- * @package NetCommons\Pages\Test\Case\Model\Behavior\PageSaveBehavior
+ * @package NetCommons\Pages\Test\Case\Model\Behavior\SavePageBehavior
  */
-class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
+class SavePageBehaviorValidatesTest extends PagesModelTestCase {
 
 /**
  * Fixtures
@@ -26,7 +26,7 @@ class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.pages.test_page_save_behavior_validates_model',
+		'plugin.pages.test_save_page_behavior_validates_model',
 		'plugin.pages.pages_language',
 	);
 
@@ -47,7 +47,7 @@ class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
-		$this->TestModel = ClassRegistry::init('TestPages.TestPageSaveBehaviorValidatesModel');
+		$this->TestModel = ClassRegistry::init('TestPages.TestSavePageBehaviorValidatesModel');
 	}
 
 /**
@@ -58,7 +58,7 @@ class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
 	public function testValidates() {
 		//テストデータ
 		$data = array(
-			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
+			'Page' => (new TestSavePageBehaviorValidatesModelFixture())->records[0],
 			'PagesLanguage' => array('id' => '1'),
 		);
 		$this->_mockForReturnTrue('TestModel', 'Pages.PagesLanguage', 'validates');
@@ -79,7 +79,7 @@ class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
 	public function testValidatesOnValidationError() {
 		//テストデータ
 		$data = array(
-			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
+			'Page' => (new TestSavePageBehaviorValidatesModelFixture())->records[0],
 			'PagesLanguage' => array('id' => '1', 'name' => ''),
 		);
 
@@ -103,7 +103,7 @@ class PageSaveBehaviorValidatesTest extends PagesModelTestCase {
 	public function testValidatesWORoomId() {
 		//テストデータ
 		$data = array(
-			'Page' => (new TestPageSaveBehaviorValidatesModelFixture())->records[0],
+			'Page' => (new TestSavePageBehaviorValidatesModelFixture())->records[0],
 			'PagesLanguage' => array('id' => '1'),
 		);
 		$data = Hash::remove($data, 'Page.room_id');

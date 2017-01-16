@@ -101,6 +101,17 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 						</td>
 
 						<td class="text-right">
+							<?php echo $this->LinkButton->add(__d('pages', 'Created m17n pages'), '', array(
+									'iconSize' => 'btn-xs active',
+									'ng-show' => '(pages[pageId][\'Page\'][\'is_m17n\'] === true)',
+									'ng-disabled' => true,
+								)); ?>
+							<?php echo $this->LinkButton->add(__d('pages', 'Add m17n page'), '', array(
+									'iconSize' => 'btn-xs',
+									'ng-hide' => '(pages[pageId][\'Page\'][\'is_m17n\'] === null || pages[pageId][\'Page\'][\'is_m17n\'] === true)',
+									'ng-click' => 'showAddM17nDialog(pageId)',
+								)); ?>
+
 							<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
 									'iconSize' => 'btn-xs',
 									'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .

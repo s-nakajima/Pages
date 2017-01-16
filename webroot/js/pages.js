@@ -88,7 +88,7 @@ NetCommonsApp.controller('PagesEditController',
         if ($scope.pages[pageId]['Page']['lft'] === '1') {
           return '';
         } else {
-          return $scope.pages[pageId]['Page']['permalink'];
+          return $scope.pages[pageId]['Page']['full_permalink'];
         }
       };
 
@@ -172,6 +172,20 @@ NetCommonsApp.controller('PagesEditController',
         );
       };
 
+      /**
+       * 他言語ページ作成ダイアログ表示
+       *
+       * @return {void}
+       */
+      $scope.showAddM17nDialog = function(pageId) {
+        var roomId = $scope.pages[pageId]['Page']['room_id'];
+        NetCommonsModal.show(
+            $scope, 'PagesAddM17nController',
+            NC3_URL + '/pages/pages_edit/add_m17n/' + roomId + '/' + pageId,
+            {backdrop: 'static', size: 'md'}
+        );
+      };
+
     }]);
 
 
@@ -188,6 +202,27 @@ NetCommonsApp.controller('PagesMoveController',
        * 移動先の親ページIDを保持する変数
        */
       $scope.pageParentId = '';
+
+      /**
+       * キャンセル処理
+       *
+       * @return {void}
+       */
+      $scope.cancel = function() {
+        $uibModalInstance.dismiss('cancel');
+      };
+
+    }]);
+
+
+/**
+ * PagesMoveController Javascript
+ *
+ * @param {string} Controller name
+ * @param {function($scope, $uibModalInstance)} Controller
+ */
+NetCommonsApp.controller('PagesAddM17nController',
+    ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
 
       /**
        * キャンセル処理

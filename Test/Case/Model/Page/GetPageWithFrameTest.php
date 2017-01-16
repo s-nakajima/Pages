@@ -56,7 +56,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$result = $this->$model->$methodName($permalink);
 
 		//チェック
-		$expected = array('Page', 'Room', 'ParentPage', 'PagesLanguage', 'PageContainer');
+		$expected = array('Page', 'Room', 'ParentPage', 'Space', 'PagesLanguage', 'PageContainer');
 		$this->assertEquals($expected, array_keys($result));
 
 		$this->__assertPage($result['Page'], array());
@@ -80,7 +80,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$result = $this->$model->$methodName($permalink);
 
 		//チェック
-		$expected = array('Page', 'Room', 'ParentPage', 'PagesLanguage', 'PageContainer');
+		$expected = array('Page', 'Room', 'ParentPage', 'Space', 'PagesLanguage', 'PageContainer');
 		$this->assertEquals($expected, array_keys($result));
 
 		$this->__assertPage($result['Page']);
@@ -102,6 +102,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$expected = array(
 			'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
 			'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null,
+			'full_permalink' => 'test4',
 		);
 		$this->assertEquals($expected, $result);
 	}

@@ -157,7 +157,6 @@ class PagesEditController extends PagesAppController {
 				$language = $this->Language->getLanguage('first', array(
 					'conditions' => array('id' => $this->request->data['PagesLanguage']['language_id']),
 				));
-				CakeLog::debug(var_export($language, true));
 				if ($language) {
 					Configure::write('Config.language', $language['Language']['code']);
 					$this->Session->write('Config.language', $language['Language']['code']);

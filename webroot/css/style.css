@@ -19,6 +19,25 @@
 	padding: 2px;
 }
 
+.pages-edit-index td {
+	padding-top: 6px !important;
+	padding-bottom: 6px !important;
+}
+
+.pages-edit-index td > div {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.page-edit-index-page-name {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	max-width: 240px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .page-move-radio .radio-inline {
 	padding-left: 0px;
 }

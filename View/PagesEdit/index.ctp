@@ -10,6 +10,7 @@
  */
 
 echo $this->NetCommonsHtml->script('/pages/js/pages.js');
+echo $this->NetCommonsHtml->css('/pages/style/pages.css');
 ?>
 
 <div class="control-panel">
@@ -43,80 +44,79 @@ echo $this->NetCommonsHtml->script('/pages/js/pages.js');
 		<?php echo $this->NetCommonsForm->unlockField('Page.type'); ?>
 
 		<div class="table-responsive">
-			<table class="table table-hover" ng-controller="PagesEditController" ng-cloak
+			<table class="table table-hover pages-edit-index" ng-controller="PagesEditController" ng-cloak
 					ng-init="initialize(<?php echo h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList)); ?>)">
 				<thead>
 					<tr ng-init="pageId = treeList[0]">
-						<th class="h2">
-							<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
-								{{pages[pageId]['PagesLanguage']['name']}}
-							</a>
-							<?php echo $this->LinkButton->edit('', '', array(
-									'iconSize' => 'btn-xs',
-									'ng-href' => $this->NetCommonsHtml->url(array('action' => 'layout')) .
-												'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
-								)); ?>
-						</th>
+						<th class="h2 clearfix">
+							<div class="pull-left">
+								<a class="page-edit-index-page-name" ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
+									{{pages[pageId]['PagesLanguage']['name']}}
+								</a>
+								<?php echo $this->LinkButton->edit('', '', array(
+										'iconSize' => 'btn-xs',
+										'ng-href' => $this->NetCommonsHtml->url(array('action' => 'layout')) .
+													'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+									)); ?>
+							</div>
 
-						<th class="text-right">
-							<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
-									'iconSize' => 'btn-xs',
-									'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .
-												'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
-								)); ?>
+							<div class="pull-right">
+								<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
+										'iconSize' => 'btn-xs',
+										'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .
+													'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+									)); ?>
+							</div>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="pageId in treeList" ng-show="indented(pageId)">
-						<td>
-							<span class="pages-tree" ng-repeat="i in indent(pageId)"> </span>
-							<span class="pages-move" ng-show="indented(pageId)">
-								<button type="button" class="btn btn-default btn-xs"
-										ng-click="saveWeight('up', pageId)" ng-disabled="moveDisabled('up', pageId)">
-									<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> </span>
-								</button>
-								<button type="button" class="btn btn-default btn-xs"
-										ng-click="saveWeight('down', pageId)" ng-disabled="moveDisabled('down', pageId)">
-									<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> </span>
-								</button>
-							</span>
+						<td class="clearfix">
+							<div class="pull-left">
+								<span class="pages-tree" ng-repeat="i in indent(pageId)"> </span>
+								<span class="pages-move" ng-show="indented(pageId)">
+									<button type="button" class="btn btn-default btn-xs"
+											ng-click="saveWeight('up', pageId)" ng-disabled="moveDisabled('up', pageId)">
+										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> </span>
+									</button>
+									<button type="button" class="btn btn-default btn-xs"
+											ng-click="saveWeight('down', pageId)" ng-disabled="moveDisabled('down', pageId)">
+										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> </span>
+									</button>
+								</span>
 
-							<span class="pages-move" ng-show="indented(pageId)">
-								<button type="button" class="btn btn-default btn-xs"
-										ng-disabled="moveDisabled('move', pageId)" ng-click="showMoveDialog(pageId)">
-									<?php echo __d('net_commons', 'Move'); ?>
-								</button>
-							</span>
+								<span class="pages-move" ng-show="indented(pageId)">
+									<button type="button" class="btn btn-default btn-xs"
+											ng-disabled="moveDisabled('move', pageId)" ng-click="showMoveDialog(pageId)">
+										<?php echo __d('net_commons', 'Move'); ?>
+									</button>
+								</span>
 
-							<a ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
-								{{pages[pageId]['PagesLanguage']['name']}}
-							</a>
+								<a class="page-edit-index-page-name" ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
+									{{pages[pageId]['PagesLanguage']['name']}}
+								</a>
 
-							<?php echo $this->LinkButton->edit('', '', array(
-									'iconSize' => 'btn-xs',
-									'ng-href' => $this->NetCommonsHtml->url(array('action' => 'edit')) .
-												'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
-								)); ?>
-						</td>
+								<?php echo $this->LinkButton->edit('', '', array(
+										'iconSize' => 'btn-xs',
+										'ng-href' => $this->NetCommonsHtml->url(array('action' => 'edit')) .
+													'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+									)); ?>
+							</div>
 
-						<td class="text-right">
-							<?php echo $this->LinkButton->add(__d('pages', 'Created m17n pages'), '', array(
-									'iconSize' => 'btn-xs active',
-									'ng-show' => '(pages[pageId][\'Page\'][\'is_m17n\'] === true)',
-									'ng-disabled' => true,
-								)); ?>
-							<?php echo $this->LinkButton->add(__d('pages', 'Add m17n page'), '', array(
-									'iconSize' => 'btn-xs',
-									'ng-hide' => '(pages[pageId][\'Page\'][\'is_m17n\'] === null || pages[pageId][\'Page\'][\'is_m17n\'] === true)',
-									'ng-click' => 'showAddM17nDialog(pageId)',
-								)); ?>
+							<div class="pull-right">
+								<?php echo $this->LinkButton->add(__d('pages', 'Add m17n page'), '', array(
+										'iconSize' => 'btn-xs',
+										'ng-hide' => '(pages[pageId][\'Page\'][\'is_m17n\'] === null || pages[pageId][\'Page\'][\'is_m17n\'] === true)',
+										'ng-click' => 'showAddM17nDialog(pageId)',
+									)); ?>
 
-							<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
-									'iconSize' => 'btn-xs',
-									'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .
-												'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
-								)); ?>
+								<?php echo $this->LinkButton->add(__d('pages', 'Add new page'), '', array(
+										'iconSize' => 'btn-xs',
+										'ng-href' => $this->NetCommonsHtml->url(array('action' => 'add')) .
+													'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+									)); ?>
+							</div>
 						</td>
 					</tr>
 				</tbody>

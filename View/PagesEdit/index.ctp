@@ -10,7 +10,7 @@
  */
 
 echo $this->NetCommonsHtml->script('/pages/js/pages.js');
-echo $this->NetCommonsHtml->css('/pages/style/pages.css');
+echo $this->NetCommonsHtml->css('/pages/css/style.css');
 ?>
 
 <div class="control-panel">

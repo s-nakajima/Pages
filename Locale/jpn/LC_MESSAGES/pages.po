@@ -161,11 +161,11 @@ msgstr "言語選択"
 msgid "Created m17n pages"
 msgstr "他言語ページ作成済"
 
-msgid "Delete m17n page"
-msgstr "当言語ページ削除"
+msgid "Delete %s page"
+msgstr "%sページ削除"
 
-msgid "Delete all data associated with the page."
-msgstr "当言語ページとそのページに紐づく配置データを削除します。<br />ただし、ページを削除するのみで、コンテンツに関するデータは削除しません。"
+msgid "Delete all data associated with the %s page."
+msgstr "%sページとそのページに紐づく配置データを削除します。<br />ただし、ページを削除するのみで、コンテンツに関するデータは削除しません。"
 
 msgid "Delete all data associated with the %s."
 msgstr "この%sに関連するデータをすべて削除します。一度削除すると元に戻せません。<br />ただし、ページを削除するのみで、コンテンツに関するデータは削除しません。"

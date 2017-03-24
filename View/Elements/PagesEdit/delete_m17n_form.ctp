@@ -24,13 +24,13 @@
 			<div uib-accordion-group is-open="dangerZone" class="panel-warning">
 				<uib-accordion-heading class="clearfix">
 					<span style="cursor: pointer">
-						<?php echo __d('pages', 'Delete m17n page'); ?>
+						<?php echo __d('pages', 'Delete %s page', $this->M17n->getNameByLangCode(Current::read('Language.code'))); ?>
 					</span>
 					<span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': dangerZone, 'glyphicon-chevron-right': ! dangerZone}"></span>
 				</uib-accordion-heading>
 
 				<div class="pull-left">
-					<?php echo __d('pages', 'Delete all data associated with the page.'); ?>
+					<?php echo __d('pages', 'Delete all data associated with the %s page.', $this->M17n->getNameByLangCode(Current::read('Language.code'))); ?>
 				</div>
 
 				<?php echo $this->NetCommonsForm->hidden('Page.id'); ?>

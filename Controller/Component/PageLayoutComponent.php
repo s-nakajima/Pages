@@ -92,7 +92,7 @@ class PageLayoutComponent extends Component {
 		}
 
 		//Layoutのセット
-		if (in_array($controller->layout, ['NetCommons.default', 'NetCommons.setting', true])) {
+		if (in_array($controller->layout, ['NetCommons.default', 'NetCommons.setting'], true)) {
 			$controller->layout = 'Pages.default';
 		}
 	}

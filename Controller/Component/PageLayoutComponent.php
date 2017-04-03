@@ -39,6 +39,7 @@ class PageLayoutComponent extends Component {
  * @return void
  * @throws NotFoundException
  * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 	public function beforeRender(Controller $controller) {
 		// Ajax用
@@ -91,8 +92,7 @@ class PageLayoutComponent extends Component {
 		}
 
 		//Layoutのセット
-		if ($controller->layout === 'NetCommons.default' ||
-				$controller->layout === 'NetCommons.setting') {
+		if (in_array($controller->layout, ['NetCommons.default', 'NetCommons.setting', true])) {
 			$controller->layout = 'Pages.default';
 		}
 	}

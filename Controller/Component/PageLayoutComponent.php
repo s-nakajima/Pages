@@ -64,7 +64,8 @@ class PageLayoutComponent extends Component {
 
 		if (! array_key_exists('Pages.PageLayout', $controller->helpers)) {
 			$controller->helpers['Pages.PageLayout'] = array(
-				'page' => $this->_page
+				'page' => $this->_page,
+				'layoutSetting' => ($controller->layout === 'NetCommons.setting')
 			);
 		}
 
@@ -90,7 +91,10 @@ class PageLayoutComponent extends Component {
 		}
 
 		//Layoutのセット
-		$controller->layout = 'Pages.default';
+		if ($controller->layout === 'NetCommons.default' ||
+				$controller->layout === 'NetCommons.setting') {
+			$controller->layout = 'Pages.default';
+		}
 	}
 
 /**

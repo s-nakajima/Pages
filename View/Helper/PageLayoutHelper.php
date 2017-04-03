@@ -230,10 +230,6 @@ class PageLayoutHelper extends AppHelper {
 			array($this->containerSize(Container::TYPE_MAIN)), $element, $attributes
 		);
 
-		//Layoutのセット
-		$this->_View->layout = 'Pages.default';
-
-		//
 		if (Current::read('Page.is_container_fluid')) {
 			$this->_View->viewVars['pageContainerCss'] = 'container-fluid';
 		} else {

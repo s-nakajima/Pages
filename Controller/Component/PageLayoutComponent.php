@@ -88,6 +88,9 @@ class PageLayoutComponent extends Component {
 		if ($controller->layout === 'NetCommons.setting' && Current::read('Frame.id')) {
 			$this->setFramePublicLang($controller);
 		}
+
+		//Layoutのセット
+		$controller->layout = 'Pages.default';
 	}
 
 /**

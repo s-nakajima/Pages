@@ -46,7 +46,7 @@ class TestPageLayoutComponentController extends AppController {
 	public function index() {
 		$this->autoRender = true;
 
-		$page = $this->Page->getPageWithFrame('');
+		$page = $this->Page->getPageWithFrame('', '2');
 		$this->set('page', $page);
 	}
 

@@ -53,7 +53,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$permalink = 'test4';
 
 		//テスト実施
-		$result = $this->$model->$methodName($permalink);
+		$result = $this->$model->$methodName($permalink, '2');
 
 		//チェック
 		$expected = array('Page', 'Room', 'ParentPage', 'Space', 'PagesLanguage', 'PageContainer');
@@ -77,7 +77,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$permalink = '';
 
 		//テスト実施
-		$result = $this->$model->$methodName($permalink);
+		$result = $this->$model->$methodName($permalink, '2');
 
 		//チェック
 		$expected = array('Page', 'Room', 'ParentPage', 'Space', 'PagesLanguage', 'PageContainer');

@@ -47,7 +47,7 @@ class PageLayoutHelperGetBoxTest extends PagesHelperTestCase {
 		$requestData = array();
 		$params = array();
 
-		$viewVars['page'] = $this->Page->getPageWithFrame('home');
+		$viewVars['page'] = $this->Page->getPageWithFrame('home', '2');
 		$this->loadHelper('Pages.PageLayout', $viewVars, $requestData, $params);
 
 		$this->PageLayout->containers = Hash::combine(

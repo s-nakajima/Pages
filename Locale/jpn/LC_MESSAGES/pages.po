@@ -89,7 +89,7 @@ msgstr "テーマ設定"
 #: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:76;115;152;192;232;272
 #: Pages/View/Elements/PagesEdit/tabs.ctp:59;62
 msgid "Setting of Meta information"
-msgstr "Meta情報の設定"
+msgstr "メタ情報の設定"
 
 #: Pages/Test/Case/View/Elements/PagesEdit/TabsTest.php:100;139;177;217;257
 #: Pages/View/Elements/PagesEdit/tabs.ctp:23

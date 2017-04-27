@@ -126,7 +126,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Room name',
-				)
+				),
+				'pageNameCss' => 'page-tree-node-page'
 			),
 			4 => array(
 				'Page' => array(
@@ -136,7 +137,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Home ja',
-				)
+				),
+				'pageNameCss' => 'page-tree-node-page'
 			),
 			7 => array(
 				'Page' => array(
@@ -146,7 +148,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 4',
-				)
+				),
+				'pageNameCss' => 'page-tree-leaf-page'
 			),
 			8 => array(
 				'Page' => array(
@@ -156,7 +159,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 5',
-				)
+				),
+				'pageNameCss' => 'page-tree-leaf-page'
 			),
 			5 => array(
 				'Page' => array(
@@ -166,7 +170,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 2',
-				)
+				),
+				'pageNameCss' => 'page-tree-node-page'
 			),
 			9 => array(
 				'Page' => array(
@@ -176,7 +181,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 2 - home',
-				)
+				),
+				'pageNameCss' => 'page-tree-leaf-page'
 			),
 			6 => array(
 				'Page' => array(
@@ -186,7 +192,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'PagesLanguage' => array(
 					'name' => 'Test page 3',
-				)
+				),
+				'pageNameCss' => 'page-tree-leaf-page'
 			)
 		);
 		$this->assertEquals($expected, $actual);

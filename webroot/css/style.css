@@ -50,3 +50,16 @@
 	font-size: 10px;
 	font-weight: 400;
 }
+
+.page-tree-room,
+.page-tree-node-page,
+.page-tree-leaf-page {
+	padding-left: 4px;
+}
+.page-tree-room {
+	border-left: 3px #659ada solid;
+}
+.page-tree-node-page,
+.page-tree-leaf-page {
+	border-left: 3px #aca899 solid;
+}

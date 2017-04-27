@@ -93,7 +93,8 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 									</button>
 								</span>
 
-								<a class="page-edit-index-page-name" ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
+								<a class="page-edit-index-page-name {{pages[pageId]['pageNameCss']}}"
+									ng-href="<?php echo $this->NetCommonsHtml->url('/') . '{{permalink(pageId)}}'; ?>">
 									{{pages[pageId]['PagesLanguage']['name']}}
 								</a>
 

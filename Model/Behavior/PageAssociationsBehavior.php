@@ -214,7 +214,7 @@ class PageAssociationsBehavior extends ModelBehavior {
 	}
 
 /**
- * PageBoxesの登録処理
+ * box_idの取得処理
  *
  * @param Model $model ビヘイビア呼び出し前のモデル
  * @param array $page ページデータ

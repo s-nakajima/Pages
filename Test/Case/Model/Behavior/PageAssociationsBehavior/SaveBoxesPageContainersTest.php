@@ -60,36 +60,36 @@ class PageAssociationsBehaviorSaveBoxesPageContainersTest extends NetCommonsMode
 	public function dataProvider() {
 		$result[0] = array();
 		$result[0]['page'] = array(
-			'Page' => array('id' => '99', 'room_id' => '10', 'parent_id' => '2'),
-			'Room' => array('id' => '10', 'space_id' => '1'),
+			'Page' => array('id' => '99', 'room_id' => '5', 'parent_id' => '2'),
+			'Room' => array('id' => '5', 'space_id' => '1'),
 			'Box' => array(
 				1 => array(
 					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
+						'type' => '4', 'space_id' => '2', 'room_id' => '5', 'page_id' => '99',
 						'container_type' => '1', 'id' => '64',
 					),
 				),
 				2 => array(
 					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
+						'type' => '4', 'space_id' => '2', 'room_id' => '5', 'page_id' => '99',
 						'container_type' => '2', 'id' => '65',
 					),
 				),
 				3 => array(
 					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
+						'type' => '4', 'space_id' => '2', 'room_id' => '5', 'page_id' => '99',
 						'container_type' => '3', 'id' => '66',
 					),
 				),
 				4 => array(
 					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
+						'type' => '4', 'space_id' => '2', 'room_id' => '5', 'page_id' => '99',
 						'container_type' => '4', 'id' => '67',
 					),
 				),
 				5 => array(
 					'Box' => array(
-						'type' => '4', 'space_id' => '2', 'room_id' => '10', 'page_id' => '99',
+						'type' => '4', 'space_id' => '2', 'room_id' => '5', 'page_id' => '99',
 						'container_type' => '5', 'id' => '68',
 					),
 				),

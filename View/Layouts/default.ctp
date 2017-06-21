@@ -24,6 +24,7 @@
 
 			echo $this->element('NetCommons.common_css');
 			echo $this->fetch('css');
+			echo $this->element('NetCommons.common_theme_css');
 
 			echo $this->element('NetCommons.common_js');
 			echo $this->element('Wysiwyg.mathjax_js');

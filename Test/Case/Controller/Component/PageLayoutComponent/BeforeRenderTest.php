@@ -49,6 +49,10 @@ class PageLayoutComponentBeforeRenderTest extends PagesControllerTestCase {
 
 		//ログイン
 		TestAuthGeneral::login($this);
+
+		$reflectionProperty = new ReflectionProperty('PageLayoutComponent', '_page');
+		$reflectionProperty->setAccessible(true);
+		$reflectionProperty->setValue(null);
 	}
 
 /**

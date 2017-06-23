@@ -18,7 +18,7 @@ App::uses('PageLayoutComponent', 'Pages.Controller/Component');
  * PageLayoutComponentBeforeRenderCalledTest
  *
  */
-class PageLayoutComponentBeforeRenderCalledTest extends CakeTestCase  {
+class PageLayoutComponentBeforeRenderCalledTest extends CakeTestCase {
 
 /**
  * Page::getPageWithFrame called once test

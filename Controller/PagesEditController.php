@@ -478,11 +478,7 @@ class PagesEditController extends PagesAppController {
 			$page['Page']['parent_id'] = (string)$parentId;
 			$page['Page']['type'] = '';
 
-			$page['Page']['hide_m17n'] = true;
-			if ($this->viewVars['isSpaceM17n']) {
-				$page['Page']['hide_m17n'] =
-						!(bool)array_diff($activeLangIds, Hash::get($pageIdsM17n, $pageId, []));
-			}
+			$page['Page']['hide_m17n'] = $this->__hideM17n($activeLangIds, $pageIdsM17n, $pageId);
 
 			// * ページ名
 			if (Hash::get($page, 'Page.id') === Page::PUBLIC_ROOT_PAGE_ID ||
@@ -497,11 +493,7 @@ class PagesEditController extends PagesAppController {
 			}
 
 			// * ページ順
-			if (isset($parentList['_' . $parentId])) {
-				$weight = count($parentList['_' . $parentId]) + 1;
-			} else {
-				$weight = 1;
-			}
+			$weight = $this->__getWeightByParent($parentList, $parentId);
 
 			$nest = substr_count($tree, Page::$treeParser);
 			$parentList['_' . $parentId]['_' . $pageId] = array(
@@ -521,6 +513,37 @@ class PagesEditController extends PagesAppController {
 		$this->set('parentList', $parentList);
 		$this->set('treeList', $treeList);
 		$this->set('pages', $pages);
+	}
+
+/**
+ * 多言語ページ作成リンクの表示有無
+ *
+ * @param array $activeLangIds 使用可能言語ID配列
+ * @param array $pageIdsM17n Pagelanguage.language_id 配列
+ * @param array $pageId Page.id
+ * @return bool 多言語ページ作成リンクの表示有無
+ */
+	private function __hideM17n($activeLangIds, $pageIdsM17n, $pageId) {
+		if (!$this->viewVars['isSpaceM17n']) {
+			return true;
+		}
+
+		return !(bool)array_diff($activeLangIds, Hash::get($pageIdsM17n, $pageId, []));
+	}
+
+/**
+ * 同じ階層の順番を取得する
+ *
+ * @param array $parentList Page.parent_id ごとの page data
+ * @param array $parentId Page.parent_id
+ * @return int 同じ階層の順番
+ */
+	private function __getWeightByParent($parentList, $parentId) {
+		if (!isset($parentList['_' . $parentId])) {
+			return 1;
+		}
+
+		return count($parentList['_' . $parentId]) + 1;
 	}
 
 /**

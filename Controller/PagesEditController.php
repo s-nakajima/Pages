@@ -505,7 +505,6 @@ class PagesEditController extends PagesAppController {
 
 			$nest = substr_count($tree, Page::$treeParser);
 			$parentList['_' . $parentId]['_' . $pageId] = array(
-				'index' => count($treeList) - 1,
 				'weight' => $weight,
 				'nest' => $nest,
 			);

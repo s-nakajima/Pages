@@ -478,11 +478,10 @@ class PagesEditController extends PagesAppController {
 			$page['Page']['parent_id'] = (string)$parentId;
 			$page['Page']['type'] = '';
 
+			$page['Page']['hide_m17n'] = true;
 			if ($this->viewVars['isSpaceM17n']) {
-				$page['Page']['is_m17n'] =
+				$page['Page']['hide_m17n'] =
 						!(bool)array_diff($activeLangIds, Hash::get($pageIdsM17n, $pageId, []));
-			} else {
-				$page['Page']['is_m17n'] = null;
 			}
 
 			// * ページ名

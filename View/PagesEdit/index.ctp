@@ -108,7 +108,7 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 							<div class="pull-right">
 								<?php echo $this->LinkButton->add(__d('pages', 'Add m17n page'), '', array(
 										'iconSize' => 'btn-xs',
-										'ng-hide' => '(pages[pageId][\'Page\'][\'is_m17n\'] === null || pages[pageId][\'Page\'][\'is_m17n\'] === true)',
+										'ng-hide' => 'pages[pageId][\'Page\'][\'hide_m17n\']',
 										'ng-click' => 'showAddM17nDialog(pageId)',
 									)); ?>
 

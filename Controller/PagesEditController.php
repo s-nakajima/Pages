@@ -469,6 +469,7 @@ class PagesEditController extends PagesAppController {
 			if (isset($page['ParentPage']['room_id']) &&
 				$page['ParentPage']['room_id'] !== Current::read('Room.id')
 			) {
+				unset($pages[$pageId]);
 				continue;
 			}
 

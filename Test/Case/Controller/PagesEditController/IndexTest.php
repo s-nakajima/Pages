@@ -34,6 +34,21 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 	protected $_controller = 'pages_edit';
 
 /**
+ * Constructs
+ *
+ * @param string $name The name parameter on PHPUnit_Framework_TestCase::__construct()
+ * @param array  $data The data parameter on PHPUnit_Framework_TestCase::__construct()
+ * @param string $dataName The dataName parameter on PHPUnit_Framework_TestCase::__construct()
+ * @return void
+ */
+	public function __construct($name = null, array $data = array(), $dataName = '') {
+		parent::__construct($name, $data, $dataName);
+		$key = array_search('plugin.pages.page4pages', $this->fixtures);
+		unset($this->fixtures[$key]);
+		$this->fixtures[] = 'plugin.pages.page4_page_edit_controller_index';
+	}
+
+/**
  * setUp method
  *
  * @return void
@@ -85,31 +100,26 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 		// * viewVars['parentList']のチェック
 		$expected = array(
 			'_0' => array(
-				'_1' => array('index' => 0, 'weight' => 1, 'nest' => 0)
+				'_1' => array('weight' => 1, 'nest' => 0)
 			),
 			'_1' => array(
-				'_4' => array('index' => 1, 'weight' => 1, 'nest' => 1),
-				'_8' => array('index' => 3, 'weight' => 2, 'nest' => 1)
+				'_4' => array('weight' => 1, 'nest' => 1),
+				'_8' => array('weight' => 2, 'nest' => 1),
+				'_5' => array('weight' => 3, 'nest' => 1),
+				'_6' => array('weight' => 4, 'nest' => 1),
 			),
 			'_4' => array(
-				'_7' => array('index' => 2, 'weight' => 1, 'nest' => 2)
-			),
-			'_3' => array(
-				'_5' => array('index' => 4, 'weight' => 1, 'nest' => 0),
-				'_6' => array('index' => 6, 'weight' => 2, 'nest' => 0),
-			),
-			'_5' => array(
-				'_9' => array('index' => 5, 'weight' => 1, 'nest' => 1)
+				'_7' => array('weight' => 1, 'nest' => 2)
 			),
 		);
 		$this->assertEquals($expected, $this->controller->viewVars['parentList']);
 
 		// * viewVars['treeList']のチェック
-		$expected = array(1, 4, 7, 8, 5, 9, 6);
+		$expected = array(1, 4, 7, 8, 5, 6);
 		$this->assertEquals($expected, $this->controller->viewVars['treeList']);
 
 		// * viewVars['pages']のチェック
-		$this->assertCount(7, $this->controller->viewVars['pages']);
+		$this->assertCount(6, $this->controller->viewVars['pages']);
 
 		$actual = $this->controller->viewVars['pages'];
 		$actual = Hash::remove($actual, '{n}.{s}.created_user');
@@ -120,7 +130,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 		$expected = array(
 			1 => array(
 				'Page' => array(
-					'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => '0', 'lft' => '1', 'rght' => '8',
+					'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => '0', 'lft' => '1', 'rght' => '14',
 					'permalink' => '', 'slug' => null, 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 					'full_permalink' => '', 'is_m17n' => true,
 				),
@@ -164,7 +174,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 			),
 			5 => array(
 				'Page' => array(
-					'id' => '5', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '15',
+					'id' => '5', 'room_id' => '5', 'root_id' => '1', 'parent_id' => '1', 'lft' => '8', 'rght' => '11',
 					'permalink' => 'test2', 'slug' => 'test2', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 					'full_permalink' => 'test2', 'is_m17n' => true,
 				),
@@ -173,20 +183,9 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				),
 				'pageNameCss' => 'page-tree-node-page'
 			),
-			9 => array(
-				'Page' => array(
-					'id' => '9', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '5', 'lft' => '13', 'rght' => '14',
-					'permalink' => 'test2/home', 'slug' => 'home', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
-					'full_permalink' => 'test2/home', 'is_m17n' => true,
-				),
-				'PagesLanguage' => array(
-					'name' => 'Test page 2 - home',
-				),
-				'pageNameCss' => 'page-tree-leaf-page'
-			),
 			6 => array(
 				'Page' => array(
-					'id' => '6', 'room_id' => '6', 'root_id' => '3', 'parent_id' => '3', 'lft' => '16', 'rght' => '17',
+					'id' => '6', 'room_id' => '6', 'root_id' => '1', 'parent_id' => '1', 'lft' => '12', 'rght' => '13',
 					'permalink' => 'test3', 'slug' => 'test3', 'is_container_fluid' => false, 'theme' => null, 'type' => '',
 					'full_permalink' => 'test3', 'is_m17n' => true,
 				),
@@ -196,6 +195,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'pageNameCss' => 'page-tree-leaf-page'
 			)
 		);
+
 		$this->assertEquals($expected, $actual);
 	}
 

@@ -463,10 +463,17 @@ class PagesEditController extends PagesAppController {
 		$parentList = array();
 		$treeList = array();
 		foreach ($pageTreeList as $pageId => $tree) {
-			$treeList[] = $pageId;
-
 			$page = Hash::get($pages, $pageId);
 
+			// RootのParentPage.room_idはnullなので、issetも条件にした
+			if (isset($page['ParentPage']['room_id']) &&
+				$page['ParentPage']['room_id'] !== Current::read('Room.id')
+			) {
+				unset($pages[$pageId]);
+				continue;
+			}
+
+			$treeList[] = $pageId;
 			$parentId = (int)$page['Page']['parent_id'];
 			$page['Page']['parent_id'] = (string)$parentId;
 			$page['Page']['type'] = '';
@@ -499,7 +506,6 @@ class PagesEditController extends PagesAppController {
 
 			$nest = substr_count($tree, Page::$treeParser);
 			$parentList['_' . $parentId]['_' . $pageId] = array(
-				'index' => count($treeList) - 1,
 				'weight' => $weight,
 				'nest' => $nest,
 			);

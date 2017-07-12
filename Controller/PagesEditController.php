@@ -586,17 +586,12 @@ class PagesEditController extends PagesAppController {
 		}
 		$this->set('parentPathName', implode(' / ', $parentPathName));
 
-		$created = $this->params['action'] === 'add';
-		$parentPermalink = $this->Page->getParentPermalink(Current::read('Page.id'), $created);
+		$parentPermalink = $this->Page->getParentPermalink(Current::read('Page'));
 		if (Current::read('Space.permalink')) {
-			array_unshift($parentPermalink, '/' . Current::read('Space.permalink'));
+			$parentPermalink = Current::read('Space.permalink') . '/' . $parentPermalink;
 		}
 
-		if (Current::read('Page.parent_id') === Current::read('Page.root_id') && ! $created) {
-			array_pop($parentPermalink);
-		}
-
-		$this->set('parentPermalink', implode('/', $parentPermalink) . '/');
+		$this->set('parentPermalink', $parentPermalink . '/');
 	}
 
 /**

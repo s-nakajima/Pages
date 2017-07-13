@@ -586,7 +586,11 @@ class PagesEditController extends PagesAppController {
 		}
 		$this->set('parentPathName', implode(' / ', $parentPathName));
 
-		$parentPermalink = $this->Page->getParentPermalink(Current::read('Page'));
+		$page = Current::read('Page');
+		if ($this->params['action'] === 'add') {
+			unset($page['id']);
+		}
+		$parentPermalink = $this->Page->getParentPermalink($page);
 		if (Current::read('Space.permalink')) {
 			$parentPermalink = Current::read('Space.permalink') . '/' . $parentPermalink;
 		}

@@ -43,9 +43,14 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
  */
 	public function __construct($name = null, array $data = array(), $dataName = '') {
 		parent::__construct($name, $data, $dataName);
+
 		$key = array_search('plugin.pages.page4pages', $this->fixtures);
 		unset($this->fixtures[$key]);
-		$this->fixtures[] = 'plugin.pages.page4_page_edit_controller_index';
+		$key = array_search('plugin.rooms.room', $this->fixtures);
+		unset($this->fixtures[$key]);
+
+		$this->fixtures[] = 'plugin.pages.Page4PageEditControllerIndex';
+		$this->fixtures[] = 'plugin.pages.Room4PageEditControllerIndex';
 	}
 
 /**
@@ -181,7 +186,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'PagesLanguage' => array(
 					'name' => 'Test page 2',
 				),
-				'pageNameCss' => 'page-tree-node-page'
+				'pageNameCss' => 'page-tree-room'
 			),
 			6 => array(
 				'Page' => array(
@@ -192,7 +197,7 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 				'PagesLanguage' => array(
 					'name' => 'Test page 3',
 				),
-				'pageNameCss' => 'page-tree-leaf-page'
+				'pageNameCss' => 'page-tree-room'
 			)
 		);
 
@@ -209,6 +214,26 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 
 		$roomId = '2';
 		$this->_testGetAction(array('action' => 'index', $roomId), null, 'BadRequestException', 'view');
+	}
+
+/**
+ * サブルームのテスト
+ *
+ * @return void
+ */
+	public function testSubRoom() {
+		$this->_testGetAction(array('action' => 'index', '5'), array('method' => 'assertNotEmpty'), null, 'view');
+		$this->assertCount(2, $this->controller->viewVars['pages']);
+	}
+
+/**
+ * 配下のページが1件もないケース
+ *
+ * @return void
+ */
+	public function testChildPageNone() {
+		$this->_testGetAction(array('action' => 'index', '6'), array('method' => 'assertNotEmpty'), null, 'view');
+		$this->assertCount(1, $this->controller->viewVars['pages']);
 	}
 
 }

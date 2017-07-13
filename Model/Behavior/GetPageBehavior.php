@@ -224,13 +224,13 @@ class GetPageBehavior extends ModelBehavior {
 	}
 
 /**
- * 親ノードのpermalinkを取得
+ * ルーム内先頭のPage.permalinkを取得
  *
  * @param Model $model Model using this behavior
  * @param array $page Page data
- * @return string 親ノードのpermalink
+ * @return string ルーム内先頭のPage.permalink
  */
-	public function getParentPermalink(Model $model, $page) {
+	public function getTopPagePermalink(Model $model, $page) {
 		if ($page['room_id'] === Space::getRoomIdRoot(Space::PUBLIC_SPACE_ID) ||
 			Hash::get($page, ['id'], false) === Current::read('Room.page_id_top')
 		) {

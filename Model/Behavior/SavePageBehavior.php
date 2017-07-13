@@ -53,7 +53,7 @@ class SavePageBehavior extends ModelBehavior {
 		}
 		$model->data['Page']['slug'] = $slug;
 
-		$permalink = $model->getParentPermalink($model->data['Page']) . '/' . $slug;
+		$permalink = $model->getTopPagePermalink($model->data['Page']) . '/' . $slug;
 		if (substr($permalink, 0, 1) === '/') {
 			$permalink = substr($permalink, 1);
 		}

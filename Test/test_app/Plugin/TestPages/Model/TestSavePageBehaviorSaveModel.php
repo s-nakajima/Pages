@@ -40,7 +40,8 @@ class TestSavePageBehaviorSaveModel extends AppModel {
  * @var array
  */
 	public $actsAs = array(
-		'Pages.SavePage'
+		'Pages.SavePage',
+		'Pages.GetPage',
 	);
 
 }

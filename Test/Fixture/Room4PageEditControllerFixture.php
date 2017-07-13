@@ -1,6 +1,6 @@
 <?php
 /**
- * Room4PageEditControllerIndexFixtureFixture
+ * Room4PageEditControllerFixture
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -11,10 +11,10 @@
 App::uses('RoomFixture', 'Rooms.Test/Fixture');
 
 /**
- * Room4PageEditControllerIndexFixtureFixture
+ * Room4PageEditControllerFixture
  *
  */
-class Room4PageEditControllerIndexFixture extends RoomFixture {
+class Room4PageEditControllerFixture extends RoomFixture {
 
 /**
  * Model name

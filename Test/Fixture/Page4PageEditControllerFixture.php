@@ -1,6 +1,6 @@
 <?php
 /**
- * Page4PageEditControllerIndex Controller
+ * Page4PageEditControllerFixture
  *
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
@@ -11,10 +11,10 @@
 App::uses('PageFixture', 'Pages.Test/Fixture');
 
 /**
- * Page4PageEditControllerIndex
+ * Page4PageEditControllerFixture
  *
  */
-class Page4PageEditControllerIndexFixture extends PageFixture {
+class Page4PageEditControllerFixture extends PageFixture {
 
 /**
  * Model name

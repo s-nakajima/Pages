@@ -49,8 +49,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 		$key = array_search('plugin.rooms.room', $this->fixtures);
 		unset($this->fixtures[$key]);
 
-		$this->fixtures[] = 'plugin.pages.Page4PageEditControllerIndex';
-		$this->fixtures[] = 'plugin.pages.Room4PageEditControllerIndex';
+		$this->fixtures[] = 'plugin.pages.Page4PageEditController';
+		$this->fixtures[] = 'plugin.pages.Room4PageEditController';
 	}
 
 /**

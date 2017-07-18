@@ -75,7 +75,7 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 						<td class="clearfix">
 							<div class="pull-left">
 								<span class="pages-tree" ng-repeat="i in indent(pageId)"> </span>
-								<span class="pages-move" ng-show="indented(pageId)">
+								<span class="pages-move">
 									<button type="button" class="btn btn-default btn-xs"
 											ng-click="saveWeight('up', pageId)" ng-disabled="moveDisabled('up', pageId)">
 										<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> </span>
@@ -85,12 +85,14 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 										<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> </span>
 									</button>
 								</span>
-								<span class="dropdown pages-move" ng-show="indented(pageId)">
+
+								<span class="dropdown pages-move">
 									<button class="btn btn-default dropdown-toggle btn-xs "
 											type="button"
 											id="{{'pages-dropdown-' + pageId}}"
 											data-toggle="dropdown" aria-haspopup="true"
-											aria-expanded="true">
+											aria-expanded="true"
+											ng-disabled="moveDisabled('up', pageId) && moveDisabled('down', pageId)">
 										<span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
 									</button>
 									<ul class="dropdown-menu"

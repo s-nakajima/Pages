@@ -71,10 +71,9 @@ NetCommonsApp.controller('PagesEditController',
       };
 
       /**
-       * インデント
+       * 自ルーム以外
        */
       $scope.indented = function(pageId) {
-        var range = [];
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
         var nest = $scope.parentList['_' + parentId]['_' + pageId]['nest'];
 

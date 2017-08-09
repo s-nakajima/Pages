@@ -61,26 +61,31 @@ class Page4pagesFixture extends PageFixture {
 		),
 		//プライベートスペースのページ（使われることはない）
 		array(
-			'id' => '2', 'room_id' => '3', 'root_id' => null, 'parent_id' => null, 'lft' => '9', 'rght' => '10',
+			'id' => '2', 'room_id' => '3', 'root_id' => null, 'parent_id' => null, 'lft' => '9', 'rght' => '12',
 			'permalink' => '', 'slug' => null,
+		),
+		//管理者のプライベートページ
+		array(
+			'id' => '10', 'room_id' => '7', 'root_id' => '2', 'parent_id' => '2', 'lft' => '10', 'rght' => '11',
+			'permalink' => 'user_administrator', 'slug' => 'user_administrator',
 		),
 		//グループスペースのページ（使われることはない）
 		array(
-			'id' => '3', 'room_id' => '4', 'root_id' => null, 'parent_id' => null, 'lft' => '11', 'rght' => '18',
+			'id' => '3', 'room_id' => '4', 'root_id' => null, 'parent_id' => null, 'lft' => '13', 'rght' => '20',
 			'permalink' => '', 'slug' => null,
 		),
 		//別ルーム(room_id=4)
 		array(
-			'id' => '5', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '12', 'rght' => '15',
+			'id' => '5', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '3', 'lft' => '14', 'rght' => '17',
 			'permalink' => 'test2', 'slug' => 'test2',
 		),
 		array(
-			'id' => '9', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '5', 'lft' => '13', 'rght' => '14',
+			'id' => '9', 'room_id' => '5', 'root_id' => '3', 'parent_id' => '5', 'lft' => '15', 'rght' => '16',
 			'permalink' => 'test2/home', 'slug' => 'home',
 		),
 		//別ルーム(room_id=5、ブロックなし)
 		array(
-			'id' => '6', 'room_id' => '6', 'root_id' => '3', 'parent_id' => '3', 'lft' => '16', 'rght' => '17',
+			'id' => '6', 'room_id' => '6', 'root_id' => '3', 'parent_id' => '3', 'lft' => '18', 'rght' => '19',
 			'permalink' => 'test3', 'slug' => 'test3',
 		),
 	);

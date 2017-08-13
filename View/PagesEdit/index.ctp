@@ -92,7 +92,7 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 											id="{{'pages-dropdown-' + pageId}}"
 											data-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="true"
-											ng-disabled="moveDisabled('up', pageId) && moveDisabled('down', pageId)">
+											ng-disabled="moveDisabled('move', pageId)">
 										<span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
 									</button>
 									<ul class="dropdown-menu"

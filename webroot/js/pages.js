@@ -49,7 +49,7 @@ NetCommonsApp.controller('PagesEditController',
       $scope.pages = {};
 
       /**
-       * ページデータ保持用
+       * ルームID保持用
        */
       $scope.roomId = null;
 

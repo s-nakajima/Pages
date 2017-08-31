@@ -45,7 +45,7 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 
 		<div class="table-responsive page-table-responsive">
 			<table class="table table-hover pages-edit-index" ng-controller="PagesEditController" ng-cloak
-					ng-init="initialize(<?php echo h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList)); ?>)">
+					ng-init="initialize(<?php echo h(json_encode($pages)) . ', ' . h(json_encode($treeList)) . ', ' . h(json_encode($parentList)) . ', ' . h(Current::read('Room.id')); ?>)">
 				<thead>
 					<tr ng-init="pageId = treeList[0]">
 						<th class="h2 clearfix">
@@ -123,10 +123,19 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 										'iconSize' => 'btn-xs',
 										'ng-href' => $this->NetCommonsHtml->url(array('action' => 'edit')) .
 													'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}',
+										'ng-show' => 'thisRoom(pageId)',
 									)); ?>
+
+								<a class="btn btn-default btn-xs nc-btn-style"
+									ng-href="<?php echo $this->NetCommonsHtml->url(array('action' => 'index')) .
+										'/{{pages[pageId][\'Page\'][\'room_id\']}}/{{pageId}}'; ?>"
+									ng-show="!thisRoom(pageId)">
+									<?php echo __d('pages', 'Page Setting on'); ?>
+								</a>
+
 							</div>
 
-							<div class="pull-right">
+							<div class="pull-right" ng-show="thisRoom(pageId)">
 								<?php echo $this->LinkButton->add(__d('pages', 'Add m17n page'), '', array(
 										'iconSize' => 'btn-xs',
 										'ng-hide' => 'pages[pageId][\'Page\'][\'hide_m17n\']',

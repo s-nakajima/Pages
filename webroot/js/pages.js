@@ -49,12 +49,18 @@ NetCommonsApp.controller('PagesEditController',
       $scope.pages = {};
 
       /**
+       * ページデータ保持用
+       */
+      $scope.roomId = null;
+
+      /**
        * Initialize
        */
-      $scope.initialize = function(pages, treeList, parentList) {
+      $scope.initialize = function(pages, treeList, parentList, roomId) {
         $scope.pages = pages;
         $scope.treeList = treeList;
         $scope.parentList = parentList;
+        $scope.roomId = roomId;
       };
 
       /**
@@ -71,13 +77,20 @@ NetCommonsApp.controller('PagesEditController',
       };
 
       /**
-       * 自ルーム以外
+       * 自ルーム以外に付属
        */
       $scope.indented = function(pageId) {
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
         var nest = $scope.parentList['_' + parentId]['_' + pageId]['nest'];
 
         return (nest !== 0);
+      };
+
+      /**
+       * 自ルーム
+       */
+      $scope.thisRoom = function(pageId) {
+        return ($scope.pages[pageId]['Page']['room_id'] === String($scope.roomId));
       };
 
       /**

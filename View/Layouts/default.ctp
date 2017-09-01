@@ -33,7 +33,7 @@
 	</head>
 
 	<body class="<?php echo !empty($modal) ? 'modal-open' : ''; ?>" ng-controller="NetCommons.base">
-		<?php echo $this->Session->flash(); ?>
+		<?php echo $this->Flash->render(); ?>
 
 		<?php echo $this->element('NetCommons.common_header'); ?>
 

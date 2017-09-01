@@ -41,6 +41,12 @@ class PagesEditControllerLayoutTest extends PagesControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		$this->generateNc(Inflector::camelize($this->_controller),
+			['components' => [
+				'Flash',
+			]
+		]);
+
 		//ログイン
 		TestAuthGeneral::login($this);
 	}
@@ -117,8 +123,8 @@ class PagesEditControllerLayoutTest extends PagesControllerTestCase {
 
 		$this->_mockForReturnTrue('Pages.PageContainer', 'savePageContainer');
 
-		$this->controller->Components->Session
-			->expects($this->once())->method('setFlash')
+		$this->controller->Components->Flash
+			->expects($this->once())->method('set')
 			->with(__d('net_commons', 'Successfully saved.'));
 
 		//テスト実行

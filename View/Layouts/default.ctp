@@ -8,6 +8,17 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+$bodyCss = '';
+if (!empty($modal)) {
+	$bodyCss = 'modal-open';
+}
+/* 未ログイン時にはヘッダーメニューを表示しないこともカスタマイズでできるようにcss追加 */
+if (AuthComponent::user()) {
+	$bodyCss .= ' body-loggedin';
+} else {
+	$bodyCss .= ' body-nologgedin';
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo Configure::read('Config.language') ?>" ng-app="NetCommonsApp">
@@ -32,7 +43,7 @@
 		?>
 	</head>
 
-	<body class="<?php echo !empty($modal) ? 'modal-open' : ''; ?>" ng-controller="NetCommons.base">
+	<body class="<?php echo $bodyCss; ?>" ng-controller="NetCommons.base">
 		<?php echo $this->Flash->render(); ?>
 
 		<?php echo $this->element('NetCommons.common_header'); ?>

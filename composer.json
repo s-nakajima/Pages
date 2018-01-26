@@ -1,10 +1,14 @@
 {
-    "name":        "netcommons/pages",
+    "name": "netcommons/pages",
     "description": "Pages Plugin for CakePHP",
-    "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "pages"],
-    "homepage":    "http://www.netcommons.org/",
-    "license":     "NetCommons License",
+    "type": "cakephp-plugin",
+    "keywords": [
+        "cakephp",
+        "pages"
+    ],
+    "homepage": "http://www.netcommons.org/",
+    "license": "LicenseRef-NetCommons",
+    "license-ref-net-commons": "https://raw.githubusercontent.com/NetCommons3/NetCommons3/master/license.txt",
     "authors": [
         {
             "name": "NetCommons Community",
@@ -17,21 +21,23 @@
     ],
     "extra": {
         "installer-paths": {
-            "app/Plugin/{$name}": ["type:cakephp-plugin"]
+            "app/Plugin/{$name}": [
+                "type:cakephp-plugin"
+            ]
         }
     },
     "require": {
-        "cakedc/migrations":            "~2.2",
-        "netcommons/boxes":             "@dev",
-        "netcommons/containers":        "@dev",
-        "netcommons/net-commons":       "@dev",
-        "netcommons/rooms":             "@dev",
-        "netcommons/site-manager":      "@dev",
-        "netcommons/theme-settings":    "@dev"
+        "cakedc/migrations": "~2.2",
+        "netcommons/boxes": "@dev",
+        "netcommons/containers": "@dev",
+        "netcommons/net-commons": "@dev",
+        "netcommons/rooms": "@dev",
+        "netcommons/site-manager": "@dev",
+        "netcommons/theme-settings": "@dev"
     },
     "require-dev": {
-        "netcommons/frames":            "dev-master",
-        "netcommons/plugin-manager":    "dev-master"
+        "netcommons/frames": "dev-master",
+        "netcommons/plugin-manager": "dev-master"
     },
     "config": {
         "vendor-dir": "vendors"

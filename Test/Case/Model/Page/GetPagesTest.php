@@ -167,8 +167,7 @@ class PageGetPagesTest extends PagesGetTestCase {
 		$pageId = $expectedPage['id'];
 
 		$expected = array(
-			'Page', 'Room', 'ParentPage', 'Space', 'ChildPage', 'PageContainer', 'PagesLanguage',
-			'Language', 'TrackableCreator', 'TrackableUpdater', 'OriginPagesLanguage'
+			'Page', 'Room', 'Space', 'PagesLanguage', 'ChildPage',
 		);
 		$this->assertEquals($expected, array_keys($result[$pageId]));
 
@@ -180,8 +179,8 @@ class PageGetPagesTest extends PagesGetTestCase {
 		$this->assertEquals($expectedRoom['id'], Hash::get($result[$pageId], 'Room.id'));
 		$this->assertEquals($expectedRoom['parent_id'], Hash::get($result[$pageId], 'Room.parent_id'));
 
-		$this->assertEquals($expectedParentPage['id'], Hash::get($result[$pageId], 'ParentPage.id'));
-		$this->assertEquals($expectedParentPage['room_id'], Hash::get($result[$pageId], 'ParentPage.room_id'));
+		//$this->assertEquals($expectedParentPage['id'], Hash::get($result[$pageId], 'ParentPage.id'));
+		//$this->assertEquals($expectedParentPage['room_id'], Hash::get($result[$pageId], 'ParentPage.room_id'));
 
 		$this->assertEquals($expectedPage['id'], Hash::get($result[$pageId], 'PagesLanguage.page_id'));
 

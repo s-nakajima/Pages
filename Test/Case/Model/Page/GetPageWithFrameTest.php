@@ -218,7 +218,8 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'frame_id' => '2',
 							'is_origin' => true,
 							'is_translation' => false,
-							'is_original_copy' => false
+							'is_original_copy' => false,
+							'default_setting_action' => ''
 						),
 					),
 				),
@@ -302,7 +303,8 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'frame_id' => '4',
 							'is_origin' => true,
 							'is_translation' => false,
-							'is_original_copy' => false
+							'is_original_copy' => false,
+							'default_setting_action' => ''
 						),
 					),
 				),
@@ -453,7 +455,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'is_origin' => true,
 							'is_translation' => false,
 							'is_original_copy' => false,
-							'is_original_copy' => false
+							'default_setting_action' => ''
 						),
 					),
 				),
@@ -537,7 +539,8 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'frame_id' => '3',
 							'is_origin' => true,
 							'is_translation' => false,
-							'is_original_copy' => false
+							'is_original_copy' => false,
+							'default_setting_action' => ''
 						),
 					),
 				),

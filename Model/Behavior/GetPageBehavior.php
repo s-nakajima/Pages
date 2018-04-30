@@ -43,24 +43,64 @@ class GetPageBehavior extends ModelBehavior {
 			$roomIds = Current::read('Room.id');
 		}
 
-		$pagesLanguages = $model->PagesLanguage->find('all', array(
-			'recursive' => 0,
+		$model->unbindModel(array('hasMany' => array('PageContainer')));
+		$model->unbindModel(array('belongsTo' => array('PagesLanguage', 'OriginPagesLanguage')));
+		$pages = $model->find('all', array(
+			'fields' => array(
+				'Page.id', 'Page.room_id', 'Page.root_id',
+				'Page.parent_id', 'Page.lft', 'Page.rght',
+				'Page.permalink', 'Page.slug',
+				// 'Page.is_container_fluid', 'Page.theme',
+				'Room.id',
+				'Room.space_id',
+				'Room.page_id_top',
+				'Room.parent_id',
+				//'Room.lft',
+				//'Room.rght',
+				'Room.active',
+				'Room.in_draft',
+				'Room.default_role_key',
+				//'Room.need_approval',
+				//'Room.default_participation',
+				//'Room.page_layout_permitted',
+				//'Room.theme',
+				'Space.id', 'Space.permalink',
+				//'ParentPage.*',
+				'PagesLanguage.page_id',
+				'PagesLanguage.language_id',
+				'PagesLanguage.name',
+			),
+			'recursive' => 1,
+			'joins' => array(
+				array(
+					'type' => 'INNER',
+					'table' => 'pages_languages',
+					'alias' => 'PagesLanguage',
+					'conditions' => array(
+						'Page.id = PagesLanguage.page_id'
+					)
+				),
+				array(
+					'type' => 'INNER',
+					'table' => 'pages_languages',
+					'alias' => 'OriginPagesLanguage',
+					'conditions' => array(
+						'PagesLanguage.page_id = OriginPagesLanguage.page_id',
+						'OriginPagesLanguage.language_id' => Current::read('Language.id'),
+					)
+				)
+			),
 			'conditions' => $model->PagesLanguage->getConditions(array(
 				'Page.room_id' => $roomIds,
 			)),
 		));
 
-		$pages = $model->find('all', array(
-			'recursive' => 1,
-			'conditions' => array(
-				'Page.id' => Hash::extract($pagesLanguages, '{n}.Page.id'),
-			),
-		));
+		$result = [];
+		foreach ($pages as $page) {
+			$result[$page['Page']['id']] = $page;
+		}
 
-		return Hash::merge(
-			Hash::combine($pages, '{n}.Page.id', '{n}'),
-			Hash::combine($pagesLanguages, '{n}.PagesLanguage.page_id', '{n}')
-		);
+		return $result;
 	}
 
 /**

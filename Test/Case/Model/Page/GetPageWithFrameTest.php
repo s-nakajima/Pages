@@ -177,12 +177,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'container_type' => '2',
 						'weight' => null,
 					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
-					),
 					'Room' => array(
 						'id' => '1',
 						'space_id' => '1',
@@ -261,12 +255,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'page_id' => null,
 						'container_type' => '5',
 						'weight' => null,
-					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
 					),
 					'Room' => array(
 						'id' => '1',
@@ -347,12 +335,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'container_type' => '3',
 						'weight' => null,
 					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
-					),
 					'Room' => array(
 						'id' => '2',
 						'space_id' => '2',
@@ -411,12 +393,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'page_id' => null,
 						'container_type' => '1',
 						'weight' => null,
-					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null
 					),
 					'Room' => array(
 						'id' => '1',
@@ -497,12 +473,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'page_id' => null,
 						'container_type' => '4',
 						'weight' => null,
-					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
 					),
 					'Room' => array(
 						'id' => '1',

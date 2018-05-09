@@ -28,6 +28,20 @@ App::uses('Space', 'Rooms.Model');
 class GetPageBehavior extends ModelBehavior {
 
 /**
+ * 何度も同じ条件で取得しないようにキャッシュする
+ *
+ * @var array
+ */
+	private $__cachePages = [];
+
+/**
+ * 何度も同じ条件で取得しないようにキャッシュする
+ *
+ * @var array
+ */
+	private $__cachePageWithFrame = [];
+
+/**
  * ページデータ取得
  *
  * @param Model $model Model using this behavior
@@ -41,6 +55,12 @@ class GetPageBehavior extends ModelBehavior {
 
 		if (! isset($roomIds)) {
 			$roomIds = Current::read('Room.id');
+		}
+
+		//同じ条件で一度取得していれば、キャッシュのデータを戻す
+		$cacheId = json_encode($roomIds);
+		if (isset($this->__cachePages[$cacheId])) {
+			return $this->__cachePages[$cacheId];
 		}
 
 		$model->unbindModel(array('hasMany' => array('PageContainer')));
@@ -100,6 +120,9 @@ class GetPageBehavior extends ModelBehavior {
 			$result[$page['Page']['id']] = $page;
 		}
 
+		if ($model->useDbConfig !== 'test') {
+			$this->__cachePages[$cacheId] = $result;
+		}
 		return $result;
 	}
 
@@ -153,6 +176,12 @@ class GetPageBehavior extends ModelBehavior {
 			);
 		}
 
+		//同じ条件で一度取得していれば、キャッシュのデータを戻す
+		$cacheId = json_encode($conditions);
+		if (isset($this->__cachePageWithFrame[$cacheId])) {
+			return $this->__cachePageWithFrame[$cacheId];
+		}
+
 		if (isset($model->belongsTo['Room'])) {
 			$model->bindModel(array(
 				'belongsTo' => array(
@@ -177,10 +206,11 @@ class GetPageBehavior extends ModelBehavior {
 		);
 		$page = $model->find('first', $query);
 
+		$pageId = Hash::get($page, 'Page.id');
 		$pagesLanguages = $model->PagesLanguage->find('first', array(
 			'recursive' => -1,
 			'conditions' => array(
-				'PagesLanguage.page_id' => Hash::get($page, 'Page.id'),
+				'PagesLanguage.page_id' => $pageId,
 				'PagesLanguage.language_id' => Current::read('Language.id'),
 			),
 		));
@@ -189,7 +219,7 @@ class GetPageBehavior extends ModelBehavior {
 		$pageContainers = $model->PageContainer->find('all', array(
 			'recursive' => -1,
 			'conditions' => array(
-				'PageContainer.page_id' => Hash::get($page, 'Page.id'),
+				'PageContainer.page_id' => $pageId,
 			),
 			'order' => array('container_type' => 'asc'),
 		));
@@ -197,6 +227,10 @@ class GetPageBehavior extends ModelBehavior {
 		foreach ($result['PageContainer'] as $i => $pageContainer) {
 			$pageContainer['Box'] = $model->Box->getBoxWithFrame($pageContainer['id']);
 			$result['PageContainer'][$i] = $pageContainer;
+		}
+
+		if ($model->useDbConfig !== 'test') {
+			$this->__cachePageWithFrame[$cacheId] = $result;
 		}
 
 		return $result;

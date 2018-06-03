@@ -10,6 +10,7 @@
  */
 
 App::uses('PagesControllerTestCase', 'Pages.TestSuite');
+App::uses('AssetComponent', 'NetCommons.Controller/Component');
 
 /**
  * PagesEditController::theme()のテスト
@@ -49,6 +50,11 @@ class PagesEditControllerThemeTest extends PagesControllerTestCase {
 
 		//ログイン
 		TestAuthGeneral::login($this);
+
+		$reflectionClass = new ReflectionClass('AssetComponent');
+		$property = $reflectionClass->getProperty('__theme');
+		$property->setAccessible(true);
+		$property->setValue('AssetComponent', null);
 	}
 
 /**

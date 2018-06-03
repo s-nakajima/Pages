@@ -32,14 +32,14 @@ class GetPageBehavior extends ModelBehavior {
  *
  * @var array
  */
-	private $__cachePages = [];
+	private static $__memoryPages = [];
 
 /**
  * 何度も同じ条件で取得しないようにキャッシュする
  *
  * @var array
  */
-	private $__cachePageWithFrame = [];
+	private static $__memoryPageWithFrame = [];
 
 /**
  * ページデータ取得
@@ -59,8 +59,8 @@ class GetPageBehavior extends ModelBehavior {
 
 		//同じ条件で一度取得していれば、キャッシュのデータを戻す
 		$cacheId = json_encode($roomIds);
-		if (isset($this->__cachePages[$cacheId])) {
-			return $this->__cachePages[$cacheId];
+		if (isset(self::$__memoryPages[$cacheId])) {
+			return self::$__memoryPages[$cacheId];
 		}
 
 		$model->unbindModel(array('hasMany' => array('PageContainer')));
@@ -121,7 +121,7 @@ class GetPageBehavior extends ModelBehavior {
 		}
 
 		if ($model->useDbConfig !== 'test') {
-			$this->__cachePages[$cacheId] = $result;
+			self::$__memoryPages[$cacheId] = $result;
 		}
 		return $result;
 	}
@@ -178,8 +178,8 @@ class GetPageBehavior extends ModelBehavior {
 
 		//同じ条件で一度取得していれば、キャッシュのデータを戻す
 		$cacheId = json_encode($conditions);
-		if (isset($this->__cachePageWithFrame[$cacheId])) {
-			return $this->__cachePageWithFrame[$cacheId];
+		if (isset(self::$__memoryPageWithFrame[$cacheId])) {
+			return self::$__memoryPageWithFrame[$cacheId];
 		}
 
 		if (isset($model->belongsTo['Room'])) {
@@ -230,7 +230,7 @@ class GetPageBehavior extends ModelBehavior {
 		}
 
 		if ($model->useDbConfig !== 'test') {
-			$this->__cachePageWithFrame[$cacheId] = $result;
+			self::$__memoryPageWithFrame[$cacheId] = $result;
 		}
 
 		return $result;

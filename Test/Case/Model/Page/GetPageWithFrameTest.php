@@ -177,12 +177,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'container_type' => '2',
 						'weight' => null,
 					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
-					),
 					'Room' => array(
 						'id' => '1',
 						'space_id' => '1',
@@ -218,7 +212,8 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'frame_id' => '2',
 							'is_origin' => true,
 							'is_translation' => false,
-							'is_original_copy' => false
+							'is_original_copy' => false,
+							'default_setting_action' => ''
 						),
 					),
 				),
@@ -261,12 +256,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'container_type' => '5',
 						'weight' => null,
 					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
-					),
 					'Room' => array(
 						'id' => '1',
 						'space_id' => '1',
@@ -302,7 +291,8 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'frame_id' => '4',
 							'is_origin' => true,
 							'is_translation' => false,
-							'is_original_copy' => false
+							'is_original_copy' => false,
+							'default_setting_action' => ''
 						),
 					),
 				),
@@ -344,12 +334,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'page_id' => '7',
 						'container_type' => '3',
 						'weight' => null,
-					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
 					),
 					'Room' => array(
 						'id' => '2',
@@ -410,12 +394,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'container_type' => '1',
 						'weight' => null,
 					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null
-					),
 					'Room' => array(
 						'id' => '1',
 						'space_id' => '1',
@@ -453,7 +431,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'is_origin' => true,
 							'is_translation' => false,
 							'is_original_copy' => false,
-							'is_original_copy' => false
+							'default_setting_action' => ''
 						),
 					),
 				),
@@ -496,12 +474,6 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 						'container_type' => '4',
 						'weight' => null,
 					),
-					'TrackableCreator' => array(
-						'id' => null, 'handlename' => null,
-					),
-					'TrackableUpdater' => array(
-						'id' => null, 'handlename' => null,
-					),
 					'Room' => array(
 						'id' => '1',
 						'space_id' => '1',
@@ -537,7 +509,8 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 							'frame_id' => '3',
 							'is_origin' => true,
 							'is_translation' => false,
-							'is_original_copy' => false
+							'is_original_copy' => false,
+							'default_setting_action' => ''
 						),
 					),
 				),

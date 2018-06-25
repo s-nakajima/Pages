@@ -111,7 +111,6 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 /**
  * Page::saveMove top 最上部テスト
  *
- * @expectedException InternalErrorException
  * @return void
  */
 	public function testSaveMoveTopOnExceptionError() {
@@ -128,6 +127,8 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 				'id' => '2'
 			]
 		];
+
+		$this->setExpectedException('InternalErrorException');
 		$this->$model->$methodName($data);
 	}
 
@@ -171,7 +172,6 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 /**
  * Page::saveMove bottom 最下部テスト
  *
- * @expectedException InternalErrorException
  * @return void
  */
 	public function testSaveMoveBottomOnExceptionError() {
@@ -188,6 +188,8 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 				'id' => '2'
 			]
 		];
+
+		$this->setExpectedException('InternalErrorException');
 		$this->$model->$methodName($data);
 	}
 

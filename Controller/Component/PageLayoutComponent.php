@@ -53,7 +53,7 @@ class PageLayoutComponent extends Component {
 		}
 
 		if (isset($controller->request->query[Current::SETTING_MODE_WORD])) {
-			Current::isSettingMode((bool) $controller->request->query[Current::SETTING_MODE_WORD]);
+			Current::isSettingMode((bool)$controller->request->query[Current::SETTING_MODE_WORD]);
 		}
 	}
 

@@ -64,7 +64,20 @@ class GetPageBehavior extends ModelBehavior {
 		}
 
 		$model->unbindModel(array('hasMany' => array('PageContainer')));
-		$model->unbindModel(array('belongsTo' => array('PagesLanguage', 'OriginPagesLanguage')));
+
+		$pagesLanguages = $model->PagesLanguage->find('all', array(
+			'recursive' => 0,
+			'conditions' => $model->PagesLanguage->getConditions(array(
+				'Page.room_id' => $roomIds,
+			)),
+		));
+
+		$retPagesLanguages = [];
+
+		foreach ($pagesLanguages as $pageLanguage) {
+			$retPagesLanguages[$pageLanguage['PagesLanguage']['page_id']] = $pageLanguage;
+		}
+
 		$pages = $model->find('all', array(
 			'fields' => array(
 				'Page.id', 'Page.room_id', 'Page.root_id',
@@ -85,39 +98,16 @@ class GetPageBehavior extends ModelBehavior {
 				//'Room.page_layout_permitted',
 				//'Room.theme',
 				'Space.id', 'Space.permalink',
-				//'ParentPage.*',
-				'PagesLanguage.page_id',
-				'PagesLanguage.language_id',
-				'PagesLanguage.name',
 			),
 			'recursive' => 1,
-			'joins' => array(
-				array(
-					'type' => 'INNER',
-					'table' => 'pages_languages',
-					'alias' => 'PagesLanguage',
-					'conditions' => array(
-						'Page.id = PagesLanguage.page_id'
-					)
-				),
-				array(
-					'type' => 'INNER',
-					'table' => 'pages_languages',
-					'alias' => 'OriginPagesLanguage',
-					'conditions' => array(
-						'PagesLanguage.page_id = OriginPagesLanguage.page_id',
-						'OriginPagesLanguage.language_id' => Current::read('Language.id'),
-					)
-				)
+			'conditions' => array(
+				'Page.id' => array_keys($retPagesLanguages),
 			),
-			'conditions' => $model->PagesLanguage->getConditions(array(
-				'Page.room_id' => $roomIds,
-			)),
 		));
 
 		$result = [];
 		foreach ($pages as $page) {
-			$result[$page['Page']['id']] = $page;
+			$result[$page['Page']['id']] = Hash::merge($retPagesLanguages[$page['Page']['id']], $page);
 		}
 
 		if ($model->useDbConfig !== 'test') {

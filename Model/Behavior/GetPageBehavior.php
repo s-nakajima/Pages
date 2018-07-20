@@ -63,21 +63,25 @@ class GetPageBehavior extends ModelBehavior {
 			return self::$__memoryPages[$cacheId];
 		}
 
-		$model->unbindModel(array('hasMany' => array('PageContainer')));
-
 		$pagesLanguages = $model->PagesLanguage->find('all', array(
+			'fields' => array(
+				'PagesLanguage.page_id',
+				'PagesLanguage.language_id',
+				'PagesLanguage.name',
+			),
 			'recursive' => 0,
 			'conditions' => $model->PagesLanguage->getConditions(array(
 				'Page.room_id' => $roomIds,
 			)),
 		));
-
 		$retPagesLanguages = [];
 
 		foreach ($pagesLanguages as $pageLanguage) {
 			$retPagesLanguages[$pageLanguage['PagesLanguage']['page_id']] = $pageLanguage;
 		}
 
+		$model->unbindModel(array('hasMany' => array('PageContainer')));
+		$model->unbindModel(array('belongsTo' => array('PagesLanguage', 'OriginPagesLanguage')));
 		$pages = $model->find('all', array(
 			'fields' => array(
 				'Page.id', 'Page.room_id', 'Page.root_id',
@@ -107,7 +111,9 @@ class GetPageBehavior extends ModelBehavior {
 
 		$result = [];
 		foreach ($pages as $page) {
-			$result[$page['Page']['id']] = Hash::merge($retPagesLanguages[$page['Page']['id']], $page);
+			$result[$page['Page']['id']] = $page;
+			$result[$page['Page']['id']]['PagesLanguage'] =
+							$retPagesLanguages[$page['Page']['id']]['PagesLanguage'];
 		}
 
 		if ($model->useDbConfig !== 'test') {

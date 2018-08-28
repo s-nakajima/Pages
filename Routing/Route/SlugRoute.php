@@ -52,11 +52,14 @@ class SlugRoute extends CakeRoute {
 
 		$this->Space = ClassRegistry::init('Rooms.Space');
 		if ($params['pass']) {
-			$result = $this->Space->find('first', array(
-				'fields' => ['id', 'permalink'],
-				'conditions' => array('permalink' => $params['pass'][0]),
-				'recursive' => -1
-			));
+			$spaces = $this->Space->getSpaces();
+			$result = [];
+			foreach ($spaces as $row) {
+				if ($row['Space']['permalink'] == $params['pass'][0]) {
+					$result = $row;
+					break;
+				}
+			}
 			if ($result) {
 				$params['spacePermalink'] = $result['Space']['permalink'];
 				$params['spaceId'] = $result['Space']['id'];

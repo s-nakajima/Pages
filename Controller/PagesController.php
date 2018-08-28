@@ -11,6 +11,7 @@
 
 App::uses('PagesAppController', 'Pages.Controller');
 App::uses('Space', 'Rooms.Model');
+App::uses('NetCommonsUrl', 'NetCommons.Utility');
 
 /**
  * ページ表示 Controller
@@ -51,7 +52,9 @@ class PagesController extends PagesAppController {
  */
 	public function beforeFilter() {
 		//CurrentPage::__getPageConditionsでページ表示として扱う
-		$this->request->params['pageView'] = true;
+		if ($this->params['action'] === 'index') {
+			$this->request->params['pageView'] = true;
+		}
 		parent::beforeFilter();
 	}
 
@@ -65,6 +68,7 @@ class PagesController extends PagesAppController {
 		if (Current::isSettingMode() && ! Current::permission('page_editable')) {
 			$paths = $this->params->params['pass'];
 			$path = implode('/', $paths);
+			Current::isSettingMode(false);
 			return $this->redirect('/' . $path);
 		}
 
@@ -83,6 +87,26 @@ class PagesController extends PagesAppController {
 			throw new NotFoundException();
 		}
 		$this->set('page', $page);
+	}
+
+/**
+ * セッティングモード切り替えアクション
+ *
+ * @return void
+ */
+	public function change_setting_mode() {
+		if (isset($this->request->query['mode'])) {
+			$settingMode = (bool)$this->request->query['mode'];
+		} else {
+			$settingMode = false;
+		}
+		$isSettingMode = Current::isSettingMode($settingMode);
+		if ($isSettingMode) {
+			$redirectUrl = NetCommonsUrl::backToPageUrl(true);
+		} else {
+			$redirectUrl = NetCommonsUrl::backToPageUrl();
+		}
+		$this->redirect($redirectUrl);
 	}
 
 }

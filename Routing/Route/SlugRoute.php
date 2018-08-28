@@ -30,6 +30,10 @@ class SlugRoute extends CakeRoute {
  *
  * @param string $url The URL to attempt to parse.
  * @return mixed Boolean false on failure, otherwise an array or parameters
+ *
+ * 速度改善の修正に伴って発生したため抑制
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 	public function parse($url) {
 		$params = parent::parse($url);

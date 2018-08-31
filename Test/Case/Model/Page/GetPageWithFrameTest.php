@@ -72,6 +72,14 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 		Current::write('Room.page_id_top', '7');
+		Current::write('Page', array(
+			'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+			'permalink' => 'test4', 'slug' => 'test4',
+		));
+		Current::write('TopPage', array(
+			'id' => '7',
+			'permalink' => 'test4',
+		));
 
 		//データ生成
 		$permalink = '';

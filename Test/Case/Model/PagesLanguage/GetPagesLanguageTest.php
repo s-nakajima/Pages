@@ -68,7 +68,13 @@ class PagesLanguageGetPagesLanguageTest extends PagesGetTestCase {
 				'is_origin' => true, 'is_translation' => false,
 			),
 			'Page' => array(
-				'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+				'id' => '7', 'room_id' => '2', 'root_id' => '1',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'lft' => null, 'rght' => null,
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
 				'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null,
 			),
 			'Language' => array(

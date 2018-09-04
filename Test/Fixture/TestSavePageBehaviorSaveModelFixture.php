@@ -40,7 +40,9 @@ class TestSavePageBehaviorSaveModelFixture extends PageFixture {
  */
 	public $records = array(
 		array(
-			'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => null, 'lft' => '1', 'rght' => '8',
+			'id' => '1', 'room_id' => '2', 'root_id' => null,
+			'parent_id' => null,
+			'lft' => '1', 'rght' => '8',
 			'permalink' => '', 'slug' => null,
 		),
 	);

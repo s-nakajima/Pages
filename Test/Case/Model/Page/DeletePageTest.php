@@ -70,25 +70,45 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 		//テストクエリ
 		$this->___query = array(
 			'recursive' => -1,
-			'fields' => array('id', 'parent_id', 'lft', 'rght'),
+			'fields' => array('id', 'parent_id', 'weight', 'sort_key', 'child_count'),
 			'conditions' => array('id' => array('1', '4', '7', '8')),
-			'order' => array('lft' => 'asc'),
+			'order' => array('sort_key' => 'asc'),
 		);
 		//事前チェック
 		$model = $this->_modelName;
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '1', 'parent_id' => null, 'lft' => '1', 'rght' => '8'
+				'id' => '1',
+				'parent_id' => null,
+				//'lft' => '1', 'rght' => '8',
+				'weight' => '1',
+				'sort_key' => '~00000001',
+				'child_count' => '3',
 			)),
 			1 => array('Page' => array(
-				'id' => '4', 'parent_id' => '1', 'lft' => '2', 'rght' => '5'
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '5',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '1',
 			)),
 			2 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '3', 'rght' => '4'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
 			)),
 			3 => array('Page' => array(
-				'id' => '8', 'parent_id' => '1', 'lft' => '6', 'rght' => '7'
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '6', 'rght' => '7',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);
@@ -193,13 +213,28 @@ class PageDeletePageTest extends NetCommonsDeleteTest {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '1', 'parent_id' => null, 'lft' => '1', 'rght' => '6'
+				'id' => '1',
+				'parent_id' => null,
+				//'lft' => '1', 'rght' => '6',
+				'weight' => '1',
+				'sort_key' => '~00000001',
+				'child_count' => '2',
 			)),
 			1 => array('Page' => array(
-				'id' => '4', 'parent_id' => '1', 'lft' => '2', 'rght' => '3'
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '3',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '0',
 			)),
 			2 => array('Page' => array(
-				'id' => '8', 'parent_id' => '1', 'lft' => '4', 'rght' => '5'
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '4', 'rght' => '5',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);

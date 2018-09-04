@@ -97,7 +97,7 @@ NetCommonsApp.controller('PagesEditController',
        * パーマリンク
        */
       $scope.permalink = function(pageId) {
-        if ($scope.pages[pageId]['Page']['lft'] === '1') {
+        if ($scope.pages[pageId]['Page']['sort_key'] === '~00000001-00000001') {
           return '';
         } else {
           return $scope.pages[pageId]['Page']['full_permalink'];

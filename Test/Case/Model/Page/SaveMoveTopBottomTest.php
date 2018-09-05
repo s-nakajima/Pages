@@ -63,9 +63,9 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 		// expected data 取得用クエリ
 		$this->___query = array(
 			'recursive' => -1,
-			'fields' => array('id', 'parent_id', 'lft', 'rght'),
+			'fields' => array('id', 'parent_id', 'weight', 'sort_key', 'child_count'),
 			'conditions' => array('id' => array('5', '6', '7')),
-			'order' => array('lft' => 'asc'),
+			'order' => array('sort_key' => 'asc'),
 		);
 
 		$this->Page = ClassRegistry::init('Pages.Page');
@@ -96,13 +96,28 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '3', 'rght' => '4'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4'
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
 			)),
 			1 => array('Page' => array(
-				'id' => '5', 'parent_id' => '4', 'lft' => '5', 'rght' => '6'
+				'id' => '5',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000001-00000002',
+				'child_count' => '0',
 			)),
 			2 => array('Page' => array(
-				'id' => '6', 'parent_id' => '4', 'lft' => '7', 'rght' => '8'
+				'id' => '6',
+				'parent_id' => '4',
+				//'lft' => '7', 'rght' => '8',
+				'weight' => '3',
+				'sort_key' => '~00000001-00000001-00000003',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);
@@ -111,9 +126,11 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 /**
  * Page::saveMove top 最上部テスト
  *
+ * CakeTreeでは、Exceptionになっていたが、NetCommonsTreeでは、エラーとしない
+ *
  * @return void
  */
-	public function testSaveMoveTopOnExceptionError() {
+	public function testSaveMoveUpOnTop() {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 
@@ -128,8 +145,38 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 			]
 		];
 
-		$this->setExpectedException('InternalErrorException');
-		$this->$model->$methodName($data);
+		//$this->setExpectedException('InternalErrorException');
+		$result = $this->$model->$methodName($data);
+		$this->assertTrue($result);
+
+		$result = $this->$model->find('all', $this->___query);
+		$expected = array(
+			0 => array('Page' => array(
+				'id' => '5',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
+			)),
+			1 => array('Page' => array(
+				'id' => '6',
+				'parent_id' => '4',
+				//'lft' => '7', 'rght' => '8',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000001-00000002',
+				'child_count' => '0',
+			)),
+			2 => array('Page' => array(
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4'
+				'weight' => '3',
+				'sort_key' => '~00000001-00000001-00000003',
+				'child_count' => '0',
+			)),
+		);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -157,13 +204,28 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '6', 'parent_id' => '4', 'lft' => '3', 'rght' => '4'
+				'id' => '6',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
 			)),
 			1 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '5', 'rght' => '6'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000001-00000002',
+				'child_count' => '0',
 			)),
 			2 => array('Page' => array(
-				'id' => '5', 'parent_id' => '4', 'lft' => '7', 'rght' => '8'
+				'id' => '5',
+				'parent_id' => '4',
+				//'lft' => '7', 'rght' => '8',
+				'weight' => '3',
+				'sort_key' => '~00000001-00000001-00000003',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);
@@ -172,9 +234,11 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 /**
  * Page::saveMove bottom 最下部テスト
  *
+ * CakeTreeでは、Exceptionになっていたが、NetCommonsTreeでは、エラーとしない
+ *
  * @return void
  */
-	public function testSaveMoveBottomOnExceptionError() {
+	public function testSaveMoveBottomOnLast() {
 		$model = $this->_modelName;
 		$methodName = $this->_methodName;
 
@@ -189,8 +253,38 @@ class SaveMoveTopBottomTest extends PagesModelTestCase {
 			]
 		];
 
-		$this->setExpectedException('InternalErrorException');
-		$this->$model->$methodName($data);
+		//$this->setExpectedException('InternalErrorException');
+		$result = $this->$model->$methodName($data);
+		$this->assertTrue($result);
+
+		$result = $this->$model->find('all', $this->___query);
+		$expected = array(
+			0 => array('Page' => array(
+				'id' => '5',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
+			)),
+			1 => array('Page' => array(
+				'id' => '6',
+				'parent_id' => '4',
+				//'lft' => '7', 'rght' => '8',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000001-00000002',
+				'child_count' => '0',
+			)),
+			2 => array('Page' => array(
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4'
+				'weight' => '3',
+				'sort_key' => '~00000001-00000001-00000003',
+				'child_count' => '0',
+			)),
+		);
+		$this->assertEquals($expected, $result);
 	}
 
 }

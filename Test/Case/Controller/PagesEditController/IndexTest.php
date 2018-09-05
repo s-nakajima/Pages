@@ -135,7 +135,12 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 		$expected = array(
 			1 => array(
 				'Page' => array(
-					'id' => '1', 'room_id' => '2', 'root_id' => null, 'parent_id' => '0', 'lft' => '1', 'rght' => '14',
+					'id' => '1', 'room_id' => '2', 'root_id' => null,
+					'parent_id' => '0',
+					//'lft' => '1', 'rght' => '14',
+					'weight' => '1',
+					'sort_key' => '~00000001',
+					'child_count' => '6',
 					'permalink' => '', 'slug' => null, 'type' => '',
 					'full_permalink' => '', 'hide_m17n' => true,
 				),
@@ -146,7 +151,12 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 			),
 			4 => array(
 				'Page' => array(
-					'id' => '4', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '2', 'rght' => '5',
+					'id' => '4', 'room_id' => '2', 'root_id' => '1',
+					'parent_id' => '1',
+					//'lft' => '2', 'rght' => '5',
+					'weight' => '1',
+					'sort_key' => '~00000001-00000001',
+					'child_count' => '1',
 					'permalink' => 'home', 'slug' => 'home', 'type' => '',
 					'full_permalink' => 'home', 'hide_m17n' => true,
 				),
@@ -157,7 +167,12 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 			),
 			7 => array(
 				'Page' => array(
-					'id' => '7', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '4', 'lft' => '3', 'rght' => '4',
+					'id' => '7', 'room_id' => '2', 'root_id' => '1',
+					'parent_id' => '4',
+					//'lft' => '3', 'rght' => '4',
+					'weight' => '1',
+					'sort_key' => '~00000001-00000001-00000001',
+					'child_count' => '0',
 					'permalink' => 'test4', 'slug' => 'test4', 'type' => '',
 					'full_permalink' => 'test4', 'hide_m17n' => true,
 				),
@@ -168,7 +183,12 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 			),
 			8 => array(
 				'Page' => array(
-					'id' => '8', 'room_id' => '2', 'root_id' => '1', 'parent_id' => '1', 'lft' => '6', 'rght' => '7',
+					'id' => '8', 'room_id' => '2', 'root_id' => '1',
+					'parent_id' => '1',
+					//'lft' => '6', 'rght' => '7',
+					'weight' => '2',
+					'sort_key' => '~00000001-00000002',
+					'child_count' => '0',
 					'permalink' => 'test5', 'slug' => 'test5', 'type' => '',
 					'full_permalink' => 'test5', 'hide_m17n' => true,
 				),
@@ -179,7 +199,12 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 			),
 			5 => array(
 				'Page' => array(
-					'id' => '5', 'room_id' => '5', 'root_id' => '1', 'parent_id' => '1', 'lft' => '8', 'rght' => '11',
+					'id' => '5', 'room_id' => '5', 'root_id' => '1',
+					'parent_id' => '1',
+					//'lft' => '8', 'rght' => '11',
+					'weight' => '3',
+					'sort_key' => '~00000001-00000003',
+					'child_count' => '1',
 					'permalink' => 'test2', 'slug' => 'test2', 'type' => '',
 					'full_permalink' => 'test2', 'hide_m17n' => true,
 				),
@@ -190,7 +215,12 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 			),
 			6 => array(
 				'Page' => array(
-					'id' => '6', 'room_id' => '6', 'root_id' => '1', 'parent_id' => '1', 'lft' => '12', 'rght' => '13',
+					'id' => '6', 'room_id' => '6', 'root_id' => '1',
+					'parent_id' => '1',
+					//'lft' => '12', 'rght' => '13',
+					'weight' => '4',
+					'sort_key' => '~00000001-00000004',
+					'child_count' => '0',
 					'permalink' => 'test3', 'slug' => 'test3', 'type' => '',
 					'full_permalink' => 'test3', 'hide_m17n' => true,
 				),

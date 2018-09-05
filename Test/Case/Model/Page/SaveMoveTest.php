@@ -51,22 +51,37 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		//テストクエリ
 		$this->___query = array(
 			'recursive' => -1,
-			'fields' => array('id', 'parent_id', 'lft', 'rght'),
+			'fields' => array('id', 'parent_id', 'weight', 'sort_key', 'child_count'),
 			'conditions' => array('id' => array('4', '7', '8')),
-			'order' => array('lft' => 'asc'),
+			'order' => array('sort_key' => 'asc'),
 		);
 		//事前チェック
 		$model = $this->_modelName;
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '4', 'parent_id' => '1', 'lft' => '2', 'rght' => '5'
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '5',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '1',
 			)),
 			1 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '3', 'rght' => '4'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
 			)),
 			2 => array('Page' => array(
-				'id' => '8', 'parent_id' => '1', 'lft' => '6', 'rght' => '7'
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '6', 'rght' => '7',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);
@@ -95,13 +110,28 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '8', 'parent_id' => '1', 'lft' => '2', 'rght' => '3'
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '3',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '0',
 			)),
 			1 => array('Page' => array(
-				'id' => '4', 'parent_id' => '1', 'lft' => '4', 'rght' => '7'
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '4', 'rght' => '7',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '1',
 			)),
 			2 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '5', 'rght' => '6'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000002-00000001',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);
@@ -131,6 +161,8 @@ class PageSaveMoveTest extends PagesModelTestCase {
 /**
  * saveMove()の最上部のUpテスト
  *
+ * CakeTreeでは、Exceptionになっていたが、NetCommonsTreeでは、エラーとしない
+ *
  * @return void
  */
 	public function testSaveMoveUpOnTop() {
@@ -140,12 +172,43 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		$roomId = '2';
 
 		//テスト実施
-		$this->setExpectedException('InternalErrorException');
+		//$this->setExpectedException('InternalErrorException');
 		$data = array(
 			'Page' => array('id' => $pageId, 'type' => 'up'),
 			'Room' => array('id' => $roomId)
 		);
-		$this->$model->$methodName($data);
+		$result = $this->$model->$methodName($data);
+		$this->assertTrue($result);
+
+		//チェック
+		$result = $this->$model->find('all', $this->___query);
+		$expected = array(
+			0 => array('Page' => array(
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '5',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '1',
+			)),
+			1 => array('Page' => array(
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
+			)),
+			2 => array('Page' => array(
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '6', 'rght' => '7',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '0',
+			)),
+		);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -171,20 +234,38 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '8', 'parent_id' => '1', 'lft' => '2', 'rght' => '3'
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '3',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '0',
 			)),
 			1 => array('Page' => array(
-				'id' => '4', 'parent_id' => '1', 'lft' => '4', 'rght' => '7'
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '4', 'rght' => '7',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '1',
 			)),
 			2 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '5', 'rght' => '6'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000002-00000001',
+				'child_count' => '0',
 			)),
 		);
+
 		$this->assertEquals($expected, $result);
 	}
 
 /**
  * saveMove()の最下部のDownテスト
+ *
+ * CakeTreeでは、Exceptionになっていたが、NetCommonsTreeでは、エラーとしない
  *
  * @return void
  */
@@ -195,12 +276,43 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		$roomId = '2';
 
 		//テスト実施
-		$this->setExpectedException('InternalErrorException');
+		//$this->setExpectedException('InternalErrorException');
 		$data = array(
 			'Page' => array('id' => $pageId, 'type' => 'down'),
 			'Room' => array('id' => $roomId)
 		);
-		$this->$model->$methodName($data);
+		$result = $this->$model->$methodName($data);
+		$this->assertTrue($result);
+
+		//チェック
+		$result = $this->$model->find('all', $this->___query);
+		$expected = array(
+			0 => array('Page' => array(
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '5',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '1',
+			)),
+			1 => array('Page' => array(
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
+			)),
+			2 => array('Page' => array(
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '6', 'rght' => '7',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000002',
+				'child_count' => '0',
+			)),
+		);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -226,13 +338,28 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '4', 'parent_id' => '1', 'lft' => '2', 'rght' => '7'
+				'id' => '4',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '7',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '2',
 			)),
 			1 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '3', 'rght' => '4'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '3', 'rght' => '4',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '0',
 			)),
 			2 => array('Page' => array(
-				'id' => '8', 'parent_id' => '4', 'lft' => '5', 'rght' => '6'
+				'id' => '8',
+				'parent_id' => '4',
+				//'lft' => '5', 'rght' => '6',
+				'weight' => '2',
+				'sort_key' => '~00000001-00000001-00000002',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);
@@ -261,13 +388,28 @@ class PageSaveMoveTest extends PagesModelTestCase {
 		$result = $this->$model->find('all', $this->___query);
 		$expected = array(
 			0 => array('Page' => array(
-				'id' => '8', 'parent_id' => '1', 'lft' => '2', 'rght' => '7'
+				'id' => '8',
+				'parent_id' => '1',
+				//'lft' => '2', 'rght' => '7',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001',
+				'child_count' => '2',
 			)),
 			1 => array('Page' => array(
-				'id' => '4', 'parent_id' => '8', 'lft' => '3', 'rght' => '6'
+				'id' => '4',
+				'parent_id' => '8',
+				//'lft' => '3', 'rght' => '6',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001',
+				'child_count' => '1',
 			)),
 			2 => array('Page' => array(
-				'id' => '7', 'parent_id' => '4', 'lft' => '4', 'rght' => '5'
+				'id' => '7',
+				'parent_id' => '4',
+				//'lft' => '4', 'rght' => '5',
+				'weight' => '1',
+				'sort_key' => '~00000001-00000001-00000001-00000001',
+				'child_count' => '0',
 			)),
 		);
 		$this->assertEquals($expected, $result);

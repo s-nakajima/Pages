@@ -77,10 +77,10 @@ class PageSavePageTest extends NetCommonsSaveTest {
 		$results[0] = array($data);
 		// * 新規の登録処理
 		$results[1] = array($data);
-		$results[1] = Hash::insert($results[1], '0.Page.id', null);
-		$results[1] = Hash::insert($results[1], '0.Page.permalink', 'insert_key');
-		$results[1] = Hash::insert($results[1], '0.Page.slug', 'insert_key');
-		$results[1] = Hash::remove($results[1], '0.Page.created_user');
+		$results[1][0]['Page']['id'] = null;
+		$results[1][0]['Page']['permalink'] = 'insert_key';
+		$results[1][0]['Page']['slug'] = 'insert_key';
+		unset($results[1][0]['Page']['created_user']);
 
 		return $results;
 	}
@@ -96,7 +96,7 @@ class PageSavePageTest extends NetCommonsSaveTest {
 		$model = $this->_modelName;
 		$method = $this->_methodName;
 
-		if (Hash::get($data, 'Page.id')) {
+		if (isset($data['Page']['id'])) {
 			parent::testSave($data);
 			return;
 		}
@@ -112,16 +112,26 @@ class PageSavePageTest extends NetCommonsSaveTest {
 			'recursive' => -1,
 			'conditions' => array('id' => $id),
 		));
-		$this->assertDatetime(Hash::get($actual[$this->$model->alias], 'created'));
-		$this->assertDatetime(Hash::get($actual[$this->$model->alias], 'modified'));
+		$this->assertDatetime($actual[$this->$model->alias]['created']);
+		$this->assertDatetime($actual[$this->$model->alias]['modified']);
 
-		$actual[$this->$model->alias] = Hash::remove($actual[$this->$model->alias], 'created');
-		$actual[$this->$model->alias] = Hash::remove($actual[$this->$model->alias], 'created_user');
-		$actual[$this->$model->alias] = Hash::remove($actual[$this->$model->alias], 'modified');
-		$actual[$this->$model->alias] = Hash::remove($actual[$this->$model->alias], 'modified_user');
+		unset($actual[$this->$model->alias]['created']);
+		unset($actual[$this->$model->alias]['created_user']);
+		unset($actual[$this->$model->alias]['modified']);
+		unset($actual[$this->$model->alias]['modified_user']);
+
 		$expected[$this->$model->alias] = Hash::merge(
 			$data[$this->$model->alias],
-			array('id' => $id, 'lft' => '5', 'rght' => '6', 'is_container_fluid' => false, 'theme' => null)
+			array(
+				'id' => $id,
+				//'lft' => '5', 'rght' => '6',
+				'lft' => null, 'rght' => null,
+				'weight' => '2',
+				'sort_key' => '~00000001-00000001-00000002',
+				'child_count' => '0',
+				'is_container_fluid' => false,
+				'theme' => null
+			)
 		);
 		$this->assertEquals($expected, $actual);
 	}

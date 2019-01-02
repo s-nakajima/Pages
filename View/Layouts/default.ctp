@@ -33,12 +33,12 @@ if (AuthComponent::user()) {
 			echo $this->html->meta('icon', '/net_commons/favicon.ico');
 			echo $this->fetch('meta');
 
-			echo $this->element('NetCommons.common_css', [], ['cache' => true]);
+			echo $this->element('NetCommons.common_css');
 			echo $this->fetch('css');
-			echo $this->element('NetCommons.common_theme_css', [], ['cache' => true]);
+			echo $this->element('NetCommons.common_theme_css');
 
-			echo $this->element('NetCommons.common_js', [], ['cache' => true]);
-			echo $this->element('Wysiwyg.mathjax_js', [], ['cache' => true]);
+			echo $this->element('NetCommons.common_js');
+			echo $this->element('Wysiwyg.mathjax_js');
 			echo $this->fetch('script');
 		?>
 	</head>
@@ -62,7 +62,7 @@ if (AuthComponent::user()) {
 			<?php echo $pageFooter; ?>
 		</main>
 
-		<?php echo $this->element('NetCommons.common_footer', [], ['cache' => true]); ?>
+		<?php echo $this->element('NetCommons.common_footer'); ?>
 
 		<?php if (!empty($modal)) : ?>
 			<div class="modal-backdrop fade in"></div>

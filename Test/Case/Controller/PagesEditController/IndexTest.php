@@ -61,6 +61,9 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		//テストプラグインのロード
+		NetCommonsCakeTestCase::loadTestPlugin($this, 'Pages', 'TestPages');
+
 		//ログイン
 		TestAuthGeneral::login($this);
 	}
@@ -88,7 +91,8 @@ class PagesEditControllerIndexTest extends PagesControllerTestCase {
 		$this->_testGetAction(array('action' => 'index', $roomId), array('method' => 'assertNotEmpty'), null, 'view');
 
 		//scriptのURLチェック
-		$pattern = '/<script.*?' . preg_quote('/pages/js/pages.js', '/') . '.*?>/';
+		$pattern = '/<script.*?' . preg_quote('/pages/js/pages.js', '/') . '.*?>|' .
+				'<script.*?' . preg_quote('/js/pages/pages.js', '/') . '.*?>/';
 		$this->assertRegExp($pattern, $this->contents);
 
 		//チェック

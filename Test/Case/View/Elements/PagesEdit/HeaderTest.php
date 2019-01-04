@@ -67,7 +67,8 @@ class PagesViewElementsPagesEditHeaderTest extends PagesControllerTestCase {
 				array('method' => 'assertNotEmpty'), null, 'view');
 
 		//cssのURLチェック
-		$pattern = '/<link.*?' . preg_quote('/control_panel/css/style.css', '/') . '.*?>/';
+		$pattern = '/<link.*?' . preg_quote('/control_panel/css/style.css', '/') . '.*?>|' .
+				'<link.*?' . preg_quote('/css/control_panel/style.css', '/') . '.*?>/';
 		$this->assertRegExp($pattern, $this->contents);
 
 		//チェック

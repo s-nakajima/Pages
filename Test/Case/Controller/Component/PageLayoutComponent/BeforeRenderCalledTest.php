@@ -49,10 +49,6 @@ class PageLayoutComponentBeforeRenderCalledTest extends CakeTestCase {
 
 		$mockPageComponent->beforeRender($Controller);
 		$mockPageComponent->beforeRender($Controller);
-
-		$reflectionProperty = new ReflectionProperty('PageLayoutComponent', '_page');
-		$reflectionProperty->setAccessible(true);
-		$reflectionProperty->setValue(null);
 	}
 
 }

@@ -16,6 +16,7 @@ App::uses('Current', 'NetCommons.Utility');
 /**
  * LayoutHelper
  *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class PageLayoutHelper extends AppHelper {
 
@@ -363,7 +364,7 @@ class PageLayoutHelper extends AppHelper {
  *    URL will not automatically handle passed and named arguments in the $url parameter.
  * @param array $extra if array includes the key "return" it sets the AutoRender to true. Can
  *    also be used to submit GET/POST data, and named/passed arguments.
- * @return Boolean true or false on success/failure, or contents
+ * @return bool true or false on success/failure, or contents
  *    of rendered action if 'return' is set in $extra.
  */
 	public function requestAction($url, $extra = array()) {
@@ -420,7 +421,8 @@ class PageLayoutHelper extends AppHelper {
 		if (!($controller instanceof Controller)) {
 			throw new MissingControllerException(array(
 				'class' => Inflector::camelize($request->params['controller']) . 'Controller',
-				'plugin' => empty($request->params['plugin']) ? null : Inflector::camelize($request->params['plugin'])
+				'plugin' => empty($request->params['plugin']) ?
+								null : Inflector::camelize($request->params['plugin'])
 			));
 		}
 
@@ -435,6 +437,7 @@ class PageLayoutHelper extends AppHelper {
  * If Routes have not been loaded they will be loaded, and app/Config/routes.php will be run.
  *
  * @param CakeRequest $request Request object to dispatch.
+ * @param array $params リクエストにセットするパラメータ
  * @param array $additionalParams Settings array ("bare", "return") which is melded with the GET and POST params
  * @return void
  */
@@ -461,7 +464,7 @@ class PageLayoutHelper extends AppHelper {
 		if (substr($url, -1, 1) === '/') {
 			$url = substr($url, 0, -1);
 		}
-		if (substr($url,0, 1) !== '/') {
+		if (substr($url, 0, 1) !== '/') {
 			$url = '/' . $url;
 		}
 		$urlArr = explode('/', $url);

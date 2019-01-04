@@ -63,7 +63,8 @@ class PagesEditHelperBeforeRenderTest extends PagesControllerTestCase {
 		$this->assertRegExp($pattern, $this->view);
 
 		//cssのURLチェック
-		$pattern = '/<link.*?' . preg_quote('/pages/css/style.css', '/') . '.*?>/';
+		$pattern = '/<link.*?' . preg_quote('/pages/css/style.css', '/') . '.*?>|' .
+				'<link.*?' . preg_quote('/css/pages/style.css', '/') . '.*?>/';
 		$this->assertRegExp($pattern, $this->contents);
 	}
 

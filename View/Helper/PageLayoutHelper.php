@@ -17,6 +17,7 @@ App::uses('Current', 'NetCommons.Utility');
  * LayoutHelper
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class PageLayoutHelper extends AppHelper {
 

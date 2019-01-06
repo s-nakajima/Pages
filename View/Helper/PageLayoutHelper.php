@@ -394,7 +394,9 @@ class PageLayoutHelper extends AppHelper {
 		}
 
 		$this->_setParams($request, $params, $extra);
+		Router::setRequestInfo($request);
 		$result = $this->_dispatch($request, new CakeResponse(), $extra);
+		Router::popRequest();
 		return $result;
 	}
 

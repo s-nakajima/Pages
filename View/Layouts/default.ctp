@@ -30,15 +30,7 @@ if (AuthComponent::user()) {
 		<title><?php echo (isset($pageTitle) ? h($pageTitle) : ''); ?></title>
 
 		<?php
-			// app/webroot/favicon.icoが無ければ、app/webroot/nc_favicon.ico表示、それもなければ/net_commons/favicon.ico表示
-			if (file_exists(WWW_ROOT . 'favicon.ico')) {
-				/* @see https://book.cakephp.org/2.0/ja/core-libraries/helpers/html.html#HtmlHelper::meta */
-				echo $this->html->meta('icon', '/favicon.ico');
-			} elseif (file_exists(WWW_ROOT . 'nc_favicon.ico')) {
-				echo $this->html->meta('icon', '/nc_favicon.ico');
-			} else {
-				echo $this->html->meta('icon', '/net_commons/favicon.ico');
-			}
+			echo $this->element('NetCommons.common_favicon');
 			echo $this->fetch('meta');
 
 			echo $this->element('NetCommons.common_css');
